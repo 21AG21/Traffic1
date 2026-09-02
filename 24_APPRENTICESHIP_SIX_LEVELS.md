@@ -1,12 +1,12 @@
-# Six Ladders: the whole apprenticeship at six levels
+# Six Ladders: everything needed for machine learning, at six levels
 
-_September 2026. Supersedes `22_LEARNING_PATH_ML.md` and `23_LESSONS_SIX_LEVELS.md`, which it combines; companion to `21_PLAN_M1_TRAFFIC_MODEL.md`._
+_September 2026. Supersedes `22_LEARNING_PATH_ML.md` and `23_LESSONS_SIX_LEVELS.md`; companion to `21_PLAN_M1_TRAFFIC_MODEL.md`._
 
-**The whole apprenticeship, told six times: every phase, every topic, every lesson and every book, from age five to a PhD at Apple.**
+**Everything needed for machine learning, told six times: twelve phases, thirty-nine lessons and one hundred books, from age five to a PhD at Apple.**
 
-Nine phases carry you from an empty terminal to designing the next traffic model. Each phase lists what you need to learn, teaches it through lessons and topic ladders written at six levels, explains every book, course and paper at the same six levels, and ends with things to build, a checkpoint that runs, and the usual pitfalls. Pick a level with the switcher and read the whole course at that height, or turn on every level and watch one idea gain precision rung by rung.
+The Fremont traffic model is the spine: you build it stage by stage and learn each idea the week it is needed. Around that spine the course covers the rest of the field, from SQL and regression to transformers, reinforcement learning, causal inference and fairness, so nothing needed for real machine-learning work is left out. Every lesson, topic and resource is explained at six levels. Pick a level with the switcher and read the whole course at that height, or turn on every level and watch one idea gain precision rung by rung. Tick things off as you go; progress is saved in this browser.
 
-The six levels, in order: Age 5, Middle school, High school, Stanford undergrad, Stanford grad, PhD at Apple. Every lesson, topic and resource below carries all six.
+The six levels, in order: Age 5, Middle school, High school, Stanford undergrad, Stanford grad, PhD at Apple. Every lesson, topic and resource below carries all six. Links were checked in September 2026.
 
 ## Contents
 
@@ -22,42 +22,64 @@ The six levels, in order: Age 5, Middle school, High school, Stanford undergrad,
   - Topic: Calculus: derivatives, the chain rule, gradients
   - Topic: Probability and statistics: distributions, medians, likelihood
   - Lesson 7: Logistic regression from scratch: the math the model runs on
-- Phase 3 · Data handling at scale (≈50 h)
+- Phase 3 · Data handling, files and SQL (≈60 h)
   - Lesson 3: Cleaning: from a giant text file to a tidy table
-- Phase 4 · Classical machine learning (≈70 h)
+  - Topic: SQL and databases: where data usually lives
+- Phase 4 · Classical machine learning, the core (≈70 h)
   - Lesson 4: Labels: what does 'slow' mean?
   - Lesson 5: Features: turning the past into columns
   - Lesson 6: Baselines and honest evaluation
   - Lesson 8: Gradient boosted trees
-- Phase 5 · Time series and forecasting (≈45 h)
+- Phase 5 · Classical machine learning, the rest (≈50 h)
+  - Topic: Regression: predicting a number, and the metrics that judge it
+  - Topic: Other classifiers and multiclass: k-nearest neighbors, naive Bayes, support vector machines, softmax
+  - Topic: Unsupervised learning: clustering, principal components and anomaly detection
+  - Topic: Hyperparameter tuning and model selection
+  - Topic: Information theory in machine learning: entropy, cross-entropy, KL divergence, mutual information
+- Phase 6 · Time series and forecasting (≈45 h)
   - Lesson 10: Jams move: sequences, neighbors and the road graph
   - Lesson 11: From scores to alerts: calibration, thresholds, lead time
-- Phase 6 · Neural networks (≈80 h)
+- Phase 7 · Neural networks (≈80 h)
   - Lesson 9: Neural networks and backpropagation, on the M1
-- Phase 7 · ML engineering (≈50 h)
+- Phase 8 · Deep learning across domains (≈100 h)
+  - Topic: Convolutional networks and computer vision
+  - Topic: Language: tokens, embeddings, attention and transformers
+  - Topic: Large language models: pretraining, fine-tuning, prompting, retrieval and evaluation
+  - Topic: Generative models: autoencoders, variational autoencoders, GANs and diffusion
+  - Topic: Transfer learning, self-supervision and foundation models
+- Phase 9 · ML engineering and scale (≈70 h)
   - Lesson 12: Shipping it on one Mac mini: memory, scheduling, monitoring
-- Phase 8 · Depth (open-ended)
+  - Topic: APIs, containers and the cloud: serving a model beyond one Mac
+  - Topic: Scaling: GPUs, distributed training and mixed precision
+- Phase 10 · Beyond supervised learning (≈70 h)
+  - Topic: Reinforcement learning: agents, rewards, bandits and policies
+  - Topic: Causal inference: from correlation to intervention
+  - Topic: Fairness, privacy and ethics: what a model owes people
+  - Topic: Recommender systems and ranking
+- Phase 11 · Depth (open-ended)
   - Topic: Uncertainty: quantiles, Bayesian thinking, conformal prediction
   - Topic: Theory: why learning works at all
   - Topic: Reading papers and reproducing benchmarks
+  - Topic: Bayesian machine learning and Gaussian processes
 
 ## Six rules
 
-- **The project is the syllabus.** Every topic is here because a stage needs it, and you learn it the week you build that stage. Nothing is studied 'just in case' until phase 8.
+- **The project is the syllabus.** Every topic in the first seven phases is here because a stage of the traffic model needs it, and you learn it the week you build that stage. The later phases cover the rest of machine learning with the same discipline: each topic ends in something that runs.
 - **Build it twice.** First with the library, so it works. Then the core from scratch in numpy, the way `03_train_from_scratch.py` does, so you know what the library hides. Then back to the library, faster.
 - **Evaluate before you model.** Baselines, metrics and leakage come before any algorithm past logistic regression. A number without a baseline next to it is not a result.
-- **Math just in time.** Linear algebra, calculus and probability in the amounts the stage needs, derived once by hand. Depth comes in phase 8, when you know what it is for.
+- **Math just in time.** Linear algebra, calculus and probability in the amounts the stage needs, derived once by hand. Depth comes in the final phase, when you know what it is for.
 - **Write it down.** A lab notebook every week, a README per stage, a write-up per phase. If you cannot explain it in plain words you do not have it yet.
 - **Checkpoints are things that run.** Each phase ends with code that produces a number or a file, not with a quiz.
 
 ### What really good looks like
 
-- **Framing.** Turn a fuzzy question ('will traffic be bad?') into a unit, a target, a horizon and a metric, and say what the answer cannot mean.
-- **Data.** Build the pipeline from raw files, know its failure modes (time zones, imputation, duplicates, gaps), and measure its memory and time.
-- **Models.** Know a dozen models well enough to say which wins on which data and why, and to implement the core of any of them from a paper.
+- **Framing.** Turn a fuzzy question into a unit, a target, a horizon and a metric, and say what the answer cannot mean.
+- **Data.** Build the pipeline from raw files or a database, know its failure modes, and measure its memory and time.
+- **Models.** Know the whole toolbox, from logistic regression to transformers and graph networks, well enough to say which wins on which data and why, and to implement the core of any of them from a paper.
 - **Evaluation.** Design a split that cannot leak, pick metrics the imbalance cannot fool, put a baseline next to every number, and calibrate what you ship.
-- **Engineering.** Ship one implementation used by training and serving, schedule it, monitor it, retrain it, and roll it back.
-- **Reading.** Read a new paper in an evening and say what it would change in stage 9 and what it would not fix.
+- **Engineering.** Ship one implementation used by training and serving, containerize it, schedule it, monitor it, retrain it, and roll it back.
+- **Acting.** Know what changes when a model's output is a decision: causal questions, feedback loops, fairness and privacy.
+- **Reading.** Read a new paper in an evening and say what it would change in your system and what it would not fix.
 - **Explaining.** Describe all of the above to a smart person outside the field without hiding behind jargon.
 
 ## Phase 0: Setup and habits
@@ -72,6 +94,7 @@ _weeks 0–1 · ≈8 h · builds stage 2 runs_
 - Git: clone, branch, commit, push, diff, `.gitignore`; what a repository and a README are.
 - Native arm64 Python on Apple silicon (miniforge or python.org), virtual environments, `pip`, VS Code, Jupyter.
 - The shape of this repo: the numbered scripts, `data/`, `models/`, `.env`, and why secrets never get committed.
+- What the traffic model predicts, so every later week has a destination.
 
 ### Topic: The terminal, git and a Python environment
 
@@ -290,9 +313,9 @@ The cost of a false alarm and of a miss are not equal and are not known when the
 
 ### Read and watch, explained at every level
 
-#### Software Carpentry: The Unix Shell, Version Control with Git
+#### [Software Carpentry: The Unix Shell, Version Control with Git](https://swcarpentry.github.io/shell-novice/)
 
-_free, half a day each, exactly the commands you will use_
+_course · free · free, half a day each, exactly the commands you will use_
 
 **Age 5.** Two short lessons on the internet that teach you to talk to the computer by typing, and to use the magic notebook that remembers your work. You follow along and type every command yourself, and the lesson tells you what should happen after each one.
 
@@ -306,9 +329,9 @@ _free, half a day each, exactly the commands you will use_
 
 **PhD at Apple.** Written and maintained by The Carpentries community, these are the lessons to hand to a new hire from a domain science before they touch the pipeline. For a research lead the value is twofold: a shared baseline of tooling across a team, and a template for writing your own onboarding lesson for this repository in the same style, with exercises that run against real PeMS files.
 
-#### Pro Git, chapters 1–3
+#### [Pro Git, chapters 1–3](https://git-scm.com/book/en/v2)
 
-_free online; enough Git for a year_
+_book · free · free online; enough Git for a year_
 
 **Age 5.** A book about a tool called git. Git is like a magic notebook that remembers every version of your drawing, so if you make a mess you can flip back to yesterday's page. The first three chapters teach you how to save a page, look back at old pages, and share the notebook with a friend.
 
@@ -324,7 +347,7 @@ _free online; enough Git for a year_
 
 #### The repo's own `00_CONCEPTS.md` and `05_PLAN_COMBINED_DATASETS.md`
 
-_read them once now, again in phase 4_
+_docs · free · read them once now, again in phase 4_
 
 **Age 5.** The project's own notes, written by the people who built it. They explain what the helper is for and how the pieces fit together, like the instruction sheet that comes in a toy box.
 
@@ -357,7 +380,7 @@ _read them once now, again in phase 4_
 
 _weeks 1–5 · ≈40 h · builds stage 2, rebuilt_
 
-**Goal.** Read and write the collector scripts fluently.
+**Goal.** Read and write the collector scripts fluently, test them, and never be confused by a clock.
 
 ### What you need to learn
 
@@ -365,6 +388,7 @@ _weeks 1–5 · ≈40 h · builds stage 2, rebuilt_
 - Modules and imports, files, CSV and JSON, exceptions, `requests`, `argparse`, f-strings, comprehensions.
 - Dates and time zones with `datetime` and `zoneinfo`; what UTC is and why the log stores it.
 - The debugger, print-debugging with intent, and `pytest` for small functions.
+- What a PeMS row and a 511 event actually measure.
 
 ### Topic: Python: from variables to functions to files
 
@@ -661,9 +685,9 @@ It samples the feed every 15 minutes; an event that is created and cleared betwe
 
 ### Read and watch, explained at every level
 
-#### Automate the Boring Stuff with Python, chapters 1–13 and 16–18
+#### [Automate the Boring Stuff with Python, chapters 1–13 and 16–18](https://automatetheboringstuff.com/)
 
-_free online; practical from page one_
+_book · free · free online; practical from page one_
 
 **Age 5.** A friendly book that teaches Python by making the computer do chores for you, like renaming lots of files at once or reading a spreadsheet. It is free to read on the internet, and every chapter ends with something useful you made.
 
@@ -677,9 +701,9 @@ _free online; practical from page one_
 
 **PhD at Apple.** The book's persistence as the default beginner text, across editions and free online, reflects a fact about ML teams: the bottleneck is often basic scripting fluency among the people who understand the domain. Building that capability across a team is a higher-leverage act than most modelling work, and this book is the cheapest tool for it.
 
-#### The official Python tutorial, sections 3–9
+#### [The official Python tutorial, sections 3–9](https://docs.python.org/3/tutorial/)
 
-_free; the reference once Sweigart runs out_
+_docs · free · free; the reference once Sweigart runs out_
 
 **Age 5.** The instruction book written by the people who make Python. It is for looking things up when the friendly book did not say.
 
@@ -693,9 +717,9 @@ _free; the reference once Sweigart runs out_
 
 **PhD at Apple.** For a team the tutorial's value is as the shared baseline that code-review standards can point to. Beyond it, the investment that turns research code into production code is static typing (mypy or pyright on every module), packaging, and a linter configuration checked into the repository so style is never a review comment.
 
-#### Kaggle Learn: Python
+#### [Kaggle Learn: Python](https://www.kaggle.com/learn/python)
 
-_free, short, with exercises in the browser_
+_course · free · free, short, with exercises in the browser_
 
 **Age 5.** A website where you learn Python in small steps and it checks your answers right away, like a game with levels.
 
@@ -709,9 +733,25 @@ _free, short, with exercises in the browser_
 
 **PhD at Apple.** Kaggle as a platform matters more than this course. It is where tabular machine-learning practice evolved: gradient-boosted ensembles, feature engineering, leakage detection, and careful validation. Reading winning solutions' write-ups for time-series competitions is a research-adjacent habit that this course is the first step toward.
 
-#### The `zoneinfo` and `datetime` documentation
+#### [Exercism, Python track](https://exercism.org/tracks/python)
 
-_free; read the section on aware versus naive datetimes twice_
+_interactive · free · free practice with tests and human mentors_
+
+**Age 5.** A website with little puzzles to solve in Python. Each one is a small job, like counting words, and when you finish, a real person can look at your answer and give you tips.
+
+**Middle school.** Exercism is free and has more than a hundred Python exercises that grow from very easy to medium. You solve them on your own computer, run the tests they give you, and submit. Volunteers mentor you if you ask. Do two or three a week during phase 1; they turn reading about Python into writing it.
+
+**High school.** Each exercise comes with a test file, so you practice the exact loop the project uses: read a description, write a function, run `pytest`, fix, repeat. The track's concept exercises teach one idea at a time (loops, dicts, string methods, classes). Aim for the exercises on parsing and on dates, which rhyme with the collector script.
+
+**Stanford undergrad.** The value is deliberate practice with feedback: small problems with tests and human review are how skill compounds. Use it to practice idioms you meet in the pipeline code (comprehensions, generators, `dataclasses`), and read other people's published solutions afterward to see cleaner versions of yours.
+
+**Stanford grad.** Compared with competitive-programming sites, Exercism's emphasis is on readable, idiomatic code, which is the skill a research codebase needs. Its mentor feedback is uneven but often excellent; the community solutions are a corpus of Python style worth studying.
+
+**PhD at Apple.** For a team, a shared practice track is a low-cost way to align coding style among people from different backgrounds; the exercises are also a fair, low-stakes pair-programming warm-up for onboarding an intern.
+
+#### [The `zoneinfo` and `datetime` documentation](https://docs.python.org/3/library/zoneinfo.html)
+
+_docs · free · free; read the section on aware versus naive datetimes twice_
 
 **Age 5.** The instructions for the part of Python that knows about clocks, dates and the different times in different places.
 
@@ -728,7 +768,7 @@ _free; read the section on aware versus naive datetimes twice_
 ### Build
 
 - Read `02_collect_events.py` top to bottom and write one comment above each function saying what it does and why.
-- Rewrite `event_touches_fremont()` from its description without looking, then test it with pytest on five hand-made events (one on I-880 with no coordinates, one inside the box on an unnamed road, one outside both).
+- Rewrite `event_touches_fremont()` from its description without looking, then test it with pytest on five hand-made events.
 - Write a script that prints events per road per day from the CSV, using only the standard library.
 - Make the stage 2 change from the plan: record `first_seen_at` and `last_seen_at` per event id, and write each poll's raw JSON to `data/events_raw/`.
 
@@ -750,10 +790,10 @@ _weeks 3–11, alongside phases 1 and 3 · ≈60 h · builds stage 3 from a blan
 
 ### What you need to learn
 
-- Linear algebra: vectors, dot product, matrix times vector, matrix times matrix, transpose, norms; what `x @ weights + bias` computes for a whole batch; a linear model as a hyperplane.
-- Calculus: the derivative as a slope, the chain rule, partial derivatives and the gradient; why stepping against the gradient lowers the loss; derivatives of the sigmoid and the log.
-- Probability: random variables, Bernoulli and normal distributions, expectation, variance, conditional probability and Bayes, independence; the logistic function as a probability.
-- Statistics: mean, median and percentiles (the label uses a median; free flow is an 85th percentile), sampling, the law of large numbers, confidence intervals, what a p-value is and is not, correlation versus causation.
+- Linear algebra: vectors, dot product, matrix times vector, matrix times matrix, transpose, norms; what `x @ weights + bias` computes for a whole batch.
+- Calculus: the derivative as a slope, the chain rule, partial derivatives and the gradient; derivatives of the sigmoid and the log.
+- Probability: random variables, Bernoulli and normal distributions, expectation, variance, conditional probability and Bayes; the logistic function as a probability.
+- Statistics: mean, median and percentiles, sampling, the law of large numbers, confidence intervals, what a p-value is and is not, correlation versus causation.
 - Putting it together: binary cross-entropy from maximum likelihood, and its gradient for logistic regression, then the same lines in the code.
 
 ### Topic: Linear algebra: vectors, dot products, matrices
@@ -1109,9 +1149,9 @@ A sign error or a missing division by n produces a loop that still decreases the
 
 ### Read and watch, explained at every level
 
-#### Khan Academy: Linear algebra, Differential calculus, Statistics and probability
+#### [Khan Academy: Linear algebra, Differential calculus, Statistics and probability](https://www.khanacademy.org/math)
 
-_free; do the exercises, skip nothing marked 'gradient'_
+_course · free · free; do the exercises, skip nothing marked 'gradient'_
 
 **Age 5.** Video lessons and practice questions that teach math one small step at a time, with a friendly voice, and you earn points for practicing.
 
@@ -1125,9 +1165,9 @@ _free; do the exercises, skip nothing marked 'gradient'_
 
 **PhD at Apple.** For a research group, mastery-style practice is an underrated onboarding tool for people arriving from adjacent fields. Its per-skill diagnostics let you prescribe precisely (three units, one evening) instead of sending someone away for a semester.
 
-#### 3Blue1Brown: Essence of linear algebra, Essence of calculus
+#### [3Blue1Brown: Essence of linear algebra, Essence of calculus](https://www.3blue1brown.com/topics/linear-algebra)
 
-_free; the intuition the exercises lack_
+_video · free · free; the intuition the exercises lack_
 
 **Age 5.** Videos with beautiful moving pictures that show what math looks like, so arrows and slopes become things you can see instead of just numbers.
 
@@ -1141,9 +1181,57 @@ _free; the intuition the exercises lack_
 
 **PhD at Apple.** The channel is evidence that rigorous intuition scales to millions of viewers. For someone who will teach and present, the animation library he built (manim) is also a practical tool for figures in talks, and his explanations of attention are a good benchmark for how clearly a research idea can be communicated.
 
-#### Mathematics for Machine Learning (Deisenroth, Faisal, Ong), chapters 2–7
+#### [Immersive Linear Algebra (Ström, Åström, Akenine-Möller)](https://immersivemath.com/ila/)
 
-_free PDF; reference, not a read-through_
+_interactive · free · free, interactive; touch what the videos show_
+
+**Age 5.** An online book where the pictures move. You drag arrows around and the math updates, so you can feel what adding arrows and stretching space means.
+
+**Middle school.** A free web book with interactive figures in every chapter: vectors, dot products, matrices, determinants, and what a matrix does to a picture. Play with each figure until the text makes sense. It pairs well with the 3Blue1Brown videos; the videos show you, this lets you touch.
+
+**High school.** Work through chapters 2 to 6 (vectors, dot product, vector product, matrices, determinants) alongside Khan Academy exercises. The interactive matrix figures make the row-times-column rule and the idea of a transformation concrete, which is what you need to read `X @ w` and the neighbor-mixing matrices without hesitation.
+
+**Stanford undergrad.** The interactive treatment of change of basis and of the determinant as a volume factor supports the geometric view of eigenvectors and of the singular value decomposition. Use it as the intuition layer under Mathematics for Machine Learning's chapter 2 to 4.
+
+**Stanford grad.** It stops before numerical linear algebra and before spectral graph theory; its value is the mental imagery. For the graph operators in lesson 10 you will need the algebraic view as well, but a picture of what a matrix does to a set of points is what you will actually use when a shape bug appears.
+
+**PhD at Apple.** A good example of what interactive explanation can do for a technical topic; if you write explanatory material for a team, this and Distill are the reference points for the medium.
+
+#### [Seeing Theory (Brown University)](https://seeing-theory.brown.edu/)
+
+_interactive · free · free, interactive; probability you can see_
+
+**Age 5.** A website that shows chance with little animations: you flip coins, roll dice and watch the results pile up into shapes.
+
+**Middle school.** Free, in the browser, with six chapters: basic probability, compound probability, distributions, frequentist inference, Bayesian inference and regression. Each idea has an animation you control. Spend an evening on it before Think Stats and the distribution shapes will already be familiar.
+
+**High school.** Its chapters on the central limit theorem, confidence intervals and Bayesian inference give the pictures behind lesson 6's bootstrap and lesson 11's calibration. The regression chapter animates least squares, which is the ancestor of every loss you will minimize.
+
+**Stanford undergrad.** Use it as a visual glossary while reading Blitzstein or Mathematics for Machine Learning chapter 6: when a definition is opaque, find its animation. It does not replace derivations, but it shortens the time between reading a definition and believing it.
+
+**Stanford grad.** Its coverage is introductory by design; its role for you is teaching, not learning. When explaining calibration or intervals to a non-specialist, its animations are the fastest bridge.
+
+**PhD at Apple.** Another instance of explanation as interactive design; worth knowing when you brief a product team on what a confidence interval is not.
+
+#### [Introduction to Probability (Blitzstein, Hwang) and Stat 110](https://probabilitybook.net/)
+
+_book · free · free book and lectures; the rigorous first course_
+
+**Age 5.** A book and a set of video classes about chance, taught by a professor who explains coin flips and dice with stories and jokes.
+
+**Middle school.** Joe Blitzstein's Harvard course Stat 110 is free on YouTube, and the book with Jessica Hwang is free as a PDF. It covers probability from counting through random variables, expectation, conditional probability and the famous distributions, with lots of worked problems. It goes slower and deeper than Khan Academy.
+
+**High school.** The chapters on conditional probability and Bayes' rule, on expectation and variance, and on the normal and Bernoulli distributions are the ones the project uses. The book's habit of checking answers by simulation in R (translate to Python) is exactly the computational stance of Think Stats. The strategic practice problems are excellent.
+
+**Stanford undergrad.** This is the standard first rigorous probability course: it is careful about what a random variable is, why conditioning is the heart of probability, and how the named distributions relate (the 'distribution family tree'). Its treatment of the law of large numbers and the central limit theorem makes the bootstrap and confidence intervals of lesson 6 intelligible.
+
+**Stanford grad.** Blitzstein's stories (the 'fundamental bridge' between probability and expectation, symmetry arguments, indicator random variables) are problem-solving tools that reappear in analysis of algorithms and in variance calculations for estimators. The later chapters on Markov chains are the background for lesson 10's state-space view and for reinforcement learning.
+
+**PhD at Apple.** Stat 110 is a model of pedagogy for a technical subject; its problem sets are the reference bank for probability interviews and qualifying exams alike. For research that leans on concentration inequalities and dependence, this is the base layer beneath the measure-theoretic course you take later.
+
+#### [Mathematics for Machine Learning (Deisenroth, Faisal, Ong), chapters 2–7](https://mml-book.github.io/)
+
+_book · free · free PDF; reference, not a read-through_
 
 **Age 5.** A big free book about the math inside learning machines. It is for looking things up, not for reading from the first page to the last.
 
@@ -1157,9 +1245,9 @@ _free PDF; reference, not a read-through_
 
 **PhD at Apple.** As a reference for writing, it fixes consistent notation for gradients, Jacobians and distributions that reviewers recognize. Its free availability makes it the safe citation for prerequisites in a paper or an internal design document, and its chapter on optimization is a compact refresher before reading anything on second-order methods.
 
-#### Think Stats (Downey)
+#### [Think Stats (Downey)](https://allendowney.github.io/ThinkStats/)
 
-_free; statistics with Python from the first page_
+_book · free · free; statistics with Python from the first page_
 
 **Age 5.** A free book that teaches statistics by playing with real numbers in Python, instead of only formulas.
 
@@ -1178,7 +1266,6 @@ _free; statistics with Python from the first page_
 - Derive the logistic regression gradient on paper, then check it numerically with finite differences against the repo's update.
 - Write the training loop from a blank file and match the repo's weights to four decimals.
 - Compute the median and the 85th percentile of a real speed column with numpy, by hand and with the library, and write a notebook page titled 'why the median' for stage 6.
-- Plot the sigmoid and the log loss; explain in one paragraph why the loss is not squared error.
 
 ### Done when
 
@@ -1190,20 +1277,20 @@ _free; statistics with Python from the first page_
 - Trying to finish all of math first. This phase runs alongside phases 1 and 3 on purpose.
 - Memorizing formulas you have not derived once.
 
-## Phase 3: Data handling at scale
+## Phase 3: Data handling, files and SQL
 
-_weeks 8–14 · ≈50 h · builds stage 5 for real_
+_weeks 8–15 · ≈60 h · builds stage 5 for real_
 
-**Goal.** Build stage 5, the cleaning stage, on a real PeMS file, inside 2 GB.
+**Goal.** Build stage 5, the cleaning stage, on a real PeMS file inside 2 GB, and be as fluent in SQL as in pandas.
 
 ### What you need to learn
 
 - numpy: arrays, dtypes, broadcasting, memory layout; why float32 halves everything.
 - pandas: Series and DataFrame, indexing, `groupby`, `merge`, time indexes, `shift`, `rolling`, `resample`, categoricals, `read_csv` with `chunksize`, Parquet through pyarrow.
-- Time zones and daylight saving in practice: `tz_localize`, ambiguous and nonexistent times.
-- Data quality: missingness, bounds, duplicates, gaps, and PeMS's `% Observed` column.
-- Plotting with matplotlib: line, histogram, scatter; reading a plot before trusting a number.
-- Measuring memory and time; polars as a second, faster tool for the same job.
+- Time zones and daylight saving in practice; data quality: missingness, bounds, duplicates, gaps, PeMS's `% Observed`.
+- SQL: `SELECT`, `WHERE`, `GROUP BY`, `JOIN`, window functions; DuckDB over Parquet; when a database beats files.
+- Plotting with matplotlib; reading a plot before trusting a number. Measuring memory and time; polars as a second tool.
+- The domain data sources: PeMS, 511, Open-Meteo, and what each actually measures.
 
 ### Lesson 3: Cleaning: from a giant text file to a tidy table
 
@@ -1354,11 +1441,83 @@ Half of those rows belong to the first 1 am and half to the second; the file doe
 - 'Filling gaps is harmless.' Every fill is a model; a fill that looks ahead leaks the future into features.
 - 'Cleaning is a one-off.' It is the stage that runs on every new day forever, and the one whose silent errors are costliest.
 
+### Topic: SQL and databases: where data usually lives
+
+**Goal.** Ask questions of a database in SQL, know when a database beats files, and never be stuck because the data is not a CSV.
+
+**Age 5.**
+
+Most numbers in the world live in databases, which are like giant well-organized filing cabinets.
+
+SQL is the way you ask the cabinet questions: 'show me every crash on I-880 in March, biggest first.' The cabinet answers with a table.
+
+_Try this._ Think of a question you could ask about the incident list, like 'which road had the most crashes?' Say it as a sentence starting with 'show me'.
+
+**Middle school.**
+
+A database stores tables (rows and columns) and lets many programs read and write them safely. SQL is the language for questions: `SELECT` picks columns, `WHERE` filters rows, `GROUP BY` counts or averages per group, `ORDER BY` sorts, and `JOIN` combines two tables that share a key, like events and stations.
+
+SQLite is a database in a single file with no server; DuckDB is one built for analysis and can query Parquet files directly. Both come free with Python.
+
+_Try this._ Load `fremont_events_log.csv` into DuckDB and run: `SELECT road_names, COUNT(*) AS n FROM events GROUP BY road_names ORDER BY n DESC LIMIT 5`.
+
+**High school.**
+
+The core of SQL in one afternoon: `SELECT`, `WHERE`, `GROUP BY` with aggregates, `HAVING`, `ORDER BY`, `LIMIT`, inner and left `JOIN`, subqueries, and `CASE`. Window functions (`LAG`, `AVG() OVER`) compute lags and rolling means inside the database, which is stage 8 in another language.
+
+Schemas and keys: a primary key identifies a row, a foreign key links tables, an index makes lookups fast. Types matter: store timestamps as timestamps, not text.
+
+When to use what: files (Parquet) for a pipeline that rebuilds from raw; a database when several programs share live data, need transactions, or need fast lookups by key.
+
+_Try this._ Rebuild the lag-3 speed feature with a window function in DuckDB over one month of Parquet and check it equals the pandas version row for row.
+
+**Stanford undergrad.**
+
+The relational model: relations, keys, normalization (and when to denormalize for analytics), the difference between OLTP (many small transactions) and OLAP (large scans and aggregates), and why columnar engines such as DuckDB dominate the second.
+
+Query execution: how a planner turns SQL into scans, joins and aggregates, why indexes help lookups but not scans, and how to read an `EXPLAIN` plan. Transactions and ACID guarantees; concurrency and isolation levels in one paragraph.
+
+From Python: `duckdb.sql()` over DataFrames and Parquet, `sqlite3` in the standard library, SQLAlchemy for a server database. A feature pipeline can be written entirely in SQL over Parquet, which is often faster and easier to audit than pandas.
+
+_Try this._ Write the profile computation (median speed per station, slot and day type on training rows) as one SQL query in DuckDB and compare its runtime and memory with the pandas version.
+
+**Stanford grad.**
+
+Data modelling for ML: point-in-time correctness expressed as `AS OF` joins, slowly changing dimensions for station metadata that changes when detectors are replaced, and event tables versus state tables. Lakehouse formats (Parquet with a table layer) as the current default for analytical data.
+
+Query optimization matters at scale: predicate pushdown, partition pruning, join ordering. The same pipeline can run on DuckDB on one machine and on a distributed engine (Spark, BigQuery) with mostly the same SQL, which is the argument for writing transformations in SQL.
+
+_Try this._ Design a schema for the pipeline's data (raw, cleaned, features, predictions, monitoring) with keys and partitioning, and write the `AS OF` join that attaches the latest station metadata valid at each timestamp.
+
+**PhD at Apple.**
+
+At scale, data platforms are the substrate of ML: streaming ingestion, table formats with time travel, feature stores backed by both an offline warehouse and an online key-value store, and governance (lineage, access control, retention). The hard problems are consistency between offline and online views and reproducibility of training sets from a warehouse that changes.
+
+Research and engineering overlap in query engines for ML (vectorized execution, GPU databases) and in declarative feature definitions compiled to both batch and streaming.
+
+_Try this._ Specify how the training table for one model version could be reconstructed bit for bit from the warehouse a year later, and what the warehouse must guarantee for that to be possible.
+
+**Check yourself.**
+
+<details>
+<summary>When does a database beat Parquet files?</summary>
+
+When several programs share live data, when you need transactions, or when you need fast lookups by key. A rebuild-from-raw pipeline is happier with files.
+
+</details>
+
+<details>
+<summary>What does a window function give you that GROUP BY does not?</summary>
+
+A value per row computed over neighboring rows, such as the previous value or a rolling average, without collapsing the rows.
+
+</details>
+
 ### Read and watch, explained at every level
 
-#### Python for Data Analysis, 3rd edition (McKinney), chapters 4–8 and 10–11
+#### [Python for Data Analysis, 3rd edition (McKinney), chapters 4–8 and 10–11](https://wesmckinney.com/book/)
 
-_free online; the pandas book by pandas's author_
+_book · free · free online; the pandas book by pandas's author_
 
 **Age 5.** A book by the person who invented pandas, the tool that turns big tables of numbers into things you can sort, count and draw.
 
@@ -1372,9 +1531,9 @@ _free online; the pandas book by pandas's author_
 
 **PhD at Apple.** pandas' design decisions (label alignment, mutable frames, Python-level groupby) explain its performance ceiling and why Arrow-native tools win the cleaning stage while pandas keeps the analysis stage. McKinney's later work on Apache Arrow is the continuation of the story, and understanding both is what lets you choose a tool per stage rather than per habit.
 
-#### pandas user guide: Time series and date functionality
+#### [pandas user guide: Time series and date functionality](https://pandas.pydata.org/docs/user_guide/timeseries.html)
 
-_free; the `shift` and `rolling` semantics live here_
+_docs · free · free; the `shift` and `rolling` semantics live here_
 
 **Age 5.** The manual page for the part of pandas that understands dates, times and clocks.
 
@@ -1388,9 +1547,9 @@ _free; the `shift` and `rolling` semantics live here_
 
 **PhD at Apple.** The precise semantics of window operations are what point-in-time correctness rests on. For an engineering organization the right move is to encode them once in a feature library with tests rather than rereading the guide per project, and to treat any window parameter as part of the model's versioned configuration.
 
-#### Kaggle Learn: Pandas, Data Cleaning, Data Visualization
+#### [Kaggle Learn: Pandas, Data Cleaning, Data Visualization](https://www.kaggle.com/learn/pandas)
 
-_free, short_
+_course · free · free, short_
 
 **Age 5.** Three short online lessons about sorting tables, tidying up messy numbers, and drawing charts from them.
 
@@ -1404,9 +1563,9 @@ _free, short_
 
 **PhD at Apple.** Visualization is a research instrument, not decoration. A reliability diagram or a lead-time distribution communicates what a table of metrics hides, and the habit these courses seed, plotting before concluding, is worth more than their content. Wilke's book and Tufte remain the references for the design side.
 
-#### The polars user guide, first three chapters
+#### [The polars user guide, first three chapters](https://docs.pola.rs/)
 
-_free; do stage 5 once in each_
+_docs · free · free; do stage 5 once in each_
 
 **Age 5.** The manual for a newer, faster tool that does the same job as pandas: turning big tables into answers.
 
@@ -1420,19 +1579,98 @@ _free; do stage 5 once in each_
 
 **PhD at Apple.** The performance gap is architectural (columnar memory, SIMD, multithreading, query optimization) rather than incidental, and on unified-memory hardware both libraries end up limited by memory bandwidth. Benchmark on the real file before choosing, and note that the decision is per stage: the cleaning stage is a query, the modelling stage is not.
 
+#### [SQLBolt, interactive SQL lessons](https://sqlbolt.com/)
+
+_interactive · free · free; SQL fluency in a weekend_
+
+**Age 5.** A website where you type questions to a pretend filing cabinet and it answers right away, with hints when you get stuck.
+
+**Middle school.** Free, in the browser, about twenty short lessons: selecting rows, filtering, sorting, joining two tables, counting and averaging, and changing data. Each lesson has a few exercises against a tiny database. Two evenings and you can read most SQL.
+
+**High school.** Work through lessons 1 to 12 (queries, filters, joins, aggregates) and 13 to 18 (inserting, updating, creating tables). Then repeat the aggregate lessons in DuckDB on the incident log, where the questions are real: incidents per road per hour, longest-lasting events, roads with the most unknown-severity events.
+
+**Stanford undergrad.** It teaches syntax, not the relational model; pair it with a page on normalization and keys, and with `EXPLAIN` in DuckDB to see what a query does. Its exercises are single-table or two-table; practice multi-join and window-function queries on the project's data afterward.
+
+**Stanford grad.** Sufficient for reading analytics SQL; insufficient for schema design, transactions and performance, which come from a database textbook or the documentation of the engine you use. Its value is speed: fluency in a weekend.
+
+**PhD at Apple.** For a team, a shared minimum of SQL fluency is what makes feature definitions reviewable by analysts and engineers alike; an interactive tutorial is the cheapest way to reach it.
+
+#### [DuckDB documentation, the Python API and SQL reference](https://duckdb.org/docs/)
+
+_docs · free · free; SQL over the project's Parquet files_
+
+**Age 5.** The manual for a small, fast database that lives inside your program and can read the project's files directly.
+
+**Middle school.** DuckDB is a free analytical database that runs inside Python with no server. Its documentation shows how to query CSV and Parquet files with SQL in one line, how to hand results to pandas, and the full list of SQL functions including window functions for lags and rolling averages.
+
+**High school.** Read the Python API page (`duckdb.sql`, `read_parquet`, `to_df`), the window-functions page, and the page on the `ASOF` join, which attaches the latest weather or metadata valid at each timestamp. Then rewrite one feature (lag-3 speed) as a window function and check it against pandas.
+
+**Stanford undergrad.** DuckDB is a vectorized, columnar, single-node engine with a query optimizer; its documentation on the execution model and on out-of-core processing explains why it handles a district-day file in seconds within a few hundred megabytes. Its Parquet reader does predicate pushdown and partition pruning, which is what stage 5 needs.
+
+**Stanford grad.** The engine is the local counterpart of cloud warehouses; SQL written for it moves to them with small changes. Its extensions (spatial, JSON, httpfs) let the whole pipeline be expressed as SQL over files, which is easier to audit and version than pandas code.
+
+**PhD at Apple.** Embedded analytical engines changed what one machine can do; their documentation is also a compact account of modern query execution. For a lead, DuckDB is the argument that the cleaning and feature stages should be declarative.
+
+#### [PeMS documentation and the Clearinghouse (Caltrans)](https://pems.dot.ca.gov/)
+
+_docs · free, login · the source of the sensor data; read before parsing_
+
+**Age 5.** The website where the road sensor numbers come from, with pages that explain what each column of numbers means.
+
+**Middle school.** PeMS is Caltrans's system that collects data from the freeway sensors. After you log in, the Clearinghouse page lets you download one file per day for a district, and the help pages explain the columns: timestamp, station, flow, occupancy, speed, and how many of the samples were real. Read the help page for the 5-minute station data before touching a file.
+
+**High school.** The documentation describes the `station_5min` layout (no header row; timestamp, station id, district, freeway, direction, lane type, station length, samples, percent observed, total flow, average occupancy, average speed, then per-lane columns) and the meta file that gives each station's location and postmile. It also explains that PeMS imputes missing data and how the percent-observed column reports it. Confirm every claim against a real file; the documentation has drifted from the files before.
+
+**Stanford undergrad.** Understand the data provenance: loop detectors report raw 30-second counts and occupancy, the district servers aggregate to 5 minutes, speed is often estimated for single-loop stations, and the imputation algorithm fills gaps from neighbors and history. That chain determines the error model in lesson 2 and the cleaning rules in lesson 3.
+
+**Stanford grad.** PeMS's imputation and its detector-health diagnostics are documented in Caltrans reports and in the traffic-engineering literature (Chen, Kwon, Rice, Skabardonis and Varaiya's work at Berkeley). Reading those explains what percent observed means statistically and why imputed rows correlate with neighbors.
+
+**PhD at Apple.** PeMS is also the source of the public benchmark datasets (PEMS-BAY, PeMSD4, PeMSD8) used across the spatio-temporal literature, which makes it a rare case where your production data and the research benchmarks share a lineage. The rate limits and login are the practical constraint; a data-sharing agreement or a bulk export is what a real deployment would negotiate.
+
+#### [Open-Meteo, historical weather API documentation](https://open-meteo.com/en/docs/historical-weather-api)
+
+_docs · free · free, no key; the rain feature_
+
+**Age 5.** A free website that tells you what the weather was, hour by hour, for any place, so we can know whether it rained when the road got slow.
+
+**Middle school.** Open-Meteo is a free weather API with no sign-up. Its historical endpoint returns hourly values (rain, temperature, wind, visibility) for a latitude and longitude going back decades, and its forecast endpoint returns the next days. The documentation page builds the request URL for you as you tick boxes.
+
+**High school.** For stage 8, request hourly precipitation for Fremont's coordinates over the training period and join it on the UTC hour. For the live loop, use the forecast endpoint, because at prediction time only a forecast exists. The docs list every variable and its units; note that historical data come from reanalysis models, not from a rain gauge in Fremont.
+
+**Stanford undergrad.** Understand the difference between reanalysis (a model's reconstruction of past weather from observations) and forecasts, and why training on reanalysis while serving on forecasts is a mild train-serve skew that you should measure (compare forecast and reanalysis precipitation on the same hours).
+
+**Stanford grad.** The point-in-time question from lesson 5 applies: the correct training feature is the forecast that would have been available at t, which Open-Meteo also archives (previous-runs endpoints). Whether the extra fidelity matters for a binary rain feature is an experiment worth an afternoon.
+
+**PhD at Apple.** Weather is the cheapest exogenous signal with a real effect on traffic. In a production system the questions become licensing, latency, and fallbacks when the provider is down; Open-Meteo's open model is a useful default and its terms are worth reading before shipping.
+
+#### [511 SF Bay Open Data, traffic API documentation](https://511.org/open-data)
+
+_docs · free, token · free with a token; the incident feed's fields and limits_
+
+**Age 5.** The rules for asking the 511 helper about crashes and roadwork, so our program can ask politely and understand the answer.
+
+**Middle school.** 511.org publishes traffic events (incidents, roadwork, closures) through an API that follows a standard called Open511. You register for a free key, then request events as JSON. The documentation lists the fields (id, type, severity, roads, geography, created, updated) and the limits on how often you may ask.
+
+**High school.** Read the events endpoint documentation next to `02_collect_events.py`: which query parameters exist (`status`, bounding box), what each field means, and the request quota. Note which fields are optional; missing geography and unknown severity are normal, which is why lesson 7's join handles them.
+
+**Stanford undergrad.** Open511 is an open specification for road events; reading the spec explains the field semantics that the 511 docs assume, including how `created` and `updated` relate to an event's life and how multiple roads are represented. The quota defines the sampling interval of your incident stream and therefore its censoring.
+
+**Stanford grad.** Event feeds are the interface between human reporting (CHP dispatch) and your model; their delay and severity encoding are measurement properties you should estimate rather than assume. Compare the feed with CHP's own incident page for a day to see what the API drops.
+
+**PhD at Apple.** Public-sector data APIs are governed by terms and by quotas that shape what a product can promise; at scale, direct feeds from agencies or probe-based incident detection replace polling. The Open511 standard is also a small lesson in how interoperability specifications succeed or fail.
+
 ### Build
 
-- Run stage 4 for a few days of files. Open one, confirm the column layout against the documented one, and write it into the stage 5 README.
-- Write `10_clean_pems.py`: chunked reading, the Fremont station filter from the meta file, DST-safe UTC conversion, bounds, `% Observed`, forward fill of at most three steps, the full 5-minute grid, float32, monthly Parquet.
+- Run stage 4 for a few days of files. Open one, confirm the column layout, and write it into the stage 5 README.
+- Write `10_clean_pems.py`: chunked reading, the Fremont filter, DST-safe UTC conversion, bounds, `% Observed`, forward fill, the full grid, float32, monthly Parquet.
 - Build the station registry with upstream and downstream neighbors from postmiles.
-- Plot one station for a day and a week; you should see two rush hours on weekdays and none on Sunday.
-- Write `tests/test_clean_pems.py` on a 100-row fixture, including the November repeated hour.
-- Log memory and seconds per file; redo it in polars and compare.
+- Rewrite the profile computation and one lag feature as DuckDB SQL and check them against pandas.
+- Plot one station for a day and a week; write `tests/test_clean_pems.py` on a 100-row fixture including the November repeated hour.
 
 ### Done when
 
 - One month of Fremont Parquet exists with the plan's schema and the plot shows rush hours.
-- The DST test passes and the script stays under 2 GB.
+- The DST test passes, the script stays under 2 GB, and the SQL version agrees row for row.
 
 ### Pitfalls
 
@@ -1440,21 +1678,20 @@ _free; do stage 5 once in each_
 - `object` dtypes and naive timestamps.
 - Forward-filling across a station boundary, which invents data.
 
-## Phase 4: Classical machine learning
+## Phase 4: Classical machine learning, the core
 
-_weeks 13–21 · ≈70 h · builds stages 6, 7, 9, 10_
+_weeks 14–22 · ≈70 h · builds stages 6, 7, 9, 10_
 
 **Goal.** Labels, the incident join, baselines, logistic regression, gradient boosted trees, calibration, and honest row-level evaluation.
 
 ### What you need to learn
 
-- The supervised setup: features, target, train, validation, test, and why three.
-- Overfitting, bias and variance, regularization, early stopping.
+- The supervised setup: features, target, train, validation, test, and why three. Overfitting, bias and variance, regularization, early stopping.
 - Metrics: confusion matrix, precision, recall, F1, the precision-recall curve and average precision, ROC-AUC, log loss, Brier score, reliability diagrams; why accuracy lies under imbalance.
 - Leakage in its three forms: target, temporal, group. Class weighting.
-- Linear and logistic regression with scikit-learn; decision trees; random forests; gradient boosting, and what `num_leaves`, `learning_rate` and `min_data_in_leaf` do in LightGBM; categorical handling.
+- Linear and logistic regression with scikit-learn; decision trees; random forests; gradient boosting and what `num_leaves`, `learning_rate` and `min_data_in_leaf` do; categorical handling.
 - Feature engineering as hypothesis-making; feature importance and SHAP values.
-- Isotonic and Platt calibration; choosing a threshold from a curve; hyperparameter search with a budget.
+- Isotonic and Platt calibration; choosing a threshold from a curve.
 
 ### Lesson 4: Labels: what does 'slow' mean?
 
@@ -2035,9 +2272,9 @@ Training loss keeps falling as trees are added; validation AP peaks and then dec
 
 ### Read and watch, explained at every level
 
-#### Machine Learning Specialization (Andrew Ng), courses 1 and 2
+#### [Machine Learning Specialization (Andrew Ng), courses 1 and 2](https://www.coursera.org/specializations/machine-learning-introduction)
 
-_the classic; audit for free_
+_course · free to audit · the classic; audit for free_
 
 **Age 5.** Video classes by a famous teacher who explains how computers learn, slowly and kindly, with drawings on a screen.
 
@@ -2051,9 +2288,9 @@ _the classic; audit for free_
 
 **PhD at Apple.** Ng's courses shaped how a generation frames ML projects around iterative diagnosis, and his later data-centric argument, that data quality dominates model choice on most real problems, is the thesis of this entire pipeline. For a lead, the course is also the common vocabulary a mixed team can be assumed to share.
 
-#### An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8
+#### [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/)
 
-_free PDF; the clearest account of trees and boosting_
+_book · free · free PDF; the clearest account of trees and boosting_
 
 **Age 5.** A famous textbook, free, that explains learning machines with pictures and real examples, written by teachers who invented some of the methods.
 
@@ -2067,9 +2304,9 @@ _free PDF; the clearest account of trees and boosting_
 
 **PhD at Apple.** As a citation for standard methods and as a teaching text it is the reference, and its evolution from R to Python editions tracks the field's tooling. For research, its framing of methods as estimators with bias and variance you can reason about is the habit that distinguishes a careful ML engineer from a library user.
 
-#### Hands-On Machine Learning (Géron), chapters 1–7
+#### [Hands-On Machine Learning (Géron), chapters 1–7](https://github.com/ageron/handson-ml3)
 
-_paid; the practitioner's companion, worth owning_
+_book · paid, code free · paid; the practitioner's companion, worth owning_
 
 **Age 5.** A book that shows how to build learning machines with real code, step by step, like a workshop manual with all the tools laid out.
 
@@ -2083,9 +2320,25 @@ _paid; the practitioner's companion, worth owning_
 
 **PhD at Apple.** The book's endurance shows the demand for practitioner texts that are correct. Its main lesson for a senior engineer is the scikit-learn API design (fit, transform, predict; composable pipelines), which is worth imitating in an internal feature library so that training and serving call the same objects.
 
-#### Kaggle Learn: Intro to ML, Intermediate ML, Feature Engineering
+#### [StatQuest with Josh Starmer (YouTube)](https://statquest.org/)
 
-_free_
+_video · free · free; one idea per video, worked with numbers_
+
+**Age 5.** Videos with silly songs and simple drawings that explain how learning machines work, one small idea at a time.
+
+**Middle school.** A YouTube channel where each video explains one idea, such as what a decision tree is or how logistic regression works, with drawings and a short song. Watch the videos on decision trees, random forests, gradient boosting and logistic regression during phase 4; they are slow, clear and free.
+
+**High school.** StatQuest's series on gradient boosting (four videos) walks through fitting trees to residuals step by step with numbers, which is exactly lesson 8's mechanism. The videos on ROC and AUC, on cross-validation and on bias and variance give the pictures behind lesson 6. The logistic regression series covers maximum likelihood and the meaning of the coefficients.
+
+**Stanford undergrad.** The channel's strength is tracing a computation with small numbers until it is obvious; use it to check your understanding of a derivation rather than as a source of the derivation. Its XGBoost series covers the second-order split gain, which is the LightGBM math in lesson 8's higher levels.
+
+**Stanford grad.** It stops at intuition and worked examples, which is the right place for a video; the formal accounts are in ISLP and ESL. When you teach, its pattern (a concrete numeric example before any symbol) is worth stealing.
+
+**PhD at Apple.** A reminder that clarity is a research skill; the channel's popularity among practitioners reflects a gap textbooks leave, and it is the resource to hand to a stakeholder who wants to know what a boosted tree actually does.
+
+#### [Kaggle Learn: Intro to ML, Intermediate ML, Feature Engineering](https://www.kaggle.com/learn/intro-to-machine-learning)
+
+_course · free · free_
 
 **Age 5.** Three short online lessons: build your first learning machine, make it better, and invent better clues for it.
 
@@ -2099,9 +2352,9 @@ _free_
 
 **PhD at Apple.** Kaggle's tabular consensus (boosted ensembles, careful validation, feature engineering over architecture) has been stable for a decade, and understanding why, which Grinsztajn and colleagues studied systematically, is more valuable than any single course and directly justifies LightGBM as this project's production model.
 
-#### LightGBM documentation: Parameters, Parameters Tuning
+#### [LightGBM documentation: Parameters, Parameters Tuning](https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html)
 
-_free; read before touching a parameter_
+_docs · free · free; read before touching a parameter_
 
 **Age 5.** The instruction sheet for the tree-building program, with all of its knobs and what each one does.
 
@@ -2115,9 +2368,41 @@ _free; read before touching a parameter_
 
 **PhD at Apple.** Documentation quality is a production concern. Parameter aliases have caused silent misconfigurations in real systems; the fix is a team configuration schema that validates parameters before training. At scale, also read the distributed-training and GPU pages to understand what changes when the data no longer fits one machine.
 
-#### Interpretable Machine Learning (Molnar), the SHAP chapter
+#### [The boosting papers: Friedman (2001), XGBoost (2016), LightGBM (2017)](https://arxiv.org/abs/1603.02754)
 
-_free online_
+_paper · free · free; the algorithm behind every parameter_
+
+**Age 5.** Three papers, written years apart, about a way of learning that builds many small decision trees, each fixing the mistakes of the ones before. The later papers made it much faster.
+
+**Middle school.** Friedman's 2001 paper invented gradient boosting: fit a small tree to what the current model gets wrong, add it with a small weight, repeat. XGBoost (Chen and Guestrin, 2016) made it fast and added a smarter way to choose splits. LightGBM (Ke and colleagues, 2017) made it faster still with histograms and by growing the most useful leaf first. Reading the abstracts and the pictures is enough at this stage.
+
+**High school.** Friedman's paper defines boosting as gradient descent in the space of functions and derives the algorithm for several losses, including the logistic loss this project uses. XGBoost's paper introduces the second-order split gain and the regularized objective. LightGBM's paper explains gradient-based one-side sampling and exclusive feature bundling, the two tricks behind its speed. Read them in order, one per week, after lesson 8.
+
+**Stanford undergrad.** Work through the derivations: the functional gradient view, the second-order Taylor expansion leading to the leaf-weight formula, and the histogram algorithm's memory footprint. Then map every LightGBM parameter to the equation it controls. This is the fastest route from tuning by folklore to tuning by understanding.
+
+**Stanford grad.** Compare the three on regularization (shrinkage, subsampling, leaf constraints), on categorical handling, and on the assumptions their speed tricks make (GOSS biases the gradient sample). The papers are also a study in how systems contributions (histograms, cache-aware access) can matter as much as algorithmic ones.
+
+**PhD at Apple.** Together they explain why boosted trees are the default for tabular problems in industry and why their implementations converge; the open research is in uncertainty (natural-gradient and probabilistic boosting), in monotone and shape constraints, and in hybrids with neural representations.
+
+#### [Why do tree-based models still outperform deep learning on tabular data? (Grinsztajn, Oyallon, Varoquaux, 2022)](https://arxiv.org/abs/2207.08815)
+
+_paper · free · free; the evidence for the production choice_
+
+**Age 5.** A paper where scientists tested many learning machines on lots of tables of numbers and found that the tree-based ones usually won.
+
+**Middle school.** A research paper that compared gradient-boosted trees, random forests and several neural networks on 45 table datasets. Trees won most of the time, and the paper tries to explain why: tables have columns with different meanings and scales, and trees handle that naturally. It is the evidence behind choosing LightGBM as this project's production model.
+
+**High school.** Read the abstract, the benchmark figure and the section on why trees win: networks are biased toward smooth functions while real tables have sharp thresholds; uninformative columns hurt networks more; and rotating the feature space (which networks are indifferent to) destroys the meaning of columns. Each point maps to a design choice in stage 9.
+
+**Stanford undergrad.** The paper is a careful benchmark with tuned baselines, which is rarer than it should be. Note its scope (medium-sized datasets, no time or graph structure) and what that leaves open for this project: the spatial structure is the one place a network has an argument, which is why the challenger is a graph model, not an MLP.
+
+**Stanford grad.** Follow-up work on tabular deep learning (attention-based tabular models, tree-inspired networks) chips at the gap without closing it. The methodological lesson is about benchmark design: the choice of datasets and tuning budget decides the headline, so read the appendix before the abstract.
+
+**PhD at Apple.** A rare example of a negative-result benchmark shaping practice. For a lead deciding on architecture, it is the citation that ends the argument for tabular problems, and its limitations define exactly where an argument remains.
+
+#### [Interpretable Machine Learning (Molnar), the SHAP chapter](https://christophm.github.io/interpretable-ml-book/shap.html)
+
+_book · free · free online_
 
 **Age 5.** A free book about asking a learning machine why it said what it said, and getting an answer you can understand.
 
@@ -2131,9 +2416,9 @@ _free online_
 
 **PhD at Apple.** Interpretability in products is a communication and accountability tool as much as a technical one. SHAP's computational cost at scale and its misuse as causal explanation are both live issues, and Molnar's book is the best neutral survey to hand to a product partner or a regulator before a discussion about what the model 'thinks'.
 
-#### scikit-learn user guide: Model evaluation, Probability calibration
+#### [scikit-learn user guide: Model evaluation, Probability calibration](https://scikit-learn.org/stable/modules/model_evaluation.html)
 
-_free; the metrics you will report_
+_docs · free · free; the metrics you will report_
 
 **Age 5.** The manual pages that explain how to score a learning machine, and how to make its confidence honest.
 
@@ -2168,20 +2453,492 @@ _free; the metrics you will report_
 - Tuning on the test split, even once.
 - Celebrating an AUC that persistence also gets.
 
-## Phase 5: Time series and forecasting
+## Phase 5: Classical machine learning, the rest
 
-_weeks 19–25 · ≈45 h · builds stage 8 targets, stage 11 episodes_
+_weeks 22–28 · ≈50 h · builds a regression twin, station clusters, a tuned model_
 
-**Goal.** Make the model forecast, and evaluate it as a forecast.
+**Goal.** The rest of the classical toolbox: regression and its metrics, other classifiers and multiclass, unsupervised learning, tuning done honestly, and the information theory under it all.
 
 ### What you need to learn
 
-- Autocorrelation and the ACF; stationarity, trend, seasonality (daily and weekly here).
-- Lag and rolling features done right; the forecast horizon; direct versus recursive multi-horizon strategies.
+- Regression: least squares, ridge and lasso, quantile regression; MAE, RMSE, MAPE, R², residual plots.
+- k-nearest neighbors, naive Bayes, support vector machines and kernels; softmax and multiclass metrics; ordinal targets.
+- Clustering (k-means, hierarchical, DBSCAN), principal components, anomaly detection; how to judge unsupervised results.
+- Hyperparameter search: grid, random, Bayesian, early stopping of trials; selection bias and nested validation.
+- Entropy, cross-entropy, KL divergence, mutual information; information gain in trees; feature selection.
+- Feature scaling, encoding and pipelines in scikit-learn.
+
+### Topic: Regression: predicting a number, and the metrics that judge it
+
+**Goal.** Predict the speed itself, not only whether it will be slow, and know how to score a numeric forecast.
+
+**Age 5.**
+
+Sometimes the question is not 'will it be slow?' but 'how fast will the cars go?' The answer is a number, like 32 miles per hour.
+
+Guessing a number is called regression. You are right when your number is close, and you can measure how far off you were.
+
+_Try this._ Guess how tall your friend is in centimeters, then measure. How far off were you? That distance is your error.
+
+**Middle school.**
+
+A regression model predicts a number from clues. The simplest is a line: speed in 30 minutes ≈ a + b × speed now. Fitting the line means choosing a and b so the guesses are as close as possible to what happened.
+
+How close is close? Mean absolute error is the average distance between guess and truth. Root mean squared error punishes big misses more. R² says how much better you did than just guessing the average every time.
+
+_Try this._ Take ten (speed now, speed 30 minutes later) pairs from one station and plot them. Draw the line you think fits best. Compute the average distance from the line to the points.
+
+**High school.**
+
+Linear regression minimizes the sum of squared errors; with several clues it is y ≈ w·x + b, fit by least squares. Metrics: MAE (robust, in mph), RMSE (sensitive to outliers), MAPE (percent, undefined at zero), R² (fraction of variance explained). Residual plots show where the model fails.
+
+Regularization: ridge (L2) shrinks weights, lasso (L1) zeroes some, both fight overfitting when clues are many or correlated. Quantile regression predicts the 10th or 90th percentile instead of the mean, which is what a 'worst plausible speed' needs.
+
+Trees and networks do regression too: LightGBM with `objective='regression'` or `quantile`, the same features as the classifier, a different target (`speed_t30`).
+
+_Try this._ Train LightGBM to predict `speed_t30` and report MAE against persistence (speed now) and against the profile. Which stations have the largest errors, and at what hour?
+
+**Stanford undergrad.**
+
+Least squares as maximum likelihood under Gaussian noise; the normal equations and their geometry (projection onto the column space); Gauss-Markov; heteroscedasticity and why MAE or quantile losses are preferable when noise scales with level. Bias-variance for regression; ridge as a Bayesian prior; lasso and sparsity; elastic net.
+
+Evaluation subtleties: RMSE decomposition into bias and variance, MASE (scaled by a naive forecast) for comparability across series, and the pinball loss for quantiles. Multi-output regression (three horizons at once) versus three models.
+
+_Try this._ Show that minimizing squared error yields the conditional mean and minimizing absolute error yields the conditional median, and explain which the traffic product should report.
+
+**Stanford grad.**
+
+Generalized linear models unify regression targets (Gaussian, Poisson for counts such as flow, Gamma for positive skewed durations). Heteroscedastic and distributional regression (predict mean and variance, or full quantile sets) are the bridge to uncertainty. Regression under dependence: errors autocorrelated in time, spatially correlated across stations, and what that does to standard errors and to cross-validation.
+
+Trees regress piecewise-constantly and cannot extrapolate; linear models extrapolate linearly and can be wildly wrong; networks are in between. Monotone and shape constraints in gradient boosting encode physics.
+
+_Try this._ Fit a Poisson GLM to flow counts with calendar features and compare its calibration of predicted variance with a squared-error model. Then fit quantile boosting at 0.1, 0.5 and 0.9 and check pinball loss and crossing.
+
+**PhD at Apple.**
+
+Production forecasting is regression at scale: hierarchical targets, reconciliation across levels (station, route, city), distributional outputs for downstream optimization, and metrics chosen by the decision they serve (ETA error weighted by trips, not by rows). Research threads: distribution-free intervals for regression, multi-horizon coherence, and losses aligned with downstream utility.
+
+_Try this._ Propose the regression target and metric for a route-level travel-time product built on station speeds, and say how station-level errors compound along a route.
+
+**Check yourself.**
+
+<details>
+<summary>Why is RMSE larger than MAE on the same data?</summary>
+
+Squaring weights large errors more; RMSE is at least MAE and the gap grows with outliers.
+
+</details>
+
+<details>
+<summary>What does R² = 0 mean?</summary>
+
+The model does no better than predicting the mean every time. It can be negative when the model is worse than that.
+
+</details>
+
+### Topic: Other classifiers and multiclass: k-nearest neighbors, naive Bayes, support vector machines, softmax
+
+**Goal.** Know the rest of the classical toolbox, when each wins, and how two-class methods extend to many classes.
+
+**Age 5.**
+
+There are many ways to sort things into groups. One way: look at the things nearest to you and copy their label. Another: count how often each clue shows up in each group. Another: draw the widest possible gap between the groups.
+
+_Try this._ Sort a pile of leaves into trees by looking at each leaf's closest match among leaves you already know. That is nearest neighbors.
+
+**Middle school.**
+
+k-nearest neighbors predicts by finding the k most similar past rows and voting. Naive Bayes multiplies the chance of each clue given each class, assuming clues are independent, which is naive but often works. A support vector machine finds the boundary with the widest margin between classes.
+
+When there are more than two classes (light, moderate, heavy congestion), softmax turns scores into probabilities that add to one, and the loss is cross-entropy over all classes.
+
+_Try this._ With five past rows labelled slow or fine and their speeds, classify a new row using k = 3 nearest neighbors by speed. Change k to 1 and 5; does the answer change?
+
+**High school.**
+
+k-NN: no training, all the cost at prediction; needs scaled features and a distance; works when similar inputs have similar outputs and data are plentiful. Naive Bayes: fast, works with counts and text, calibrates badly. SVM: maximize margin, use kernels to draw curved boundaries, strong on small clean data, slow on millions of rows.
+
+Multiclass: one-vs-rest, one-vs-one, or native softmax (logistic regression and networks). Metrics generalize: per-class precision and recall, macro versus micro averages, the confusion matrix as the primary picture. Ordinal classes (light < moderate < heavy) deserve ordinal losses or a regression on the ratio.
+
+_Try this._ Turn the speed ratio into three classes (above 0.8, 0.6 to 0.8, below 0.6) and train a softmax logistic regression; print the 3 × 3 confusion matrix and macro F1.
+
+**Stanford undergrad.**
+
+Bayes-optimal classification and what each method approximates: k-NN estimates the posterior locally (consistent as k grows with n, cursed by dimension); naive Bayes is a generative model with a factorized likelihood; the SVM is a large-margin discriminative model whose dual reveals the kernel trick and support vectors. Hinge loss versus logistic loss; kernels as inner products in a feature space; the representer theorem.
+
+Softmax regression as the multinomial logit; its gradient generalizes p − y to a vector. Calibration in multiclass (temperature scaling). Cost-sensitive learning and thresholding per class.
+
+_Try this._ Derive the dual of the soft-margin SVM and identify the support vectors; then show that kernel k-NN and kernel SVM use the same similarity in different ways.
+
+**Stanford grad.**
+
+Where each method still matters: k-NN as a retrieval baseline and in nearest-neighbor search at scale (approximate methods, vector databases); naive Bayes as a fast text baseline; SVMs in small-sample scientific settings and as the origin of kernel methods leading to Gaussian processes. Structured prediction and sequence labelling as multiclass over structured outputs.
+
+Metric choice under class imbalance in multiclass, hierarchical classification, and label noise. The relation between margin theory (SVMs, boosting) and generalization.
+
+_Try this._ Implement a kernelized ridge classifier and a linear SVM on the same features; compare margins and calibration, and explain why the boosted trees still win on this data.
+
+**PhD at Apple.**
+
+Nearest-neighbor retrieval is now infrastructure (embeddings plus approximate search underlie retrieval-augmented systems and recommenders); kernel methods live on in theory (neural tangent kernels) and in Gaussian processes. The practical multiclass problems at scale are extreme classification (millions of labels) and hierarchical, cost-sensitive decisions.
+
+_Try this._ Design an approximate nearest-neighbor index over per-station day embeddings to find 'days like today' as a forecasting baseline, and state its failure modes.
+
+**Check yourself.**
+
+<details>
+<summary>Why does k-NN need scaled features?</summary>
+
+Distance mixes units; an unscaled flow in vehicles swamps a speed in mph, so the neighbors are chosen by one feature only.
+
+</details>
+
+<details>
+<summary>What does softmax guarantee?</summary>
+
+A vector of positive numbers that sum to one, so the outputs can be read as class probabilities.
+
+</details>
+
+### Topic: Unsupervised learning: clustering, principal components and anomaly detection
+
+**Goal.** Find structure with no labels: groups of similar stations or days, compact descriptions of many columns, and rows that look wrong.
+
+**Age 5.**
+
+Sometimes nobody tells you the answers, and you just sort things into piles that look alike. That is unsupervised learning: finding groups on your own.
+
+It can also spot the odd one out, like the one sensor that says cars are going 200 miles per hour.
+
+_Try this._ Dump out a box of buttons and sort them into piles however makes sense to you. Now find the button that fits no pile.
+
+**Middle school.**
+
+Clustering groups similar rows: k-means picks k centers and assigns each row to the nearest one, then moves the centers, and repeats. Days could cluster into 'normal weekday', 'holiday', 'crash day'.
+
+Principal component analysis finds the few directions along which the data vary most, so sixty columns can be summarized by a handful. Anomaly detection flags rows far from everything else, which is how you catch a broken detector.
+
+_Try this._ Take one station's daily speed profiles (288 numbers per day) for a month and run k-means with k = 3. Which days landed together? Look at the odd cluster.
+
+**High school.**
+
+k-means (choose k with the elbow or silhouette), hierarchical clustering (a tree of merges), DBSCAN (density, no k, finds noise). PCA: center, take the top eigenvectors of the covariance, project; explained variance tells how many to keep. Anomaly detection: distance from the profile, isolation forests, or reconstruction error.
+
+Uses here: cluster stations by their weekly profile to find station types; PCA on the 288-slot daily profile to get a few 'shape' features; anomaly scores to flag detector faults before they poison training.
+
+_Try this._ Run PCA on daily speed profiles across all stations and plot the first two components colored by weekday. What does component one measure?
+
+**Stanford undergrad.**
+
+Clustering as optimization (k-means as coordinate descent on within-cluster variance; Gaussian mixtures and EM as its probabilistic version), the meaning of a 'good' clustering (no ground truth; stability and downstream utility), and the curse of dimensionality for distances. PCA as the best low-rank approximation (Eckart-Young), its relation to the SVD, and its limits (linear, variance is not always signal). Nonlinear reduction (t-SNE, UMAP) for visualization only.
+
+Anomaly detection formally: density estimation and its thresholds; one-class methods; the distinction between point, contextual and collective anomalies (a detector stuck at 65 mph is contextual).
+
+_Try this._ Implement k-means and EM for a Gaussian mixture from scratch in numpy on the daily profiles, and show that k-means is the limit of EM as the variances shrink.
+
+**Stanford grad.**
+
+Representation learning as the modern form of unsupervised learning: autoencoders, contrastive methods, and the fact that most 'unsupervised' structure now comes from pretext tasks. Mixture models and latent-variable models for regime detection on the fundamental diagram; hidden Markov models for congestion states over time. Evaluation of unsupervised methods through downstream tasks and through stability under resampling.
+
+Anomaly detection under distribution shift: what counts as anomalous changes with roadwork; contextual detection using the profile and neighbors.
+
+_Try this._ Fit a hidden Markov model with three states to a station's speed and occupancy and compare the inferred states with the relative and absolute labels; where do they disagree?
+
+**PhD at Apple.**
+
+Unsupervised structure at scale underlies embeddings, retrieval, and pretraining; the research frontier is in self-supervised objectives, in identifiability of latent variables, and in detection of anomalies and drift without labels in streaming systems. For sensor networks, unsupervised detector-health models are a product in their own right.
+
+_Try this._ Propose a self-supervised pretraining task on unlabeled PeMS history for all of California and argue what representation it would learn and how you would test transfer to Fremont.
+
+**Check yourself.**
+
+<details>
+<summary>Why is there no accuracy for clustering?</summary>
+
+There are no labels to compare with. You judge clusters by stability, by interpretability, and by whether they help a downstream task.
+
+</details>
+
+<details>
+<summary>What does the first principal component of daily profiles usually capture?</summary>
+
+Overall level, how slow or fast the whole day was. Shape differences come in the later components.
+
+</details>
+
+### Topic: Hyperparameter tuning and model selection
+
+**Goal.** Choose settings and models with a budget and without fooling yourself.
+
+**Age 5.**
+
+A learning machine has dials, like how many questions a tree may ask. Turning the dials changes how well it learns. Finding good dial settings is tuning, and you check each setting on a quiz the machine has not seen.
+
+_Try this._ Set a kitchen timer to different times for cooking rice. Which time gives the best rice? That is tuning one dial.
+
+**Middle school.**
+
+Hyperparameters are settings you choose, not things the model learns: number of leaves, learning rate, how many lags to use. Tuning tries settings and keeps the best by the validation score. Grid search tries every combination; random search tries random ones and is usually better for the same effort.
+
+The trap: if you try a thousand settings and pick the best on validation, the validation score is now too optimistic. That is why the test split stays untouched until the end.
+
+_Try this._ Train LightGBM with learning rates 0.01, 0.05, 0.2 and leaves 15, 63, 255. Make a 3 × 3 table of validation AP. Is the best corner where you expected?
+
+**High school.**
+
+Search strategies: grid, random, Bayesian optimization (build a model of score versus settings and pick the most promising next point), and early-stopping-based methods such as successive halving that kill bad trials early. Tools: Optuna. Rules: tune few things (learning rate, leaves, min data in leaf, feature fraction), on the chronological validation split, with a fixed budget of trials, and log every trial.
+
+Model selection is the same problem one level up: which model family to ship. Use the same validation protocol, compare against baselines, and prefer the simpler model unless the gain is clear and reproducible across folds.
+
+_Try this._ Run 30 Optuna trials over four LightGBM parameters with early stopping, plot validation AP against trial number, and check how much the best trial beats the defaults.
+
+**Stanford undergrad.**
+
+Why random beats grid (most dials matter little, so sampling explores the important ones more densely); Bayesian optimization with Gaussian processes or tree-structured estimators; multi-fidelity methods (Hyperband). The selection bias of picking the maximum of many noisy scores, and nested cross-validation as the honest fix. Learning curves to decide whether more data or more capacity helps.
+
+For time series: tuning on rolling-origin folds, reporting the spread, and re-tuning cadence when retraining monthly.
+
+_Try this._ Simulate selecting the best of N random models with pure-noise validation scores and plot the expected 'best' score against N; then explain what nested cross-validation changes.
+
+**Stanford grad.**
+
+AutoML as automated pipeline search; its wins on benchmarks and its costs in compute and interpretability. Hyperparameter importance analysis (which dials mattered) as a research tool. Transfer of hyperparameters across tasks and scales, and scaling laws as principled tuning for large models. The reproducibility problem: reported gains within tuning noise.
+
+_Try this._ Fit a functional ANOVA on your tuning trials to estimate each parameter's importance, and use it to prune the search space for the monthly retrain.
+
+**PhD at Apple.**
+
+At scale, tuning is an engineering system: distributed trials, early stopping, warm starts from previous versions, and budgets set by cost. The research frontier includes learning-rate-free methods, tuning under distribution shift, and using scaling laws to extrapolate from small runs.
+
+_Try this._ Design the tuning policy for the monthly retrain: what is re-tuned, what is inherited, how many trials, and the statistical test that decides whether the new configuration replaces the old.
+
+**Check yourself.**
+
+<details>
+<summary>Why does random search often beat grid search?</summary>
+
+Most parameters matter little; random search spends its trials exploring more distinct values of the ones that matter.
+
+</details>
+
+<details>
+<summary>Why must the test split stay untouched during tuning?</summary>
+
+Any choice made by looking at a score on a split makes that score optimistic; the test split is the one score you never chose on.
+
+</details>
+
+### Topic: Information theory in machine learning: entropy, cross-entropy, KL divergence, mutual information
+
+**Goal.** See why cross-entropy is the loss, what KL divergence measures, and how mutual information screens features.
+
+**Age 5.**
+
+Information is surprise. If I tell you the sun rose today, that is no surprise, so little information. If I tell you it snowed in Fremont, that is a big surprise.
+
+A learning machine is trying to be less surprised by what happens. Its score is how surprised it was.
+
+_Try this._ Play twenty questions and count how many yes-or-no questions you need. Fewer questions means the answer carried less surprise.
+
+**Middle school.**
+
+Entropy measures how unpredictable something is: a fair coin has one bit of entropy, a coin that always lands heads has zero. Cross-entropy measures how surprised your model is by the truth: if you said 90 % slow and it was slow, small surprise; if you said 5 % and it was slow, big surprise.
+
+Training minimizes the average surprise, which is exactly the cross-entropy loss of lesson 7. Mutual information measures how much knowing one thing (rain) reduces your uncertainty about another (slow).
+
+_Try this._ Compute the surprise −log₂(p) for p = 0.9, 0.5 and 0.05. Notice how fast it grows as p shrinks.
+
+**High school.**
+
+Entropy H(p) = −Σ p log p. Cross-entropy H(p, q) = −Σ p log q is the expected surprise when the truth follows p and you predicted q. KL divergence KL(p‖q) = H(p, q) − H(p) is the extra surprise from using q instead of p; it is zero only when q = p and it is not symmetric. Minimizing cross-entropy over your model's q is minimizing KL to the truth.
+
+Mutual information I(X; Y) = KL between the joint and the product of marginals; it is zero when independent and captures nonlinear dependence, which correlation misses. Decision trees choose splits by information gain, a drop in entropy.
+
+_Try this._ Estimate the mutual information between each feature (binned) and `y_30` on one month; rank the features and compare the ranking with LightGBM's gain importance.
+
+**Stanford undergrad.**
+
+The source-coding theorem gives entropy its meaning (bits needed on average); cross-entropy is the cost of coding with the wrong distribution. Maximum likelihood equals cross-entropy minimization equals KL minimization. Proper scoring rules and the log score. Differential entropy and its caveats. Mutual information estimation from data is hard in high dimensions; binning and k-NN estimators.
+
+Applications: the information bottleneck as a view of representation learning, entropy regularization, and the variational lower bound (ELBO) which is the KL machinery behind variational autoencoders.
+
+_Try this._ Prove KL(p‖q) ≥ 0 with Jensen's inequality and derive the ELBO for a latent-variable model as a KL identity.
+
+**Stanford grad.**
+
+Information theory in learning theory: mutual-information generalization bounds, minimum description length and Occam, channel capacity as a limit on what noisy features can carry about a target. Rate-distortion as the theory of lossy compression, which is what representation learning does. Estimating mutual information with neural estimators and their pitfalls.
+
+_Try this._ Bound the achievable average precision from the mutual information between the feature set and the target on a synthetic problem, and discuss why the bound is loose for real features.
+
+**PhD at Apple.**
+
+Information-theoretic ideas organize much of modern ML: cross-entropy pretraining of language models, compression as a view of intelligence, and channel-capacity arguments about sensor networks (how much a detector network can tell you about a road). The research frontier includes information-theoretic accounts of generalization in overparameterized models and of what pretraining learns.
+
+_Try this._ Estimate, from data, how much information about a station's speed in 30 minutes is carried by its own history versus by its neighbors versus by the calendar, and what that implies about the horizon at which each source dominates.
+
+**Check yourself.**
+
+<details>
+<summary>Why is cross-entropy the loss for classification?</summary>
+
+It is the expected surprise of the truth under the model, which equals the negative log-likelihood; minimizing it moves the model's distribution toward the true one in KL divergence.
+
+</details>
+
+<details>
+<summary>What does mutual information capture that correlation misses?</summary>
+
+Any dependence, including nonlinear and non-monotone ones; correlation only measures linear association.
+
+</details>
+
+### Read and watch, explained at every level
+
+#### [scikit-learn user guide: Supervised and unsupervised learning](https://scikit-learn.org/stable/supervised_learning.html)
+
+_docs · free · free; one page per method with its pitfalls_
+
+**Age 5.** The manual for a big toolbox of learning methods, with a page for each tool that explains what it is for.
+
+**Middle school.** The scikit-learn user guide has one section per method: nearest neighbors, naive Bayes, support vector machines, linear models, clustering, principal components, anomaly detection. Each page explains the idea, shows the code, and links an example. Read the page for each method the week you meet it.
+
+**High school.** For the classical-ML phase: the pages on nearest neighbors, naive Bayes, support vector machines, linear models (ridge, lasso, logistic), clustering (k-means, DBSCAN, hierarchical), decomposition (PCA), novelty and outlier detection, and model selection (cross-validation, grid and random search, learning curves). Their examples are runnable on the project's features.
+
+**Stanford undergrad.** The guide is unusually good at stating each method's assumptions, complexity and pitfalls (for instance, k-means's sensitivity to scaling, or the meaning of the SVM's C). Read the 'tips on practical use' sections; they are the accumulated experience of the maintainers.
+
+**Stanford grad.** It is also a reference for evaluation and preprocessing (scalers, encoders, pipelines, `TimeSeriesSplit`). Its consistent API (fit, predict, transform) is the pattern every internal ML library ends up imitating, and the reason to prototype in scikit-learn before writing anything custom.
+
+**PhD at Apple.** scikit-learn's documentation is a public good and a standard; its design decisions (no GPU, no deep learning, stability over novelty) are a deliberate scope that has kept it reliable for fifteen years, which is a lesson in library governance.
+
+#### [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/)
+
+_book · free · now chapters 6 (regularization), 9 (SVMs) and 12 (unsupervised)_
+
+**Age 5.** A famous textbook, free, that explains learning machines with pictures and real examples, written by teachers who invented some of the methods.
+
+**Middle school.** Written by statisticians, with Python labs. Chapter 2 explains what learning from data is and why a model can be too simple or too complicated. Chapter 3 is linear regression, chapter 4 is classification including logistic regression, and chapter 8 is trees, forests and boosting. Read a chapter, then do its lab in a notebook.
+
+**High school.** The clearest explanation anywhere of bias versus variance (chapter 2, with figures worth redrawing), of logistic regression as a model of probability (chapter 4), and of why boosting works by fitting small trees to what is left over (chapter 8). Its lab for chapter 8 uses the same scikit-learn calls you will make in stage 9.
+
+**Stanford undergrad.** ISLP is the practical face of The Elements of Statistical Learning. Add chapter 5 on cross-validation and the bootstrap, and chapter 6 on model selection and regularization; together with the core chapters they cover phase 4's theory. Its treatment of the bootstrap is the basis for lesson 6's block bootstrap, with the modification that blocks are days.
+
+**Stanford grad.** After ISLP, go to ESL for proofs and depth. ISLP's boosting section gives the additive-model view; combine it with Friedman's 2001 paper for the gradient view that LightGBM implements. Note where ISLP's examples assume independent rows and how each method's assumptions change under temporal dependence.
+
+**PhD at Apple.** As a citation for standard methods and as a teaching text it is the reference, and its evolution from R to Python editions tracks the field's tooling. For research, its framing of methods as estimators with bias and variance you can reason about is the habit that distinguishes a careful ML engineer from a library user.
+
+#### [Hands-On Machine Learning (Géron), chapters 1–7](https://github.com/ageron/handson-ml3)
+
+_book · paid, code free · now chapters 8 and 9 (dimensionality reduction, clustering)_
+
+**Age 5.** A book that shows how to build learning machines with real code, step by step, like a workshop manual with all the tools laid out.
+
+**Middle school.** Aurélien Géron's book (paid, worth owning) walks through a whole project in chapter 2: get data, split it, build features, train a model, evaluate it, tune it. Then classification, training models with gradient descent, support vector machines, decision trees, and ensembles. Chapters 1 to 7 line up with phase 4. Run the notebooks as you read.
+
+**High school.** Chapter 2's project is the template for this pipeline in miniature. Chapter 3 covers precision, recall, the precision-recall curve and ROC with code; chapter 4 trains logistic regression by gradient descent, matching lesson 7; chapters 6 and 7 cover trees, random forests and boosting with scikit-learn. The code is idiomatic scikit-learn and worth imitating.
+
+**Stanford undergrad.** Géron is strong on practice (pipelines, transformers, cross-validation pitfalls, hyperparameter search) and adequate on theory; read alongside ISLP. Be alert to where its examples shuffle data or use `train_test_split` with a random split; for a time series that is the wrong move, as lesson 6 explains, and the fix is a chronological split with a gap.
+
+**Stanford grad.** The later chapters on deep learning overlap with phase 6; choose one framework (PyTorch here) and translate rather than switching. His chapter on sequence models is a useful contrast to Dive into Deep Learning's treatment, and his emphasis on end-to-end pipelines with `Pipeline` and `ColumnTransformer` is a design pattern for the feature module.
+
+**PhD at Apple.** The book's endurance shows the demand for practitioner texts that are correct. Its main lesson for a senior engineer is the scikit-learn API design (fit, transform, predict; composable pipelines), which is worth imitating in an internal feature library so that training and serving call the same objects.
+
+#### [StatQuest with Josh Starmer (YouTube)](https://statquest.org/)
+
+_video · free · the videos on k-means, PCA, SVMs and regularization_
+
+**Age 5.** Videos with silly songs and simple drawings that explain how learning machines work, one small idea at a time.
+
+**Middle school.** A YouTube channel where each video explains one idea, such as what a decision tree is or how logistic regression works, with drawings and a short song. Watch the videos on decision trees, random forests, gradient boosting and logistic regression during phase 4; they are slow, clear and free.
+
+**High school.** StatQuest's series on gradient boosting (four videos) walks through fitting trees to residuals step by step with numbers, which is exactly lesson 8's mechanism. The videos on ROC and AUC, on cross-validation and on bias and variance give the pictures behind lesson 6. The logistic regression series covers maximum likelihood and the meaning of the coefficients.
+
+**Stanford undergrad.** The channel's strength is tracing a computation with small numbers until it is obvious; use it to check your understanding of a derivation rather than as a source of the derivation. Its XGBoost series covers the second-order split gain, which is the LightGBM math in lesson 8's higher levels.
+
+**Stanford grad.** It stops at intuition and worked examples, which is the right place for a video; the formal accounts are in ISLP and ESL. When you teach, its pattern (a concrete numeric example before any symbol) is worth stealing.
+
+**PhD at Apple.** A reminder that clarity is a research skill; the channel's popularity among practitioners reflects a gap textbooks leave, and it is the resource to hand to a stakeholder who wants to know what a boosted tree actually does.
+
+#### [Random Search for Hyper-Parameter Optimization (Bergstra, Bengio, 2012)](https://jmlr.org/papers/v13/bergstra12a.html)
+
+_paper · free · free; why random beats grid_
+
+**Age 5.** A paper that found that trying dial settings at random beats trying them in a neat grid, because only a few dials really matter.
+
+**Middle school.** Bergstra and Bengio showed that random search finds good hyperparameters faster than grid search for the same number of trials. The reason is in one figure: if only one of two dials matters, a grid wastes trials repeating the same values of the important one, while random search tries many different values. Free to read in the Journal of Machine Learning Research.
+
+**High school.** Read the introduction and the figure, then the experiments on neural networks. The lesson generalizes: budget your trials, sample them randomly (or with a smarter method), and look at which parameters actually moved the score.
+
+**Stanford undergrad.** The argument rests on low effective dimensionality of the hyperparameter response surface; the paper also introduces the use of quasi-random sequences. It is the foundation for later Bayesian and multi-fidelity methods, which improve on random search by modelling the response surface.
+
+**Stanford grad.** Compare with Hyperband and Bayesian optimization papers; random search remains the honest baseline that every tuning method must beat, and it parallelizes trivially.
+
+**PhD at Apple.** A rare methodology paper that changed practice immediately; for a lead, its message is that a well-chosen search space and a fixed budget matter more than the search algorithm.
+
+#### [Optuna documentation](https://optuna.readthedocs.io/)
+
+_docs · free · free; tuning with pruning in an hour_
+
+**Age 5.** The manual for a helper that tries dial settings for you, learns which ones look promising, and stops the bad tries early.
+
+**Middle school.** Optuna is a free Python library for hyperparameter search. You write a function that trains a model with settings drawn from ranges you define and returns the validation score; Optuna runs trials, favors promising regions, and can stop bad trials early. The tutorial pages get you running in an hour.
+
+**High school.** Read the tutorial (define an objective, create a study, optimize), the pruning page (early stopping of bad trials with LightGBM's callback), and the visualization page (parameter importance, optimization history). Use it to tune four LightGBM parameters with a budget of 30 trials on the chronological validation split.
+
+**Stanford undergrad.** Its default sampler is a tree-structured Parzen estimator, a Bayesian optimization method; the docs explain samplers and pruners so you can choose. Understand how to make trials reproducible (seeds), how to store studies (SQLite) and how to run trials in parallel on the Mac's cores.
+
+**Stanford grad.** Optuna's design (define-by-run search spaces, pluggable samplers) makes it usable for pipeline search, not only parameters; its parameter-importance analysis is a practical functional-ANOVA implementation for pruning the search space of a monthly retrain.
+
+**PhD at Apple.** Tuning libraries are infrastructure; the questions at scale are distributed trials, warm starts across model versions, and integration with experiment tracking, all of which Optuna's docs address at a level worth reading before building your own.
+
+#### [Visual Information Theory (Olah)](https://colah.github.io/posts/2015-09-Visual-Information/)
+
+_essay · free · free; entropy and KL with pictures_
+
+**Age 5.** A web page with pictures that explains what information is, using rectangles whose size shows how surprising something is.
+
+**Middle school.** Chris Olah's essay explains entropy, cross-entropy and KL divergence with diagrams of code lengths: rare events need long codes, and using the wrong codebook wastes bits. It makes the cross-entropy loss feel like a real cost. Free, about an hour.
+
+**High school.** Read it before the information-theory topic; its diagrams show why cross-entropy is at least entropy, why KL is not symmetric, and what mutual information measures. Then redo its examples with the traffic label's base rate as the distribution.
+
+**Stanford undergrad.** The essay gives the coding interpretation that makes the theorems intuitive (the source-coding theorem as optimal code lengths); with it, the KL-based derivations in variational inference and the information bottleneck read naturally.
+
+**Stanford grad.** Olah's other essays (on neural network representations, on attention) are of the same quality; his work on interpretability is where the visual method meets research.
+
+**PhD at Apple.** An example of explanation as research communication at its best; when you write for a broad technical audience, this is the standard.
+
+### Build
+
+- Train LightGBM regression and quantile models for `speed_t30`; report MAE against persistence and the profile, per hour.
+- Turn the speed ratio into three classes and train softmax regression, k-NN and a linear SVM; compare macro F1 and calibration.
+- Cluster stations by weekly profile; run PCA on daily profiles; build an anomaly score for detector faults and inspect the top twenty days.
+- Tune four LightGBM parameters with Optuna on the chronological validation split with a 30-trial budget; report the gain over defaults, honestly.
+- Rank features by mutual information with `y_30` and compare with gain importance.
+
+### Done when
+
+- A regression report with MAE per horizon and a quantile band whose coverage you measured.
+- A station-type map from the clustering and a written interpretation of the first two principal components.
+- A tuning log with the best configuration and its validation gain, or a note that defaults were fine.
+
+### Pitfalls
+
+- Reporting R² without a baseline.
+- Interpreting clusters as ground truth.
+- Tuning a hundred trials and believing the best score.
+
+## Phase 6: Time series and forecasting
+
+_weeks 27–33 · ≈45 h · builds stage 8 targets, stage 11 episodes_
+
+**Goal.** Make the model forecast, and evaluate it as a forecast, with the traffic physics behind why it works.
+
+### What you need to learn
+
+- Autocorrelation and the ACF; stationarity, trend, seasonality; lag and rolling features done right; the forecast horizon; direct versus recursive strategies.
 - Persistence and seasonal-naive baselines; rolling-origin backtests; leakage through time.
-- ARIMA and exponential smoothing at reading level: what they are, why trees on lag features replaced them for this problem.
-- Spatial correlation and the road graph; propagation of a jam upstream.
-- Event-level metrics: episode onset, lead time, false alarms per station-day; anomaly versus level, the two labels.
+- ARIMA and exponential smoothing at reading level; why trees on lag features replaced them here.
+- Spatial correlation, the road graph, and kinematic waves: why a downstream slowdown predicts your future.
+- Event-level metrics: episode onset, lead time, false alarms per station-day; calibration and thresholds for alerts.
 
 ### Lesson 10: Jams move: sequences, neighbors and the road graph
 
@@ -2455,9 +3212,9 @@ A driver experiences alerts per trip, not per 5-minute row; a station firing twe
 
 ### Read and watch, explained at every level
 
-#### Forecasting: Principles and Practice, the Python edition (Hyndman, Athanasopoulos), chapters 1–5, 7, 9
+#### [Forecasting: Principles and Practice, the Python edition (Hyndman, Athanasopoulos), chapters 1–5, 7, 9](https://otexts.com/fpppy/)
 
-_free online; the forecasting book_
+_book · free · free online; the forecasting book_
 
 **Age 5.** A free book about predicting the future from the past, by people who do it for a living, with lots of pictures of wiggly lines.
 
@@ -2471,9 +3228,9 @@ _free online; the forecasting book_
 
 **PhD at Apple.** Hyndman's wider work (the M4 and M5 forecasting competitions, hierarchical reconciliation, feature-based model selection) is the empirical forecasting literature. The M5 result, gradient-boosted models on lag features winning at scale, is direct evidence for this project's choice of LightGBM as the production model.
 
-#### Kaggle Learn: Time Series
+#### [Kaggle Learn: Time Series](https://www.kaggle.com/learn/time-series)
 
-_free; lag features and hybrids in an afternoon_
+_course · free · free; lag features and hybrids in an afternoon_
 
 **Age 5.** A short online lesson about guessing what comes next in a line of numbers.
 
@@ -2487,9 +3244,9 @@ _free; lag features and hybrids in an afternoon_
 
 **PhD at Apple.** The design principle it plants, decompose into predictable structure and a learned residual, is robust across production forecasters and is how a classical model can remain as a fallback when a learned model goes stale.
 
-#### statsmodels documentation: one ARIMA fit on one station
+#### [statsmodels documentation: one ARIMA fit on one station](https://www.statsmodels.org/stable/tsa.html)
 
-_free; do it once to know what it is_
+_docs · free · free; do it once to know what it is_
 
 **Age 5.** A tool that fits an old but famous kind of forecast to a line of numbers. You try it once to see what it does.
 
@@ -2503,11 +3260,43 @@ _free; do it once to know what it is_
 
 **PhD at Apple.** Classical models remain the interpretable baseline and a source of principled uncertainty that deep models lack. A production system often keeps a simple statistical model as the fallback when the learned model is stale or its inputs are missing, and statsmodels is where that fallback would be built.
 
+#### [Traffic Flow Dynamics (Treiber, Kesting) and the traffic-simulation.de simulator](https://traffic-simulation.de/)
+
+_interactive · free simulator, paid book · free simulator, paid book; the physics of jams_
+
+**Age 5.** A website where you can watch cartoon cars drive on a ring road, add a slow truck, and see a traffic jam appear from nowhere and move backwards. And a book that explains why.
+
+**Middle school.** traffic-simulation.de is a free browser simulation by the authors of the book Traffic Flow Dynamics. You change the number of cars, the road shape and driver behavior, and watch jams form and travel upstream. The book (paid) explains the physics: how cars follow each other, why jams move backwards, and how a bottleneck works. Play with the simulator during phase 5.
+
+**High school.** Use the simulator to see the ideas of lesson 10: the fundamental diagram, capacity, the backward-moving jam wave and its speed, and how an on-ramp creates a bottleneck. The book's chapters on the Lighthill-Whitham-Richards model and on car-following models are the theory; chapter 8 (kinematic waves) is the one to read.
+
+**Stanford undergrad.** The book is the standard modern text on traffic flow theory: macroscopic models (LWR, second-order models), microscopic car-following (the Intelligent Driver Model, which the simulator runs), and the empirical facts (capacity drop, stop-and-go waves). It gives you the physical priors that justify monotone constraints and the direction of neighbor features.
+
+**Stanford grad.** Read it to design physics-informed components: a kinematic-wave forecast as a baseline or as a residual target for the learned model, and simulator-generated data for stress-testing the model on regimes rare in the archive. Its treatment of calibration of car-following models is a useful contrast with ML calibration.
+
+**PhD at Apple.** Coupling learned forecasters with traffic simulators is where counterfactual questions (what if 5 % of drivers reroute?) become answerable. The book and the open simulator are the practical entry to that line of work, and the Intelligent Driver Model is simple enough to make differentiable.
+
+#### [The M5 forecasting competition and its findings (Makridakis, Spiliotis, Assimakopoulos)](https://www.kaggle.com/competitions/m5-forecasting-accuracy)
+
+_dataset · free · free; the largest evidence for global boosted models_
+
+**Age 5.** A big contest where thousands of people tried to predict how many of each thing a store would sell. The winners used the same kind of tree model we use for traffic.
+
+**Middle school.** M5 was a large forecasting competition on Kaggle in 2020 with real Walmart sales data, tens of thousands of series. The organizers later published what worked: gradient-boosted trees on lag features won, simple statistical methods were strong baselines, and combining models helped. The competition page and the summary papers are free.
+
+**High school.** Read the organizers' summary of the accuracy competition: the winning approaches, the role of cross-learning (one model across many series), and the evaluation metric. Then read one winner's write-up. The pattern, a global boosted model on lag and calendar features with careful validation, is this project's stage 9.
+
+**Stanford undergrad.** M5 is the largest public evidence for global models over per-series models, for boosted trees over classical methods at scale, and for the importance of the validation protocol (many teams overfit the public leaderboard). Its uncertainty track (quantile forecasts) connects to the uncertainty topic in the final phase.
+
+**Stanford grad.** The M-competition series (M1 through M6) is the empirical forecasting literature; read the M4 findings alongside M5 to see how the consensus moved from statistical ensembles to boosted global models, and what the organizers concluded about deep learning's role.
+
+**PhD at Apple.** Competitions are natural experiments about what works under a fixed protocol; their limitations (leaderboard overfitting, no deployment costs) are as instructive as their results. For a forecasting team, M5's write-ups are the closest thing to a field manual.
+
 ### Build
 
-- `13_feature_engineering.py` with forward-shifted targets `y_15`, `y_30`, `y_60` and the rolling-origin split with a one-day gap.
-- The episode-level half of `18_evaluate_lead_time.py`: onset, lead-time histogram, share of episodes caught, false alarms.
-- Plot the ACF of speed for one station; compute skill over persistence per horizon.
+- `13_feature_engineering.py` with forward-shifted targets and the rolling-origin split with a one-day gap.
+- The episode-level half of `18_evaluate_lead_time.py`: onset, lead-time histogram, share caught, false alarms.
+- Plot the ACF of speed for one station; estimate the shockwave speed from the fundamental diagram; compute skill over persistence per horizon.
 - Train on the absolute label too; compare prevalence and skill and write the decision.
 
 ### Done when
@@ -2520,9 +3309,9 @@ _free; do it once to know what it is_
 - `shift` in the wrong direction; a rolling window that looks ahead.
 - Evaluating on rows whose target was imputed.
 
-## Phase 6: Neural networks
+## Phase 7: Neural networks
 
-_weeks 24–34 · ≈80 h · builds stage 9 networks_
+_weeks 32–42 · ≈80 h · builds stage 9 networks_
 
 **Goal.** The MLP in numpy with backprop by hand, then the spatio-temporal net in PyTorch on the M1's GPU.
 
@@ -2531,8 +3320,7 @@ _weeks 24–34 · ≈80 h · builds stage 9 networks_
 - The perceptron and the multilayer perceptron; activations; loss functions; backpropagation for one hidden layer, by hand.
 - Gradient descent variants (SGD, momentum, Adam); initialization; batch normalization, dropout, learning-rate schedules; early stopping.
 - PyTorch: tensors, autograd, `nn.Module`, `DataLoader`, the `mps` device, saving and loading, `model.eval()`.
-- Sequence models: RNN, GRU, LSTM, 1-D temporal convolutions; attention and transformers at reading level.
-- Graph neural networks: adjacency, message passing, diffusion on a graph; how DCRNN and STGCN model traffic on PeMS data.
+- Sequence models: RNN, GRU, LSTM, 1-D temporal convolutions; graph neural networks: adjacency, message passing; how DCRNN and STGCN model traffic.
 - The practical rules: small data wants small nets; a deep model does not win by default.
 
 ### Lesson 9: Neural networks and backpropagation, on the M1
@@ -2694,9 +3482,9 @@ Each batch launches a handful of tiny kernels; the launch overhead is comparable
 
 ### Read and watch, explained at every level
 
-#### 3Blue1Brown: Neural networks
+#### [3Blue1Brown: Neural networks](https://www.3blue1brown.com/topics/neural-networks)
 
-_free; four videos, watch before Karpathy_
+_video · free · free; four videos, watch before Karpathy_
 
 **Age 5.** Four videos with moving pictures that show what a neural network is and how it learns, using handwritten numbers as the example.
 
@@ -2710,9 +3498,25 @@ _free; four videos, watch before Karpathy_
 
 **PhD at Apple.** Its visual language has become the standard for explaining networks to non-specialists. Reuse the logic of its diagrams when presenting the spatio-temporal network to a product team, and its treatment of what a layer 'sees' as a caution when someone asks what the model has learned.
 
-#### Neural Networks: Zero to Hero (Karpathy), micrograd and makemore
+#### [TensorFlow Playground](https://playground.tensorflow.org/)
 
-_free; backprop from scratch, the best there is_
+_interactive · free · free; poke a network in the browser_
+
+**Age 5.** A web page where you build a tiny brain by clicking, then press play and watch it learn to separate blue dots from orange dots.
+
+**Middle school.** A free browser toy: pick a dataset of dots, add layers and neurons, choose a learning rate, press play, and watch the network learn a boundary. You can see what each neuron detects. It makes the words in lesson 9 (layer, neuron, activation, learning rate) into something you can poke.
+
+**High school.** Use it to run the experiments lesson 9 describes: too high a learning rate diverges; too few neurons underfit the spiral; adding features (x², sin x) lets a small network solve what a bigger one struggles with; regularization smooths the boundary. Fifteen minutes here saves an hour of confusion later.
+
+**Stanford undergrad.** It visualizes the decision boundary and per-neuron activations for a two-input problem, which is the clearest demonstration of what hidden layers compute and why feature engineering and depth are partial substitutes for each other.
+
+**Stanford grad.** Its role for you is demonstration when teaching; it cannot show the high-dimensional effects (initialization statistics, batch norm) that matter in practice.
+
+**PhD at Apple.** A reminder that a well-designed toy can carry a concept further than a lecture; it is the demo to open when a stakeholder asks what a neural network 'is'.
+
+#### [Neural Networks: Zero to Hero (Karpathy), micrograd and makemore](https://karpathy.ai/zero-to-hero.html)
+
+_video · free · free; backprop from scratch, the best there is_
 
 **Age 5.** A programmer builds a tiny brain from scratch on video, typing every line, and explains each one as he goes.
 
@@ -2726,9 +3530,9 @@ _free; backprop from scratch, the best there is_
 
 **PhD at Apple.** Karpathy's teaching sets the bar for from-scratch pedagogy, and his emphasis on reading gradients and activations is the diagnostic culture a research team should share. For a lead, the course is the fastest way to give a strong engineer without deep-learning background a working mental model in a week.
 
-#### PyTorch tutorials: Learn the Basics; the MPS backend notes
+#### [PyTorch tutorials: Learn the Basics; the MPS backend notes](https://pytorch.org/tutorials/beginner/basics/intro.html)
 
-_free_
+_docs · free · free_
 
 **Age 5.** The official lessons for the tool that runs neural networks, plus a note about making it use the Mac's graphics chip so it goes faster.
 
@@ -2742,9 +3546,9 @@ _free_
 
 **PhD at Apple.** PyTorch's eager, Pythonic design is why research iterates fast; its deployment story (TorchScript's decline, ExecuTorch, ONNX and Core ML export) is where production effort goes. Knowing both ends, and the operator-support gaps between them, is what lets you promise a model can ship on a device.
 
-#### Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10
+#### [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/)
 
-_free, PyTorch throughout_
+_book · free · free, PyTorch throughout_
 
 **Age 5.** A free online textbook where every idea comes with code you can run, about teaching computers using layers of simple math.
 
@@ -2758,9 +3562,25 @@ _free, PyTorch throughout_
 
 **PhD at Apple.** A living, open textbook with code in several frameworks is itself a research-infrastructure achievement. Cite it for standard architectures, use its implementations as reference points when reproducing papers, and note its authors' choice to include the messy practical chapters most textbooks omit.
 
-#### Practical Deep Learning for Coders (fast.ai)
+#### [Understanding Deep Learning (Prince)](https://udlbook.github.io/udlbook/)
 
-_free; the practitioner's counterweight to the theory_
+_book · free · free PDF; chapters 1 to 9 now, the rest in phase 8_
+
+**Age 5.** A newer big book about deep learning, free to read, with lots of clear pictures that show what each part of a network does.
+
+**Middle school.** Simon Prince's textbook (2023), free as a PDF with notebooks. It covers supervised learning, networks, training, measuring performance, regularization, convolutional and recurrent and transformer networks, graph networks, and generative models. It is more modern and more visual than the older Deep Learning book. Read the early chapters after phase 6.
+
+**High school.** Chapters 1 to 9 are the modern version of lesson 9: networks, loss functions, fitting, gradients and initialization, measuring performance, and regularization, each with figures that make the idea visible. Chapter 13 on graph neural networks covers the neighbor mixing of the spatio-temporal net. The notebooks let you run every figure.
+
+**Stanford undergrad.** Prince's treatment of why deep networks generalize, of the loss landscape, and of the transformer architecture is the clearest current textbook account, and it includes the recent empirical findings (double descent, scaling) that Goodfellow predates. Chapter 12 on transformers is the reading before lesson 8's attention material.
+
+**Stanford grad.** The chapters on generative models (VAEs, GANs, normalizing flows, diffusion) are a compact, correct introduction with the math intact, and the chapter on ethics is unusually careful for a technical text. Use it as the reference when reading current papers.
+
+**PhD at Apple.** A free, modern, rigorous textbook is a public good; it is the one to recommend to a new graduate student and the one to cite for standard architectures in the current idiom. Its figures are also the model for how to draw a network in a paper.
+
+#### [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/)
+
+_course · free · free; the practitioner's counterweight to the theory_
 
 **Age 5.** A free class where you train a real neural network on the very first day and only later learn all the details, like learning to ride a bike before studying how it works.
 
@@ -2774,9 +3594,25 @@ _free; the practitioner's counterweight to the theory_
 
 **PhD at Apple.** fast.ai's research output (training-efficiency results, transfer learning for text) shows that practitioner-driven groups produce research results. Its philosophy of accessible deep learning shaped how many teams onboard engineers, and its lesson structure is a reasonable template for an internal course on this pipeline.
 
-#### DCRNN (Li et al., ICLR 2018) and STGCN (Yu et al., IJCAI 2018)
+#### [A Gentle Introduction to Graph Neural Networks (Distill, 2021)](https://distill.pub/2021/gnn-intro/)
 
-_the two traffic papers; first pass now, second in phase 8_
+_interactive · free · free, interactive; message passing before CS224W_
+
+**Age 5.** An article with pictures you can play with about learning from things that are connected, like friends in a group or roads in a city.
+
+**Middle school.** A free interactive article on Distill, a journal for clear explanations. It explains what a graph is, how information passes between connected nodes in a graph neural network, and what such networks can predict. Play with the interactive figures; they show messages moving along edges.
+
+**High school.** Read it before lesson 10's higher levels and before CS224W: it explains message passing (each node updates from its neighbors), pooling, and the design choices (how many layers, what to aggregate) with live figures. The road graph of this project is a small instance of what it describes.
+
+**Stanford undergrad.** The article's playground lets you change layers and aggregation and watch performance change, which is an intuition for over-smoothing and receptive field. Its taxonomy of graph tasks (node, edge, graph level) places station-level traffic prediction precisely.
+
+**Stanford grad.** It is deliberately introductory; the formal treatment (spectral versus spatial convolutions, expressiveness) is in CS224W and the survey literature. Its value is fixing the vocabulary before those.
+
+**PhD at Apple.** Distill's format, interactive and peer-reviewed, is the high bar for explanatory writing in ML; this article and its companion on graph convolutions are what to point a collaborator to before a graph-learning discussion.
+
+#### [DCRNN (Li et al., ICLR 2018) and STGCN (Yu et al., IJCAI 2018)](https://arxiv.org/abs/1707.01926)
+
+_paper · free · the two traffic papers; first pass now, second in phase 11_
 
 **Age 5.** Two papers where scientists taught computers to predict traffic on real Californian roads, using the same kind of sensors we use.
 
@@ -2810,20 +3646,545 @@ _the two traffic papers; first pass now, second in phase 8_
 - A learning rate ten times too high.
 - Believing the deep model must win.
 
-## Phase 7: ML engineering
+## Phase 8: Deep learning across domains
 
-_weeks 32–40 · ≈50 h · builds stages 12 and 13_
+_weeks 42–54 · ≈100 h · builds a headline classifier, a local LLM extractor, a profile generator_
 
-**Goal.** The pipeline runs itself on the Mac mini, and you could hand it to someone.
+**Goal.** Vision, language, large language models, generative models and transfer learning: the parts of deep learning the traffic data cannot carry, learned on small public data that fits the Mac mini.
 
 ### What you need to learn
 
-- Reproducibility: seeds, pinned versions, a Makefile, one command from raw to report.
-- The one-feature-module rule and train-serve skew; testing ML code with fixtures and golden files.
-- Experiment tracking (a JSON log per run, or MLflow locally); a model registry as a folder with a manifest; rollback.
-- Scheduling with launchd; logging; alerting when nothing arrives.
-- Monitoring: drift with PSI, performance decay, retraining policy; delivered lead versus nominal lead.
-- Memory profiling on unified memory; documentation for the next person; what a false alarm costs a real driver.
+- Convolutions, pooling, feature hierarchies, residual networks; classification, detection, segmentation; transfer from pretrained vision models.
+- Tokens, embeddings, self-attention, transformers; encoder and decoder models; fine-tuning a text classifier.
+- Large language models: pretraining, fine-tuning, preference tuning, prompting, retrieval-augmented generation, tool use; evaluation and its traps; running a quantized model locally.
+- Autoencoders, variational autoencoders, GANs, diffusion models; what they are for beyond images.
+- Transfer learning, self-supervised objectives, foundation models, parameter-efficient adaptation; when training from scratch still wins.
+
+### Topic: Convolutional networks and computer vision
+
+**Goal.** Understand how networks see: convolutions, pooling, feature hierarchies, and the tasks built on them.
+
+**Age 5.**
+
+A picture is a grid of tiny colored dots. A computer can slide a small window over the grid looking for edges, then corners, then eyes and wheels, and finally decide 'that is a car'.
+
+_Try this._ Look at a photo through a paper tube. Move it around. You see edges and small parts before you can tell what the whole thing is.
+
+**Middle school.**
+
+A convolution slides a small filter (say 3 × 3 numbers) across the image and computes a weighted sum at each spot, so one filter finds one pattern everywhere. Stacking layers of filters finds bigger patterns; pooling shrinks the image so later layers see more of it at once.
+
+Convolutional networks classify images, find objects with boxes, and label every pixel. They can also read a traffic camera and count cars, which is another way to measure a road.
+
+_Try this._ Draw a 5 × 5 grid of zeros with a vertical line of ones, and slide a 3 × 3 filter [−1, 0, 1] across each row. Where does the output light up?
+
+**High school.**
+
+Layers: convolution (filters, stride, padding), nonlinearity, pooling, batch normalization, then fully connected layers or global pooling. Why convolutions: weight sharing and locality make them data-efficient and translation-equivariant. Classic architectures (LeNet, AlexNet, VGG, ResNet with skip connections) and what each added.
+
+Tasks: classification, detection (boxes), segmentation (pixels); transfer learning from ImageNet-pretrained models; data augmentation. A 1-D convolution over time is the same idea and is what temporal convolutions in traffic models do.
+
+_Try this._ Train a small convolutional network on a public digits dataset in PyTorch on MPS, then replace the classifier head and fine-tune a pretrained ResNet on a tiny dataset of your own photos.
+
+**Stanford undergrad.**
+
+Convolution as a linear operator with structure (Toeplitz), receptive fields, dilations, depthwise separable convolutions and their cost, normalization variants, and residual connections as a fix for optimization depth. Detection pipelines (region proposals, anchor-free methods), segmentation with encoder-decoders, and the metrics (mAP, IoU).
+
+Vision transformers as an alternative inductive bias, and when convolutions still win (small data, efficiency). Self-supervised pretraining for vision.
+
+_Try this._ Implement a 2-D convolution in numpy with padding and stride, verify against PyTorch, and count the multiplications for a 3 × 3 convolution on a 224 × 224 × 64 tensor.
+
+**Stanford grad.**
+
+Equivariance and invariance as design principles (group-equivariant networks); the interplay of architecture and data scale (ConvNets versus ViTs as data grows); efficient architectures for edge devices (MobileNet, quantization); robustness to distribution shift and adversarial examples; explaining vision models (saliency, concept methods). For transport: camera-based traffic counting and incident detection as complementary sensors.
+
+_Try this._ Design a camera-based vehicle counter for one Fremont on-ramp: architecture, training data, evaluation, and how you would fuse it with loop-detector counts.
+
+**PhD at Apple.**
+
+Vision on device (phones, cameras, cars) is an engineering discipline of its own: latency and energy budgets, hardware-aware architecture search, quantization-aware training, and privacy (on-device processing of imagery). Research threads: multimodal models linking vision and language, 3-D and video understanding, and foundation models for perception.
+
+_Try this._ Sketch a privacy-preserving on-device pipeline that turns roadside camera video into aggregate counts without storing images, and list the failure modes you would monitor.
+
+**Check yourself.**
+
+<details>
+<summary>Why share the same filter across the whole image?</summary>
+
+A pattern is a pattern wherever it appears; sharing makes the network data-efficient and lets it recognize a car in any corner.
+
+</details>
+
+<details>
+<summary>What does pooling buy?</summary>
+
+A larger receptive field for later layers and some tolerance to small shifts, at the cost of resolution.
+
+</details>
+
+### Topic: Language: tokens, embeddings, attention and transformers
+
+**Goal.** Understand how text becomes numbers and how attention lets a model relate every word to every other.
+
+**Age 5.**
+
+A computer cannot read letters, so it turns words into lists of numbers. Words that mean similar things get similar numbers.
+
+Then, to understand a sentence, it lets each word look at the other words and decide which ones matter for it. That looking is called attention.
+
+_Try this._ In the sentence 'the road near the school was slow because of a crash', which words tell you why it was slow? Point at them. That is attention.
+
+**Middle school.**
+
+Tokens are pieces of text (words or word parts); each token gets an embedding, a vector learned so that related tokens sit near each other. Attention computes, for each token, how much to weigh every other token, then mixes their vectors accordingly. A transformer stacks attention and small networks many times.
+
+The same machinery reads 511 incident headlines: 'Injury collision on I-880 N' can be turned into features, or classified by severity, by a small language model.
+
+_Try this._ Take three incident headlines and list which words in each would help decide whether it is serious. Then guess which words a model would attend to.
+
+**High school.**
+
+Tokenization (byte-pair encoding), embeddings (word2vec's idea: predict neighbors), positional information, self-attention as softmax(QKᵀ/√d)V, multi-head attention, feed-forward blocks, residuals and layer normalization. Encoder models (BERT) for understanding, decoder models (GPT) for generation.
+
+Older sequence models (RNNs, LSTMs) processed words in order and struggled with long range; attention sees everything at once, which is why transformers won. Evaluation: perplexity for language modelling, accuracy or F1 for classification.
+
+_Try this._ Implement single-head self-attention in numpy for a sentence of six tokens with random embeddings, print the attention matrix, and explain what a row means.
+
+**Stanford undergrad.**
+
+The transformer in full: scaled dot-product attention and its quadratic cost, causal masking, positional encodings (sinusoidal, learned, rotary), training with teacher forcing, and the compute and memory of a layer. Pretraining objectives (masked language modelling, next-token prediction), fine-tuning for classification, and embeddings from encoders for retrieval.
+
+Practical NLP: text preprocessing pitfalls, class imbalance in text classification, and using a small pretrained encoder on the 511 headlines for severity when the field is missing.
+
+_Try this._ Fine-tune a small pretrained encoder to predict incident severity from headlines and compare with a bag-of-words logistic regression; report macro F1 and calibration.
+
+**Stanford grad.**
+
+Efficient attention (linear, sparse, flash), long-context methods, mixture of experts, and the interpretability of attention (attention is not explanation). Multilingual and multimodal models. Sequence models for non-text data: transformers over time steps and over stations in spatio-temporal forecasting, and their inductive-bias trade-offs against graph convolutions.
+
+_Try this._ Replace the GRU in the spatio-temporal net with a small temporal transformer and the neighbor mixing with spatial attention; compare validation AP and training time on the M1.
+
+**PhD at Apple.**
+
+Language models are now general-purpose components: embeddings for retrieval, classifiers with no labels, and interfaces to systems. The research frontier spans scaling, alignment, efficiency, and evaluation. For a transport product the relevant questions are extracting structured facts from free-text reports reliably and cheaply, and doing it on device where privacy demands.
+
+_Try this._ Design an evaluation for a model that extracts route, direction and severity from free-text incident reports, including how you would build a labelled set and measure calibration of its confidence.
+
+**Check yourself.**
+
+<details>
+<summary>What is an embedding?</summary>
+
+A learned vector for a token, arranged so that tokens used in similar ways end up near each other.
+
+</details>
+
+<details>
+<summary>Why did attention replace recurrence?</summary>
+
+It relates every position to every other in one step, trains in parallel, and handles long-range dependencies that recurrent models forget.
+
+</details>
+
+### Topic: Large language models: pretraining, fine-tuning, prompting, retrieval and evaluation
+
+**Goal.** Know what a large language model is, how it is trained and adapted, how to use one responsibly in a system, and how to evaluate it.
+
+**Age 5.**
+
+A large language model has read a huge amount of writing and learned to guess the next word so well that it can answer questions and write stories.
+
+It is not always right, so people check its answers, and they give it the right documents to read when they want facts.
+
+_Try this._ Ask an adult to ask a chatbot what time it is. It probably cannot know. Why not? Because it has no clock unless someone gives it one.
+
+**Middle school.**
+
+Pretraining: the model reads billions of words and learns to predict the next token. Fine-tuning: it is trained a little more on examples of the behavior you want. Prompting: you write instructions and examples in the input. Retrieval-augmented generation: you search your documents and put the relevant ones in the prompt so the model answers from them.
+
+Models can be confidently wrong (hallucinate), so evaluation matters: test on questions with known answers and measure how often the model is right.
+
+_Try this._ Write a prompt asking a model to turn 'Injury collision on I-880 N at Mission Blvd' into route, direction and location fields. Try three headlines. Where does it guess?
+
+**High school.**
+
+The training pipeline: pretraining on web-scale text, supervised fine-tuning on demonstrations, preference tuning (reinforcement learning from human feedback or direct preference optimization). Scaling laws: loss falls predictably with model size, data and compute. Inference: sampling, temperature, context windows, cost per token.
+
+Adaptation: prompting (instructions, few-shot examples, structured output), parameter-efficient fine-tuning (LoRA), retrieval (embeddings, a vector index, chunking), and tool use. Evaluation: held-out benchmarks, task-specific test sets, and human review. On a 16 GB Mac mini, a quantized 3 to 8 billion-parameter model runs locally but competes with training for memory.
+
+_Try this._ Run a small quantized open model locally, ask it to extract structured fields from 50 incident headlines, and measure exact-match accuracy against fields you labelled by hand.
+
+**Stanford undergrad.**
+
+Architecture and training at scale: decoder-only transformers, tokenizer design, data curation and deduplication, mixed precision, distributed training. Alignment methods and their failure modes; hallucination as a calibration problem; retrieval as grounding. Evaluation science: contamination, benchmark saturation, LLM-as-judge and its biases, and why task-specific evaluation sets beat leaderboards.
+
+Systems: latency and cost, caching, batching, structured decoding, guardrails, and observability for model calls. For this project: an LLM could parse free-text reports or draft the weekly monitoring summary, never decide alerts.
+
+_Try this._ Build a small retrieval-augmented question answerer over the repository's documentation with a local embedding model, and write a 30-question evaluation set with exact answers to score it.
+
+**Stanford grad.**
+
+Research threads: scaling and data efficiency, reasoning and tool use, long context, interpretability (probing, circuits), safety and alignment, efficient inference (quantization, speculative decoding, distillation), and evaluation methodology. The open scientific question of what capabilities emerge from next-token prediction and why.
+
+_Try this._ Design an experiment measuring whether an LLM's extracted incident severity improves the traffic model's average precision over the raw feed's field, controlling for the cases where the feed's field is missing.
+
+**PhD at Apple.**
+
+Deploying LLMs in products is a discipline of evaluation, cost and risk: task-specific evals with regression tests, human review loops, privacy of prompts, on-device versus server inference, and clear boundaries on what the model may decide. The research frontier includes reliable structured extraction, calibrated abstention, and agents that act through tools with verifiable behavior.
+
+_Try this._ Write the evaluation and safety plan for using an on-device language model to summarize the weekly monitoring report for a traffic operations team, including what it must never assert.
+
+**Check yourself.**
+
+<details>
+<summary>What is retrieval-augmented generation for?</summary>
+
+Grounding answers in your documents so the model reads facts instead of recalling them, which cuts hallucination and keeps knowledge current.
+
+</details>
+
+<details>
+<summary>Why evaluate on your own test set rather than a public benchmark?</summary>
+
+Public benchmarks may be in the training data and rarely match your task; a held-out set of your own questions measures what you will ship.
+
+</details>
+
+### Topic: Generative models: autoencoders, variational autoencoders, GANs and diffusion
+
+**Goal.** Understand models that learn to produce data, the ideas behind each family, and what they are for beyond pictures.
+
+**Age 5.**
+
+Some learning machines do not sort things; they make new things, like drawing a car that has never existed, by learning what cars usually look like.
+
+_Try this._ Draw a car from memory. You are using what you learned about cars to make a new one. A generative model does the same with numbers.
+
+**Middle school.**
+
+An autoencoder squeezes data through a narrow middle and learns to rebuild it; the middle becomes a compact summary. A variational autoencoder makes that middle a probability so you can sample new data. A GAN trains a forger against a detective until the forgeries look real. A diffusion model learns to remove noise step by step, so starting from pure noise it can produce a realistic sample.
+
+For traffic, generative models can produce realistic fake days for testing or fill in missing sensor data.
+
+_Try this._ Take a daily speed profile, add random noise to it, and try to guess the original. That guessing, repeated many times, is what a diffusion model learns.
+
+**High school.**
+
+Autoencoders and reconstruction error as an anomaly score; VAEs with a latent Gaussian and a loss of reconstruction plus a KL term; GANs with a generator and discriminator and their training instability; diffusion models as learned denoising over many steps with a simple noise-prediction loss. Evaluation is hard: likelihood is not quality; sample-quality scores exist for images.
+
+Uses: synthetic data, imputation, compression, and learning representations that transfer.
+
+_Try this._ Train a small autoencoder on daily speed profiles in PyTorch; use reconstruction error to rank days by strangeness and inspect the top five.
+
+**Stanford undergrad.**
+
+The ELBO and amortized variational inference behind VAEs; the reparameterization trick; posterior collapse. GANs as a minimax game, mode collapse, Wasserstein formulations. Diffusion: forward noising process, reverse process, score matching, the connection to stochastic differential equations, classifier-free guidance. Normalizing flows as exact-likelihood models.
+
+Time-series generation and imputation with these families; conditional generation (a day given weather and calendar) as a simulator for evaluation.
+
+_Try this._ Derive the VAE loss from the ELBO and implement a conditional VAE that generates daily profiles given weekday and rain; compare generated and real distributions of the 5 pm speed.
+
+**Stanford grad.**
+
+Diffusion models' dominance in images and their extension to audio, video, molecules and time series; latent diffusion for efficiency; evaluation via distribution metrics and downstream utility. Generative models for scientific simulation and for data augmentation under distribution shift. Privacy risks (memorization) and the synthetic-data trade-offs.
+
+_Try this._ Train a small diffusion model on daily station profiles and test whether augmenting training with its samples improves the classifier's average precision on rare rainy-day episodes.
+
+**PhD at Apple.**
+
+Generative modelling is now infrastructure for media, science and simulation. The research frontier includes fast sampling, controllability, evaluation, and world models that couple generation with dynamics. For transport, generative simulators of traffic conditioned on interventions are a path to counterfactual evaluation of alerts and routing.
+
+_Try this._ Propose a generative traffic simulator conditioned on incidents and weather, trained on PeMS history, and the validation that would let you trust its counterfactuals.
+
+**Check yourself.**
+
+<details>
+<summary>What does the KL term in a VAE do?</summary>
+
+It keeps the learned latent distribution close to a simple prior so that sampling from the prior produces sensible outputs.
+
+</details>
+
+<details>
+<summary>Why is likelihood a poor measure of sample quality?</summary>
+
+A model can assign high likelihood to data while producing blurry or degenerate samples; likelihood and perceptual quality measure different things.
+
+</details>
+
+### Topic: Transfer learning, self-supervision and foundation models
+
+**Goal.** Reuse what a model learned elsewhere, learn from unlabeled data, and know when a pretrained model beats training from scratch.
+
+**Age 5.**
+
+If you already know how to ride a bicycle, learning a scooter is faster. Learning machines can also start from something they already learned instead of starting from zero.
+
+_Try this._ Name one thing you learned that made a new thing easier. That is transfer.
+
+**Middle school.**
+
+Transfer learning takes a model trained on a big dataset and adapts it to a small one: keep the early layers, retrain the last part. Self-supervised learning makes its own labels from unlabeled data, like predicting a hidden word or a missing patch, so it can learn from everything. Foundation models are big models pretrained this way that many tasks reuse.
+
+For traffic, a model pretrained on all of California's PeMS could be fine-tuned for Fremont with less data.
+
+_Try this._ Cover part of a sentence with your hand and guess the missing word. You just made a label with no teacher.
+
+**High school.**
+
+Feature extraction versus fine-tuning; learning rates for pretrained layers; catastrophic forgetting. Self-supervised objectives: masked prediction, contrastive learning (pull similar views together), next-step prediction. Foundation models in vision, language and now time series; zero-shot and few-shot use.
+
+Practical rule: with little labelled data, start pretrained; with lots of in-domain data and a narrow task, training from scratch on tabular features still wins, which is why LightGBM is this project's production model.
+
+_Try this._ Pretrain a small network on all Fremont stations with a masked-step objective, then fine-tune it on one station's classification task and compare with training that station's model from scratch on the same data.
+
+**Stanford undergrad.**
+
+Why transfer works (shared low-level features, representations as inductive bias), negative transfer, domain adaptation and domain shift; contrastive learning theory (InfoNCE as a mutual-information bound); masked autoencoders; scaling behavior of pretraining. Time-series foundation models and their mixed evidence against tuned task-specific models.
+
+Evaluating transfer honestly: matched compute and data budgets, and the leakage risk when pretraining data overlaps the test period.
+
+_Try this._ Implement a contrastive pretraining on station-day windows (two augmented views of the same window as positives), then a linear probe for the slow-episode label; report linear-probe AP against raw features.
+
+**Stanford grad.**
+
+Representation quality and its measurement (probes, transfer suites), the role of data curation in pretraining, parameter-efficient adaptation (adapters, LoRA), continual pretraining, and model merging. Foundation models for spatio-temporal data and the open question of whether traffic dynamics transfer across cities.
+
+_Try this._ Design an experiment testing whether pretraining on PeMS District 4 improves 60-minute skill in Fremont, with a leakage-safe split in time and space.
+
+**PhD at Apple.**
+
+The economics of pretraining (one large cost amortized over many tasks) reshaped ML organizations; the research frontier includes what pretraining learns, how to adapt safely, and how to evaluate foundation models on tasks they were not built for. For transport, a state-wide pretrained traffic model served to many cities is a plausible product and a research program.
+
+_Try this._ Write the research plan for a California-wide traffic foundation model: data, objective, evaluation across cities, and the failure modes you would expect.
+
+**Check yourself.**
+
+<details>
+<summary>When does training from scratch beat a pretrained model?</summary>
+
+With plenty of in-domain data and a narrow task, especially tabular problems where boosted trees on engineered features remain strongest.
+
+</details>
+
+<details>
+<summary>What makes self-supervision possible?</summary>
+
+The data contain their own supervision: hide part of an input and predict it from the rest.
+
+</details>
+
+### Read and watch, explained at every level
+
+#### [Understanding Deep Learning (Prince)](https://udlbook.github.io/udlbook/)
+
+_book · free · now chapters 10 to 18: convolutions, transformers, graphs, generative models_
+
+**Age 5.** A newer big book about deep learning, free to read, with lots of clear pictures that show what each part of a network does.
+
+**Middle school.** Simon Prince's textbook (2023), free as a PDF with notebooks. It covers supervised learning, networks, training, measuring performance, regularization, convolutional and recurrent and transformer networks, graph networks, and generative models. It is more modern and more visual than the older Deep Learning book. Read the early chapters after phase 6.
+
+**High school.** Chapters 1 to 9 are the modern version of lesson 9: networks, loss functions, fitting, gradients and initialization, measuring performance, and regularization, each with figures that make the idea visible. Chapter 13 on graph neural networks covers the neighbor mixing of the spatio-temporal net. The notebooks let you run every figure.
+
+**Stanford undergrad.** Prince's treatment of why deep networks generalize, of the loss landscape, and of the transformer architecture is the clearest current textbook account, and it includes the recent empirical findings (double descent, scaling) that Goodfellow predates. Chapter 12 on transformers is the reading before lesson 8's attention material.
+
+**Stanford grad.** The chapters on generative models (VAEs, GANs, normalizing flows, diffusion) are a compact, correct introduction with the math intact, and the chapter on ethics is unusually careful for a technical text. Use it as the reference when reading current papers.
+
+**PhD at Apple.** A free, modern, rigorous textbook is a public good; it is the one to recommend to a new graduate student and the one to cite for standard architectures in the current idiom. Its figures are also the model for how to draw a network in a paper.
+
+#### [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/)
+
+_book · free · now chapters 7, 8 and 11: convolutions and attention_
+
+**Age 5.** A free online textbook where every idea comes with code you can run, about teaching computers using layers of simple math.
+
+**Middle school.** Chapters 3 to 5 cover linear and softmax regression and multilayer perceptrons with PyTorch code you can execute. Chapters 9 and 10 cover recurrent networks (RNN, GRU, LSTM) and how to train them well. Run the notebooks; each section ends with exercises that are worth doing.
+
+**High school.** Chapter 5's multilayer perceptron from scratch mirrors lesson 9's numpy network; chapter 9 explains why GRUs can remember and forget, which is the sequence half of the spatio-temporal network. The exercises about changing hidden size and learning rate are the experiments to actually run on the traffic data.
+
+**Stanford undergrad.** d2l's coverage of optimization (chapter 12), attention (chapter 11) and computational performance (chapter 13) is deeper than most books and free. Its consistent code style makes it easy to lift components, and its treatment of truncated backpropagation through time explains what a recurrent model can and cannot learn from a 12-step window.
+
+**Stanford grad.** Its graph-neural-network coverage is thin; use CS224W for that. Its attention chapters are the bridge to spatio-temporal transformers, and its chapter on computational performance (asynchrony, memory, multi-device) is the right background before profiling on unified memory.
+
+**PhD at Apple.** A living, open textbook with code in several frameworks is itself a research-infrastructure achievement. Cite it for standard architectures, use its implementations as reference points when reproducing papers, and note its authors' choice to include the messy practical chapters most textbooks omit.
+
+#### [CS231n: Convolutional Neural Networks for Visual Recognition, course notes](https://cs231n.github.io/)
+
+_course · free · free; the convolutional foundations with worked counts_
+
+**Age 5.** The notes from a famous class that taught computers to see, with drawings of how a picture becomes numbers and then a label.
+
+**Middle school.** Stanford's computer vision course notes are free online: image classification, linear classifiers, optimization, backpropagation, neural networks, convolutional networks, and how to train them. The notes are written for beginners with some Python, and the assignments build a network from scratch.
+
+**High school.** Read the convolutional networks module: filters, stride, padding, pooling, and the famous architectures, with the parameter and computation counts worked out. The backpropagation and neural-network modules are a good second pass over the traffic course's lesson 9.
+
+**Stanford undergrad.** The notes' treatment of initialization, batch normalization, dropout and learning-rate schedules is compact and correct, and the assignment code (numpy implementations of layers) is the vision analogue of the from-scratch rule. The lecture videos add transfer learning, detection and segmentation.
+
+**Stanford grad.** The course predates vision transformers and self-supervised vision; read it for the convolutional foundations, then the recent literature for the rest. Its assignment design is a model for teaching by implementation.
+
+**PhD at Apple.** CS231n shaped how a generation learned deep learning; knowing it tells you what practitioners take for granted. For a lead, its assignments are a fair calibration of what 'can implement a network from scratch' means.
+
+#### [The Illustrated Transformer (Alammar)](https://jalammar.github.io/illustrated-transformer/)
+
+_essay · free · free; read before the paper_
+
+**Age 5.** A web page with drawings that shows how a computer reads a sentence by paying attention to the words that matter, a bit like how you look at the important parts of a picture.
+
+**Middle school.** Jay Alammar's blog post explains the transformer, the model behind modern language models, with step-by-step pictures: how words become numbers, how attention lets each word look at the others, and how layers stack. Free, and readable without much math. Read it before any paper on transformers.
+
+**High school.** Follow the pictures of self-attention: queries, keys and values, the dot-product scores, the softmax, and the weighted sum. Then multi-head attention and the encoder-decoder structure. When you can redraw the attention diagram from memory, read Attention Is All You Need with the post open beside it.
+
+**Stanford undergrad.** The post is the intuition layer for the attention equation softmax(QKᵀ/√d)V; pair it with a from-scratch implementation (Karpathy's GPT lesson) so the pictures become code. Its companion posts on GPT-2 and on BERT extend the same method to decoder-only and encoder-only models.
+
+**Stanford grad.** It omits positional encodings' subtleties, training dynamics and scaling; those come from the papers and from Prince's chapter 12. For spatio-temporal traffic models, the relevant transfer is attention over stations (spatial attention) and over time steps, which later traffic transformers use.
+
+**PhD at Apple.** Alammar's posts are the standard first explanation across the industry; for briefing non-specialists on what a language model does, they remain the reference, and their visual grammar is worth adopting in talks.
+
+#### [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762)
+
+_paper · free · free; the paper, with the post open beside it_
+
+**Age 5.** The paper that introduced the transformer, the design inside today's language models, by showing that paying attention to all words at once works better than reading them one by one.
+
+**Middle school.** A research paper from 2017 that proposed the transformer for translating languages. Its main idea is self-attention, where every word looks at every other word and decides what matters. It replaced the older recurrent networks and became the base of modern language models. Read the introduction and look at the architecture figure after the Illustrated Transformer.
+
+**High school.** Read it with the Illustrated Transformer open: the attention equation, multi-head attention, positional encodings, the encoder-decoder layout and the training setup. The results table compares with the recurrent baselines; note the compute cost column.
+
+**Stanford undergrad.** Work through the model dimensions and parameter counts, the reason for scaling by the square root of the key size, the role of residuals and layer normalization, and the label smoothing and learning-rate warmup in training. Then implement a single encoder layer from the paper in PyTorch.
+
+**Stanford grad.** The paper's details (sinusoidal positions, dropout placement) have been revised by later work; understand what survived (attention, residual stacks) and what changed (pre-norm, rotary positions, decoder-only). Its influence is the case study in how an architecture spreads.
+
+**PhD at Apple.** A canonical citation; for research, the interesting questions are the ones it opened (efficiency of attention, positional information, what attention learns) rather than what it settled.
+
+#### [Hugging Face LLM course](https://huggingface.co/learn/llm-course/chapter1/1)
+
+_course · free · free; the practical stack for language models_
+
+**Age 5.** A free online class that shows how to use ready-made language models, like borrowing a very well-read robot and teaching it your job.
+
+**Middle school.** A free course from Hugging Face, the company behind the most-used library for language models. Chapters 1 to 4 explain how transformer models work and how to download, run and fine-tune one; later chapters cover datasets, tokenizers and common language tasks. Everything runs in notebooks.
+
+**High school.** Do chapters 1 to 3 (transformers, using pretrained models, fine-tuning a classifier) and apply chapter 3 to the 511 headlines: fine-tune a small encoder to predict severity. Chapter 6 on tokenizers explains why 'I-880' may split oddly and how to handle it.
+
+**Stanford undergrad.** The course teaches the practical stack (models, datasets, tokenizers, training loops with the accelerate library) that most applied NLP uses; understand what the abstractions hide (padding, attention masks, learning-rate schedules) by reading the code of one training step.
+
+**Stanford grad.** Later chapters and the companion courses (agents, reinforcement learning from human feedback) track current practice; the course is a good index of what the ecosystem considers standard at any moment.
+
+**PhD at Apple.** The Hugging Face ecosystem is where much of applied NLP lives; its course is also a reference for how open model sharing and evaluation are organized, which matters for reproducibility and licensing decisions in a product.
+
+#### [Speech and Language Processing, 3rd edition draft (Jurafsky, Martin)](https://web.stanford.edu/~jurafsky/slp3/)
+
+_book · free · free; the textbook for the language chapters_
+
+**Age 5.** A big free book about how computers handle language, from letters and words to whole conversations.
+
+**Middle school.** The standard textbook on natural language processing, free online as a draft that the authors update. It covers text processing, n-gram models, embeddings, neural networks for text, transformers and large language models, and speech. Read chapters as references when a topic comes up.
+
+**High school.** The chapters on tokenization and regular expressions, on vector semantics and embeddings, on transformers and on large language models are the textbook version of the language topic. Each ends with exercises; the embeddings chapter's exercises can be done on the incident headlines.
+
+**Stanford undergrad.** Jurafsky and Martin give the linguistic and statistical background (n-gram language models, smoothing, evaluation with perplexity) that makes modern models intelligible as a continuation rather than a break. The chapters on fine-tuning and on alignment (including direct preference optimization) are current.
+
+**Stanford grad.** Its breadth (parsing, semantics, dialogue, speech) is the map of the field beyond language modelling, useful when a product needs structured extraction or dialogue rather than generation.
+
+**PhD at Apple.** A free, continuously revised textbook by leading researchers is the field's reference; its revision history is itself a record of how fast the field moved.
+
+#### [Build a Large Language Model (From Scratch) (Raschka)](https://github.com/rasbt/LLMs-from-scratch)
+
+_book · paid, code free · paid book, free code; a GPT you built yourself_
+
+**Age 5.** A book that builds a small language model step by step in code, so you can see every part instead of trusting a magic box.
+
+**Middle school.** Sebastian Raschka's book (paid) walks through implementing a GPT-style model in PyTorch: the tokenizer, the attention mechanism, the transformer blocks, pretraining on text, and fine-tuning for classification and for following instructions. The code is free on GitHub. It is the from-scratch rule applied to language models.
+
+**High school.** Chapters 2 to 5 build and pretrain a small model you can run on the Mac mini; chapters 6 and 7 fine-tune it. Type the code rather than copying it, and keep the model tiny so training takes minutes. When you finish, the Hugging Face abstractions will be transparent.
+
+**Stanford undergrad.** The value is completeness: every tensor shape is shown, the attention implementation is stepwise, and the training loop is explicit. Pair it with the original papers and with Karpathy's GPT lesson for a second perspective on the same architecture.
+
+**Stanford grad.** It stops at small scale; the scaling questions (data curation, distributed training, evaluation) are in the ultra-scale playbook and in CS336. Its instruction-tuning chapter is a compact account of supervised fine-tuning.
+
+**PhD at Apple.** A from-scratch implementation is the fastest route to reading LLM papers critically; for a lead, assigning it to an engineer is a reliable way to build a real mental model before they touch a production model.
+
+#### [Stanford CS336: Language Modeling from Scratch](https://cs336.stanford.edu/)
+
+_course · free · free lectures and assignments; how models are really built_
+
+**Age 5.** A university class where students build a language model from the very bottom, including collecting and cleaning the text it learns from.
+
+**Middle school.** A Stanford course whose lectures and assignments are public. Students implement everything: the tokenizer, the model, the training system, data cleaning and evaluation. It is demanding and current, and its assignment write-ups are worth reading even if you do not do them all.
+
+**High school.** Watch the lectures on tokenization, on the transformer and its variants, and on data. The assignments show how much of a language model is engineering (systems, data pipelines) rather than architecture.
+
+**Stanford undergrad.** The course's systems assignments (efficient attention kernels, distributed training, mixed precision) are the practical version of the scaling topic; its data assignment (filtering, deduplication) is the part most courses skip and most products get wrong.
+
+**Stanford grad.** Compare its curriculum with the ultra-scale playbook and with the papers on data curation; together they are the current state of the art in how language models are built, at a level that lets you read the industrial reports.
+
+**PhD at Apple.** The course is a snapshot of what a research lab considers foundational in 2026; for a lead, its assignments define what an engineer joining an LLM team should be able to do.
+
+#### [What are Diffusion Models? (Weng, Lil'Log)](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/)
+
+_essay · free · free; the generative-model survey to read first_
+
+**Age 5.** A long web post that explains how a computer can draw a picture by starting from noise and cleaning it up bit by bit.
+
+**Middle school.** Lilian Weng's blog post explains diffusion models, the method behind modern image generators: add noise to data step by step, train a network to undo one step, then generate by starting from noise. It compares diffusion with GANs and VAEs. Free; it is long and mathematical in places, so read it in two sittings.
+
+**High school.** Read the first sections (the forward and reverse processes and the training objective) and skim the later ones on speeding up sampling and on conditioning. Then implement a tiny diffusion model on one-dimensional data (daily speed profiles) to see the idea work.
+
+**Stanford undergrad.** The post derives the variational objective, the simplification to noise prediction, and the connection to score matching; it is a faithful and compact version of the original papers. The later sections on classifier-free guidance and on fast samplers track the field.
+
+**Stanford grad.** Weng's other posts (on attention, on self-supervised learning, on prompt engineering and on agents) are similarly careful surveys; her blog is a reliable index of a topic's literature.
+
+**PhD at Apple.** A well-maintained survey post is often more useful than a review paper because it is revised; cite the papers, but read the post first.
+
+#### [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/)
+
+_course · free · the vision and text lessons, with transfer learning throughout_
+
+**Age 5.** A free class where you train a real neural network on the very first day and only later learn all the details, like learning to ride a bike before studying how it works.
+
+**Middle school.** Jeremy Howard's course is top-down: you build working models first (on images, text and tables) and learn the theory as you need it. It uses the fastai library built on PyTorch. It is good for confidence and full of practical tricks that make training work.
+
+**High school.** Its tabular lessons (random forests first, then neural networks on tables) and its training tricks (a learning-rate finder, the one-cycle schedule) are directly usable in stage 9. The lesson on embeddings for categorical variables shows how to give station identity to a network, which is how the spatio-temporal net could learn per-station behavior.
+
+**Stanford undergrad.** The course's emphasis on iterating quickly and inspecting data is a counterweight to theory-first study, and its stated view that tree ensembles usually win on tabular data matches the evidence and this project's production choice. Its chapter on data ethics is short and worth the time for anyone whose model will issue alerts to drivers.
+
+**Stanford grad.** The fastai library's abstractions can hide details you need for a custom model such as the spatio-temporal network. Learn the ideas from the course, then implement in plain PyTorch. The course's lessons on collaborative filtering and on tabular embeddings are the clearest introduction to learned representations for categorical data.
+
+**PhD at Apple.** fast.ai's research output (training-efficiency results, transfer learning for text) shows that practitioner-driven groups produce research results. Its philosophy of accessible deep learning shaped how many teams onboard engineers, and its lesson structure is a reasonable template for an internal course on this pipeline.
+
+### Build
+
+- Train a small convolutional network on a public digits dataset on MPS, then fine-tune a pretrained ResNet on a tiny set of your own photos.
+- Fine-tune a small pretrained encoder to predict 511 incident severity from headlines; compare with a bag-of-words logistic regression.
+- Run a quantized open language model locally, extract route, direction and severity from 50 headlines, and score exact match against hand labels; build a small retrieval-augmented question answerer over the repository's docs with a 30-question eval set.
+- Train an autoencoder on daily speed profiles and rank days by reconstruction error; train a conditional VAE that generates profiles given weekday and rain.
+- Pretrain a masked-step model on all Fremont stations and compare a linear probe with raw features on the slow-episode label.
+
+### Done when
+
+- A headline severity classifier with macro F1 and calibration next to the bag-of-words baseline.
+- An extraction accuracy number for the local LLM with an error analysis of its worst ten cases.
+- A generated-profile plot next to real ones, with a distribution comparison of the 5 pm speed.
+
+### Pitfalls
+
+- Fine-tuning with a learning rate meant for training from scratch.
+- Trusting an LLM's output without an eval set.
+- Judging generative samples by eye alone.
+
+## Phase 9: ML engineering and scale
+
+_weeks 52–62 · ≈70 h · builds stages 12 and 13, a containerized service_
+
+**Goal.** The pipeline runs itself on the Mac mini, ships as a service that could run anywhere, and you know what changes at scale.
+
+### What you need to learn
+
+- Reproducibility: seeds, pinned versions, a Makefile, one command from raw to report; the one-feature-module rule and train-serve skew.
+- Testing ML code with fixtures and golden files; experiment tracking; a model registry as a folder with a manifest; rollback.
+- Scheduling with launchd; logging and alerting; monitoring: drift with PSI, performance decay, retraining policy.
+- APIs with FastAPI, containers with Docker, cloud basics; batch versus online serving; service contracts and runbooks.
+- Why GPUs are fast; data, tensor and pipeline parallelism; mixed precision; profiling; scaling laws.
 
 ### Lesson 12: Shipping it on one Mac mini: memory, scheduling, monitoring
 
@@ -2977,11 +4338,133 @@ Nothing checks the new model before it replaces the old one. A bad day of data p
 - 'Monitoring is accuracy.' Freshness and missing data fail first; accuracy is the last thing to notice.
 - 'More memory would fix it.' Filtering at ingest, float32 and one job at a time fix it; memory would only hide the design.
 
+### Topic: APIs, containers and the cloud: serving a model beyond one Mac
+
+**Goal.** Wrap a model in a service, package it so it runs anywhere, and know what changes when it leaves the Mac mini.
+
+**Age 5.**
+
+Right now the helper lives on one small computer. To let a phone app ask it questions, we give it a door with a doorbell: the app rings, asks 'is I-880 slow?', and the helper answers.
+
+A container is a lunchbox with everything the helper needs packed inside, so it works on any computer.
+
+_Try this._ Play doorbell: one person is the app, one is the helper. The app asks a question at the door and the helper answers. That is an API.
+
+**Middle school.**
+
+An API is an agreed way for programs to talk: the app sends a request (station, horizon) and gets a JSON answer (probability). A web framework such as FastAPI turns a Python function into that door. A container (Docker) packages the code, Python and libraries into one image that runs the same everywhere. The cloud is renting computers by the hour to run it.
+
+_Try this._ Write a Python function `predict(station_id, horizon)` that returns the latest probability from `predictions_latest.json`. That function is the whole API before the door is added.
+
+**High school.**
+
+FastAPI: define request and response models, add an endpoint, run with a server, read the auto-generated docs. Docker: a Dockerfile lists the base image and install steps, `docker build` and `docker run` package and run it, `.dockerignore` keeps data out. Cloud basics: a virtual machine, object storage for files, a scheduler, secrets management, and logs. Batch versus online serving: this project's 5-minute batch writes a file; an online service answers on demand.
+
+Security basics: never expose secrets, validate inputs, rate-limit, use HTTPS.
+
+_Try this._ Wrap the predictor in a FastAPI endpoint, containerize it, run it on the Mac, and call it with `curl`. Then measure latency for 100 requests.
+
+**Stanford undergrad.**
+
+Service design: statelessness, health checks, versioned endpoints, timeouts and retries, idempotency, structured logging with request ids. Model serving patterns: model loaded once per process, warm-up, batching, shadow deployments, canary releases, rollback. Containers versus virtual machines; orchestration (Kubernetes) at a level of understanding; infrastructure as code. Cost and latency budgets as design inputs.
+
+Data movement: object storage as the shared truth, caching, and the feature-consistency problem between batch and online paths.
+
+_Try this._ Design the API contract (schemas, error codes, versioning) for the alert service and implement it with a golden test that replays a stored day through the endpoint.
+
+**Stanford grad.**
+
+Reliability engineering for ML services: service-level objectives, observability (metrics, traces, logs), load testing, graceful degradation (serve persistence when the model fails), and multi-region concerns. Edge deployment (on-device) versus cloud, and the privacy and latency trade-offs. Security threats specific to ML endpoints (model extraction, adversarial inputs).
+
+_Try this._ Write the runbook for the alert service: what alerts fire, what the on-call does for each, and how to roll back a bad model in under five minutes.
+
+**PhD at Apple.**
+
+Serving at scale is a systems research area: inference optimization, hardware-aware scheduling, multi-tenant model serving, and the economics of inference. On-device serving flips the constraints to energy, memory and privacy, which the M1 sandbox mimics. The organizational lesson: the model is a small part of the service, and the service is what users experience.
+
+_Try this._ Compare cloud batch, cloud online and on-device serving for a traffic alert product on cost, latency, privacy and failure modes, and recommend one with a migration path.
+
+**Check yourself.**
+
+<details>
+<summary>What does a container solve?</summary>
+
+Environment drift: the code, interpreter and libraries travel together, so the service runs the same on the Mac, a server or the cloud.
+
+</details>
+
+<details>
+<summary>Why keep serving stateless?</summary>
+
+Any instance can answer any request, which makes scaling, retries and rollbacks simple; state lives in storage, not in the process.
+
+</details>
+
+### Topic: Scaling: GPUs, distributed training and mixed precision
+
+**Goal.** Know why GPUs are fast, how training spreads across many of them, and what breaks when models and data outgrow one machine.
+
+**Age 5.**
+
+A GPU is a chip with thousands of tiny calculators that all work at once, so it can do the same small sum on a huge pile of numbers very fast. Big learning machines use many GPUs at once, like many cooks in one kitchen.
+
+_Try this._ Have four friends each add up a quarter of a long list of numbers, then add their four answers. That is parallel computing.
+
+**Middle school.**
+
+GPUs do many identical arithmetic steps in parallel, which is what matrix multiplication needs. Training a big model splits the work: data parallelism gives each GPU different batches and averages their gradient updates; model parallelism splits the model itself across GPUs. Mixed precision uses smaller numbers (16-bit) where it is safe, doubling speed and halving memory.
+
+The Mac mini's GPU shares memory with the CPU; there is no copying, but there is also no way to add more.
+
+_Try this._ Time a matrix multiplication of two 4096 × 4096 matrices on the CPU and on MPS. How many times faster is the GPU?
+
+**High school.**
+
+Throughput versus latency; memory bandwidth as the usual bottleneck; batch size and learning-rate scaling; data loading as the hidden bottleneck. Data parallelism with all-reduce of gradients; gradient accumulation to simulate large batches; mixed precision with loss scaling. Checkpointing and resuming. Profiling to find the actual bottleneck before optimizing.
+
+_Try this._ Profile the spatio-temporal net's training step on the M1 with the PyTorch profiler; report the share of time in data loading, forward, backward and optimizer, and speed up the largest.
+
+**Stanford undergrad.**
+
+Hardware: GPU architecture (streaming multiprocessors, memory hierarchy, tensor cores), roofline models, arithmetic intensity. Distributed training: data, tensor and pipeline parallelism, ZeRO-style sharding of optimizer state, communication costs and overlap, collective operations. Numerics: bfloat16 versus float16, loss scaling, numerically stable implementations.
+
+Scaling laws and compute-optimal training as the principled way to size a model for a budget.
+
+_Try this._ Compute the arithmetic intensity of the net's matrix multiplications and place them on a roofline for the M1 GPU; explain why small batches are bandwidth-bound.
+
+**Stanford grad.**
+
+Systems for large-scale training: schedulers, fault tolerance, elastic training, and the engineering of thousand-GPU runs; compilers and kernels (fused attention, custom kernels); inference optimization (quantization, KV caching, speculative decoding). The environmental and financial cost of scale as a research constraint.
+
+_Try this._ Estimate the compute, memory and time to train a city-scale spatio-temporal transformer on a year of statewide PeMS data on one GPU versus eight, and identify the parallelism strategy.
+
+**PhD at Apple.**
+
+Scale is the defining engineering fact of modern ML; the research frontier includes efficient architectures, training and inference at scale, and the science of scaling laws. The M1 sandbox teaches the discipline (profile, measure, budget) that transfers; the numbers do not.
+
+_Try this._ Write a compute budget for a production traffic model at state scale (training, monthly retrains, inference), and argue where the cost actually lands.
+
+**Check yourself.**
+
+<details>
+<summary>Why are GPUs fast for neural networks?</summary>
+
+Networks are mostly matrix multiplications, which are thousands of identical, independent multiply-adds that a GPU runs in parallel.
+
+</details>
+
+<details>
+<summary>What does mixed precision risk?</summary>
+
+Underflow and overflow in 16-bit numbers; loss scaling and keeping master weights in 32-bit are the standard fixes.
+
+</details>
+
 ### Read and watch, explained at every level
 
-#### Designing Machine Learning Systems (Huyen), chapters 1–3 and 7–9
+#### [Designing Machine Learning Systems (Huyen), chapters 1–3 and 7–9](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/)
 
-_paid; the systems view in one book_
+_book · paid · paid; the systems view in one book_
 
 **Age 5.** A book about how to make a learning machine work in the real world, day after day, not just once on a laptop.
 
@@ -2995,9 +4478,9 @@ _paid; the systems view in one book_
 
 **PhD at Apple.** The systems view it presents is the current industry consensus, and the research questions it leaves open (monitoring without labels, continual learning with guarantees, evaluation under feedback) are exactly the ones in lesson 12's highest level. For a lead it is also the book to align a team's vocabulary before an architecture discussion.
 
-#### Made With ML (Mohandas)
+#### [Made With ML (Mohandas)](https://madewithml.com/)
 
-_free; testing, monitoring and pipelines with code_
+_course · free · free; testing, monitoring and pipelines with code_
 
 **Age 5.** A free website that shows, with real code, how to build a learning machine the careful way, with tests and checks so it keeps working.
 
@@ -3011,9 +4494,9 @@ _free; testing, monitoring and pipelines with code_
 
 **PhD at Apple.** A free, opinionated, code-first MLOps curriculum is rare. Use it to align a team on practices before choosing a platform, and note which of its practices survive the translation to a single-machine deployment: most of them, which says something about what MLOps actually is.
 
-#### Machine Learning Engineering (Burkov)
+#### [Machine Learning Engineering (Burkov)](https://www.mlebook.com/)
 
-_free to read online_
+_book · free · free to read online_
 
 **Age 5.** A short, plain book about the whole job of building learning machines, from getting the data to keeping them running.
 
@@ -3027,9 +4510,57 @@ _free to read online_
 
 **PhD at Apple.** A concise practitioner reference is useful for writing internal guidelines, and its brevity forces prioritization, which senior engineers need more than additional content. Its structure is a reasonable skeleton for an engineering-standards document for an ML team.
 
-#### Hidden Technical Debt in Machine Learning Systems (Sculley et al., 2015)
+#### [Full Stack Deep Learning](https://fullstackdeeplearning.com/)
 
-_free; ten pages, read twice_
+_course · free · free; the production lifecycle with labs_
+
+**Age 5.** A free class about everything around a learning machine: getting data, keeping it working, and putting it inside a real app.
+
+**Middle school.** A free course (lectures and labs online) that covers the parts of a deep learning project that courses usually skip: data management, training infrastructure, testing, deployment, monitoring, and building a working product. Watch the deployment and monitoring lectures in phase 7.
+
+**High school.** Its labs build an end-to-end application (a text recognizer) with experiment tracking, tests, a web deployment and monitoring; the lectures on troubleshooting training and on data management are directly useful even for a tabular model. The lecture on deployment patterns frames the replay-mode choice.
+
+**Stanford undergrad.** The course's structure is the production ML lifecycle; its lectures on ethics, on project management and on team organization cover the non-technical failure modes. Compare its tooling choices with the minimal single-machine setup and extract principles.
+
+**Stanford grad.** Together with Huyen's book and Made With ML it forms the practical MLOps curriculum; its treatment of testing and troubleshooting neural network training is the most concrete of the three.
+
+**PhD at Apple.** Its evolution across years is a snapshot of how industry practice changed; for a lead, it is the course to point engineers to when they move from research code to a product.
+
+#### [Rules of Machine Learning (Zinkevich, Google)](https://developers.google.com/machine-learning/guides/rules-of-ml)
+
+_docs · free · free; 43 rules from hard experience_
+
+**Age 5.** A list of rules from an engineer who has built many learning machines, about what to do first and what mistakes to avoid.
+
+**Middle school.** A free document of 43 short rules from Google, such as 'do not be afraid to launch a product without machine learning', 'design and implement metrics first', and 'keep the first model simple'. Read it in an hour during phase 7; you will recognize this project in most of the rules.
+
+**High school.** Its phases (before ML, the first pipeline, feature engineering, slowed growth) match the course's phases. Rules about training-serving skew, about logging features at serving time, and about launching a simple model first are exactly the decisions in stages 12 and 13. Note which rules you have already broken.
+
+**Stanford undergrad.** The document encodes hard-won operational judgment: measure before modelling, prefer simple and debuggable, watch for silent failures, and treat feature logging as the foundation of everything later. Use it as a review checklist for the serving design.
+
+**Stanford grad.** Some rules are specific to large consumer products (ranking, human-in-the-loop labels) and do not transfer to a one-machine forecaster; identifying which is a useful exercise in generalizing engineering advice.
+
+**PhD at Apple.** A primary source on how a large organization thinks about ML systems, written before MLOps was a word; read with Sculley's technical-debt paper as a pair.
+
+#### [The ML Test Score (Breck, Cai, Nielsen, Salib, Sculley, 2017)](https://research.google/pubs/the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction/)
+
+_paper · free · free; the production-readiness rubric_
+
+**Age 5.** A checklist from engineers who ask: did you test your data, did you test your model, did you test the machine that runs it? You get points for each thing you checked.
+
+**Middle school.** A short free paper that gives a scoring rubric for how production-ready an ML system is: tests for data (is the schema right, are features useful), tests for model development (is the baseline beaten, are hyperparameters tuned), tests for infrastructure (can you roll back), and monitoring (is the model stale). Score this project against it in phase 7.
+
+**High school.** Each of the 28 items is a concrete test you could write for this pipeline: feature schema tests, a golden-day pipeline test, a check that serving features equal training features, a canary before model swap, alerts on data freshness. Turn the rubric into a `tests/` folder plan.
+
+**Stanford undergrad.** The rubric operationalizes the technical-debt paper; its scoring (points for manual checks, more for automated ones) encodes the principle that unautomated checks decay. Use it to prioritize what stage 13 automates first.
+
+**Stanford grad.** It predates data-validation tooling and drift libraries but defines what they should do; reading it explains why those tools exist and what they still miss (feedback loops, label delay).
+
+**PhD at Apple.** A rare attempt to quantify production readiness; its limits (a checklist cannot weight items by risk) point toward risk-based test design, which is an open engineering problem in ML systems.
+
+#### [Hidden Technical Debt in Machine Learning Systems (Sculley et al., 2015)](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html)
+
+_paper · free · free; ten pages, read twice_
 
 **Age 5.** A short paper by people who build big systems, saying: the learning part is small, and the messy parts around it are big and bite you later if you are not careful.
 
@@ -3043,9 +4574,9 @@ _free; ten pages, read twice_
 
 **PhD at Apple.** A foundational engineering paper whose legacy is the field of ML systems and MLOps. At your level the exercise is to separate which debts are inherent to ML (data dependencies, feedback) from which are ordinary software engineering, and to identify where research, rather than discipline, could reduce the inherent ones.
 
-#### launchd.info and the pytest documentation
+#### [launchd.info and the pytest documentation](https://www.launchd.info/)
 
-_free_
+_docs · free · free_
 
 **Age 5.** Instructions for two tools: one that makes the Mac run a program on a schedule by itself, and one that runs all your checks with a single command.
 
@@ -3059,16 +4590,97 @@ _free_
 
 **PhD at Apple.** Tooling choices are context-dependent. The durable skill is specifying a job's contract, idempotence, timeout, alerting, and retry policy, independently of the scheduler, so that migrating from launchd to a cluster scheduler later is mechanical rather than a redesign.
 
+#### [FastAPI documentation](https://fastapi.tiangolo.com/)
+
+_docs · free · free; a door on the predictor in an afternoon_
+
+**Age 5.** The manual for a tool that gives your program a door on the internet, so other programs can knock and ask questions.
+
+**Middle school.** FastAPI is a free Python framework for building web APIs. Its tutorial shows how to turn a function into an endpoint, define what requests and responses look like, and run a server, with automatically generated interactive documentation. The first ten tutorial pages are enough to wrap the predictor.
+
+**High school.** Read the tutorial through request bodies, path and query parameters, response models and error handling. Wrap the predictor: a request with station and horizon, a response with probability and alert. Try the automatic docs page and call the endpoint from the command line.
+
+**Stanford undergrad.** FastAPI is built on type hints and a validation library; understand how validation, serialization and documentation come from the same models, and how dependency injection structures shared resources such as a loaded model. Read the pages on background tasks and on testing with the test client.
+
+**Stanford grad.** Its async model and deployment guidance (workers, reverse proxies) are the practical side of serving; for batch-predict pipelines a web API is optional, for a dashboard it is the interface.
+
+**PhD at Apple.** Framework choice matters less than the service contract; FastAPI's docs are also a good example of documentation that teaches the underlying concepts rather than only the library.
+
+#### [Docker, Get started guide](https://docs.docker.com/get-started/)
+
+_docs · free · free; the service in a box_
+
+**Age 5.** Instructions for packing your program and everything it needs into one box that runs the same on any computer.
+
+**Middle school.** Docker packages code, its interpreter and libraries into an image that runs anywhere Docker runs. The Get Started guide walks through building an image from a Dockerfile, running it, keeping data outside the container, and sharing images. An afternoon is enough for this project's service.
+
+**High school.** Do the first parts of the guide (build, run, volumes), then write a Dockerfile for the prediction service: a slim Python base image, requirements installed, the code copied, the model files mounted from outside. Keep data and secrets out of the image.
+
+**Stanford undergrad.** Understand layers and caching (order your Dockerfile so dependencies are cached), image size, multi-stage builds, and the difference between an image and a container. Know what a container does not isolate (the kernel) and what that means for security.
+
+**Stanford grad.** Containers are the unit of deployment on orchestration platforms; the guide's later sections on Compose and on multi-container apps are the step toward a small stack (service, scheduler, monitoring). For Apple silicon, note multi-architecture images.
+
+**PhD at Apple.** Containerization is the boundary that makes reproducibility and deployment mechanical; the research-relevant question is whether your experiment can be rerun from an image and a data hash a year later.
+
+#### [PyTorch distributed overview](https://pytorch.org/tutorials/beginner/dist_overview.html)
+
+_docs · free · free; what you would need past one machine_
+
+**Age 5.** The manual page about using many computers or chips at once to train one learning machine faster.
+
+**Middle school.** PyTorch's overview of distributed training explains the main options: data parallelism (every device gets different batches and they average their updates), and ways to split a model across devices when it is too big for one. It points to tutorials for each. Read it to understand what you would need if the model outgrew the Mac mini.
+
+**High school.** Read the overview and the DistributedDataParallel tutorial to see the pattern: one process per device, a shared training script, gradients averaged with an all-reduce. You cannot run it meaningfully on one Mac, but reading it prepares you for any cloud GPU.
+
+**Stanford undergrad.** Understand process groups, collective operations, the cost model of gradient synchronization, and the fully sharded variant that partitions optimizer state and parameters. The tutorials on checkpointing and on elastic training cover the operational side.
+
+**Stanford grad.** Distributed training is where systems knowledge (communication, memory hierarchy) meets ML; the overview links the pieces you will meet in the ultra-scale playbook and in any large-model paper's training section.
+
+**PhD at Apple.** The distributed stack is a research area in itself (compilers, sharding strategies, fault tolerance); for a lead, the practical question is which parallelism a model needs and what it costs in engineering time.
+
+#### [The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)](https://huggingface.co/spaces/nanotron/ultrascale-playbook)
+
+_book · free · free; how the largest models are actually trained_
+
+**Age 5.** A free online book about training gigantic language models on hundreds of chips at once, with pictures of how the work is split up.
+
+**Middle school.** Hugging Face's playbook explains how large language models are trained across many GPUs: splitting data, splitting the model, splitting the layers, and keeping all the chips busy. It reports thousands of experiments. It is advanced; read the introduction to see how much engineering scale involves.
+
+**High school.** Read the sections on data parallelism and on memory (activations, optimizer state) to understand why a model's memory is several times its parameter count, and how mixed precision and gradient accumulation help. The interactive figures make the trade-offs concrete.
+
+**Stanford undergrad.** The playbook is the current practical reference on parallelism strategies (data, tensor, pipeline, context), on overlapping communication with computation, and on choosing a configuration for a given cluster. Its benchmarks are reproducible and its code is open.
+
+**Stanford grad.** Compare with the academic papers on sharding and pipeline parallelism; the playbook's contribution is measurement across configurations. For anyone planning a large training run, it is the checklist.
+
+**PhD at Apple.** Open, measured engineering knowledge of this kind is rare; the playbook is both a reference and a model of how to publish systems results.
+
+#### [Scaling Laws for Neural Language Models (Kaplan et al., 2020)](https://arxiv.org/abs/2001.08361)
+
+_paper · free · free; measure before assuming bigger helps_
+
+**Age 5.** A paper that found that bigger models trained on more text get better in a very predictable way, like a line on a graph.
+
+**Middle school.** Researchers trained language models of many sizes and found that the loss falls smoothly and predictably as model size, data and compute grow, following power laws. That predictability is why companies can plan enormous training runs. Read the introduction and the main figures.
+
+**High school.** Look at the figures relating loss to parameters, tokens and compute; note that architecture details mattered less than scale. Later work (compute-optimal training) revised how to split a budget between model size and data. The lesson for any project: measure how your metric changes with data size before assuming a bigger model will help.
+
+**Stanford undergrad.** The paper's methodology (fit power laws across orders of magnitude, hold other factors fixed) is a template for empirical scaling studies; its revision by compute-optimal analyses shows the importance of tuning learning rates per scale. Apply the method to the traffic model: skill against months of data.
+
+**Stanford grad.** Scaling laws organize much of current research on large models; their limits (task-specific behavior, data quality, emergence claims) are active debates. For forecasting, the analogous question is whether more stations and years keep improving skill.
+
+**PhD at Apple.** Understanding scaling is now part of research strategy; the open questions include what scales with what, and where data quality dominates quantity.
+
 ### Build
 
-- `19_predict_live.py` in replay mode over yesterday's file; `20_monitor.py`; four launchd plists.
-- `make setup` and `make all` that rebuild features, models and the report from raw.
-- A golden-file test: serving features equal training features for one stored day, bit for bit.
-- A memory and time line in every stage's log; a README per stage.
+- `19_predict_live.py` in replay mode; `20_monitor.py`; four launchd plists; `make setup` and `make all`.
+- A golden-file test that serving features equal training features for one stored day; a memory and time line in every stage's log.
+- Wrap the predictor in FastAPI, containerize it, run the golden test through the endpoint, and measure latency.
+- Profile the spatio-temporal net's training step on the M1 and speed up its largest cost; write a compute budget for a statewide model.
+- Score the pipeline against the ML Test Score rubric and turn the gaps into a `tests/` plan.
 
 ### Done when
 
-- From a fresh clone, `make setup && make all` produces the evaluation report.
+- From a fresh clone, `make setup && make all` produces the evaluation report, and the containerized service answers the golden test.
 - The replay loop has run unattended for a week and the monitor has written four weekly files.
 
 ### Pitfalls
@@ -3076,21 +4688,495 @@ _free_
 - A second copy of the feature code.
 - cron instead of launchd on a Mac that sleeps.
 - No way to roll back a bad model.
+- Optimizing before profiling.
 
-## Phase 8: Depth
+## Phase 10: Beyond supervised learning
 
-_weeks 40–44, then onward · open-ended · builds papers, PEMS-BAY, write-ups_
+_weeks 60–70 · ≈70 h · builds an alert-policy analysis, a fairness audit, a dashboard ranker_
+
+**Goal.** What changes when a model's output is a decision: reinforcement learning, causal inference, fairness, privacy and ranking.
+
+### What you need to learn
+
+- Markov decision processes, value functions, Q-learning and policy gradients; bandits; off-policy evaluation from logged data; where RL fits in traffic control.
+- Potential outcomes, confounding, causal diagrams, randomization; adjustment, instruments, difference-in-differences; interference; performative prediction.
+- Fairness definitions and their conflicts; measuring disparity by slice; differential privacy; documentation (model cards, datasheets); governance.
+- Recommenders and ranking: collaborative filtering, matrix factorization, learning to rank, ranking metrics, exposure bias and feedback loops.
+
+### Topic: Reinforcement learning: agents, rewards, bandits and policies
+
+**Goal.** Understand learning by acting: the setup, the core algorithms, and where it fits (and does not fit) in a traffic system.
+
+**Age 5.**
+
+Some learning happens by trying things and seeing what happens: touch the hot stove once and you learn. A computer can learn a game the same way, getting points for good moves and losing points for bad ones.
+
+_Try this._ Teach a friend a simple game only by saying 'good' or 'bad' after each move, never explaining the rules. Do they figure it out?
+
+**Middle school.**
+
+In reinforcement learning an agent sees a state, picks an action, gets a reward, and the world moves to a new state. It learns a policy, a rule for choosing actions, that collects the most reward over time. The hard part is that rewards may come late, and that trying new actions (exploration) costs something.
+
+A bandit is the simplest case: one decision, repeated, like which of three alert messages drivers respond to most. Traffic lights and ramp meters can be controlled by reinforcement learning.
+
+_Try this._ Play with a bandit on paper: three slot machines with hidden payout rates; keep choosing, track averages, and decide when to stop exploring.
+
+**High school.**
+
+Markov decision processes: states, actions, transitions, rewards, discounting. Value functions and the Bellman equation; Q-learning and policy gradients as the two families; exploration versus exploitation; deep RL (a network for the value or policy). Bandits: epsilon-greedy, upper confidence bound, Thompson sampling. Simulators are usually required because trying actions in the real world is expensive or unsafe.
+
+For traffic: ramp metering and signal timing are natural RL problems; alerting is closer to a bandit with delayed feedback.
+
+_Try this._ Implement Q-learning on a small grid world in numpy, then Thompson sampling for a three-arm bandit; plot regret over time.
+
+**Stanford undergrad.**
+
+Dynamic programming (value and policy iteration), temporal-difference learning, function approximation and its instability (the deadly triad), policy gradient theorem and actor-critic methods, off-policy evaluation from logged data (importance sampling), and the sample-inefficiency problem. Contextual bandits as the practical middle ground for decisions with immediate feedback.
+
+Offline RL and off-policy evaluation are what a system with logged alerts and outcomes could actually use; online RL on live traffic is rarely acceptable.
+
+_Try this._ Formulate the alerting policy as a contextual bandit with delayed reward, propose an off-policy estimator for a new policy from logged data, and state its assumptions.
+
+**Stanford grad.**
+
+Model-based RL with learned or physical simulators (traffic microsimulation as an environment), multi-agent RL for networks of intersections, safe RL with constraints, and the evaluation problem (simulator-to-real gap). Connections to control theory and to causal inference (policies as interventions).
+
+_Try this._ Design a ramp-metering controller for one Fremont on-ramp trained in a traffic simulator, and the validation that would justify a field trial.
+
+**PhD at Apple.**
+
+RL in products is mostly bandits and offline evaluation; full RL succeeds where a faithful simulator exists (games, some control). The research frontier includes sample efficiency, offline RL with guarantees, RL from human feedback for language models, and safe deployment. For transport, learned control of signals and meters is an active applied area with real deployments.
+
+_Try this._ Write the evaluation protocol for an RL-controlled corridor: metrics, baselines (fixed-time, actuated), safety constraints, and how you would attribute changes to the controller rather than to demand shifts.
+
+**Check yourself.**
+
+<details>
+<summary>What distinguishes RL from supervised learning?</summary>
+
+There are no correct labels, only rewards, and the agent's actions change the data it sees.
+
+</details>
+
+<details>
+<summary>Why are bandits the practical case?</summary>
+
+Immediate feedback and no state transitions make evaluation and safety tractable; most product decisions look like that.
+
+</details>
+
+### Topic: Causal inference: from correlation to intervention
+
+**Goal.** Ask what would happen if you acted, and know what data can and cannot tell you about it.
+
+**Age 5.**
+
+Ice cream sales and sunburns go up together, but ice cream does not cause sunburn; the sun causes both. Finding the real cause is harder than noticing things go together.
+
+_Try this._ Think of two things that happen together in your life but where one does not cause the other. What causes both?
+
+**Middle school.**
+
+Correlation is when two things move together; causation is when changing one changes the other. Confounders are hidden causes of both. The cleanest way to find a cause is an experiment: randomly do the thing to some and not others, then compare. When you cannot experiment, you need assumptions and careful methods.
+
+For traffic: incidents and slowdowns go together, but reporting an incident also depends on congestion; and an alert that changes driver behavior changes the outcome it predicted.
+
+_Try this._ Design a fair test of whether an alert makes drivers reroute: who gets the alert, who does not, and how you decide.
+
+**High school.**
+
+Potential outcomes: each unit has an outcome with and without treatment; the effect is the difference; you only ever see one. Randomization makes the groups comparable. Without it: adjust for confounders (regression, matching, weighting), use natural experiments (instruments, discontinuities, differences-in-differences), and draw the causal diagram (DAG) to decide what to adjust for and what not to (colliders).
+
+A/B tests are randomized experiments; interference (one driver's reroute affects others) breaks the usual analysis.
+
+_Try this._ Draw the DAG for incident, congestion, reporting, rain and alert. Which variables should you adjust for to estimate the effect of an incident on speed, and which must you not?
+
+**Stanford undergrad.**
+
+Identification conditions (exchangeability, positivity, consistency), the back-door and front-door criteria, do-calculus at a reading level, estimators (outcome regression, inverse probability weighting, doubly robust), instrumental variables, regression discontinuity, difference-in-differences and synthetic controls. Causal machine learning: double machine learning and causal forests for heterogeneous effects.
+
+Interference and spillovers, which are the rule in traffic; cluster-randomized and switchback designs.
+
+_Try this._ Estimate the effect of rain on the probability of a slow episode with inverse probability weighting on hour and weekday, and compare with a naive difference; explain the gap.
+
+**Stanford grad.**
+
+Time-varying treatments and g-methods for sequential policies (alerting is one); mediation; sensitivity analysis to unmeasured confounding; causal discovery and its limits; causal representation learning. Performative prediction as a bridge between causal inference and ML deployment.
+
+_Try this._ Design a switchback experiment for alerts across days and routes that respects interference, and the analysis that estimates the effect on travel time.
+
+**PhD at Apple.**
+
+Products that act on predictions are causal systems, and evaluating them requires experimental design or credible quasi-experiments; the research frontier includes experimentation under interference, off-policy evaluation, and causal effects of algorithmic systems on populations. Traffic is an unusually good testbed because interventions are visible and physical.
+
+_Try this._ Write the causal question, identification strategy and analysis plan for 'do alerts reduce total delay on I-880 in the evening peak?'
+
+**Check yourself.**
+
+<details>
+<summary>Why does adjusting for a collider cause bias?</summary>
+
+Conditioning on a common effect of two variables induces an association between them that does not exist causally.
+
+</details>
+
+<details>
+<summary>What does randomization buy?</summary>
+
+Treated and untreated groups are comparable on everything, measured or not, so the difference in outcomes is the causal effect on average.
+
+</details>
+
+### Topic: Fairness, privacy and ethics: what a model owes people
+
+**Goal.** See where a traffic model can treat people unequally or expose them, and know the tools and the limits of technical fixes.
+
+**Age 5.**
+
+A helper should be fair: it should not warn some neighborhoods and forget others. And it should not tell anyone where a particular person drove.
+
+_Try this._ If a helper only worked for one street, who would be left out? How would they feel?
+
+**Middle school.**
+
+Fairness: a model's mistakes can fall more on some groups, for example if detectors are worse in some neighborhoods, alerts there are worse. Privacy: data about where people go is sensitive; even aggregated speeds can reveal a single car at 3 am. Ethics also covers being honest about what the model can do and who is accountable when it is wrong.
+
+_Try this._ Look at the station map. Which parts of Fremont have few detectors? What does that mean for whom the alerts help?
+
+**High school.**
+
+Fairness definitions and why they conflict: equal error rates across groups, calibration within groups, demographic parity; you cannot have all at once. Measuring: slice every metric by area and time. Privacy: anonymization fails against linkage; differential privacy adds calibrated noise with a provable guarantee; aggregation thresholds and k-anonymity are weaker but common. Ethics in practice: documentation (datasheets, model cards), stating limits, and a person accountable for decisions.
+
+For this project: detector coverage is uneven; probe data would raise privacy questions the loop data do not.
+
+_Try this._ Compute recall and false-alarm rate per station and plot them on the map. Which areas get worse service, and why?
+
+**Stanford undergrad.**
+
+Formal fairness criteria (independence, separation, sufficiency) and impossibility results; sources of disparity (measurement, representation, label, deployment); mitigation methods (reweighting, constraints, post-processing) and their costs. Differential privacy: definition, composition, the privacy budget, DP-SGD; federated learning and its limits. Governance: impact assessments, audits, and regulation as constraints on design.
+
+Prediction versus decision: fairness lives in the policy (who gets alerts) as much as in the model.
+
+_Try this._ Implement a DP release of hourly average speeds per station with Laplace noise; plot utility against epsilon and decide the smallest epsilon the product could tolerate.
+
+**Stanford grad.**
+
+The limits of technical fairness (measurement of groups, contested definitions, distributional versus procedural justice); long-term dynamics of fair decisions; privacy attacks on models (membership inference, extraction) and defenses; the tension between transparency and gaming. Participatory design and the role of affected communities in defining harms.
+
+_Try this._ Audit the alert policy for disparate impact across neighborhoods under two fairness definitions, show they conflict on this data, and write the memo that explains the choice to a city council.
+
+**PhD at Apple.**
+
+Responsible ML at scale is organizational: review processes, documentation, red-teaming, monitoring for disparate impact after deployment, and legal compliance. The research frontier includes fairness under distribution shift and feedback, privacy-preserving learning with useful guarantees, and evaluation of societal impact. Transport systems allocate a public good, which raises the stakes.
+
+_Try this._ Design the governance for a public traffic-alert system: what is measured, who reviews it, what triggers a pause, and how the public can contest a decision.
+
+**Check yourself.**
+
+<details>
+<summary>Why can a model be calibrated for every group and still have unequal error rates?</summary>
+
+Calibration and equal error rates are different criteria, and when base rates differ across groups they cannot all hold at once.
+
+</details>
+
+<details>
+<summary>What does differential privacy guarantee?</summary>
+
+That any single person's data changes the released output's distribution by at most a bounded factor, whatever else an attacker knows.
+
+</details>
+
+### Topic: Recommender systems and ranking
+
+**Goal.** Rank things for people from their behavior, evaluate a ranking, and see the feedback loops that ranking creates.
+
+**Age 5.**
+
+When a video app shows you what to watch next, it guessed from what you and people like you watched before. That guessing is a recommender.
+
+Our helper ranks roads too: the ones most likely to jam go to the top of the list.
+
+_Try this._ Make a list of your friend's favorite games ranked from most to least. What did you use to guess?
+
+**Middle school.**
+
+Recommenders learn from clicks, plays and ratings. Collaborative filtering says: people who liked what you liked will like this; matrix factorization learns a few hidden traits per person and per item. Content-based methods use item features. Ranking systems score candidates and order them; evaluation asks whether the good items are near the top.
+
+Ranking the top-risk segments per route for a dashboard is a small ranking problem with the same metrics.
+
+_Try this._ Rank ten stations by predicted probability of a slow episode. If only three actually became slow, how many were in your top three? That is precision at 3.
+
+**High school.**
+
+Matrix factorization with implicit feedback, nearest-neighbor methods, and modern two-tower models that embed users and items; candidate generation then ranking; ranking losses (pointwise, pairwise, listwise). Metrics: precision at k, recall at k, mean average precision, NDCG. Offline evaluation is biased by what was shown (exposure), which is the central difficulty.
+
+Feedback loops: what is recommended gets clicked, which trains the next model; popularity bias and filter bubbles follow.
+
+_Try this._ Implement matrix factorization by alternating least squares on a small public ratings dataset and report NDCG at 10 against a popularity baseline.
+
+**Stanford undergrad.**
+
+Learning to rank (LambdaMART, which is gradient boosting for ranking), embedding retrieval with approximate nearest neighbors, position bias and unbiased learning to rank, off-policy evaluation of rankers from logged data (inverse propensity scoring), and exploration in recommendation. Cold start and side information. Multi-objective ranking (relevance, diversity, freshness).
+
+For the dashboard: rank segments by calibrated risk times exposure (traffic volume), and evaluate with NDCG against realized episodes.
+
+_Try this._ Train a LightGBM ranker (lambdarank) to order stations by risk each 5 minutes using the classifier's features, and compare NDCG at 5 with sorting by calibrated probability.
+
+**Stanford grad.**
+
+Recommendation as a causal and sequential problem: exposure bias, interference between users, long-term effects, and the alignment of optimization targets with user welfare. Large-scale systems (retrieval, ranking, re-ranking stages) and their latency budgets. Evaluation through online experiments and interleaving.
+
+_Try this._ Propose an off-policy evaluation of a new segment-ranking policy for the dashboard from logged views and outcomes, and the propensity model it needs.
+
+**PhD at Apple.**
+
+Recommenders are the most deployed ML systems and the most studied for societal effects; research spans sequential recommendation, causal recommendation, fairness of exposure, and generative retrieval. The methodological core, ranking under partial feedback, transfers to any system that shows people a prioritized list, including a traffic dashboard.
+
+_Try this._ Design the ranking objective for a public traffic dashboard that balances predicted delay, number of affected drivers and fairness of coverage, and say how you would evaluate it.
+
+**Check yourself.**
+
+<details>
+<summary>Why is offline evaluation of a recommender biased?</summary>
+
+Logged feedback exists only for items that were shown; items never shown have no data, and the log reflects the old policy's choices.
+
+</details>
+
+<details>
+<summary>What does NDCG reward?</summary>
+
+Putting relevant items near the top, with a discount that makes the first positions count most.
+
+</details>
+
+### Read and watch, explained at every level
+
+#### [Reinforcement Learning: An Introduction (Sutton, Barto)](http://incompleteideas.net/book/the-book-2nd.html)
+
+_book · free · free; the standard first book_
+
+**Age 5.** The classic free book about learning by trial and reward, by two of the people who invented the field.
+
+**Middle school.** Sutton and Barto's textbook, free online, explains reinforcement learning from bandits through Markov decision processes, dynamic programming, Monte Carlo and temporal-difference methods, to function approximation and policy gradients. Part 1 is readable with basic probability. It is the standard first book.
+
+**High school.** Read chapters 1 to 6 (bandits, MDPs, dynamic programming, Monte Carlo, temporal-difference learning) and implement the small examples (grid worlds, the cliff walk). Chapter 13 on policy gradients is the bridge to deep RL. The exercises are excellent and the answers are checkable by simulation.
+
+**Stanford undergrad.** The book's careful treatment of the Bellman equations, of on-policy versus off-policy learning, and of the deadly triad (function approximation, bootstrapping, off-policy) is what you need to read deep RL papers critically. Chapter 11 on off-policy methods with approximation is the relevant one for learning from logged alert data.
+
+**Stanford grad.** Its coverage of eligibility traces, of planning with learned models, and of the psychology and neuroscience connections gives the field's intellectual context; the second edition's case studies show what worked and why.
+
+**PhD at Apple.** The canonical reference; its authors' later essays on the field's direction are worth reading alongside. For a lead, it is the book to require before anyone proposes RL for a control problem.
+
+#### [David Silver's Reinforcement Learning course (UCL, DeepMind)](https://www.davidsilver.uk/teaching/)
+
+_video · free · free lectures alongside the book_
+
+**Age 5.** Video lectures by a scientist who helped build a computer that beat the best human at the board game Go, explaining how machines learn from rewards.
+
+**Middle school.** Ten free lectures that follow Sutton and Barto: Markov decision processes, planning, learning without a model, function approximation, policy gradients, and games. Watch them alongside the book; the lectures make the equations feel inevitable.
+
+**High school.** Lectures 1 to 5 cover the foundations used in the RL topic; lecture 6 on value function approximation and lecture 7 on policy gradients are the bridge to deep RL. Do the book's exercises after each lecture.
+
+**Stanford undergrad.** Silver's derivations (the Bellman equations, the policy gradient theorem) are clear and complete; his lecture on exploration and on integrating learning and planning is a compact treatment of the ideas behind model-based RL.
+
+**Stanford grad.** The course predates much of deep RL; pair it with Spinning Up for algorithms and with recent surveys for offline RL. Its value is conceptual clarity.
+
+**PhD at Apple.** A widely used lecture series that defines the shared vocabulary of the field; useful as a common reference when a team discusses control problems.
+
+#### [Spinning Up in Deep RL (OpenAI)](https://spinningup.openai.com/)
+
+_docs · free · free; clean algorithms and a reading list_
+
+**Age 5.** A free website that teaches modern trial-and-reward learning with clear notes and code you can run.
+
+**Middle school.** Spinning Up is an educational site with an introduction to deep reinforcement learning, a list of key papers, and clean implementations of the main algorithms. It was written for people who know some deep learning and want to do RL properly. Read the introduction and run one algorithm on a simple simulated task.
+
+**High school.** Read the three-part introduction (key concepts, kinds of algorithms, the policy-gradient derivation) and study the code for one algorithm (PPO or DQN). The exercises and the 'spinning up as a researcher' essay are practical advice.
+
+**Stanford undergrad.** Its implementations are readable references for the standard algorithms and their tricks; the key-papers list is a curated syllabus for the field. Use it to reproduce a result on a simulated control task before attempting a traffic-control simulator.
+
+**Stanford grad.** It reflects the state of deep RL around its writing; later methods (offline RL, RL from human feedback) are covered elsewhere. Its clarity about what makes RL hard (sample efficiency, instability, reward design) remains accurate.
+
+**PhD at Apple.** A useful teaching resource and a reminder that reproducible baselines were a problem the field had to solve deliberately.
+
+#### [Causal Inference: The Mixtape (Cunningham)](https://mixtape.scunning.com/)
+
+_book · free · free; applied causal methods with code_
+
+**Age 5.** A free book about telling causes from coincidences, written in a friendly voice with lots of examples from real life.
+
+**Middle school.** Scott Cunningham's book, free online, teaches the methods economists use to find causes in data without experiments: comparing groups over time, using cut-offs, using instruments, and matching. It explains directed graphs (pictures of cause and effect) early and uses them throughout. Code is included.
+
+**High school.** Read the chapters on directed acyclic graphs, on potential outcomes, on matching, and on difference-in-differences. Then draw the DAG for incidents, congestion and reporting and decide what you can estimate from the archive.
+
+**Stanford undergrad.** The Mixtape is the applied-economics complement to Hernán and Robins: more on quasi-experimental designs (instruments, regression discontinuity, synthetic control), less on time-varying treatments. Its worked examples with code are the fastest way to see each method fail and succeed.
+
+**Stanford grad.** Its treatment of difference-in-differences includes the recent literature on staggered adoption, which is relevant to evaluating roadwork or policy changes across corridors. Read it alongside the causal machine-learning literature.
+
+**PhD at Apple.** A free, current, applied causal-inference text; for a product team asking what an alert causes, it is the accessible primer before the formal one.
+
+#### [Causal Inference: What If (Hernán, Robins)](https://miguelhernan.org/whatifbook)
+
+_book · free · free; the rigorous base, part 1 now_
+
+**Age 5.** A free book about telling the difference between 'these two things happen together' and 'this one causes that one', which is harder than it sounds.
+
+**Middle school.** A textbook by two epidemiologists, free as a PDF, about answering causal questions from data: what would have happened if we had done something else. Part 1 is readable with basic statistics and uses simple examples. Read it in the final phase when you ask what an alert actually causes.
+
+**High school.** Part 1 introduces counterfactuals, randomized experiments, confounding, and the diagrams (DAGs) that make assumptions explicit. Apply it to the project: does an incident cause the slowdown, or does congestion cause the incident to be reported? The book gives the tools to state that question precisely.
+
+**Stanford undergrad.** Its treatment of exchangeability, positivity and consistency as the conditions for causal identification, and of methods (standardization, inverse probability weighting, g-methods), is the rigorous base for causal questions in ML. Part 2 covers models; part 3 covers time-varying treatments, which is where traffic interventions live.
+
+**Stanford grad.** Read alongside Pearl's structural approach (the Book of Why for the story, Causality for the math) and the modern causal ML literature (double machine learning, causal forests). The time-varying-treatment chapters are directly relevant to sequential alerting policies.
+
+**PhD at Apple.** The epidemiological tradition of causal inference is the most careful one about assumptions; for a product that intervenes (alerts that change traffic), it is the framework for saying what you can and cannot learn from logged data.
+
+#### The Book of Why (Pearl, Mackenzie)
+
+_book · paid · paid; the ideas in prose_
+
+**Age 5.** A book that tells the story of how scientists learned to ask 'why', with pictures of arrows showing what causes what.
+
+**Middle school.** Judea Pearl's popular book (paid) explains causal thinking through history and examples: why statistics avoided causation for a century, how causal diagrams changed that, and the 'ladder of causation' from seeing to doing to imagining. No equations; read it for the ideas before the technical books.
+
+**High school.** Its account of confounding, of the smoking debates, and of the difference between observing and intervening prepares you for the causal-inference topic; its ladder of causation is the frame for what a prediction model can and cannot answer.
+
+**Stanford undergrad.** The book presents Pearl's structural framework in prose; the technical version is in his textbook Causality. Compare with the potential-outcomes framework of Hernán and Robins; they are largely equivalent but stress different things.
+
+**Stanford grad.** Read critically: the book advocates for one school; the disagreements with the potential-outcomes tradition are instructive about what each framework makes easy.
+
+**PhD at Apple.** A widely read book that shaped how the public and many engineers think about causality; useful as a shared reference when explaining why a model's feature importance is not a causal claim.
+
+#### [Fairness and Machine Learning (Barocas, Hardt, Narayanan)](https://fairmlbook.org/)
+
+_book · free · free; the graduate text_
+
+**Age 5.** A free book about making sure learning machines treat different groups of people fairly, and about how hard it is to even agree on what fair means.
+
+**Middle school.** A textbook, free online, about fairness in machine learning: how models can treat groups differently, the different definitions of fairness and why they conflict, how discrimination is understood in law and philosophy, and what can be done. It is readable with basic statistics.
+
+**High school.** Read the chapters on classification (the fairness criteria and the impossibility of satisfying them all), on causality, and on the legal background. Then audit the alert policy across neighborhoods using two criteria and see them disagree.
+
+**Stanford undergrad.** The book's formal treatment (independence, separation, sufficiency; the trade-offs; measurement issues) is the rigorous base; its chapters on the limits of technical fixes and on broader questions are unusually honest for a technical text.
+
+**Stanford grad.** It connects to causal inference (counterfactual fairness), to long-term dynamics of decisions, and to measurement of protected attributes; the bibliography is a map of the field.
+
+**PhD at Apple.** The standard graduate text; for a lead deploying a public system, its framing of fairness as a socio-technical question, not a metric, is the one that survives contact with real decisions.
+
+#### [The Algorithmic Foundations of Differential Privacy (Dwork, Roth)](https://www.cis.upenn.edu/~aaroth/privacybook.html)
+
+_book · free · free from the authors; chapters 1 to 3_
+
+**Age 5.** A book about adding a little randomness to shared numbers so that nobody can tell whether any one person's information was used.
+
+**Middle school.** Cynthia Dwork and Aaron Roth's monograph, free from the authors, defines differential privacy: a way of releasing statistics with noise so that each person's data has a bounded effect on the result. It explains the basic mechanisms and how privacy loss adds up. The first chapters are readable; the rest is for specialists.
+
+**High school.** Read chapters 1 to 3 (the promise, the definition, the Laplace and exponential mechanisms, composition) and implement a private release of hourly average speeds. Plot how accuracy changes with the privacy parameter.
+
+**Stanford undergrad.** The monograph's treatment of composition, of sensitivity, and of the exponential mechanism is the foundation for private learning (DP-SGD) and for private data release. Understand what the guarantee does and does not cover (it protects individuals, not groups; it says nothing about the data being wrong).
+
+**Stanford grad.** Later work covers private deep learning, local differential privacy (as used on devices), and privacy accounting; the monograph is the base for reading it. Its examples of failed anonymization are the argument for the definition.
+
+**PhD at Apple.** Differential privacy is deployed at scale in operating systems and statistical agencies; the research frontier is utility at practical privacy budgets and privacy under continual release, which is exactly what a streaming traffic system does.
+
+#### [Model Cards for Model Reporting (Mitchell et al., 2019) and Datasheets for Datasets (Gebru et al., 2018)](https://arxiv.org/abs/1810.03993)
+
+_paper · free · free; documentation you will actually fill in_
+
+**Age 5.** Two papers that say every learning machine and every pile of data should come with a label, like food has ingredients and warnings.
+
+**Middle school.** Two short papers proposing standard documentation: a model card describes what a model is for, how it was evaluated, on whom, and where it fails; a datasheet describes how a dataset was collected, what it contains and how it should and should not be used. Both are free and have templates you can fill in.
+
+**High school.** Fill in a datasheet for the Fremont PeMS and 511 data and a model card for the LightGBM alert model, using the papers' question lists. You will find questions you cannot answer; those are the gaps.
+
+**Stanford undergrad.** The papers' value is the questions; they operationalize accountability without prescribing a metric. Compare with later documentation standards and with regulatory requirements for high-risk systems.
+
+**Stanford grad.** Documentation is part of the technical-debt story (Sculley) and of governance (fairness book); the research question is whether documentation changes behavior, which later studies examine.
+
+**PhD at Apple.** Model and data documentation are now expected in responsible deployment; for a lead, they are the artifacts a review board or regulator will ask for first.
+
+#### [Google's Recommendation Systems course](https://developers.google.com/machine-learning/recommendation)
+
+_course · free · free; the architecture of ranking systems_
+
+**Age 5.** A free class from Google about how apps guess what you might like next.
+
+**Middle school.** A short free course covering how recommendation works: candidate generation (finding possible items), scoring, and re-ranking; collaborative filtering and matrix factorization; embeddings; and the problems of cold start and bias. With small exercises in a notebook.
+
+**High school.** Do the sections on collaborative filtering, matrix factorization and retrieval; then apply the ranking metrics (precision at k, NDCG) to the traffic dashboard's ordering of segments.
+
+**Stanford undergrad.** The course is a compact tour of an industrial recommender's stages and their trade-offs; read it as architecture, then the papers for the methods (matrix factorization, two-tower retrieval, learning to rank).
+
+**Stanford grad.** It is introductory and Google-flavored; the research literature on exposure bias, off-policy evaluation and fairness in ranking is where the hard questions live.
+
+**PhD at Apple.** A useful shared reference for the structure of ranking systems; for a lead, its staged architecture is the design pattern for any system that shows people an ordered list.
+
+#### [Matrix Factorization Techniques for Recommender Systems (Koren, Bell, Volinsky, 2009)](https://doi.org/10.1109/MC.2009.263)
+
+_paper · paywalled · short; the Netflix Prize method by its winners_
+
+**Age 5.** A short article by the people who won a famous movie-rating contest, explaining how they guessed what movies people would like using hidden traits.
+
+**Middle school.** Written by the Netflix Prize winners, this article explains matrix factorization: represent each user and each movie by a few numbers (hidden traits), and predict a rating by combining them. It also covers biases, implicit feedback and time effects. Free to read and short.
+
+**High school.** Read it fully; it is one of the clearest short explanations of a learning method. Then implement the basic model with alternating least squares on a small public dataset and reproduce the improvement from adding bias terms.
+
+**Stanford undergrad.** The article's extensions (implicit feedback, temporal dynamics, confidence weighting) are the seeds of much later work; its discussion of the Netflix Prize is a lesson in the value of ensembles and in the gap between a contest metric and a product.
+
+**Stanford grad.** Compare with modern two-tower and sequential models; matrix factorization remains a strong baseline and an interpretable one.
+
+**PhD at Apple.** A historically important applied paper; its authors' account of the prize is also a case study in evaluation design and data privacy (the prize's data release led to a de-anonymization result).
+
+#### [Performative Prediction (Perdomo, Zrnic, Mendler-Dünner, Hardt, 2020)](https://arxiv.org/abs/2002.06673)
+
+_paper · free · free; the theory of alerts that change traffic_
+
+**Age 5.** A paper about what happens when a prediction changes the thing it predicted, like telling everyone a road will be slow so everyone avoids it and it is not slow after all.
+
+**Middle school.** When a model's predictions influence the world, the data it learns from next time are shaped by its own past predictions. This paper names that situation and studies when retraining still settles down to a sensible model. Traffic alerts are a textbook case.
+
+**High school.** Read the introduction and the examples; then the definition of a performatively stable model (one that stays optimal on the data it induces) and the conditions under which repeated retraining converges to one. Ask what it means for stage 13's monthly retrain.
+
+**Stanford undergrad.** The framework formalizes feedback loops as a distribution map from model to data; the results relate convergence to how sensitive the distribution is to the model. It is the theory behind the practical warning in lessons 6 and 12.
+
+**Stanford grad.** Subsequent work covers strategic behavior, optimization methods for performative risk, and connections to causal inference and reinforcement learning; for traffic, the open question is estimating the distribution map from logged alerts.
+
+**PhD at Apple.** A foundational framing for any system that acts on its predictions; a research program on alerting policies would start here and with the causal-inference literature.
+
+### Build
+
+- Q-learning on a grid world and Thompson sampling on a three-arm bandit; formulate alerting as a contextual bandit and write the off-policy estimator.
+- Draw the DAG for incidents, congestion, reporting, rain and alerts; estimate the effect of rain on slow episodes with inverse probability weighting; design a switchback experiment for alerts.
+- Audit recall and false alarms per station on the map under two fairness definitions; release hourly speeds with differential privacy and plot utility against epsilon; fill in a model card and a datasheet.
+- Train a LightGBM ranker to order segments by risk for the dashboard and evaluate NDCG against realized episodes.
+
+### Done when
+
+- A memo on what the logged data can and cannot say about the effect of alerts, with the experiment that would settle it.
+- A fairness audit map and a filled model card.
+- A ranked dashboard with NDCG next to sorting by probability.
+
+### Pitfalls
+
+- Adjusting for a collider.
+- Treating feature importance as a causal claim.
+- Believing one fairness metric settles the question.
+
+## Phase 11: Depth
+
+_weeks 70–76, then onward · open-ended · builds papers, PEMS-BAY, Bayesian models, write-ups_
 
 **Goal.** From 'can build this' to 'can design the next one and say why it works'. Rotate the tracks; each is months, not weeks.
 
 ### What you need to learn
 
-- Uncertainty: Bayesian thinking, quantile regression, conformal prediction for honest intervals on 'slow in 30 minutes'; causal inference basics, and why incident features are not causal claims.
-- Theory: convexity, why boosting works, generalization and the bias-variance decomposition properly; CS229 notes; Elements of Statistical Learning chapters 7, 10 and 15.
-- Deep learning depth: transformers properly, attention for time series, graph learning (CS224W), self-supervision; Goodfellow as the reference.
-- Benchmarks: reproduce DCRNN or Graph WaveNet on METR-LA and PEMS-BAY, the public PeMS Bay Area datasets, with a reduced config on the M1; compare with the Fremont numbers.
-- Practice: two Kaggle competitions on tabular or time-series data, written up honestly; one contribution to a library you used (a docs fix counts).
-- Communication: publish a write-up of this project with its limitations; give a talk to a meetup or a friend.
+- Uncertainty: quantiles, Bayesian thinking, conformal prediction, adaptive conformal inference; risk control for alerts.
+- Theory: generalization, bias-variance properly, convexity, margins, double descent; what breaks under shift.
+- Bayesian machine learning: hierarchical models, MCMC and variational inference, Gaussian processes, Bayesian optimization.
+- Reading and reproducing: DCRNN, STGCN, Graph WaveNet on PEMS-BAY at reduced scale; ablations; write-ups.
+- Practice and communication: two competitions written up honestly, one open-source contribution, one public write-up of the traffic model, one talk.
 
 ### Topic: Uncertainty: quantiles, Bayesian thinking, conformal prediction
 
@@ -3260,11 +5346,71 @@ To verify the pipeline and the protocol on your hardware. The absolute number sc
 
 </details>
 
+### Topic: Bayesian machine learning and Gaussian processes
+
+**Goal.** Treat parameters as uncertain, update beliefs with data, and use models that come with their own error bars.
+
+**Age 5.**
+
+Before you look, you have a guess. After you look, you have a better guess. Bayesian thinking is keeping track of how sure you are and changing it a little with every new clue.
+
+_Try this._ Guess how many marbles are in a jar. Now someone tells you it is more than 50. Change your guess. Someone says fewer than 80. Change it again.
+
+**Middle school.**
+
+Bayes' rule updates a prior belief with data into a posterior. A Bayesian model does that for its parameters: instead of one best weight, it keeps a whole distribution of plausible weights, so its predictions come with uncertainty. A Gaussian process is a Bayesian model over functions: it predicts a curve and a band around it, wide where data are scarce.
+
+_Try this._ Plot ten (time, speed) points for one station and sketch by hand a smooth curve with a band that is narrow near the points and wide between them.
+
+**High school.**
+
+Priors, likelihoods and posteriors; conjugate examples (Beta-Binomial for a station's slow rate); posterior predictive distributions; Bayesian linear and logistic regression; hierarchical models sharing strength across stations. Gaussian processes: a kernel defines similarity, predictions are closed-form with variance, cost grows as the cube of the data size, so they suit small data and hyperparameter tuning.
+
+Computation: exact for conjugate cases, otherwise Markov chain Monte Carlo or variational inference (PyMC, Stan, or NumPyro).
+
+_Try this._ Fit a Beta-Binomial model of each station's slow-episode rate with a shared prior, and compare the shrunken estimates with the raw rates for stations with few data.
+
+**Stanford undergrad.**
+
+Bayesian decision theory; model comparison and the marginal likelihood; MCMC (Metropolis, Hamiltonian Monte Carlo) and diagnostics; variational inference and the ELBO; Laplace approximation; Gaussian processes in depth (kernels, hyperparameter learning by marginal likelihood, sparse approximations). Bayesian optimization as the workhorse of hyperparameter tuning.
+
+Bayesian neural networks and their approximations (dropout, ensembles, last-layer Laplace) for uncertainty in deep models.
+
+_Try this._ Implement a Gaussian process regression for one station's daily profile with a periodic kernel and learn the hyperparameters by maximizing marginal likelihood; compare its predictive band with the bootstrap interval.
+
+**Stanford grad.**
+
+Scalable Bayesian inference (stochastic variational inference, inducing points), Bayesian nonparametrics, probabilistic programming, calibration of Bayesian predictive distributions under model misspecification, and the relation between Bayesian and conformal guarantees. Hierarchical spatio-temporal models as a classical alternative to graph networks.
+
+_Try this._ Build a hierarchical Bayesian model of slow-episode rates with station and hour effects in a probabilistic programming language, check convergence, and compare its calibration with the boosted trees'.
+
+**PhD at Apple.**
+
+Bayesian methods underlie modern uncertainty quantification, experimental design, and Bayesian optimization at scale; the research frontier includes scalable inference for deep models, decision-making under uncertainty, and combining Bayesian and frequentist guarantees. For products, the practical value is honest uncertainty and principled pooling across sparse groups.
+
+_Try this._ Argue, with a small experiment, whether a Bayesian hierarchical model or isotonic calibration on a boosted model gives better-calibrated per-station probabilities with three months of data.
+
+**Check yourself.**
+
+<details>
+<summary>What does a prior do when data are scarce?</summary>
+
+It dominates: the posterior stays near the prior until data accumulate, which is exactly the shrinkage that helps stations with few observations.
+
+</details>
+
+<details>
+<summary>Why do Gaussian processes suit hyperparameter tuning?</summary>
+
+They model a smooth unknown function with uncertainty from few evaluations, which is what Bayesian optimization needs to choose the next trial.
+
+</details>
+
 ### Read and watch, explained at every level
 
-#### Probabilistic Machine Learning: An Introduction (Murphy)
+#### [Probabilistic Machine Learning: An Introduction (Murphy)](https://probml.github.io/pml-book/book1.html)
 
-_free PDF; the modern reference_
+_book · free · free PDF; the modern reference_
 
 **Age 5.** A very big free book that explains almost all of machine learning using the language of chance.
 
@@ -3278,9 +5424,9 @@ _free PDF; the modern reference_
 
 **PhD at Apple.** Murphy's books are the field's encyclopedia. Cite them for standard results and use them to find the original references quickly; for research, their breadth is what lets you place a new idea in the landscape in an afternoon rather than a week.
 
-#### The Elements of Statistical Learning (Hastie, Tibshirani, Friedman)
+#### [The Elements of Statistical Learning (Hastie, Tibshirani, Friedman)](https://hastie.su.domains/ElemStatLearn/)
 
-_free PDF_
+_book · free · free PDF_
 
 **Age 5.** A famous, hard, free book by three statisticians who invented many of the methods it describes.
 
@@ -3294,9 +5440,41 @@ _free PDF_
 
 **PhD at Apple.** Still the canonical citation for many methods, and its authors' later work on sparsity and the lasso is the natural continuation. For a paper, its notation for loss functions and additive models is safe to adopt, and its chapter 7 remains the reference for arguing that a reported gain is within noise.
 
-#### CS229 lecture notes (Stanford)
+#### [Understanding Machine Learning: From Theory to Algorithms (Shalev-Shwartz, Ben-David)](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)
 
-_free_
+_book · free · free PDF; learning theory with proofs_
+
+**Age 5.** A free math book that asks: why can a machine that learned from old examples be right about new ones? And it proves the answers.
+
+**Middle school.** A university textbook, free as a PDF, about the theory of learning: what it means to learn, when it is possible, and how much data you need. It is hard, and it is the right book when you want proofs rather than pictures. For the final phase.
+
+**High school.** The first part (the PAC learning framework, VC dimension, bias-complexity trade-off) is the formal version of the theory ladder. Read chapters 2 to 6 slowly, doing the exercises; they make the words overfitting and generalization precise.
+
+**Stanford undergrad.** Its coverage of uniform convergence, Rademacher complexity, regularization and stability, and convex learning gives the tools to read generalization bounds in papers. The chapters on boosting and on stochastic gradient descent connect the theory to the algorithms of phases 4 and 6.
+
+**Stanford grad.** It is the standard reference for classical learning theory; modern questions (overparameterization, implicit bias) build on it and are covered in recent lecture notes and papers rather than textbooks. Read it with Boyd's convex optimization for the optimization side.
+
+**PhD at Apple.** The base layer for theoretical work; its exercises are qualifying-exam material, and its treatment of stability is the entry point to the generalization theory of SGD.
+
+#### [Convex Optimization (Boyd, Vandenberghe)](https://web.stanford.edu/~boyd/cvxbook/)
+
+_book · free · free PDF and lectures_
+
+**Age 5.** A free math book about finding the lowest point of a bowl-shaped hill, which is what a learning machine does when it learns.
+
+**Middle school.** The standard textbook on convex optimization, free as a PDF, with lecture videos. It explains what makes a problem convex (a single lowest point), the methods that find it, and duality, a way of looking at the same problem from the other side. It is a graduate book; use it as a reference in the final phase.
+
+**High school.** Chapters 2 to 5 (convex sets, convex functions, convex problems, duality) are the language behind why logistic regression has a global optimum and why regularization works. Chapter 9 on unconstrained minimization covers gradient descent and Newton's method with convergence proofs.
+
+**Stanford undergrad.** Its treatment of gradient descent convergence, of conditioning, and of Newton and quasi-Newton methods gives the tools to reason about learning rates and about why second-order methods do not scale. The course's problem sets and the CVXPY library make it practical.
+
+**Stanford grad.** Convexity is the regime where theory is complete; deep learning is the regime where it is not. Reading Boyd is how you know exactly what guarantees you give up, and its duality chapters are the background for support vector machines and for constrained learning (fairness constraints, monotonicity).
+
+**PhD at Apple.** A canonical reference; its lecture videos are the fastest way for a strong engineer to acquire the optimization vocabulary that research papers assume.
+
+#### [CS229 lecture notes (Stanford)](https://cs229.stanford.edu/main_notes.pdf)
+
+_course · free · free_
 
 **Age 5.** The notes from a famous university class about learning machines, free for anyone to read.
 
@@ -3310,9 +5488,9 @@ _free_
 
 **PhD at Apple.** CS229 is what most ML researchers learned from, so knowing it lets you calibrate what a reviewer or a new hire assumes as background, and what they will not have seen (dependent data, forecasting protocols, calibration under shift) and will need explained.
 
-#### CS224W: Machine Learning with Graphs (Stanford)
+#### [CS224W: Machine Learning with Graphs (Stanford)](https://web.stanford.edu/class/cs224w/)
 
-_free lectures_
+_course · free · free lectures_
 
 **Age 5.** A university class, free to watch, about learning from things that are connected to each other, like roads that join.
 
@@ -3326,9 +5504,9 @@ _free lectures_
 
 **PhD at Apple.** CS224W and the PyTorch Geometric ecosystem are the standard entry to graph machine-learning research. Its open problems (expressiveness, scalability, dynamic graphs, transfer across graphs) overlap with traffic forecasting's own, and the course's reading list is a good map of the field.
 
-#### A Gentle Introduction to Conformal Prediction (Angelopoulos, Bates)
+#### [A Gentle Introduction to Conformal Prediction (Angelopoulos, Bates)](https://arxiv.org/abs/2107.07511)
 
-_free; intervals you can defend_
+_paper · free · free; intervals you can defend_
 
 **Age 5.** A short guide about how to make a learning machine say 'I am 90 % sure the answer is in this range' and actually be right 90 % of the time.
 
@@ -3342,9 +5520,25 @@ _free; intervals you can defend_
 
 **PhD at Apple.** Conformal methods are the practical route to distribution-free guarantees in products. The research frontier, conditional coverage, dependence, and feedback between predictions and outcomes, is where the traffic alert problem sits, and the tutorial's clarity makes it the right document to hand to a product or legal partner.
 
-#### Statistical Rethinking (McElreath)
+#### [Adaptive Conformal Inference Under Distribution Shift (Gibbs, Candès, 2021)](https://arxiv.org/abs/2106.00170)
 
-_paid; the Bayesian track, lectures free_
+_paper · free · free; coverage that survives seasons_
+
+**Age 5.** A paper about keeping the 'I am 90 % sure' promise even when the world keeps changing, by adjusting how wide the range is as you go.
+
+**Middle school.** Conformal prediction promises a hit rate, but the promise assumes the future looks like the past. This paper adjusts the range online: if recent ranges missed too often, widen; if they hit too often, narrow. The result keeps the long-run hit rate even as the data shift, which is what traffic does across seasons.
+
+**High school.** The method is a few lines: track whether each interval covered the truth, and update a single number that sets the next interval's width. Implement it on the rolling 30-minute speed predictions and plot the realized coverage week by week; compare with a fixed conformal interval.
+
+**Stanford undergrad.** The guarantee is about long-run average coverage under arbitrary shift, achieved by an online update resembling gradient descent on the miscoverage rate; understand what it gives up (no per-period guarantee) and how the step size trades adaptivity for stability.
+
+**Stanford grad.** Follow with later work on conformal methods for time series and on risk control; the connection to online learning (regret bounds) explains why the method works without distributional assumptions.
+
+**PhD at Apple.** The practical entry point to valid uncertainty in non-stationary deployed systems; for an alerting product, this line of work is how you keep a false-alarm promise honest over months.
+
+#### [Statistical Rethinking (McElreath)](https://xcelab.net/rm/)
+
+_book · paid, lectures free · paid, lectures free; the Bayesian track_
 
 **Age 5.** A book, with free video lectures, that teaches how to think carefully about chance and evidence, using stories and small models.
 
@@ -3358,9 +5552,41 @@ _paid; the Bayesian track, lectures free_
 
 **PhD at Apple.** McElreath's causal-first framing is influential in applied statistics. For traffic it is the right lens for questions prediction alone cannot answer, such as the effect of an alert or of an incident on downstream speeds, and its emphasis on stating assumptions explicitly is the discipline an alerting product needs.
 
-#### Deep Learning (Goodfellow, Bengio, Courville)
+#### [Bayesian Data Analysis, 3rd edition (Gelman, Carlin, Stern, Dunson, Vehtari, Rubin)](https://sites.stat.columbia.edu/gelman/book/)
 
-_free online_
+_book · free · free PDF; the applied Bayesian reference_
+
+**Age 5.** A big free book about learning from data by keeping track of what you believed before and how the data changed it.
+
+**Middle school.** The standard graduate textbook on Bayesian statistics, free as a PDF from the authors. Part 1 covers the basics, part 2 the computation (sampling methods), part 3 regression and hierarchical models. It is demanding; use it as the reference after Statistical Rethinking.
+
+**High school.** Read the chapters on single-parameter models and on hierarchical models, and reproduce the classic eight-schools example in a probabilistic programming library. Then apply the same hierarchical model to per-station slow-episode rates.
+
+**Stanford undergrad.** Its treatment of hierarchical models, of model checking (posterior predictive checks), and of Markov chain Monte Carlo diagnostics is the rigorous base for applied Bayesian work; the chapters on decision analysis and on model comparison connect to calibration and to model selection.
+
+**Stanford grad.** Together with the authors' later work (Stan, workflow papers) it defines current Bayesian practice; its chapter on nonparametric models and on missing data are advanced references.
+
+**PhD at Apple.** The canonical applied Bayesian text; for research, its emphasis on model checking and workflow is the counterweight to treating inference as a black box.
+
+#### [Gaussian Processes for Machine Learning (Rasmussen, Williams)](https://gaussianprocess.org/gpml/)
+
+_book · free · free; models with their own error bars_
+
+**Age 5.** A free book about a kind of model that draws a smooth curve through data and also draws a band that shows how unsure it is.
+
+**Middle school.** The standard textbook on Gaussian processes, free online. Chapters 2 and 3 explain regression and classification with Gaussian processes, chapter 4 the kernels that define what 'similar' means, and chapter 5 how to choose them. It is mathematical but self-contained.
+
+**High school.** Read chapters 2 and 4 and implement Gaussian process regression on one station's daily profile with a periodic kernel. The predictive band is the picture to keep in mind whenever someone asks how sure the model is.
+
+**Stanford undergrad.** The book's treatment of the marginal likelihood for hyperparameter selection, of the connection to kernel methods and to Bayesian linear regression, and of approximations for classification is the foundation for Bayesian optimization and for modern probabilistic models.
+
+**Stanford grad.** Its coverage predates scalable approximations (inducing points, variational methods) and deep kernels; read those from the recent literature. The chapter on model selection and the appendix on Gaussian identities are lasting references.
+
+**PhD at Apple.** The canonical reference; Gaussian processes remain the tool of choice for expensive-function optimization and for small-data science, and their theory underlies much of modern uncertainty quantification.
+
+#### [Deep Learning (Goodfellow, Bengio, Courville)](https://www.deeplearningbook.org/)
+
+_book · free · free online_
 
 **Age 5.** The big classic book about deep neural networks, free online, by three of the people who built the field.
 
@@ -3374,9 +5600,9 @@ _free online_
 
 **PhD at Apple.** A canonical citation and a snapshot of the field as of 2016. Knowing what it lacks (attention, scaling laws, modern generative models, the empirical understanding of generalization) is as important as knowing what it contains, and reading it against Murphy's second volume shows how the field's framing has shifted.
 
-#### Graph WaveNet (Wu et al., IJCAI 2019)
+#### [Graph WaveNet (Wu et al., IJCAI 2019)](https://arxiv.org/abs/1906.00121)
 
-_free; the third traffic paper_
+_paper · free · free; the third traffic paper_
 
 **Age 5.** A paper where scientists let the computer figure out for itself which roads affect which, instead of telling it.
 
@@ -3390,10 +5616,43 @@ _free; the third traffic paper_
 
 **PhD at Apple.** For Fremont the learned graph could reveal cross-freeway coupling (I-880 to I-680 through SR-84 and Mission), and testing whether that improves 60-minute skill is a concrete, publishable experiment that fits on the M1. The paper is also a good example of an ablation done properly.
 
+#### [METR-LA and PEMS-BAY datasets (DCRNN repository)](https://github.com/liyaguang/DCRNN)
+
+_dataset · free · free; the benchmark to reproduce on_
+
+**Age 5.** Two ready-made piles of road sensor data that scientists all use to test their traffic guessers, so everyone can compare fairly.
+
+**Middle school.** The DCRNN paper's authors published their code and two datasets on GitHub: METR-LA (207 sensors in Los Angeles) and PEMS-BAY (325 sensors in the Bay Area, from PeMS like our data). Everyone since has tested on them. Download them in the final phase to reproduce a paper on the Mac mini.
+
+**High school.** The repository contains the data files, the adjacency matrices built from road distances, and scripts to create the 12-step windows and the train, validation and test splits. Study how the splits are made and how missing values are masked; that protocol is what every paper's table assumes.
+
+**Stanford undergrad.** Use the datasets to reproduce DCRNN and STGCN at reduced scale and to test your own spatio-temporal net under the standard protocol, so your numbers are comparable with the literature. Note the differences from Fremont: no incidents, no weather, a fixed sensor set, and speed only.
+
+**Stanford grad.** The benchmark's known issues (data leakage through normalization statistics in some codebases, sensitivity to the graph construction) are documented in later papers; reading those is part of using the benchmark responsibly.
+
+**PhD at Apple.** Shared benchmarks made the field comparable and also narrowed it; extending the protocol with incidents and weather, and evaluating episode-level metrics, is a contribution in itself.
+
+#### [ETA Prediction with Graph Neural Networks in Google Maps (Derrow-Pinion et al., 2021)](https://arxiv.org/abs/2108.11482)
+
+_paper · free · free; the industrial version_
+
+**Age 5.** A paper about how a maps app guesses how long a drive will take, by looking at the roads as a connected network and learning from millions of trips.
+
+**Middle school.** A research paper describing the graph neural network behind travel-time estimates in Google Maps. Roads are grouped into segments and supersegments, a network learns how traffic on connected pieces relates, and the model runs at enormous scale. It is the industrial version of what the spatio-temporal net does for Fremont.
+
+**High school.** Read the system description: the supersegment graph, the features (segment attributes, real-time speeds, time), the graph network with message passing, and the training tricks (MetaGradients, ensembling). Compare its evaluation (travel-time error across cities) with the row-level metrics of this project.
+
+**Stanford undergrad.** The paper is a case study in making graph learning work in production: stability across retrains, latency, and the engineering around a model that is a small part of a larger system. Its ablations show which components mattered, which is the discipline to copy.
+
+**Stanford grad.** Contrast the probe-data setting (trip-based, sparse, privacy-constrained) with fixed-detector data; the modelling choices differ accordingly. Its treatment of training stability is relevant to any graph model retrained monthly.
+
+**PhD at Apple.** One of few public accounts of a deployed spatio-temporal graph model at scale; it frames the open problems (transfer across regions, non-stationarity, coupling with routing) that a research agenda in this area would address.
+
 ### Build
 
-- A PEMS-BAY reproduction that runs on the mini.
-- A conformal interval on the 30-minute prediction, evaluated for coverage.
+- A PEMS-BAY reproduction that runs on the mini, with one ablation.
+- A conformal interval on the 30-minute prediction with realized coverage tracked weekly.
+- A hierarchical Bayesian model of per-station slow rates compared with isotonic calibration.
 - A public write-up of the Fremont model, limitations first.
 
 ### Done when
@@ -3409,19 +5668,125 @@ _free; the third traffic paper_
 
 ## How to study so it sticks
 
-- **A weekly rhythm at ten hours.** Three hours of reading or lectures with notes. Five hours building in the repo. One hour rewriting the week's notes from memory. One hour explaining it to someone, or to a file if no one is around.
+- **A weekly rhythm at ten hours.** Three hours of reading or lectures with notes. Five hours building. One hour rewriting the week's notes from memory. One hour explaining it to someone, or to a file if no one is around.
 - **The three passes.** Run it. Change it and predict what will happen before you run it. Rebuild it from a blank file. Only the third pass counts as knowing.
 - **A lab notebook.** `notebook/YYYY-WW.md`: what you tried, what broke, what you learned, the number. Numbers without the setup that produced them are noise a month later.
 - **A baseline next to every result.** Persistence, the profile rate, the previous version. No exceptions, including for plots.
 - **What would fool this metric?.** Ask it of every number. Accuracy under imbalance, AUC with persistence, F1 without a threshold rule, a shuffled split on a time series.
 - **Read in this order.** Code, then docs, then papers, then blog posts. Blog posts last because they are the easiest to write badly.
 - **The stuck rule.** Thirty minutes alone. Then write the question down precisely, which solves half of them. Then ask, with the exact error and what you already tried.
-- **One project.** This one is enough for ten months. A second project before phase 7 is a way to avoid finishing the first.
+- **One project.** The traffic model is enough for the first year. Later phases add small side projects only where the traffic data cannot carry the idea.
 - **Rest.** Two long sessions beat five short ones for building; five short ones beat two long ones for math. Sleep is when it consolidates.
 
 ### Honest notes
 
-- Editions and chapter numbers drift; if a chapter does not match its description, find the topic in the index. Availability of free editions can change.
-- The hours assume a beginner. If phase 1 takes twenty hours, take the twenty; if it takes sixty, that is normal too. Reorder nothing.
-- The math in phase 2 is the part people skip and the part that separates using ML from understanding it. Derive the gradient once by hand; everything in phase 6 is that derivation repeated.
-- Being good at ML is mostly being good at evaluation. Phases 4 and 5 are where that is learned; do not shorten them to reach the neural networks sooner.
+- Every link was checked in September 2026. Editions and chapter numbers drift; if a chapter does not match its description, find the topic in the index.
+- The hours assume a beginner. If a phase takes twice as long, take it. Reorder nothing before phase 8; the later phases can be taken in any order.
+- The math in phase 2 is the part people skip and the part that separates using ML from understanding it. Derive the gradient once by hand; everything in phases 7 and 8 is that derivation repeated.
+- Being good at ML is mostly being good at evaluation. Phases 4 to 6 are where that is learned; do not shorten them to reach the neural networks sooner.
+- The traffic project cannot carry vision, language or reinforcement learning; those topics use small public datasets and simulators, chosen to run on the Mac mini.
+
+## The library
+
+| Title | Kind | Cost | Phase |
+|---|---|---|---|
+| [Software Carpentry: The Unix Shell, Version Control with Git](https://swcarpentry.github.io/shell-novice/) | course | free | 0 |
+| [Pro Git, chapters 1–3](https://git-scm.com/book/en/v2) | book | free | 0 |
+| The repo's own `00_CONCEPTS.md` and `05_PLAN_COMBINED_DATASETS.md` | docs | free | 0 |
+| [Automate the Boring Stuff with Python, chapters 1–13 and 16–18](https://automatetheboringstuff.com/) | book | free | 1 |
+| [The official Python tutorial, sections 3–9](https://docs.python.org/3/tutorial/) | docs | free | 1 |
+| [Kaggle Learn: Python](https://www.kaggle.com/learn/python) | course | free | 1 |
+| [Exercism, Python track](https://exercism.org/tracks/python) | interactive | free | 1 |
+| [The `zoneinfo` and `datetime` documentation](https://docs.python.org/3/library/zoneinfo.html) | docs | free | 1 |
+| [Khan Academy: Linear algebra, Differential calculus, Statistics and probability](https://www.khanacademy.org/math) | course | free | 2 |
+| [3Blue1Brown: Essence of linear algebra, Essence of calculus](https://www.3blue1brown.com/topics/linear-algebra) | video | free | 2 |
+| [Immersive Linear Algebra (Ström, Åström, Akenine-Möller)](https://immersivemath.com/ila/) | interactive | free | 2 |
+| [Seeing Theory (Brown University)](https://seeing-theory.brown.edu/) | interactive | free | 2 |
+| [Introduction to Probability (Blitzstein, Hwang) and Stat 110](https://probabilitybook.net/) | book | free | 2 |
+| [Mathematics for Machine Learning (Deisenroth, Faisal, Ong), chapters 2–7](https://mml-book.github.io/) | book | free | 2 |
+| [Think Stats (Downey)](https://allendowney.github.io/ThinkStats/) | book | free | 2 |
+| [Python for Data Analysis, 3rd edition (McKinney), chapters 4–8 and 10–11](https://wesmckinney.com/book/) | book | free | 3 |
+| [pandas user guide: Time series and date functionality](https://pandas.pydata.org/docs/user_guide/timeseries.html) | docs | free | 3 |
+| [Kaggle Learn: Pandas, Data Cleaning, Data Visualization](https://www.kaggle.com/learn/pandas) | course | free | 3 |
+| [The polars user guide, first three chapters](https://docs.pola.rs/) | docs | free | 3 |
+| [SQLBolt, interactive SQL lessons](https://sqlbolt.com/) | interactive | free | 3 |
+| [DuckDB documentation, the Python API and SQL reference](https://duckdb.org/docs/) | docs | free | 3 |
+| [PeMS documentation and the Clearinghouse (Caltrans)](https://pems.dot.ca.gov/) | docs | free, login | 3 |
+| [Open-Meteo, historical weather API documentation](https://open-meteo.com/en/docs/historical-weather-api) | docs | free | 3 |
+| [511 SF Bay Open Data, traffic API documentation](https://511.org/open-data) | docs | free, token | 3 |
+| [Machine Learning Specialization (Andrew Ng), courses 1 and 2](https://www.coursera.org/specializations/machine-learning-introduction) | course | free to audit | 4 |
+| [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/) | book | free | 4, 5 |
+| [Hands-On Machine Learning (Géron), chapters 1–7](https://github.com/ageron/handson-ml3) | book | paid, code free | 4, 5 |
+| [StatQuest with Josh Starmer (YouTube)](https://statquest.org/) | video | free | 4, 5 |
+| [Kaggle Learn: Intro to ML, Intermediate ML, Feature Engineering](https://www.kaggle.com/learn/intro-to-machine-learning) | course | free | 4 |
+| [LightGBM documentation: Parameters, Parameters Tuning](https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html) | docs | free | 4 |
+| [The boosting papers: Friedman (2001), XGBoost (2016), LightGBM (2017)](https://arxiv.org/abs/1603.02754) | paper | free | 4 |
+| [Why do tree-based models still outperform deep learning on tabular data? (Grinsztajn, Oyallon, Varoquaux, 2022)](https://arxiv.org/abs/2207.08815) | paper | free | 4 |
+| [Interpretable Machine Learning (Molnar), the SHAP chapter](https://christophm.github.io/interpretable-ml-book/shap.html) | book | free | 4 |
+| [scikit-learn user guide: Model evaluation, Probability calibration](https://scikit-learn.org/stable/modules/model_evaluation.html) | docs | free | 4 |
+| [scikit-learn user guide: Supervised and unsupervised learning](https://scikit-learn.org/stable/supervised_learning.html) | docs | free | 5 |
+| [Random Search for Hyper-Parameter Optimization (Bergstra, Bengio, 2012)](https://jmlr.org/papers/v13/bergstra12a.html) | paper | free | 5 |
+| [Optuna documentation](https://optuna.readthedocs.io/) | docs | free | 5 |
+| [Visual Information Theory (Olah)](https://colah.github.io/posts/2015-09-Visual-Information/) | essay | free | 5 |
+| [Forecasting: Principles and Practice, the Python edition (Hyndman, Athanasopoulos), chapters 1–5, 7, 9](https://otexts.com/fpppy/) | book | free | 6 |
+| [Kaggle Learn: Time Series](https://www.kaggle.com/learn/time-series) | course | free | 6 |
+| [statsmodels documentation: one ARIMA fit on one station](https://www.statsmodels.org/stable/tsa.html) | docs | free | 6 |
+| [Traffic Flow Dynamics (Treiber, Kesting) and the traffic-simulation.de simulator](https://traffic-simulation.de/) | interactive | free simulator, paid book | 6 |
+| [The M5 forecasting competition and its findings (Makridakis, Spiliotis, Assimakopoulos)](https://www.kaggle.com/competitions/m5-forecasting-accuracy) | dataset | free | 6 |
+| [3Blue1Brown: Neural networks](https://www.3blue1brown.com/topics/neural-networks) | video | free | 7 |
+| [TensorFlow Playground](https://playground.tensorflow.org/) | interactive | free | 7 |
+| [Neural Networks: Zero to Hero (Karpathy), micrograd and makemore](https://karpathy.ai/zero-to-hero.html) | video | free | 7 |
+| [PyTorch tutorials: Learn the Basics; the MPS backend notes](https://pytorch.org/tutorials/beginner/basics/intro.html) | docs | free | 7 |
+| [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/) | book | free | 7, 8 |
+| [Understanding Deep Learning (Prince)](https://udlbook.github.io/udlbook/) | book | free | 7, 8 |
+| [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/) | course | free | 7, 8 |
+| [A Gentle Introduction to Graph Neural Networks (Distill, 2021)](https://distill.pub/2021/gnn-intro/) | interactive | free | 7 |
+| [DCRNN (Li et al., ICLR 2018) and STGCN (Yu et al., IJCAI 2018)](https://arxiv.org/abs/1707.01926) | paper | free | 7 |
+| [CS231n: Convolutional Neural Networks for Visual Recognition, course notes](https://cs231n.github.io/) | course | free | 8 |
+| [The Illustrated Transformer (Alammar)](https://jalammar.github.io/illustrated-transformer/) | essay | free | 8 |
+| [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) | paper | free | 8 |
+| [Hugging Face LLM course](https://huggingface.co/learn/llm-course/chapter1/1) | course | free | 8 |
+| [Speech and Language Processing, 3rd edition draft (Jurafsky, Martin)](https://web.stanford.edu/~jurafsky/slp3/) | book | free | 8 |
+| [Build a Large Language Model (From Scratch) (Raschka)](https://github.com/rasbt/LLMs-from-scratch) | book | paid, code free | 8 |
+| [Stanford CS336: Language Modeling from Scratch](https://cs336.stanford.edu/) | course | free | 8 |
+| [What are Diffusion Models? (Weng, Lil'Log)](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/) | essay | free | 8 |
+| [Designing Machine Learning Systems (Huyen), chapters 1–3 and 7–9](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/) | book | paid | 9 |
+| [Made With ML (Mohandas)](https://madewithml.com/) | course | free | 9 |
+| [Machine Learning Engineering (Burkov)](https://www.mlebook.com/) | book | free | 9 |
+| [Full Stack Deep Learning](https://fullstackdeeplearning.com/) | course | free | 9 |
+| [Rules of Machine Learning (Zinkevich, Google)](https://developers.google.com/machine-learning/guides/rules-of-ml) | docs | free | 9 |
+| [The ML Test Score (Breck, Cai, Nielsen, Salib, Sculley, 2017)](https://research.google/pubs/the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction/) | paper | free | 9 |
+| [Hidden Technical Debt in Machine Learning Systems (Sculley et al., 2015)](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html) | paper | free | 9 |
+| [launchd.info and the pytest documentation](https://www.launchd.info/) | docs | free | 9 |
+| [FastAPI documentation](https://fastapi.tiangolo.com/) | docs | free | 9 |
+| [Docker, Get started guide](https://docs.docker.com/get-started/) | docs | free | 9 |
+| [PyTorch distributed overview](https://pytorch.org/tutorials/beginner/dist_overview.html) | docs | free | 9 |
+| [The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)](https://huggingface.co/spaces/nanotron/ultrascale-playbook) | book | free | 9 |
+| [Scaling Laws for Neural Language Models (Kaplan et al., 2020)](https://arxiv.org/abs/2001.08361) | paper | free | 9 |
+| [Reinforcement Learning: An Introduction (Sutton, Barto)](http://incompleteideas.net/book/the-book-2nd.html) | book | free | 10 |
+| [David Silver's Reinforcement Learning course (UCL, DeepMind)](https://www.davidsilver.uk/teaching/) | video | free | 10 |
+| [Spinning Up in Deep RL (OpenAI)](https://spinningup.openai.com/) | docs | free | 10 |
+| [Causal Inference: The Mixtape (Cunningham)](https://mixtape.scunning.com/) | book | free | 10 |
+| [Causal Inference: What If (Hernán, Robins)](https://miguelhernan.org/whatifbook) | book | free | 10 |
+| The Book of Why (Pearl, Mackenzie) | book | paid | 10 |
+| [Fairness and Machine Learning (Barocas, Hardt, Narayanan)](https://fairmlbook.org/) | book | free | 10 |
+| [The Algorithmic Foundations of Differential Privacy (Dwork, Roth)](https://www.cis.upenn.edu/~aaroth/privacybook.html) | book | free | 10 |
+| [Model Cards for Model Reporting (Mitchell et al., 2019) and Datasheets for Datasets (Gebru et al., 2018)](https://arxiv.org/abs/1810.03993) | paper | free | 10 |
+| [Google's Recommendation Systems course](https://developers.google.com/machine-learning/recommendation) | course | free | 10 |
+| [Matrix Factorization Techniques for Recommender Systems (Koren, Bell, Volinsky, 2009)](https://doi.org/10.1109/MC.2009.263) | paper | paywalled | 10 |
+| [Performative Prediction (Perdomo, Zrnic, Mendler-Dünner, Hardt, 2020)](https://arxiv.org/abs/2002.06673) | paper | free | 10 |
+| [Probabilistic Machine Learning: An Introduction (Murphy)](https://probml.github.io/pml-book/book1.html) | book | free | 11 |
+| [The Elements of Statistical Learning (Hastie, Tibshirani, Friedman)](https://hastie.su.domains/ElemStatLearn/) | book | free | 11 |
+| [Understanding Machine Learning: From Theory to Algorithms (Shalev-Shwartz, Ben-David)](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/) | book | free | 11 |
+| [Convex Optimization (Boyd, Vandenberghe)](https://web.stanford.edu/~boyd/cvxbook/) | book | free | 11 |
+| [CS229 lecture notes (Stanford)](https://cs229.stanford.edu/main_notes.pdf) | course | free | 11 |
+| [CS224W: Machine Learning with Graphs (Stanford)](https://web.stanford.edu/class/cs224w/) | course | free | 11 |
+| [A Gentle Introduction to Conformal Prediction (Angelopoulos, Bates)](https://arxiv.org/abs/2107.07511) | paper | free | 11 |
+| [Adaptive Conformal Inference Under Distribution Shift (Gibbs, Candès, 2021)](https://arxiv.org/abs/2106.00170) | paper | free | 11 |
+| [Statistical Rethinking (McElreath)](https://xcelab.net/rm/) | book | paid, lectures free | 11 |
+| [Bayesian Data Analysis, 3rd edition (Gelman, Carlin, Stern, Dunson, Vehtari, Rubin)](https://sites.stat.columbia.edu/gelman/book/) | book | free | 11 |
+| [Gaussian Processes for Machine Learning (Rasmussen, Williams)](https://gaussianprocess.org/gpml/) | book | free | 11 |
+| [Deep Learning (Goodfellow, Bengio, Courville)](https://www.deeplearningbook.org/) | book | free | 11 |
+| [Graph WaveNet (Wu et al., IJCAI 2019)](https://arxiv.org/abs/1906.00121) | paper | free | 11 |
+| [METR-LA and PEMS-BAY datasets (DCRNN repository)](https://github.com/liyaguang/DCRNN) | dataset | free | 11 |
+| [ETA Prediction with Graph Neural Networks in Google Maps (Derrow-Pinion et al., 2021)](https://arxiv.org/abs/2108.11482) | paper | free | 11 |
