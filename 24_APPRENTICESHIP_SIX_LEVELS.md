@@ -2,11 +2,11 @@
 
 _September 2026. Supersedes `22_LEARNING_PATH_ML.md` and `23_LESSONS_SIX_LEVELS.md`; companion to `21_PLAN_M1_TRAFFIC_MODEL.md`._
 
-**Everything needed for machine learning, told six times: twelve phases, thirty-nine lessons and 140 free books, courses and papers, from age five to a PhD at Apple.**
+**Everything needed for machine learning, told six times: twelve phases, thirty-nine lessons and 140 free books, courses and papers, each with its own study guide, from age five to a PhD at Apple.**
 
-The Fremont traffic model is the spine: you build it stage by stage and learn each idea the week it is needed. Around that spine the course covers the rest of the field, from SQL and regression to transformers, reinforcement learning, causal inference and fairness, so nothing needed for real machine-learning work is left out. Every lesson, topic and resource is explained at six levels, and every resource is free. Pick a level with the switcher and read the whole course at that height, or turn on every level and watch one idea gain precision rung by rung. Tick things off as you go; progress is saved in this browser.
+The Fremont traffic model is the spine: you build it stage by stage and learn each idea the week it is needed. Around that spine the course covers the rest of the field, from SQL and regression to transformers, reinforcement learning, causal inference and fairness, so nothing needed for real machine-learning work is left out. Every lesson, topic and resource is explained at six levels, every resource is free, and every resource carries a study guide that teaches its content here, so the course can be learned from this page alone. Pick a level with the switcher and read the whole course at that height, or turn on every level and watch one idea gain precision rung by rung. Tick things off as you go; progress is saved in this browser.
 
-The six levels, in order: Age 5, Middle school, High school, Stanford undergrad, Stanford grad, PhD at Apple. Every lesson, topic and resource below carries all six. Links were checked in September 2026.
+The six levels, in order: Age 5, Middle school, High school, Stanford undergrad, Stanford grad, PhD at Apple. Every lesson, topic and resource below carries all six, and every resource has a study guide (what it covers, key ideas, formulas, takeaways, practice) so the content can be learned from this document before opening the link. Links were checked in September 2026.
 
 ## Contents
 
@@ -329,6 +329,43 @@ _course · free · a day · free, half a day each, exactly the commands you will
 
 **PhD at Apple.** Written and maintained by The Carpentries community, these are the lessons to hand to a new hire from a domain science before they touch the pipeline. For a research lead the value is twofold: a shared baseline of tooling across a team, and a template for writing your own onboarding lesson for this repository in the same style, with exercises that run against real PeMS files.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Two half-day lessons. The shell lesson teaches you to navigate a file system, create and inspect files, combine small tools with pipes, and write loops and scripts. The git lesson teaches you to record versions of a project, inspect and undo changes, and share work through a remote repository.
+
+**Key ideas, in order.**
+
+1. The file system is a tree; you always stand somewhere in it (`pwd`), move with `cd`, and list with `ls`. Absolute paths start at the root `/`; relative paths start from where you stand; `..` is the parent, `~` is home.
+2. Files and directories: `mkdir` creates, `touch` and editors create files, `mv` renames or moves, `cp` copies, `rm` deletes with no undo. Tab completion and the up arrow save most of your typing.
+3. Pipes and filters: every tool reads text and writes text, so `wc -l`, `sort`, `head`, `tail`, `cut`, `uniq`, `grep` can be chained with `|`. `>` sends output to a file and `>>` appends. This is how you inspect a 200 MB PeMS file without opening it.
+4. Loops: `for f in *.txt.gz; do echo $f; done` repeats a command over many files; variables are set with `name=value` and read with `$name`. A script is a file of such commands run with `bash script.sh`, with `$1` for its first argument.
+5. Finding things: `grep pattern file` searches contents; `find . -name '*.parquet'` searches names; `man cmd` or `cmd --help` explains flags.
+6. Git's model: a repository stores snapshots (commits) of a project; each commit records who, when, why, and points to its parent. `git init` starts one; `git status` shows what changed; `git add` stages; `git commit -m 'why'` records.
+7. History and undo: `git log` lists commits; `git diff` shows changes since the last commit or between commits; `git checkout -- file` discards working changes; `git revert` makes a new commit that undoes an old one.
+8. Ignoring: `.gitignore` lists patterns (`data/`, `.env`, `*.parquet`) that git should never track. Secrets and large data never go in.
+9. Remotes: `git remote add origin URL`, `git push -u origin main` publishes; `git pull` fetches and merges; a clone is a full copy of the history. Conflicts happen when two people edit the same lines; git marks them with `<<<<<<<` and you resolve by editing and committing.
+10. Collaboration: branches let work proceed in parallel; pull requests are reviewed merges; a README and a license make a repository usable by others.
+
+**Formulas and commands to remember.**
+
+```
+pwd; ls -la; cd data; cat file | head -3
+zcat d04_text_station_5min_2026_03_02.txt.gz | head -1 | tr ',' '\n' | wc -l
+git init; git add .; git commit -m 'first'; git diff; git log --oneline
+git remote add origin https://github.com/you/Traffic1; git push -u origin main
+```
+
+**Three takeaways.**
+
+- Everything in the shell is text flowing between small tools; learn ten commands and pipes and you can inspect any file.
+- A commit is a snapshot with a message that says why; small commits with honest messages are the whole discipline.
+- Secrets and data never enter git; `.gitignore` is the first file you write.
+
+**Practice.** Count the rows and columns of one PeMS file from the shell alone, then commit a script that does it and push it to GitHub.
+
+</details>
+
 #### [Pro Git, chapters 1–3](https://git-scm.com/book/en/v2)
 
 _book · free · a weekend · free online; enough Git for a year_
@@ -344,6 +381,43 @@ _book · free · a weekend · free online; enough Git for a year_
 **Stanford grad.** Chapter 10 on internals is the next read: the content-addressed object store (blobs, trees, commits named by hash) is the same idea as the manifest hashes in this pipeline and as data-versioning tools such as DVC and lakeFS. Git's model of history is what makes reproducible experiments possible: a commit hash plus a data hash names a result forever. Chapter 7's tools (stash, bisect, reflog, rewriting history) are what you reach for when an experiment goes wrong.
 
 **PhD at Apple.** At scale git's limits show: monorepos, large binary artifacts (git LFS), and the mismatch between versioning code and versioning data or models, which is why model registries and data lakes grew their own lineage systems. Still, the discipline the book teaches, small atomic commits with messages that explain why rather than what, is what makes a research codebase reviewable and a production incident debuggable at 3 am. For a team, the book is also the reference for a written branching policy.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The reference for git. Chapter 1 explains what version control is and how git differs from older systems. Chapter 2 is the daily toolkit for a single repository. Chapter 3 is branching and merging, the feature that makes git what it is.
+
+**Key ideas, in order.**
+
+1. Git stores snapshots, not differences: each commit is a picture of every tracked file (unchanged files are shared by reference). Almost every operation is local and fast, and git only adds data, so committed work is nearly impossible to lose.
+2. Three states: files are modified (in the working directory), staged (in the index, chosen for the next commit), or committed (in the repository). `git add` moves work into the index; `git commit` records the index.
+3. Getting a repository: `git init` in an existing folder or `git clone URL`. Tracking: `git status` (with `-s` for short form), `git add`, `.gitignore` with glob patterns, `git diff` (working versus index) and `git diff --staged` (index versus last commit).
+4. Committing and history: `git commit -m`, `git commit -a` to skip staging for tracked files, `git rm`, `git mv`, and `git log` with `--oneline`, `-p`, `--stat`, `--graph`, and filters by author, date and path.
+5. Undoing: `git commit --amend` rewrites the last commit; `git restore --staged file` unstages; `git restore file` discards working changes (dangerous: unrecoverable). Anything committed can be recovered from the reflog.
+6. Remotes: `git remote -v`, `git fetch` (download without merging), `git pull` (fetch and merge), `git push origin branch`; tags with `git tag -a v1.0 -m` mark releases; aliases shorten commands.
+7. Branches are pointers: a branch is a movable name for a commit; `HEAD` points to the current branch. `git branch name` creates, `git switch name` moves HEAD, `git switch -c name` does both. Creating a branch costs nothing.
+8. Merging: a fast-forward merge just moves the pointer when history is linear; a three-way merge creates a merge commit with two parents when branches diverged. Conflicts are marked in the files and resolved by editing, `git add`, `git commit`.
+9. Workflows: long-running branches (main, develop) and short topic branches; remote-tracking branches (`origin/main`) record where the remote was at last fetch; `git push origin --delete branch` cleans up.
+10. Rebasing (end of chapter 3): replays commits onto another base for a linear history; never rebase commits that others already have.
+
+**Formulas and commands to remember.**
+
+```
+git status -s; git diff --staged; git log --oneline --graph --all
+git switch -c feature/clean-pems; ...; git switch main; git merge feature/clean-pems
+git fetch origin; git log main..origin/main; git pull
+git reflog   # find any commit you thought was lost
+```
+
+**Three takeaways.**
+
+- Commits are snapshots in a graph and branches are pointers into it; every confusing situation becomes a drawing.
+- The index is a staging area for composing a commit; use it to make commits small and coherent.
+- Merges are safe and rebases rewrite history; use rebases only on branches nobody else has.
+
+**Practice.** Create a topic branch for the cleaning script, make three commits, merge it into main with a merge commit, then draw the resulting graph from `git log --graph` by hand.
+
+</details>
 
 #### The repo's own `00_CONCEPTS.md` and `05_PLAN_COMBINED_DATASETS.md`
 
@@ -361,6 +435,37 @@ _docs · free · an hour, twice · read them once now, again in phase 4_
 
 **PhD at Apple.** Design documents are where most of the leverage in an ML project lives, and most teams write them badly. The exercise at your level is to write the version a team could execute: explicit interfaces between stages, success criteria with numbers, risks with owners, and what would make you stop. Use these two files as the before, and the flowchart plan as a partial after.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The project's own documents. The concepts file explains the first model: how events become a training table, what logistic regression computes, and how gradient descent fits it. The plan file specifies how PeMS detector data and 511 incidents are cleaned, labelled, joined, featurized, split and evaluated.
+
+**Key ideas, in order.**
+
+1. The v1 model: a grid of road × hour × weekend cells, each labelled 1 if any incident ever occurred there. Features are hour (scaled to 0–1), a weekend flag and one-hot road indicators; the model is a logistic regression trained by hand-written gradient descent.
+2. Logistic regression in the concepts file: score z = w·x + b, probability p = 1 / (1 + e^(−z)), loss = −[y log p + (1 − y) log(1 − p)], gradient (p − y)·x, update w ← w − η·gradient. Lesson 7 rebuilds this.
+3. The plan's pipeline: download PeMS 5-minute files and station metadata; clean (timezone to UTC, sanity bounds, short-gap fill, Fremont station filter); label slow episodes from a speed profile; join incidents by route, direction and distance; engineer lag, rolling, neighbor, calendar and incident features; split chronologically; train baselines, logistic regression, trees and an MLP; evaluate with standard metrics and lead time.
+4. The plan's cautions: the timezone step is mandatory and easy to get wrong; PeMS column layout must be verified against a real file; the label threshold should be versioned in filenames; class weighting when positives are rare.
+5. What the flowchart plan changed: targets shifted forward by the horizon, a train-only profile, a second absolute label, weather and static features, LightGBM as production, calibration and thresholds, a serving loop and monitoring, and the admission that no real-time speed feed exists yet.
+
+**Formulas and commands to remember.**
+
+```
+p = sigmoid(x @ weights + bias)
+loss = -mean(y*log(p) + (1-y)*log(1-p))
+weights -= lr * X.T @ (p - y) / n
+```
+
+**Three takeaways.**
+
+- Read a design document as a hypothesis about data you have not seen yet; the first real file will change it.
+- The v1 model is a lookup table shaped like a model; its value is teaching the mechanics.
+- The plan's later revisions are the record of what evaluation discipline caught.
+
+**Practice.** List every difference between the plan file and the flowchart plan, and for each say what evidence or reasoning caused the change.
+
+</details>
+
 #### [The Missing Semester of Your CS Education (MIT)](https://missing.csail.mit.edu/)
 
 _course · free · a week · free; the tools nobody teaches, in eleven lectures_
@@ -377,6 +482,41 @@ _course · free · a week · free; the tools nobody teaches, in eleven lectures_
 
 **PhD at Apple.** For onboarding engineers and researchers alike, this is the shortest path to shared tooling literacy; its lecture on metaprogramming (build systems, testing, continuous integration) is the bridge to the engineering phase.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Eleven one-hour lectures with notes and exercises on the tools around programming: the shell, shell scripting, editors, data wrangling with command-line tools, command-line environments, version control, debugging and profiling, metaprogramming (build systems, dependencies, testing), security, and a potpourri.
+
+**Key ideas, in order.**
+
+1. Shell basics: how the shell finds programs through `PATH`, quoting and expansion, redirection, and why permissions (`chmod`, `sudo`) block scripts silently.
+2. Shell scripting: variables, functions, exit codes (`$?`), `&&` and `||`, command substitution `$(cmd)`, `for` loops, `find`, `xargs`, and shebangs. The lecture's advice: use the shell for glue, Python for logic.
+3. Editors: the Vim lecture teaches modal editing and why an editor you can drive without the mouse pays off; whichever editor you use, learn its search, multi-cursor and integrated terminal.
+4. Data wrangling: `sed` substitutions, regular expressions (character classes, anchors, groups), `awk` for columns, `sort | uniq -c | sort -nk1`, `paste`, `bc`, and building a one-line analysis of a log file. Directly applicable to a PeMS file.
+5. Command-line environment: job control (`&`, `Ctrl-Z`, `fg`, `bg`), terminal multiplexers (tmux), aliases and dotfiles, SSH keys and port forwarding for remote machines.
+6. Version control: git's data model as a directed acyclic graph of commits over trees of blobs; the staging area; branches as references; merging and conflicts; `git bisect` to find a bad commit; `git stash`.
+7. Debugging and profiling: print debugging versus logging levels, debuggers (`pdb`), `strace`-style system tracing, static analysis (linters, type checkers), CPU profilers and flame graphs, memory profilers, and `time` versus wall-clock.
+8. Metaprogramming: build systems (`make` with targets and dependencies), semantic versioning, lock files, continuous integration, and testing vocabulary (unit, integration, regression, mocking).
+9. Security: hashes, key derivation, symmetric and asymmetric encryption at a user's level, SSH keys, password managers, and why secrets never go in repositories.
+
+**Formulas and commands to remember.**
+
+```
+cat log | grep 'Error' | sed -E 's/.*station=([0-9]+).*/\1/' | sort | uniq -c | sort -nk1 | tail
+make all   # a Makefile target with dependencies runs only what changed
+git bisect start; git bisect bad; git bisect good v1.0; # test, mark, repeat
+```
+
+**Three takeaways.**
+
+- The shell is a programming environment; learning to compose its tools removes a category of Python scripts.
+- A Makefile with dependencies is the simplest correct pipeline runner.
+- Profile before optimizing and bisect before guessing.
+
+**Practice.** Write a Makefile for the project with `setup`, `collect`, `clean`, `features` and `test` targets, each depending on the previous one's outputs.
+
+</details>
+
 #### [Elements of AI (University of Helsinki)](https://www.elementsofai.com/)
 
 _course · free · about 30 hours · free; the big picture with no math, before the phases begin_
@@ -392,6 +532,36 @@ _course · free · about 30 hours · free; the big picture with no math, before 
 **Stanford grad.** A model of public education about a technical field: careful about hype, honest about uncertainty, and concrete about societal effects.
 
 **PhD at Apple.** Worth knowing as the reference for what a general audience can be expected to understand about AI, which matters when you write for policy makers or the public.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A non-technical introduction in six chapters: what AI is, problem solving by search, real-world AI and probability, machine learning, neural networks, and the implications of AI. Each chapter has short readings and exercises.
+
+**Key ideas, in order.**
+
+1. Defining AI: it is not one thing; useful distinctions are narrow versus general, autonomy versus adaptivity, and the observation that once something works we stop calling it AI. The Turing test and the Chinese room as framing arguments.
+2. Search and games: a problem as states and actions, breadth-first and depth-first search, and game trees with the minimax idea; why exhaustive search fails as branching grows and heuristics are needed.
+3. Probability: odds and probabilities, Bayes' rule with a medical-test example (base rates matter), naive Bayes for spam filtering; the point that uncertainty is handled by arithmetic, not intuition.
+4. Machine learning: supervised (labelled examples), unsupervised (structure without labels) and reinforcement (rewards) learning; nearest neighbors and linear regression as first models; overfitting as memorization; the need for held-out evaluation.
+5. Neural networks: neurons as weighted sums with a squashing function, layers, the idea of training by adjusting weights, and what deep networks do with images.
+6. Implications: prediction versus explanation, bias in data becoming bias in decisions, the limits of current systems (no common sense, brittle outside training data), and the questions society should ask.
+
+**Formulas and commands to remember.**
+
+```
+P(disease | positive) = P(positive | disease) P(disease) / P(positive)
+```
+
+**Three takeaways.**
+
+- AI is a set of methods with limits, not a mind; know which method is being used.
+- Base rates decide what a positive test means; the same logic runs through every alert this course builds.
+- Overfitting and biased data are the two failure modes a non-expert should be able to name.
+
+**Practice.** Explain to someone outside the field, in five sentences, what the traffic model does, what it cannot do, and why its alerts need a threshold.
+
+</details>
 
 ### Build
 
@@ -733,6 +903,49 @@ _book · free · weeks · free online; practical from page one_
 
 **PhD at Apple.** The book's persistence as the default beginner text, across editions and free online, reflects a fact about ML teams: the bottleneck is often basic scripting fluency among the people who understand the domain. Building that capability across a team is a higher-leverage act than most modelling work, and this book is the cheapest tool for it.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Python from zero through practical programs. Part 1 (chapters 1 to 6) is the language: expressions, flow control, functions, lists, dictionaries, strings. Chapters 7 to 13 cover regular expressions, files, organizing files, debugging, web scraping and spreadsheets. Chapters 16 to 18 cover CSV and JSON, time and scheduling, and sending messages.
+
+**Key ideas, in order.**
+
+1. Expressions and types: integers, floats, strings; variables as names bound to values; `input()` and `print()`; converting with `int()`, `str()`, `float()`.
+2. Flow control: booleans and comparisons, `if`, `elif`, `else`; `while` with `break` and `continue`; `for` over `range()`; importing modules; `sys.exit()`.
+3. Functions: `def`, parameters, `return`, `None`, keyword arguments, local versus global scope, and exception handling with `try` and `except`.
+4. Lists: indexing and slicing, `len`, `append`, `insert`, `remove`, `sort`, list concatenation, `in`, multiple assignment, references versus copies (the cause of many surprises), and tuples as immutable lists.
+5. Dictionaries: key-value pairs, `keys()`, `values()`, `items()`, `get()` with a default, `setdefault()`, nested structures, and pretty printing; a 511 event is exactly this shape.
+6. Strings: escape characters, raw and multiline strings, methods (`upper`, `strip`, `split`, `join`, `startswith`, `isdigit`), f-strings, and justifying text.
+7. Regular expressions: `re.compile`, groups, `|`, `?`, `*`, `+`, `{n}`, character classes, `^` and `$`, `findall`, `sub`, and greedy versus non-greedy; used here to parse road names such as 'I-880 N'.
+8. Files: paths with `pathlib`, `open` in read, write and append modes, `with` blocks, reading lines, and the `shelve` and `json` modules for saving data.
+9. Debugging: raising exceptions, tracebacks, assertions, logging with levels and to files, and the debugger's step, over and continue.
+10. CSV and JSON: `csv.reader` and `DictReader`, writing with `csv.writer`, `json.loads` and `json.dumps`, and reading a web API's JSON into dictionaries.
+11. Time: `time.time()`, `time.sleep()`, `datetime` objects, `timedelta` arithmetic, `strftime` and `strptime`, running programs on a schedule, and launching other programs.
+
+**Formulas and commands to remember.**
+
+```
+import csv, json
+with open('data/fremont_events_log.csv', newline='') as f:
+    rows = list(csv.DictReader(f))
+counts = {}
+for r in rows:
+    counts[r['event_type']] = counts.get(r['event_type'], 0) + 1
+import re
+m = re.search(r'(I-\d+|SR-\d+)\s*([NSEW])?', 'Collision on I-880 N')
+route, direction = m.group(1), m.group(2)
+```
+
+**Three takeaways.**
+
+- Lists and dictionaries are the two structures most data code is made of; know their methods cold.
+- A `with open(...)` block, `csv.DictReader` and `json.loads` cover the project's file needs.
+- Regular expressions are a small language; learn groups and character classes and you can parse most text fields.
+
+**Practice.** Write a script that reads the incident log with `csv.DictReader`, parses route and direction from `road_names` with a regular expression, and prints counts per route and direction.
+
+</details>
+
 #### [The official Python tutorial, sections 3–9](https://docs.python.org/3/tutorial/)
 
 _docs · free · an afternoon · free; the reference once Sweigart runs out_
@@ -748,6 +961,47 @@ _docs · free · an afternoon · free; the reference once Sweigart runs out_
 **Stanford grad.** Beyond the tutorial, the language reference and the PEPs are where design rationale lives: PEP 8 for style, PEP 484 and successors for typing, PEP 20 for the philosophy. Reading a few accepted and rejected PEPs teaches how language decisions are argued with evidence, which is a useful model for arguing design decisions in your own project.
 
 **PhD at Apple.** For a team the tutorial's value is as the shared baseline that code-review standards can point to. Beyond it, the investment that turns research code into production code is static typing (mypy or pyright on every module), packaging, and a linter configuration checked into the repository so style is never a review comment.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The language as its authors describe it: informal introduction (numbers, strings, lists), control flow (if, for, range, break, functions, argument forms, lambda, docstrings), data structures (list methods, comprehensions, tuples, sets, dictionaries, looping techniques), modules and packages, input and output (formatting, files, JSON), errors and exceptions, and classes.
+
+**Key ideas, in order.**
+
+1. Numbers and strings: integer and float arithmetic, `//` and `%`, string indexing and slicing (strings are immutable), and lists as mutable sequences.
+2. Control flow: `for` iterates over any iterable; `range` produces numbers lazily; `else` on loops runs when no `break` occurred; `match` statements for structural matching; `pass` as a placeholder.
+3. Functions in depth: default values evaluated once (the mutable-default trap), keyword and positional-only arguments, `*args` and `**kwargs`, unpacking argument lists, lambda expressions, docstrings and annotations.
+4. Data structures: `list.sort` versus `sorted`, list comprehensions and nested ones, `del`, tuples and packing, sets and their operations, dictionaries and `dict()` construction, `enumerate`, `zip`, `reversed`, `sorted` in loops, and comparison chaining.
+5. Modules: a module is a file; `import` runs it once; `__name__ == '__main__'`; the module search path; packages as directories with `__init__.py`; `from package import name`.
+6. Input and output: f-strings and `format`, `repr` versus `str`, reading and writing files with `with`, `read`, `readline`, iteration over lines, `json.dump` and `json.load`.
+7. Errors: syntax errors versus exceptions, `try`, `except` with specific types, `else`, `finally`, raising, exception chaining, user-defined exceptions, and cleanup with `with`.
+8. Classes: namespaces and scopes (the LEGB rule), class and instance attributes, methods, inheritance, `super()`, private names by convention, iterators (`__iter__`, `__next__`), and generators with `yield` for lazy sequences.
+
+**Formulas and commands to remember.**
+
+```
+rows = [r for r in reader if 'I-880' in r['road_names']]   # comprehension
+def stream(path):
+    with open(path) as f:
+        for line in f:
+            yield line.rstrip('\n')     # a generator reads lazily
+try:
+    resp = requests.get(url, timeout=30)
+    resp.raise_for_status()
+except requests.RequestException as e:
+    log.error('poll failed: %s', e)
+```
+
+**Three takeaways.**
+
+- Iterables and generators are how Python streams large files; use them instead of reading everything.
+- Mutable defaults, references shared between names, and integer versus float division are the classic traps.
+- Catch specific exceptions and let the rest crash loudly.
+
+**Practice.** Write a generator that yields only Fremont-station rows from a gzipped PeMS file, and a class that wraps the station registry with a `neighbors(station_id)` method.
+
+</details>
 
 #### [Kaggle Learn: Python](https://www.kaggle.com/learn/python)
 
@@ -765,6 +1019,38 @@ _course · free · a weekend · free, short, with exercises in the browser_
 
 **PhD at Apple.** Kaggle as a platform matters more than this course. It is where tabular machine-learning practice evolved: gradient-boosted ensembles, feature engineering, leakage detection, and careful validation. Reading winning solutions' write-ups for time-series competitions is a research-adjacent habit that this course is the first step toward.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Seven lessons with graded exercises: hello Python (syntax, variables, numbers), functions and getting help, booleans and conditionals, lists, loops and list comprehensions, strings and dictionaries, and working with external libraries.
+
+**Key ideas, in order.**
+
+1. Syntax and arithmetic: operators, `int` and `float`, `type()`, `help()` and docstrings as the way to learn any function.
+2. Functions: defining, default arguments, returning values, functions as arguments (`max(numbers, key=abs)`), and the difference between printing and returning.
+3. Booleans: comparison and logical operators, short-circuiting, `bool()` of empty values, conditional expressions.
+4. Lists: indexing from both ends, slicing, mutation methods, `in`, `len`, `sorted`, `sum`, tuples and swapping.
+5. Loops and comprehensions: `for` over lists and strings, `range`, `while`, list comprehensions with conditions, and `sum([...])` idioms for counting.
+6. Strings and dictionaries: string methods, `format`, dictionaries as maps, `.keys()`, `.items()`, iterating, and comprehensions over dictionaries.
+7. Libraries: `import math`, `import numpy as np`, `dir()` to explore, operator overloading (why `np.array` adds elementwise), and reading documentation.
+
+**Formulas and commands to remember.**
+
+```
+slow = [s for s in speeds if s < 35]
+len([s for s in speeds if s < 35]) / len(speeds)
+```
+
+**Three takeaways.**
+
+- Comprehensions express filtering and mapping in one line and are the idiom of data code.
+- `help()` and `dir()` are how you learn a library at the prompt.
+- Operators mean whatever the object's class says; numpy arrays add elementwise for that reason.
+
+**Practice.** Compute, with a comprehension, the share of 5-minute rows below 35 mph for one station from a list of speeds.
+
+</details>
+
 #### [Exercism, Python track](https://exercism.org/tracks/python)
 
 _interactive · free · ongoing, a few a week · free practice with tests and human mentors_
@@ -780,6 +1066,34 @@ _interactive · free · ongoing, a few a week · free practice with tests and hu
 **Stanford grad.** Compared with competitive-programming sites, Exercism's emphasis is on readable, idiomatic code, which is the skill a research codebase needs. Its mentor feedback is uneven but often excellent; the community solutions are a corpus of Python style worth studying.
 
 **PhD at Apple.** For a team, a shared practice track is a low-cost way to align coding style among people from different backgrounds; the exercises are also a fair, low-stakes pair-programming warm-up for onboarding an intern.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Practice exercises in two kinds: concept exercises that introduce one idea (basics, booleans, numbers, conditionals, loops, lists, dictionaries, strings, tuples, sets, classes, exceptions, generators, and more) and practice exercises of growing difficulty with test suites; optional human mentoring on submissions.
+
+**Key ideas, in order.**
+
+1. The loop: read the instructions, run the failing tests, write the function, run again, refactor, submit. Every exercise ships with a pytest file, so you learn test-driven habits by default.
+2. Concept exercises teach idioms: string formatting and methods, list methods and slicing, dictionary methods, comprehensions, `enumerate` and `zip`, unpacking, `None` handling, and class basics.
+3. Practice exercises worth doing for this project: parsing (ISBN, phone numbers), date and time arithmetic (gigasecond, meetup), matrix and grid manipulation, run-length encoding, and word counting, which rehearse the parsing and aggregation the pipeline needs.
+4. Community solutions: after submitting, read others' published solutions to see cleaner idioms; mentors comment on clarity and idiom rather than only correctness.
+
+**Formulas and commands to remember.**
+
+```
+pytest -q   # run the exercise's tests; make them pass, then make the code readable
+```
+
+**Three takeaways.**
+
+- Small problems with tests, done regularly, are how fluency compounds.
+- Reading other solutions after your own is where idiom is learned.
+- Readable beats clever; the mentors will say so.
+
+**Practice.** Do two exercises a week through phase 1; for each, write down one idiom you learned from a published solution.
+
+</details>
 
 #### [CS50's Introduction to Programming with Python (Harvard)](https://cs50.harvard.edu/python/)
 
@@ -797,6 +1111,44 @@ _course · free · ten weeks part-time · free; structured lectures with checked
 
 **PhD at Apple.** For a team, CS50P is a fair baseline for what 'can program in Python' should mean before someone touches pipeline code.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Ten weeks of lectures with problem sets checked by an autograder: functions and variables, conditionals, loops, exceptions, libraries, unit tests, file input and output, regular expressions, object-oriented programming, and a final week on advanced features (sets, generators, type hints, docstrings, argument parsing, unpacking).
+
+**Key ideas, in order.**
+
+1. Functions and variables: `print` with separators, `input`, strings and numbers, `def` and `return`, scope, and f-strings.
+2. Conditionals and loops: comparison and logical operators, `match`, `while` and `for`, `break` and `continue`, lists and dictionaries in loops, `range` and `len`.
+3. Exceptions: `ValueError` from bad input, `try` and `except`, `else`, `pass`, and writing functions that validate input in a loop.
+4. Libraries: `random`, `statistics`, `sys.argv` and exit codes, `pip install`, `requests` to call an API and parse JSON, and writing your own modules.
+5. Unit tests: `assert`, `pytest`, test functions, testing for exceptions, organizing tests in folders; the course's insistence that tests are part of the program.
+6. File I/O: `open` and `with`, reading and writing lines, CSV with `csv.reader`, `DictReader` and `DictWriter`, sorting records, and reading binary files.
+7. Regular expressions: `re.search`, `re.match`, `re.fullmatch`, `re.sub`, character classes, quantifiers, groups and validation of emails and formats.
+8. Object-oriented programming: classes, `__init__`, attributes, methods, properties with getters and setters, class methods, inheritance, operator overloading.
+9. Advanced features: sets, global variables and constants, type hints and `mypy`, docstrings, `argparse`, unpacking, `*args` and `**kwargs`, `map` and `filter`, comprehensions, `enumerate`, generators.
+
+**Formulas and commands to remember.**
+
+```
+def main():
+    ...
+if __name__ == '__main__':
+    main()
+def test_touches():
+    assert event_touches_fremont({'roads': [{'name': 'I-880 N'}]})
+```
+
+**Three takeaways.**
+
+- Validate inputs in a loop with exceptions; programs that accept anything fail later and quietly.
+- Tests are written with the code, not after; `pytest` makes that cheap.
+- Argument parsing, type hints and docstrings turn a script into a tool others can run.
+
+**Practice.** Rewrite the collector's command-line interface with `argparse` (a `--bootstrap` flag and a `--since` date) and add tests for its argument handling.
+
+</details>
+
 #### [The `zoneinfo` and `datetime` documentation](https://docs.python.org/3/library/zoneinfo.html)
 
 _docs · free · an hour · free; read the section on aware versus naive datetimes twice_
@@ -812,6 +1164,42 @@ _docs · free · an hour · free; read the section on aware versus naive datetim
 **Stanford grad.** Time zone rules come from the IANA database through the `tzdata` package and change when governments change rules, so pin the version. The docs' note that naive datetimes are interpreted as local time is a trap on servers set to UTC, and `datetime.utcnow()` returning a naive object is a second trap that the docs now warn about. Both have caused real outages.
 
 **PhD at Apple.** Time handling is a recurring production failure class across the industry. The documentation is the specification; the engineering answer is a house rule (UTC everywhere, aware objects only, conversions at the edges) enforced by a linter rule and a test, so the specification never has to be reread under pressure.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Two standard-library modules. `datetime` provides `date`, `time`, `datetime`, `timedelta`, `timezone` and `tzinfo`, with parsing, formatting and arithmetic. `zoneinfo` provides `ZoneInfo`, IANA time zone objects that apply daylight-saving rules.
+
+**Key ideas, in order.**
+
+1. Aware versus naive: a naive datetime has no `tzinfo` and no fixed meaning; an aware one has a zone or offset. Comparing or subtracting a naive and an aware datetime raises an error, which is a feature.
+2. Constructing: `datetime(2026, 3, 8, 1, 30)`, `datetime.now(timezone.utc)` (never `utcnow()`, which is naive), `datetime.fromisoformat('2026-04-12T16:42:00+00:00')`, `datetime.strptime(text, '%m/%d/%Y %H:%M:%S')` for PeMS's format.
+3. Zones: `ZoneInfo('America/Los_Angeles')` from the IANA database (installed with `tzdata` on systems without one). `dt.replace(tzinfo=zone)` attaches a zone to a naive time; `dt.astimezone(zone)` converts an aware time.
+4. Daylight saving: in spring an hour does not exist (02:00 to 03:00 local); in fall an hour repeats. Python represents the repeated hour with the `fold` attribute (0 for the first occurrence, 1 for the second). Attaching a zone to a naive time in the repeated hour picks `fold=0` unless told otherwise.
+5. Arithmetic: `timedelta(minutes=5)`, `dt + timedelta(...)`, differences give `timedelta` with `.total_seconds()`. Arithmetic on aware datetimes across a DST boundary is done in UTC internally, so it is correct.
+6. Formatting: `isoformat()` produces ISO 8601 (`2026-04-12T16:42:00+00:00`); `strftime` with format codes; `%z` for the offset and `%Z` for the zone name.
+7. pandas mirrors this: `tz_localize` attaches a zone to a naive column (with `ambiguous` and `nonexistent` arguments), `tz_convert` converts an aware column.
+
+**Formulas and commands to remember.**
+
+```
+from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
+LA = ZoneInfo('America/Los_Angeles')
+local = datetime.strptime('11/01/2026 01:30:00', '%m/%d/%Y %H:%M:%S').replace(tzinfo=LA)   # ambiguous!
+utc = local.astimezone(timezone.utc)
+second = local.replace(fold=1).astimezone(timezone.utc)   # one hour later
+```
+
+**Three takeaways.**
+
+- Work in UTC with aware objects; convert to local only for display.
+- Never call `utcnow()`; call `now(timezone.utc)`.
+- The repeated November hour is real ambiguity; decide explicitly what to do with it.
+
+**Practice.** Take the PeMS timestamps for November 1 of the current year, localize them with `fold=0` and `fold=1`, and show which rows differ after conversion to UTC.
+
+</details>
 
 ### Build
 
@@ -1213,6 +1601,42 @@ _course · free · weeks · free; do the exercises, skip nothing marked 'gradien
 
 **PhD at Apple.** For a research group, mastery-style practice is an underrated onboarding tool for people arriving from adjacent fields. Its per-skill diagnostics let you prescribe precisely (three units, one evening) instead of sending someone away for a semester.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Three self-paced courses with videos and mastery exercises. Linear algebra: vectors, linear combinations, matrices, transformations, and eigenvalues. Differential calculus: limits, derivatives, rules, chain rule, applications; the multivariable course adds partial derivatives and the gradient. Statistics and probability: data displays, summary statistics, probability rules, random variables, distributions, sampling, confidence intervals, tests, and regression.
+
+**Key ideas, in order.**
+
+1. Vectors: arrows with magnitude and direction, or lists of numbers; addition, scalar multiplication, linear combinations and span; the dot product a·b = Σ aᵢbᵢ = |a||b|cos θ measures alignment; length is √(a·a).
+2. Matrices as transformations: multiplying a matrix by a vector maps space; columns are where the basis vectors land; matrix multiplication composes transformations; the identity does nothing; the inverse undoes; determinant is the area scaling factor (zero means collapse).
+3. Systems and rank: row reduction solves Ax = b; rank counts independent columns; null space and column space; eigenvectors are directions a transformation only stretches, eigenvalues the stretch factors.
+4. Limits and derivatives: the derivative as the limit of the difference quotient, as slope of the tangent, as instantaneous rate; differentiability implies continuity.
+5. Differentiation rules: power, constant multiple, sum, product, quotient, and chain rule d/dx f(g(x)) = f′(g(x)) g′(x); derivatives of eˣ, ln x, sin, cos; implicit differentiation.
+6. Applications: increasing and decreasing, critical points, maxima and minima, concavity and the second derivative, optimization word problems; the gradient in several variables as the vector of partial derivatives, pointing uphill.
+7. Describing data: mean, median, mode, range, interquartile range, variance and standard deviation (population versus sample), percentiles, histograms and box plots, outliers.
+8. Probability: sample spaces, addition and multiplication rules, conditional probability P(A|B) = P(A∩B)/P(B), independence, Bayes' theorem, combinatorics; random variables, expected value, variance, binomial and geometric distributions.
+9. Normal distribution and sampling: z-scores, the empirical rule, the central limit theorem, sampling distributions of means and proportions, confidence intervals, hypothesis tests and their errors, chi-square and regression basics.
+
+**Formulas and commands to remember.**
+
+```
+a·b = Σ aᵢbᵢ = |a||b| cos θ
+d/dx σ(x) = σ(x)(1 − σ(x)) where σ(x) = 1/(1+e^{−x})
+Var(X) = E[X²] − (E[X])²;   P(A|B) = P(B|A)P(A)/P(B)
+z = (x − μ)/σ;  CI = x̄ ± z* · s/√n
+```
+
+**Three takeaways.**
+
+- The dot product and matrix-vector product are the whole arithmetic of a linear model.
+- The chain rule is the whole arithmetic of backpropagation.
+- Conditional probability and the sampling distribution are the whole arithmetic of evaluation.
+
+**Practice.** Do the mastery challenges for dot products, the chain rule and conditional probability, then derive the sigmoid's derivative and Bayes' rule on paper without notes.
+
+</details>
+
 #### [3Blue1Brown: Essence of linear algebra, Essence of calculus](https://www.3blue1brown.com/topics/linear-algebra)
 
 _video · free · an afternoon each · free; the intuition the exercises lack_
@@ -1228,6 +1652,42 @@ _video · free · an afternoon each · free; the intuition the exercises lack_
 **Stanford grad.** Sanderson's method, visual first and symbols second, is a model for explaining your own work. His later videos on neural networks and on the Fourier transform extend the same approach to topics you meet in phases 6 and 8, and his video on backpropagation is the one to show someone who has read the equations and still does not see it.
 
 **PhD at Apple.** The channel is evidence that rigorous intuition scales to millions of viewers. For someone who will teach and present, the animation library he built (manim) is also a practical tool for figures in talks, and his explanations of attention are a good benchmark for how clearly a research idea can be communicated.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Two animated video series. Linear algebra (16 videos): vectors, linear combinations and span, linear transformations and matrices, matrix multiplication as composition, determinants, inverse matrices and rank, non-square matrices, dot products and duality, cross products, change of basis, eigenvectors and eigenvalues, abstract vector spaces. Calculus (12 videos): the essence of calculus, the derivative paradox, derivative formulas through geometry, chain and product rules, exponentials, implicit differentiation, limits, integrals, the fundamental theorem, higher-order derivatives, Taylor series.
+
+**Key ideas, in order.**
+
+1. A vector is an arrow from the origin; its coordinates are how far along each basis arrow. Span is everything reachable by scaling and adding; linear dependence means an arrow adds nothing.
+2. A linear transformation keeps grid lines parallel and evenly spaced and fixes the origin; it is fully described by where the basis vectors land, and those landing spots are the matrix's columns. Matrix-vector multiplication is 'apply the transformation'.
+3. Matrix multiplication is composition: apply the right matrix first, then the left; that is why order matters. The determinant is the factor by which area (or volume) scales, negative when orientation flips, zero when space collapses.
+4. Inverse and rank: the inverse undoes a transformation when the determinant is nonzero; rank is the dimension of the output; the null space is what gets squashed to zero; solving Ax = b is asking which vector lands on b.
+5. Dot product and duality: projecting one vector onto another; a 1×n matrix is a linear function to the number line, and every such function is a dot product with some vector, which is why w·x is the natural form of a linear model.
+6. Eigenvectors stay on their own line under the transformation; eigenvalues are their stretch factors; diagonalizing means choosing eigenvectors as the basis so the transformation becomes pure scaling.
+7. Calculus: area under a curve built from thin rectangles; the derivative as the ratio of tiny changes; geometric derivations of d(x²) = 2x dx and d(1/x); the chain rule as nested tiny changes; the product rule as the change in area of a rectangle.
+8. Exponentials: eˣ is its own derivative because its rate of change is proportional to itself; other bases scale by ln; implicit differentiation for relations; limits and ε-δ intuition.
+9. Integration and Taylor series: the fundamental theorem links accumulation to slope; the second derivative as curvature; Taylor series approximate functions with polynomials from derivatives at one point, which is the second-order expansion used in Newton's method and in XGBoost's split gain.
+
+**Formulas and commands to remember.**
+
+```
+A(u + v) = Au + Av;  A(cu) = c·Au
+(AB)v = A(Bv);  det(AB) = det(A) det(B)
+Av = λv for an eigenvector v
+d/dx f(g(x)) = f′(g(x)) g′(x);  f(x + h) ≈ f(x) + f′(x)h + ½ f″(x)h²
+```
+
+**Three takeaways.**
+
+- A matrix is a transformation; its columns say where the basis lands; multiplication is composition.
+- A derivative is a tiny ratio; the chain rule multiplies tiny ratios along a path, which is backpropagation.
+- Taylor's second-order approximation is what boosting and Newton's method use to choose a step.
+
+**Practice.** After each video, redraw its central picture from memory, then write the corresponding numpy expression and check it on a small example.
+
+</details>
 
 #### [Immersive Linear Algebra (Ström, Åström, Akenine-Möller)](https://immersivemath.com/ila/)
 
@@ -1245,6 +1705,40 @@ _interactive · free · a few evenings · free, interactive; touch what the vide
 
 **PhD at Apple.** A good example of what interactive explanation can do for a technical topic; if you write explanatory material for a team, this and Distill are the reference points for the medium.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** An interactive online book: introduction, vectors, the dot product, the vector product, Gaussian elimination, the matrix, determinants, rank, linear mappings, and eigenvalues and eigenvectors, each with figures you manipulate.
+
+**Key ideas, in order.**
+
+1. Vectors: geometric (arrows) and algebraic (coordinates) views, addition, scaling, length, unit vectors, and the interactive figure that shows a linear combination sweeping a plane.
+2. Dot product: definition, projection of one vector onto another, the angle between vectors, orthogonality, and decomposition into parallel and perpendicular parts, all shown live as you drag arrows.
+3. Vector product: the cross product's direction and magnitude, its use for normals and areas, and its non-commutativity.
+4. Gaussian elimination: solving linear systems by row operations, the meaning of no solution, one solution and infinitely many, with interactive steps.
+5. The matrix: as a table, as a transformation, matrix-vector and matrix-matrix products, transpose, identity and inverse, and the interactive figure showing a matrix deforming a picture.
+6. Determinants: as scaling of area and volume, sign as orientation, properties under row operations, and the link to invertibility.
+7. Rank and mappings: column space, null space, rank-nullity, and linear mappings between spaces; projection and rotation as examples.
+8. Eigenvalues and eigenvectors: the interactive figure where you drag a vector until it lands on its own line; the characteristic equation; diagonalization; symmetric matrices' orthogonal eigenvectors.
+
+**Formulas and commands to remember.**
+
+```
+proj_b(a) = (a·b / b·b) b
+det[[a, b], [c, d]] = ad − bc
+A = Q Λ Qᵀ for symmetric A (orthogonal eigenvectors)
+```
+
+**Three takeaways.**
+
+- Projection is the geometric meaning of the dot product and of least squares.
+- The determinant tells you whether a transformation loses a dimension.
+- Symmetric matrices have orthogonal eigenvectors, which is why covariance matrices and PCA behave.
+
+**Practice.** Use the eigenvector figure to find both eigenvectors of a symmetric 2×2 matrix by dragging, then confirm them with numpy's `eigh`.
+
+</details>
+
 #### [Seeing Theory (Brown University)](https://seeing-theory.brown.edu/)
 
 _interactive · free · an evening · free, interactive; probability you can see_
@@ -1260,6 +1754,39 @@ _interactive · free · an evening · free, interactive; probability you can see
 **Stanford grad.** Its coverage is introductory by design; its role for you is teaching, not learning. When explaining calibration or intervals to a non-specialist, its animations are the fastest bridge.
 
 **PhD at Apple.** Another instance of explanation as interactive design; worth knowing when you brief a product team on what a confidence interval is not.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Six interactive chapters: basic probability (chance events, expectation, variance), compound probability (set theory, counting, conditional probability), probability distributions (random variables, discrete and continuous, central limit theorem), frequentist inference (point estimation, confidence intervals, bootstrap), Bayesian inference (Bayes' theorem, likelihood, prior to posterior), and regression (least squares, correlation, analysis of variance).
+
+**Key ideas, in order.**
+
+1. Chance events: a probability is a long-run frequency; the coin-flip animation shows the proportion of heads converging to p.
+2. Expectation and variance: expectation as the balance point of a distribution; variance as average squared distance from it; dice animations show both.
+3. Compound events and conditioning: Venn diagrams for union and intersection, counting with permutations and combinations, and conditional probability as restricting to a smaller sample space.
+4. Random variables and distributions: discrete (Bernoulli, binomial, geometric, Poisson) and continuous (uniform, normal, exponential, beta) with adjustable parameters; the central limit theorem animation piles sample means into a bell.
+5. Frequentist inference: point estimates with their sampling variability; confidence intervals drawn many times, most containing the truth; the bootstrap resampling from the data to estimate variability.
+6. Bayesian inference: prior, likelihood and posterior updated as data arrive, shown as changing curves; the effect of a strong or weak prior.
+7. Regression: the least-squares line as the one minimizing squared vertical distances, correlation as the strength of linear association, and analysis of variance as partitioning variability.
+
+**Formulas and commands to remember.**
+
+```
+E[X] = Σ x P(X = x);  Var(X) = E[(X − E[X])²]
+P(A|B) = P(A ∩ B) / P(B)
+posterior ∝ likelihood × prior
+```
+
+**Three takeaways.**
+
+- A confidence interval is a procedure that captures the truth a stated fraction of the time; no single interval has a probability.
+- The bootstrap estimates variability by resampling; block it for dependent data.
+- Bayesian updating is multiplication of prior and likelihood, renormalized.
+
+**Practice.** In the confidence-interval animation, run 100 intervals at 90 % and count how many miss; then do the same with the bootstrap on one station's daily mean speed.
+
+</details>
 
 #### [Introduction to Probability (Blitzstein, Hwang) and Stat 110](https://probabilitybook.net/)
 
@@ -1277,6 +1804,42 @@ _book · free · a semester · free book and lectures; the rigorous first course
 
 **PhD at Apple.** Stat 110 is a model of pedagogy for a technical subject; its problem sets are the reference bank for probability interviews and qualifying exams alike. For research that leans on concentration inequalities and dependence, this is the base layer beneath the measure-theoretic course you take later.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A full first course: probability and counting; conditional probability; random variables and distributions; expectation; continuous random variables; moments; joint distributions; transformations; conditional expectation; inequalities and limit theorems; Markov chains; Markov chain Monte Carlo; Poisson processes.
+
+**Key ideas, in order.**
+
+1. Counting and the naive definition: probability as favorable over total outcomes when outcomes are equally likely; the multiplication rule, binomial coefficients, sampling with and without replacement, the birthday problem; the general definition via axioms.
+2. Conditional probability is the soul of statistics: P(A|B) = P(A∩B)/P(B); Bayes' rule; the law of total probability; independence versus conditional independence; classic paradoxes (Monty Hall, Simpson) as exercises in careful conditioning.
+3. Random variables: distributions through PMFs and CDFs; Bernoulli, binomial, hypergeometric, discrete uniform, geometric, negative binomial, Poisson; indicator random variables as a counting tool; the 'fundamental bridge' between probability and expectation: P(A) = E[I_A].
+4. Expectation: linearity holds always, even for dependent variables, which solves many problems by decomposition into indicators; variance and its properties; the law of the unconscious statistician for E[g(X)].
+5. Continuous random variables: PDFs, the uniform, normal (with the 68–95–99.7 rule), exponential (memoryless) distributions; universality of the uniform (inverse-CDF sampling); moment generating functions.
+6. Joint distributions: joint, marginal and conditional distributions; covariance and correlation; the multinomial; the multivariate normal; transformations and convolutions; order statistics; the beta and gamma families and their conjugacy with binomial and Poisson.
+7. Conditional expectation: E[Y|X] as the best predictor; Adam's law E[E[Y|X]] = E[Y]; Eve's law Var(Y) = E[Var(Y|X)] + Var(E[Y|X]), which is the decomposition behind bias-variance intuition.
+8. Inequalities and limits: Markov, Chebyshev, Jensen, Cauchy-Schwarz; the weak and strong laws of large numbers; the central limit theorem and why sample means are approximately normal.
+9. Markov chains: transition matrices, stationary distributions, reversibility; Markov chain Monte Carlo (Metropolis-Hastings, Gibbs) as sampling from a distribution you can only evaluate up to a constant, the computation behind Bayesian inference in the final phase.
+
+**Formulas and commands to remember.**
+
+```
+P(A|B) = P(B|A) P(A) / P(B)
+E[X + Y] = E[X] + E[Y] always;  Var(X + Y) = Var(X) + Var(Y) + 2Cov(X, Y)
+E[Y] = E[E[Y|X]];   Var(Y) = E[Var(Y|X)] + Var(E[Y|X])
+Beta(a, b) prior + Binomial(n, k) data → Beta(a + k, b + n − k) posterior
+```
+
+**Three takeaways.**
+
+- Condition carefully; most probability errors are conditioning errors.
+- Linearity of expectation plus indicators solves what brute force cannot.
+- Conjugate updates (Beta-Binomial) are the simplest Bayesian model, and Eve's law is bias-variance in disguise.
+
+**Practice.** Model each station's slow-episode rate with a Beta prior and its training counts as binomial data; compute the posterior mean and compare with the raw rate for stations with few observations.
+
+</details>
+
 #### [Mathematics for Machine Learning (Deisenroth, Faisal, Ong), chapters 2–7](https://mml-book.github.io/)
 
 _book · free · reference · free PDF; reference, not a read-through_
@@ -1292,6 +1855,39 @@ _book · free · reference · free PDF; reference, not a read-through_
 **Stanford grad.** Coverage stops before measure-theoretic probability and before optimization theory proper (convergence rates, duality in depth). For those, Boyd and Vandenberghe on convex optimization and a graduate probability text. It is the right prerequisite for Murphy's Probabilistic Machine Learning, and its exercises are a reasonable self-test before that book.
 
 **PhD at Apple.** As a reference for writing, it fixes consistent notation for gradients, Jacobians and distributions that reviewers recognize. Its free availability makes it the safe citation for prerequisites in a paper or an internal design document, and its chapter on optimization is a compact refresher before reading anything on second-order methods.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The mathematical foundations in one notation: linear algebra (systems, vector spaces, independence, basis, rank, linear mappings, affine spaces), analytic geometry (norms, inner products, projections, rotations), matrix decompositions (determinant, eigendecomposition, Cholesky, SVD, matrix approximation), vector calculus (gradients, Jacobians, chain rule, backpropagation, automatic differentiation, higher-order derivatives, linearization), probability and distributions (discrete and continuous, sum and product rules, Bayes, Gaussians, conjugacy, exponential family, change of variables), and continuous optimization (gradient descent, constrained optimization, Lagrange duality, convex optimization).
+
+**Key ideas, in order.**
+
+1. Vector spaces and mappings: vectors as elements of a space closed under addition and scaling; linear independence, basis and dimension; a linear mapping is represented by a matrix once bases are chosen; kernel and image; change of basis.
+2. Geometry: norms (Euclidean, Manhattan), inner products generalizing the dot product, lengths and angles, orthogonality, orthonormal bases, and orthogonal projections onto subspaces, with the projection matrix P = B(BᵀB)⁻¹Bᵀ; least squares as projection.
+3. Decompositions: determinant and trace, eigenvalues and eigenvectors, diagonalization of symmetric matrices, Cholesky for positive definite matrices, the singular value decomposition A = UΣVᵀ for any matrix, and the Eckart-Young theorem: the best rank-k approximation truncates the SVD (the basis of PCA).
+4. Vector calculus: partial derivatives, the gradient as a row vector of partials, Jacobians of vector-valued functions, the chain rule as Jacobian products; gradients of matrix expressions; backpropagation as reverse-mode automatic differentiation along a computation graph; the Hessian and second-order Taylor expansion.
+5. Probability: random variables, sum and product rules, Bayes' theorem, means and covariances, the Gaussian's marginals and conditionals in closed form, conjugate priors, the exponential family, sufficient statistics, and change of variables for transformed densities.
+6. Optimization: gradient descent and step size, momentum, stochastic gradient descent, constrained optimization with Lagrange multipliers, duality, convex sets and functions, linear and quadratic programs, and why convexity makes local optima global.
+
+**Formulas and commands to remember.**
+
+```
+A = UΣVᵀ;  A_k = Σ_{i≤k} σᵢ uᵢ vᵢᵀ minimizes ‖A − A_k‖ over rank-k matrices
+∂(f∘g)/∂x = (∂f/∂g)(∂g/∂x)   (Jacobian chain rule)
+x_{t+1} = x_t − γ ∇f(x_t)ᵀ
+For Gaussian (x, y): p(x|y) is Gaussian with mean μ_x + Σ_xy Σ_yy⁻¹ (y − μ_y)
+```
+
+**Three takeaways.**
+
+- The SVD is the universal decomposition: PCA, least squares and low-rank approximation are all views of it.
+- Backpropagation is the chain rule for Jacobians, evaluated in reverse.
+- Gaussians are closed under marginalizing and conditioning, which is why they appear everywhere from least squares to Gaussian processes.
+
+**Practice.** Derive the gradient of the logistic loss in the book's notation and verify that its Hessian is Xᵀ diag(p(1−p)) X; then compute the SVD of one month of daily profiles and reconstruct them from the top three components.
+
+</details>
 
 #### [Think Stats (Downey)](https://allendowney.github.io/ThinkStats/)
 
@@ -1309,6 +1905,40 @@ _book · free · two weeks · free; statistics with Python from the first page_
 
 **PhD at Apple.** The book is an argument that computation has changed how statistics should be taught, and it is right. For someone designing evaluation methodology, its emphasis on effect sizes and simulation over p-values is the correct instinct, and its examples are a template for the kind of small, honest analysis that should accompany every metric in a report.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Exploratory data analysis in Python: distributions (histograms, PMFs, CDFs), probability mass and density, modelling distributions (exponential, normal, lognormal, Pareto), relationships between variables (scatter, correlation), estimation (bias, sampling distributions), hypothesis testing by simulation (permutation tests), linear least squares, regression, time series analysis, and survival analysis.
+
+**Key ideas, in order.**
+
+1. Distributions: the histogram counts, the PMF normalizes, the CDF answers 'what fraction is below x' and makes comparisons easy; percentiles and quantiles read off the CDF; the median and interquartile range are robust summaries.
+2. Modelling: fitting analytic distributions and checking with probability plots; the exponential for waiting times, the normal for sums, lognormal and Pareto for skewed quantities such as incident durations.
+3. Relationships: scatter plots with jitter and transparency, covariance, Pearson correlation for linear association, Spearman for monotone, and why correlation does not imply causation.
+4. Estimation: an estimator's bias and its sampling distribution; the standard error as the spread of estimates over hypothetical repeated samples; simulation to see it; confidence intervals from percentiles of simulated estimates.
+5. Hypothesis testing by simulation: choose a test statistic, simulate the null (permutation or resampling), compute the fraction of simulated statistics at least as extreme (the p-value); the same recipe covers means, proportions and correlations; power and the danger of many tests.
+6. Least squares and regression: minimizing squared residuals, coefficients, R², residual plots, and multiple regression with control variables; the point that a regression coefficient is an association, not an effect.
+7. Time series: decomposition into trend and seasonality, moving averages, serial correlation and autocorrelation, and why naive tests overstate significance for correlated data.
+8. Survival analysis: hazard and survival curves for durations, which fit incident clearance times and episode lengths.
+
+**Formulas and commands to remember.**
+
+```
+CDF(x) = P(X ≤ x);  quantile(q) = min{x : CDF(x) ≥ q}
+p-value ≈ fraction of permuted statistics ≥ observed
+slope = Cov(x, y) / Var(x);  R² = 1 − Var(residuals)/Var(y)
+```
+
+**Three takeaways.**
+
+- Plot the CDF before the histogram; comparisons and percentiles live there.
+- Simulate the null and count; that is what a p-value is.
+- Autocorrelated data need block resampling, or every test is overconfident.
+
+**Practice.** Compute and plot the CDF of speed for one station on weekdays versus Sundays, then test the difference in medians with a permutation test that permutes whole days, not rows.
+
+</details>
+
 #### [MIT 18.06 Linear Algebra (Strang), OpenCourseWare](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/)
 
 _course · free · ten lectures, two weeks · free; the classic lectures, the first ten alongside Khan_
@@ -1325,6 +1955,41 @@ _course · free · ten lectures, two weeks · free; the classic lectures, the fi
 
 **PhD at Apple.** A canonical course; for research communication, Strang's habit of stating the idea in one sentence before any symbol is the standard to aim for.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Thirty-four lectures: geometry of linear equations, elimination, matrix multiplication and inverses, factorization A = LU, transposes and permutations, vector spaces and subspaces, the null space and Ax = 0, Ax = b, independence, basis and dimension, the four fundamental subspaces, orthogonality, projections, least squares, Gram-Schmidt, determinants, eigenvalues and eigenvectors, diagonalization, differential equations, Markov matrices, symmetric matrices, positive definite matrices, similar matrices, the SVD, linear transformations, change of basis, and applications.
+
+**Key ideas, in order.**
+
+1. Two pictures of Ax = b: rows as planes intersecting, columns as a combination of column vectors landing on b; solvability is whether b is in the column space.
+2. Elimination and LU: row operations as multiplication by elementary matrices; pivots; A = LU records the elimination; inverses exist when elimination finds n pivots.
+3. The four subspaces: column space and null space of A, row space and left null space; their dimensions (rank r, n − r, r, m − r); the row space and null space are orthogonal complements. This is the map that explains every least-squares and regression fact.
+4. Projections and least squares: projecting b onto the column space gives the closest solvable problem; the normal equations AᵀA x̂ = Aᵀb; the projection matrix A(AᵀA)⁻¹Aᵀ; fitting a line by least squares; orthonormal bases and Gram-Schmidt make it stable.
+5. Determinants: properties (sign flips on row swap, linear in each row, zero for dependent rows), cofactors, and the formula det = product of pivots.
+6. Eigenvalues: Ax = λx, the characteristic polynomial, diagonalization A = SΛS⁻¹, powers Aᵏ = SΛᵏS⁻¹ for difference equations and Markov chains, and the steady state of a Markov matrix.
+7. Symmetric and positive definite matrices: real eigenvalues, orthogonal eigenvectors (A = QΛQᵀ), positive definiteness tests (all pivots, all eigenvalues, all leading determinants positive, xᵀAx > 0), and the connection to minima of quadratic functions, which is why a positive definite Hessian means a convex bowl.
+8. The SVD: A = UΣVᵀ from the eigenvectors of AᵀA and AAᵀ; it exposes the four subspaces and orders directions by importance, which is principal components.
+9. Linear transformations and change of basis: a matrix depends on the bases chosen; similar matrices represent the same transformation; the best basis is eigenvectors or singular vectors.
+
+**Formulas and commands to remember.**
+
+```
+AᵀA x̂ = Aᵀb;  P = A(AᵀA)⁻¹Aᵀ
+A = QΛQᵀ (symmetric);  xᵀAx > 0 for all x ≠ 0 ⇔ positive definite
+A = UΣVᵀ;  columns of V are eigenvectors of AᵀA
+```
+
+**Three takeaways.**
+
+- Least squares is projection onto the column space; regression is linear algebra.
+- Positive definite means a bowl; that is the link between linear algebra and optimization.
+- The SVD orders the directions in data by variance; PCA is its application.
+
+**Practice.** Fit speed in 30 minutes as a linear function of four lag features by solving the normal equations with numpy, and compare with `np.linalg.lstsq` and with a projection computed from an orthonormal basis.
+
+</details>
+
 #### [OpenIntro Statistics](https://www.openintro.org/book/os/)
 
 _book · free · weeks · free textbook; inference done carefully_
@@ -1340,6 +2005,39 @@ _book · free · weeks · free textbook; inference done carefully_
 **Stanford grad.** It is introductory by design; its value is a correct foundation for the language of uncertainty that the evaluation and causal-inference topics build on.
 
 **PhD at Apple.** An openly licensed textbook maintained by a nonprofit, usable in teaching without restrictions; its treatment of study design is what you will point a product team to when they propose an evaluation.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** An introductory statistics text with data and code: introduction to data (observations, variables, sampling, experiments), summarizing data (numerical and categorical), probability (rules, conditional probability, random variables, continuous distributions), distributions of random variables (normal, geometric, binomial, negative binomial, Poisson), foundations for inference (point estimates, sampling distributions, confidence intervals, hypothesis testing), inference for categorical data, inference for numerical data (t-tests, ANOVA), introduction to linear regression, and multiple and logistic regression.
+
+**Key ideas, in order.**
+
+1. Data and design: cases and variables, numerical and categorical types, observational studies versus experiments, confounding, random sampling versus random assignment, and why only experiments support causal claims.
+2. Summaries: distributions' shape, center and spread; robust statistics; contingency tables and conditional proportions; the danger of comparing groups without accounting for their composition.
+3. Probability: disjoint events, the general addition rule, independence, conditional probability from tables, Bayes' theorem by tree diagrams, random variables' expectation and variance, and linear combinations of random variables.
+4. Named distributions: the normal with z-scores and percentiles, binomial with its normal approximation, geometric and negative binomial for waiting, Poisson for counts per interval, which is the natural model for incidents per hour.
+5. Inference foundations: the sampling distribution of a proportion or mean, the standard error, the central limit theorem's conditions, confidence intervals, and hypothesis tests with null and alternative, the p-value, significance level, type 1 and type 2 errors, and the distinction between statistical and practical significance.
+6. Categorical and numerical inference: one and two proportions, chi-square goodness of fit and independence, one-sample and paired t-tests, two-sample comparisons, power and sample size, and ANOVA with its multiple-comparison problem.
+7. Regression: fitting a line, residuals, correlation, conditions for inference on the slope, outliers and leverage; multiple regression with indicator variables, adjusted R², model selection; logistic regression as regression for a binary outcome, its odds-ratio interpretation and diagnostics.
+
+**Formulas and commands to remember.**
+
+```
+SE(p̂) = √(p(1 − p)/n);  SE(x̄) = s/√n
+p-value = P(statistic at least as extreme | H₀)
+logit(p) = β₀ + β₁x₁ + … ;  odds ratio = e^{β}
+```
+
+**Three takeaways.**
+
+- Design decides what can be concluded; random assignment supports causation, random sampling supports generalization.
+- A p-value measures surprise under the null, not the probability the null is true.
+- Logistic regression coefficients are log odds ratios; that is how to read the weights of lesson 7.
+
+**Practice.** Model hourly incident counts on I-880 as Poisson, check whether the variance exceeds the mean (overdispersion), and fit a logistic regression of 'slow at 5 pm' on rain and weekday, interpreting each coefficient as an odds ratio.
+
+</details>
 
 ### Build
 
@@ -1611,6 +2309,41 @@ _book · free · weeks · free online; the pandas book by pandas's author_
 
 **PhD at Apple.** pandas' design decisions (label alignment, mutable frames, Python-level groupby) explain its performance ceiling and why Arrow-native tools win the cleaning stage while pandas keeps the analysis stage. McKinney's later work on Apache Arrow is the continuation of the story, and understanding both is what lets you choose a tool per stage rather than per habit.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** numpy basics (chapter 4), pandas basics (5), data loading and file formats (6), cleaning and preparation (7), wrangling: join, combine, reshape (8), data aggregation and group operations (10), and time series (11).
+
+**Key ideas, in order.**
+
+1. numpy arrays: homogeneous, typed (`dtype`), n-dimensional; creation, arithmetic elementwise, broadcasting rules (trailing dimensions of size 1 stretch), indexing and slicing return views, boolean masks select, fancy indexing copies; universal functions, `where`, aggregations along an axis, sorting, unique; random number generation. Vectorization replaces loops.
+2. pandas objects: `Series` (values plus an index) and `DataFrame` (columns sharing an index). Indexing with `loc` (labels) and `iloc` (positions); alignment: arithmetic between objects lines up on index labels and produces NaN where they differ; reindexing; sorting; descriptive statistics; `value_counts`; correlation.
+3. Loading: `read_csv` with `sep`, `header=None`, `names`, `usecols`, `dtype`, `parse_dates`, `chunksize` (an iterator of DataFrames for files too large for memory), `nrows`; writing with `to_csv`; JSON, Parquet (`read_parquet`, `to_parquet` with pyarrow), and databases through SQLAlchemy.
+4. Cleaning: missing data (`isna`, `dropna`, `fillna` with values, methods and limits), duplicates, `map` and `replace`, renaming, binning with `cut` and `qcut`, outliers with boolean masks, permutation and sampling, dummies with `get_dummies`, string methods on `.str`, regular expressions in columns, and categorical dtype for memory and speed.
+5. Wrangling: hierarchical indexing, `merge` (inner, left, outer, on keys, with suffixes and validation), `join`, `concat` along axes, `combine_first`, reshaping with `stack`, `unstack`, `pivot` and `melt`.
+6. Group operations: `groupby` splits by keys, applies a function, and combines; aggregations (`sum`, `mean`, `size`, custom with `agg`), transformations that return same-shaped results (`transform`, which is how a per-station lag is built), `apply` for arbitrary functions, group-wise fills, quantile analysis, and pivot tables and cross-tabulations.
+7. Time series: `Timestamp`, `DatetimeIndex`, parsing, generating ranges with frequency strings (`'5min'`, `'D'`), shifting (`shift` by positions or by frequency), time zones (`tz_localize`, `tz_convert`), periods, resampling (downsample with aggregation, upsample with fill), rolling and expanding windows with `min_periods`, exponentially weighted windows, and moving-window correlations.
+
+**Formulas and commands to remember.**
+
+```
+for chunk in pd.read_csv(path, header=None, usecols=range(12), names=cols, chunksize=200_000):
+    parts.append(chunk[chunk.station.isin(keep)])
+df['speed_lag_3'] = df.groupby('station_id').speed.shift(3)
+prof = tr.groupby(['station_id','daytype','slot']).speed.median()
+df.set_index('timestamp').groupby('station_id').speed.rolling('30min').mean()
+```
+
+**Three takeaways.**
+
+- Alignment on the index is pandas' defining behavior; know it or your joins will silently misalign.
+- `groupby(...).transform` and `shift` inside groups are the two operations feature engineering is built from.
+- Chunked reading, categoricals and float32 are how a 16 GB machine handles a year of data.
+
+**Practice.** Implement stage 5's cleaning on one district-day with chunked reading, then compute per-station lag-1 and rolling-30-minute means with groupby, and verify a random row by hand.
+
+</details>
+
 #### [pandas user guide: Time series and date functionality](https://pandas.pydata.org/docs/user_guide/timeseries.html)
 
 _docs · free · an afternoon · free; the `shift` and `rolling` semantics live here_
@@ -1626,6 +2359,40 @@ _docs · free · an afternoon · free; the `shift` and `rolling` semantics live 
 **Stanford grad.** The guide documents edge behaviors (periods versus timestamps, offsets, business-day calendars) that matter for holiday and weekday features, and the performance notes on tz-aware columns. Read the Copy-on-Write page alongside; it changed chained-assignment semantics and quietly breaks old code.
 
 **PhD at Apple.** The precise semantics of window operations are what point-in-time correctness rests on. For an engineering organization the right move is to encode them once in a feature library with tests rather than rereading the guide per project, and to treat any window parameter as part of the model's versioned configuration.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Everything pandas does with time: parsing and constructing timestamps, date ranges and frequencies, indexing by time, shifting and lagging, time zones, resampling, periods, and the related pages on window operations.
+
+**Key ideas, in order.**
+
+1. Timestamps and ranges: `pd.Timestamp`, `pd.to_datetime` with `format` for speed and safety, `pd.date_range(start, periods, freq='5min', tz='UTC')`; frequency aliases (`min`, `h`, `D`, `W`, `MS`) and anchored offsets.
+2. Indexing: partial string indexing (`df.loc['2026-03']`), slicing by time, `at_time`, `between_time`, `first`, `last`; the index must be sorted for slices to be efficient.
+3. Shifting: `shift(n)` moves values by n rows (positional; only a time shift if the grid is complete); `shift(freq='5min')` moves the index instead; `diff` for changes.
+4. Time zones: naive versus aware; `tz_localize('America/Los_Angeles', ambiguous=..., nonexistent=...)` where `ambiguous` accepts `'raise'`, `'NaT'`, `'infer'` or a boolean array, and `nonexistent` accepts `'raise'`, `'NaT'`, `'shift_forward'`, `'shift_backward'`; `tz_convert('UTC')`; arithmetic in UTC.
+5. Resampling: `resample('5min')` then an aggregation (`mean`, `sum`, `first`) to downsample, or `asfreq` and `ffill` to upsample; `origin` and `label` control bin edges; resampling groups by time the way `groupby` groups by key.
+6. Windows: `rolling(window)` by count or by time offset (`'30min'`), `min_periods`, `center` (which looks ahead; never for features), `expanding`, `ewm` with `span` or `halflife`; aggregations, `apply`, and windowed correlation.
+7. Periods and offsets: `Period` for spans (a month), `PeriodIndex`, conversions, and `DateOffset` arithmetic for business calendars and holidays; `pandas.tseries.holiday` for custom calendars.
+8. Performance: keep the index sorted, prefer vectorized datetime accessors (`dt.hour`, `dt.dayofweek`), and avoid Python-level `apply` on datetimes.
+
+**Formulas and commands to remember.**
+
+```
+ts = pd.to_datetime(df.ts, format='%m/%d/%Y %H:%M:%S').dt.tz_localize('America/Los_Angeles', ambiguous='NaT', nonexistent='shift_forward').dt.tz_convert('UTC')
+grid = pd.date_range(day, periods=288, freq='5min', tz='UTC')
+s.rolling(6, min_periods=3).mean()   # trailing 30 minutes on a 5-minute grid
+```
+
+**Three takeaways.**
+
+- `shift` is positional; the full grid is what makes it a time shift.
+- `ambiguous` and `nonexistent` are not optional for a US time zone; choose and document.
+- Trailing windows only; `center=True` leaks the future.
+
+**Practice.** Localize and convert one November week, reindex to the full grid, and prove with an assertion that every station has exactly 288 rows per day after the DST change.
+
+</details>
 
 #### [Kaggle Learn: Pandas, Data Cleaning, Data Visualization](https://www.kaggle.com/learn/pandas)
 
@@ -1643,6 +2410,39 @@ _course · free · an afternoon each · free, short_
 
 **PhD at Apple.** Visualization is a research instrument, not decoration. A reliability diagram or a lead-time distribution communicates what a table of metrics hides, and the habit these courses seed, plotting before concluding, is worth more than their content. Wilke's book and Tufte remain the references for the design side.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Pandas: creating, reading and writing; indexing, selecting and assigning; summary functions and maps; grouping and sorting; data types and missing values; renaming and combining. Data Cleaning: handling missing values, scaling and normalization, parsing dates, character encodings, inconsistent data entry. Data Visualization: line charts, bar charts and heatmaps, scatter plots, distributions, plot types and custom styles, and a final project.
+
+**Key ideas, in order.**
+
+1. Selecting: `iloc` by position, `loc` by label, conditional selection with boolean expressions and `isin`, assignment to columns.
+2. Summaries and maps: `describe`, `mean`, `unique`, `value_counts`; `map` and `apply` to transform; vectorized arithmetic between columns.
+3. Grouping and sorting: `groupby` with `size`, `agg` of several functions, multi-index results and `reset_index`, `sort_values` by one or more columns.
+4. Types and missing values: `dtype` and `astype`, NaN detection with `isnull`, `fillna` with a value or a strategy, `replace`; decide whether a value is missing because it does not exist or was not recorded, which is the `% Observed` question.
+5. Cleaning dates and text: `pd.to_datetime` with an explicit format, detecting rows that fail to parse, character encodings for legacy files, and fixing inconsistent categories with normalization and fuzzy matching.
+6. Scaling versus normalization: scaling changes the range (min-max), normalization changes the shape (Box-Cox); when each is appropriate and when neither is (tree models).
+7. Visualization with seaborn: `lineplot` for time, `barplot` and `heatmap` for categories and matrices, `scatterplot`, `regplot`, `lmplot`, `swarmplot`, `histplot` and `kdeplot` for distributions, `jointplot`; choosing a plot by the question.
+
+**Formulas and commands to remember.**
+
+```
+df.groupby('station_id').speed.agg(['mean', 'median', 'count'])
+sns.lineplot(data=one_day, x='timestamp', y='speed')
+sns.heatmap(profile.pivot(index='station_id', columns='slot', values='speed'))
+```
+
+**Three takeaways.**
+
+- Decide what a missing value means before filling it.
+- Parse dates with an explicit format and inspect the rows that fail.
+- Choose the plot from the question: distribution, relationship, comparison or change over time.
+
+**Practice.** Make three plots of one station: a day line, a weekday-versus-Sunday distribution, and a station-by-slot heatmap of the profile; write one sentence each about what they show.
+
+</details>
+
 #### [The polars user guide, first three chapters](https://docs.pola.rs/)
 
 _docs · free · an afternoon · free; do stage 5 once in each_
@@ -1658,6 +2458,42 @@ _docs · free · an afternoon · free; do stage 5 once in each_
 **Stanford grad.** Polars represents the Arrow-native, query-optimized direction of data tooling, alongside DuckDB. For pipelines it is the better default; for ad hoc analysis pandas still has the larger ecosystem. Know both and choose per stage; the guide's chapter on the query optimizer explains why the same operation costs so differently.
 
 **PhD at Apple.** The performance gap is architectural (columnar memory, SIMD, multithreading, query optimization) rather than incidental, and on unified-memory hardware both libraries end up limited by memory bandwidth. Benchmark on the real file before choosing, and note that the decision is per stage: the cleaning stage is a query, the modelling stage is not.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Getting started (installation, reading, selecting, filtering, grouping), concepts (data types, data structures, contexts: select, filter, with_columns, group_by; expressions; lazy versus eager), and expressions (basic operators, column selection, casting, strings, aggregation, missing data, window functions, folds, lists, user-defined functions, and the streaming API).
+
+**Key ideas, in order.**
+
+1. Data model: a DataFrame of typed columns with no index; strict dtypes; `pl.read_csv`, `pl.read_parquet`, `pl.scan_csv` and `pl.scan_parquet` for lazy frames.
+2. Contexts and expressions: `select` picks and computes columns, `filter` keeps rows, `with_columns` adds columns, `group_by(...).agg(...)` aggregates; expressions (`pl.col('speed').mean()`) are composable and run in parallel; no row-by-row Python.
+3. Lazy evaluation: a `LazyFrame` builds a query plan; `collect()` optimizes (projection and predicate pushdown, common subexpression elimination) and executes; `explain()` shows the plan; `collect(streaming=True)` processes in chunks for data larger than memory.
+4. Expressions in depth: arithmetic and comparisons, `when/then/otherwise`, casting, string namespace (`str.contains`, `str.extract`), temporal namespace (`dt.hour`, `dt.replace_time_zone`, `dt.convert_time_zone`), null handling (`fill_null`, `forward_fill` with a limit inside `over`), and window functions with `over('station_id')` that compute per-group values without collapsing rows.
+5. Joins and reshaping: `join` (inner, left, outer, asof for nearest-time matching, which is the incident and weather join), `concat`, `pivot` and `unpivot`.
+6. Time series: `group_by_dynamic` for time windows, `rolling` with time-based windows, `shift` inside `over`, and time zone handling in the temporal namespace with explicit ambiguity handling.
+7. Interop: `to_pandas`, `from_pandas`, Arrow zero-copy where dtypes allow, and writing Parquet with compression and row groups.
+
+**Formulas and commands to remember.**
+
+```
+q = (pl.scan_csv(path, has_header=False, new_columns=cols)
+       .filter(pl.col('station').is_in(keep))
+       .select(cols[:12]))
+day = q.collect(streaming=True)
+df.with_columns(pl.col('speed').shift(3).over('station_id').alias('speed_lag_3'))
+df.with_columns(pl.col('speed').rolling_mean(window_size=6, min_periods=3).over('station_id'))
+```
+
+**Three takeaways.**
+
+- Expressions plus lazy plans are why polars is fast; write the query, let the engine order it.
+- `over` is the per-group window that replaces `groupby(...).transform`.
+- The asof join is the right tool for attaching the latest weather or metadata to each timestamp.
+
+**Practice.** Redo stage 5 with `scan_csv`, a filter and a streaming collect; then build the lag and rolling features with `over` and compare timing and peak memory with pandas.
+
+</details>
 
 #### [SQLBolt, interactive SQL lessons](https://sqlbolt.com/)
 
@@ -1675,6 +2511,39 @@ _interactive · free · a weekend · free; SQL fluency in a weekend_
 
 **PhD at Apple.** For a team, a shared minimum of SQL fluency is what makes feature definitions reviewable by analysts and engineers alike; an interactive tutorial is the cheapest way to reach it.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Eighteen lessons plus extras: SELECT queries, constraints (WHERE with comparison, LIKE, IN, BETWEEN), filtering and sorting (DISTINCT, ORDER BY, LIMIT, OFFSET), multi-table queries with JOINs, outer joins, NULLs, expressions, aggregates (COUNT, SUM, AVG, MIN, MAX, GROUP BY, HAVING), order of execution, inserting, updating, deleting, creating and altering tables, dropping tables, and subqueries and unions.
+
+**Key ideas, in order.**
+
+1. SELECT and WHERE: choose columns, filter rows with `=`, `<>`, `<`, `BETWEEN`, `IN`, `LIKE` with `%` wildcards; combine with `AND` and `OR`.
+2. Sorting and limiting: `DISTINCT` for unique values, `ORDER BY col ASC|DESC`, `LIMIT n OFFSET m` for pagination.
+3. Joins: `INNER JOIN t2 ON t1.key = t2.key` keeps matching rows; `LEFT JOIN` keeps all left rows with NULLs where unmatched; the incident-to-station join and the station-to-registry join are exactly this.
+4. NULLs and expressions: `IS NULL`, `IS NOT NULL`, arithmetic and string expressions in SELECT with `AS` aliases.
+5. Aggregates: `COUNT(*)`, `SUM`, `AVG`, `MIN`, `MAX`; `GROUP BY` to aggregate per group; `HAVING` to filter groups after aggregation (WHERE filters rows before).
+6. Order of execution: FROM and JOIN, WHERE, GROUP BY, HAVING, SELECT, DISTINCT, ORDER BY, LIMIT; knowing it explains why you cannot use a SELECT alias in WHERE.
+7. Modifying data: `INSERT INTO ... VALUES`, `UPDATE ... SET ... WHERE` (always with WHERE), `DELETE FROM ... WHERE`; schema: `CREATE TABLE` with types and constraints, `ALTER TABLE`, `DROP TABLE`.
+8. Subqueries and unions: a query inside `IN (...)` or in FROM; `UNION` to stack results; correlated subqueries as a prelude to window functions.
+
+**Formulas and commands to remember.**
+
+```
+SELECT road_names, COUNT(*) AS n FROM events WHERE severity = 'MAJOR' GROUP BY road_names HAVING n > 5 ORDER BY n DESC;
+SELECT e.event_id, s.station_id FROM events e JOIN stations s ON s.fwy = e.fwy AND s.dir = e.dir;
+```
+
+**Three takeaways.**
+
+- WHERE filters rows, HAVING filters groups; the order of execution explains the rest.
+- A LEFT JOIN keeps what you started with; an INNER JOIN silently drops the unmatched.
+- Never UPDATE or DELETE without a WHERE.
+
+**Practice.** In DuckDB over the incident log, find the ten hours of the week with the most incidents on I-880, and the share of events with unknown severity per road.
+
+</details>
+
 #### [DuckDB documentation, the Python API and SQL reference](https://duckdb.org/docs/)
 
 _docs · free · an afternoon · free; SQL over the project's Parquet files_
@@ -1690,6 +2559,45 @@ _docs · free · an afternoon · free; SQL over the project's Parquet files_
 **Stanford grad.** The engine is the local counterpart of cloud warehouses; SQL written for it moves to them with small changes. Its extensions (spatial, JSON, httpfs) let the whole pipeline be expressed as SQL over files, which is easier to audit and version than pandas code.
 
 **PhD at Apple.** Embedded analytical engines changed what one machine can do; their documentation is also a compact account of modern query execution. For a lead, DuckDB is the argument that the cleaning and feature stages should be declarative.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The Python API (connections, querying DataFrames and files, results to pandas or Arrow, relations), the SQL reference (statements, data types, expressions, functions, window functions, aggregates, samples), the data-import pages (CSV, Parquet, JSON, partitioned files, globbing), and the guides (performance, out-of-core, ASOF joins, time zones).
+
+**Key ideas, in order.**
+
+1. Embedded and columnar: `import duckdb`; `duckdb.sql('SELECT ...')` runs against files by name (`read_parquet('data/pems_processed/*.parquet')`) or against DataFrames in scope; results convert with `.df()` or `.arrow()`; a persistent database is one file.
+2. Reading files: CSV with `read_csv` and auto-detection (or explicit `columns`, `header=false`, `delim`), gzip transparent; Parquet with projection and predicate pushdown and Hive-style partitions; globs over many files; `DESCRIBE` and `SUMMARIZE` to inspect.
+3. Types and time: `TIMESTAMP`, `TIMESTAMPTZ`, `INTERVAL`; `strptime` for PeMS's format; `timezone('America/Los_Angeles', ts)` conversions; `date_trunc`, `time_bucket` for 5-minute bins; the ICU extension for zone rules.
+4. Window functions: `LAG(speed, 3) OVER (PARTITION BY station_id ORDER BY ts)`, `AVG(speed) OVER (PARTITION BY station_id ORDER BY ts ROWS BETWEEN 5 PRECEDING AND CURRENT ROW)`, `ROW_NUMBER`, `RANK`, `QUANTILE_CONT` as an aggregate for medians; `QUALIFY` to filter on window results.
+5. ASOF join: `ASOF JOIN weather ON ts >= weather.ts` attaches the latest weather reading at or before each row, and with `PARTITION BY` per station; the correct way to join metadata valid at a time.
+6. Aggregates and grouping sets: `GROUP BY ALL`, `median`, `quantile`, `mode`, `arg_max`, `list` aggregates, `FILTER (WHERE ...)` clauses, `PIVOT` and `UNPIVOT`.
+7. Performance and memory: `SET memory_limit`, `SET threads`, out-of-core sorting and grouping to temp files, `EXPLAIN ANALYZE` to see the plan and timings, writing Parquet with `COPY ... TO ... (FORMAT PARQUET, PARTITION_BY (month))`.
+
+**Formulas and commands to remember.**
+
+```
+duckdb.sql("""
+  SELECT station_id, ts, speed,
+         LAG(speed, 3) OVER w AS speed_lag_3,
+         AVG(speed) OVER (w ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS speed_roll_mean_30
+  FROM read_parquet('data/pems_processed/*.parquet')
+  WINDOW w AS (PARTITION BY station_id ORDER BY ts)
+""").df()
+SELECT station_id, daytype, slot, median(speed) AS profile_speed FROM cleaned WHERE ts <= '2026-08-31' GROUP BY ALL;
+SELECT * FROM rows ASOF JOIN weather ON rows.ts >= weather.ts;
+```
+
+**Three takeaways.**
+
+- Query files directly; a year of Parquet is one `read_parquet` glob.
+- Window functions with PARTITION BY station are lags and rolling means in SQL.
+- ASOF joins are the point-in-time join that feature stores are built around.
+
+**Practice.** Write the whole of stage 6 (profile, ratio, three-step label) as one DuckDB query over the monthly Parquet files and check its label prevalence per hour against the pandas version.
+
+</details>
 
 #### [PeMS documentation and the Clearinghouse (Caltrans)](https://pems.dot.ca.gov/)
 
@@ -1707,6 +2615,38 @@ _docs · free (login) · an afternoon · the source of the sensor data; read bef
 
 **PhD at Apple.** PeMS is also the source of the public benchmark datasets (PEMS-BAY, PeMSD4, PeMSD8) used across the spatio-temporal literature, which makes it a rare case where your production data and the research benchmarks share a lineage. The rate limits and login are the practical constraint; a data-sharing agreement or a bulk export is what a real deployment would negotiate.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The Performance Measurement System: what detectors report (30-second counts and occupancy per lane), how PeMS aggregates to 5 minutes, hours and days, how it estimates speed for single-loop stations, how it imputes missing data and reports the share observed, the station metadata, and the Clearinghouse's file types (station 5-minute, hourly, daily, meta, incidents from CHP).
+
+**Key ideas, in order.**
+
+1. Detectors: inductive loops (and radar or magnetometers) count vehicles and measure occupancy (fraction of time occupied); double loops measure speed directly; single loops estimate it from flow and occupancy with an effective vehicle length (the g-factor) that PeMS calibrates per station.
+2. Aggregation: raw 30-second samples become 5-minute rows; flow sums, occupancy averages, speed averages flow-weighted across lanes; the timestamp is the start of the interval.
+3. Station 5-minute file layout (verify on a real file): timestamp, station id, district, freeway, direction, lane type (ML mainline, OR on-ramp, FR off-ramp, HV HOV), station length, samples, percent observed, total flow, average occupancy, average speed, then per-lane samples, flow, occupancy, speed and observed; no header.
+4. Imputation: when detectors fail, PeMS fills values from neighboring lanes, neighboring stations and historical profiles; `% Observed` says what fraction of the lane-points were real; detector health diagnostics flag stuck, chattering and dead detectors.
+5. Metadata: station id, freeway, direction, district, county, city, state and absolute postmile, latitude and longitude, station length, type, number of lanes, and name; postmile order defines upstream and downstream along a route.
+6. Clearinghouse: one file per district per day for station 5-minute data; meta files per district; download requires a free account; the interface is a web form and rate limited, which the Selenium collector respects.
+7. Related products: CHP incidents, lane closures, and performance measures (VMT, VHT, delay) computed from the same data; the public benchmark datasets in traffic research derive from PeMS.
+
+**Formulas and commands to remember.**
+
+```
+speed_est ≈ flow / (occupancy × (1 / g))   # single-loop estimate, g = effective vehicle length
+observed_frac = pct_obs / 100;  treat rows with observed_frac < 0.5 as missing for labels
+```
+
+**Three takeaways.**
+
+- Speed is often estimated, and imputed rows are not observations; `% Observed` is the column that tells you which is which.
+- Postmiles, not coordinates, define the road graph.
+- The layout in the documentation must be checked against a real file before a parser is trusted.
+
+**Practice.** Download one district-day and the meta file; confirm the column count and the meaning of columns 8 to 12 by checking that total flow equals the sum of per-lane flows on a few rows.
+
+</details>
+
 #### [Open-Meteo, historical weather API documentation](https://open-meteo.com/en/docs/historical-weather-api)
 
 _docs · free · an hour · free, no key; the rain feature_
@@ -1722,6 +2662,37 @@ _docs · free · an hour · free, no key; the rain feature_
 **Stanford grad.** The point-in-time question from lesson 5 applies: the correct training feature is the forecast that would have been available at t, which Open-Meteo also archives (previous-runs endpoints). Whether the extra fidelity matters for a binary rain feature is an experiment worth an afternoon.
 
 **PhD at Apple.** Weather is the cheapest exogenous signal with a real effect on traffic. In a production system the questions become licensing, latency, and fallbacks when the provider is down; Open-Meteo's open model is a useful default and its terms are worth reading before shipping.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A free weather API: the historical (archive) endpoint with hourly and daily variables from reanalysis models back to 1940, the forecast endpoint with hourly forecasts and past days, the request builder, variable lists with units, time zone handling, and terms of use.
+
+**Key ideas, in order.**
+
+1. Requests: GET with `latitude`, `longitude`, `start_date`, `end_date`, `hourly=precipitation,rain,temperature_2m,wind_speed_10m,visibility`, `timezone=UTC`; the response is JSON with parallel arrays of times and values.
+2. Historical data: derived from reanalysis (ERA5 and higher-resolution regional models), gridded at kilometers, so a value is an area estimate, not a gauge reading in Fremont; hourly resolution; units are metric by default.
+3. Forecast data: the forecast endpoint gives the coming days hourly and can include `past_days`; forecasts are model runs that update; for point-in-time training features the previous-runs endpoint archives what a forecast said at the time.
+4. Variables for traffic: precipitation and rain (mm per hour), visibility, wind speed, temperature; derived flags such as `is_raining = precipitation > 0.2 mm`; daily summaries for calendar-level features.
+5. Joining: align on the UTC hour (`timestamp.floor('h')`) with a left join onto the 5-minute grid; for the live loop use the forecast issued before the prediction time.
+6. Limits and terms: free for non-commercial use with fair-use rate limits; commercial use requires a subscription; cache responses locally (a year of hourly values is small).
+
+**Formulas and commands to remember.**
+
+```
+https://archive-api.open-meteo.com/v1/archive?latitude=37.55&longitude=-121.98&start_date=2026-01-01&end_date=2026-12-31&hourly=precipitation,visibility&timezone=UTC
+wx['hour'] = pd.to_datetime(wx.time, utc=True); df['hour'] = df.timestamp.dt.floor('h'); df = df.merge(wx, on='hour', how='left')
+```
+
+**Three takeaways.**
+
+- Reanalysis is a model's reconstruction; treat it as an area estimate.
+- Train on what serving will have: the forecast, not the realized weather.
+- Cache; the whole training period is a few megabytes.
+
+**Practice.** Fetch hourly precipitation for the training period, join it on the UTC hour, and compare label prevalence on rainy versus dry hours at 5 pm.
+
+</details>
 
 #### [511 SF Bay Open Data, traffic API documentation](https://511.org/open-data)
 
@@ -1739,6 +2710,37 @@ _docs · free (token) · an hour · free with a token; the incident feed's field
 
 **PhD at Apple.** Public-sector data APIs are governed by terms and by quotas that shape what a product can promise; at scale, direct feeds from agencies or probe-based incident detection replace polling. The Open511 standard is also a small lesson in how interoperability specifications succeed or fail.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The 511 SF Bay open data portal: registering for a token, the traffic events API following the Open511 specification (events resource, filters, pagination, formats), the fields of an event, the road and geography sub-objects, the status lifecycle, rate limits, and the transit APIs alongside.
+
+**Key ideas, in order.**
+
+1. Access: request a free API token; include it as `api_key` on every request; the specification documents request quotas per token and asks for attribution.
+2. The events resource: `GET /traffic/events?api_key=...&format=json` returns a list of events with `id`, `status` (ACTIVE or ARCHIVED), `event_type` (INCIDENT, CONSTRUCTION, SPECIAL_EVENT, ROAD_CONDITION, WEATHER_CONDITION), `severity` (MINOR, MODERATE, MAJOR, UNKNOWN), `headline`, `description`, `created`, `updated`, `schedule`, `roads` (a list with `name`, `from`, `to`, `direction`, `state`), and `geography` (a GeoJSON Point or LineString).
+3. Filtering: by status, by bounding box (`bbox`), by road name, by jurisdiction, by event type, by severity, and by time; pagination with `offset` and `limit`; formats JSON and XML.
+4. Lifecycle: an event is created when reported, updated as details change, and archived when cleared; `updated` is the last edit time, not necessarily the clearing time; short events may never appear to a 15-minute poller.
+5. Open511: an open specification for road event data used by several agencies; its field semantics (statuses, event types, schedule recurrence) are defined there, and reading it explains fields the portal's page glosses.
+6. Data quality: geography may be missing or coarse; severity is often UNKNOWN; road names follow conventions (`I-880 N`) that need parsing; timestamps are ISO 8601 in UTC or with offset.
+
+**Formulas and commands to remember.**
+
+```
+GET https://api.511.org/traffic/events?api_key=KEY&format=json&status=active
+roads: [{'name': 'I-880 N', 'direction': 'N', 'from': 'Mission Blvd', 'to': 'Dixon Landing Rd'}]
+```
+
+**Three takeaways.**
+
+- The feed is a sampled event stream; what you see depends on how often you ask.
+- `created` is report time and `updated` is edit time; neither is the physical start or end.
+- Parse roads and directions defensively; the fields are text written by people.
+
+**Practice.** Poll the active endpoint every 5 minutes for a day, record first-seen and last-seen per event id, and compare those windows with the `created` and `updated` fields.
+
+</details>
+
 #### [Python Data Science Handbook (VanderPlas)](https://jakevdp.github.io/PythonDataScienceHandbook/)
 
 _book · free · weeks · free online; a second explanation of numpy, pandas and matplotlib_
@@ -1754,6 +2756,38 @@ _book · free · weeks · free online; a second explanation of numpy, pandas and
 **Stanford grad.** The book predates Arrow-backed pandas and polars; its scikit-learn chapter is introductory. Its lasting value is the clear treatment of the numerical stack's fundamentals.
 
 **PhD at Apple.** A widely used free reference; a good default recommendation for engineers moving from another language to Python's data stack.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** IPython and Jupyter (help, magics, profiling), numpy (arrays, ufuncs, aggregations, broadcasting, boolean masks, fancy indexing, sorting, structured arrays), pandas (objects, indexing, operations, missing data, hierarchical indexing, concat and merge, aggregation and grouping, pivot tables, strings, time series, high-performance eval and query), matplotlib (line, scatter, errorbars, density and contour, histograms, legends, colorbars, subplots, annotation, ticks, styles, 3-D, geographic, seaborn), and machine learning with scikit-learn (the API, hyperparameters and validation, feature engineering, naive Bayes, linear regression, SVMs, random forests, PCA, manifold learning, k-means, Gaussian mixtures, kernel density, and worked applications).
+
+**Key ideas, in order.**
+
+1. IPython: `?` and `??` for help and source, tab completion, `%timeit` and `%prun` for timing and profiling, `%debug` after an exception.
+2. numpy in depth: dtypes and memory, views versus copies, broadcasting rules with diagrams, boolean masking and counting, fancy indexing for gathering and scattering, `argsort` and partial sorts, structured arrays.
+3. pandas in depth: index objects, `loc`/`iloc`, ufuncs preserving indexes, alignment, `None` versus `NaN`, hierarchical indexing for panel data (station by time), `concat` and `merge` with all join types, `groupby` with `aggregate`, `filter`, `transform`, `apply`, pivot tables, vectorized string methods, time series with resampling and rolling, and `eval`/`query` for speed.
+4. matplotlib's object model: figure and axes, `plt.subplots`, styling lines and markers, error bars, `contour` and `imshow`, histograms and 2-D histograms, legends and colorbars, annotation, tick customization, style sheets, and seaborn's statistical plots on top.
+5. scikit-learn's API: estimator objects with `fit`, `predict`, `transform`; data as a features matrix and a target array; the train-test split; validation curves and learning curves to diagnose bias and variance; grid search; feature engineering (categorical encoding, text features, derived features, imputation, pipelines).
+6. Model tours: naive Bayes for text, linear regression with basis functions and regularization, support vector machines with kernels, random forests and their ensembles, PCA for dimensionality reduction and noise filtering, manifold learning for visualization, k-means and Gaussian mixtures for clustering, kernel density estimation, and applications (face detection, digits).
+
+**Formulas and commands to remember.**
+
+```
+%timeit df.groupby('station_id').speed.shift(3)
+fig, ax = plt.subplots(figsize=(10, 3)); ax.plot(day.timestamp, day.speed); ax.set(ylabel='mph', title='Station 400001, 2026-03-02')
+from sklearn.model_selection import learning_curve
+```
+
+**Three takeaways.**
+
+- Learn the object model of matplotlib once and every figure becomes controllable.
+- Validation and learning curves are the diagnostic pictures for bias and variance.
+- The scikit-learn API is three verbs; everything composes from them.
+
+**Practice.** Plot learning curves (validation AP against training size) for LightGBM on the traffic features and say whether more data or more capacity would help.
+
+</details>
 
 #### [Fundamentals of Data Visualization (Wilke)](https://clauswilke.com/dataviz/)
 
@@ -1771,6 +2805,38 @@ _book · free · weeks · free online; how to design a plot that tells the truth
 
 **PhD at Apple.** A free, rigorous, tool-agnostic reference for figures in papers and reports; the standard to hold a figure to before a talk.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part 1, from data to visualization: aesthetics and data types, coordinate systems and axes, color scales, amounts, distributions, proportions, x-y relationships, geospatial data, uncertainty. Part 2, principles of figure design: proportional ink, overplotting, color use and misuse, redundant coding, multi-panel figures, titles and captions, tables, balancing data and context, larger axis labels, avoiding line drawings, not going 3-D. Part 3, miscellaneous: file formats, choosing software, telling a story.
+
+**Key ideas, in order.**
+
+1. Aesthetics map data to position, shape, size, color, line type; data types (quantitative, ordinal, categorical, date, text) decide which mappings are legitimate; log and sqrt axes for skewed data; polar coordinates rarely.
+2. Color: sequential scales for ordered quantities, diverging for values around a center, qualitative for categories; colorblind-safe palettes; color as a highlight, not decoration; never encode more than a handful of categories by hue.
+3. Amounts: bars from zero, dot plots when the baseline is meaningless, grouped and stacked bars, heatmaps for two categorical axes and a quantity (the station-by-slot profile).
+4. Distributions: histograms and density plots (bin width and bandwidth matter), empirical cumulative distributions for comparison, quantile-quantile plots, boxplots, violins, ridgeline plots for many groups (a distribution per hour).
+5. Proportions and relationships: pie charts rarely, stacked bars, mosaic plots; scatter with transparency and jitter, bubble charts, paired data, correlograms, and connected scatter for time.
+6. Uncertainty: error bars with a stated meaning, confidence bands, graded bands, hypothetical outcome plots; show the distribution rather than a bar with a whisker when you can; the reliability diagram and the interval coverage plot belong here.
+7. Principles: the amount of ink should be proportional to the data; avoid overplotting with transparency, contours or binning; redundant coding (color plus shape) for accessibility; small multiples with shared axes for comparison; a title says the finding, a caption says what is plotted; do not use 3-D for 2-D data.
+
+**Formulas and commands to remember.**
+
+```
+fig, axes = plt.subplots(4, 5, sharex=True, sharey=True)   # small multiples, one station each
+ax.fill_between(t, lo, hi, alpha=.2)   # a band, with its meaning stated in the caption
+```
+
+**Three takeaways.**
+
+- Choose the scale by the data type and the color scale by the data's structure.
+- Show distributions and uncertainty as shapes, not as bars with whiskers.
+- The title states the finding; the caption states the encoding.
+
+**Practice.** Redesign the lead-time histogram and the reliability diagram from the evaluation report following the book: state the finding in the title, choose scales deliberately, and show uncertainty with a band from block bootstrap.
+
+</details>
+
 #### [Kaggle Learn: Intro to SQL, Advanced SQL](https://www.kaggle.com/learn/intro-to-sql)
 
 _course · free · an afternoon each · free; window functions on a real warehouse_
@@ -1787,6 +2853,39 @@ _course · free · an afternoon each · free; window functions on a real warehou
 
 **PhD at Apple.** A free, practical introduction to warehouse SQL for a team that needs analysts and engineers to share feature definitions.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Intro: getting started with BigQuery and SQL, SELECT/FROM/WHERE, GROUP BY/HAVING/COUNT, ORDER BY, AS and WITH (common table expressions), and joining data. Advanced: JOINs and UNIONs in depth, analytic (window) functions, nested and repeated data, and writing efficient queries.
+
+**Key ideas, in order.**
+
+1. Warehouse basics: datasets and tables, schemas with types, previewing rows, estimating a query's scanned bytes before running it (cost awareness).
+2. Core clauses: SELECT and WHERE with types and dates, aggregations with GROUP BY and HAVING, ORDER BY with dates, `EXTRACT` for parts of a timestamp, and aliases.
+3. CTEs: `WITH name AS (SELECT ...)` to stage intermediate results, which keeps multi-step feature queries readable; joins on keys with table aliases.
+4. Joins and unions: inner, left, right, full outer; UNION ALL versus UNION; joining more than two tables; self-joins.
+5. Analytic functions: `OVER (PARTITION BY ... ORDER BY ... ROWS BETWEEN ...)`; `LAG`, `LEAD`, `FIRST_VALUE`, `RANK`, `ROW_NUMBER`, running totals and moving averages; the exact machinery of lag and rolling features.
+6. Nested and repeated fields: STRUCT and ARRAY columns, `UNNEST` to flatten, which is how the 511 event's `roads` list would be stored in a warehouse.
+7. Efficiency: select only needed columns, filter early, avoid `SELECT *`, use partitions, and read the query plan.
+
+**Formulas and commands to remember.**
+
+```
+WITH s AS (SELECT station_id, ts, speed FROM pems)
+SELECT *, AVG(speed) OVER (PARTITION BY station_id ORDER BY ts ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS roll_30 FROM s;
+SELECT event_id, road.name FROM events, UNNEST(roads) AS road;
+```
+
+**Three takeaways.**
+
+- CTEs make feature queries readable; window functions make them possible.
+- Nested fields are unnested with UNNEST; event lists become rows.
+- Scan less; column pruning and partition filters decide cost.
+
+**Practice.** Write the incident join (route, direction, distance under a mile, active window) as a SQL query with a CTE for parsed routes and a window function for minutes since start.
+
+</details>
+
 #### [Select Star SQL](https://selectstarsql.com/)
 
 _interactive · free · two hours · free; one dataset, project-shaped practice_
@@ -1802,6 +2901,36 @@ _interactive · free · two hours · free; one dataset, project-shaped practice_
 **Stanford grad.** Useful mostly as a teaching resource; its narrative approach is a good model for a project-specific SQL primer.
 
 **PhD at Apple.** A small, well-made open resource; the kind of thing to fork and adapt to a team's own dataset for onboarding.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** An interactive book in four chapters over one dataset (Texas death-row records): beazley (SELECT, WHERE, LIMIT, basic filters), hierarchy (aggregations, GROUP BY, HAVING, counting and averaging), harder (CASE, subqueries, joins, NULL handling), and the story (composing several steps to answer a real question), with exercises checked in the browser.
+
+**Key ideas, in order.**
+
+1. Reading before querying: look at the columns, their types, and a few rows; ask what one row means.
+2. Filtering and projecting: SELECT chosen columns, WHERE on text and numbers, `LIKE` patterns, `LENGTH` and string functions, `LIMIT` for inspection.
+3. Aggregation: `COUNT`, `AVG`, `MIN`, `MAX` over groups; `GROUP BY` one or several columns; `HAVING` on aggregates; `ORDER BY` an aggregate.
+4. Conditional logic: `CASE WHEN ... THEN ... ELSE ... END` to bucket values (a severity code from text) or to count conditionally with `SUM(CASE WHEN ... THEN 1 ELSE 0 END)`.
+5. Subqueries and joins: a query in FROM or WHERE, joining a table to an aggregate of itself, and the reasoning about NULLs in comparisons and aggregates.
+6. Composing a story: chaining steps, checking intermediate results, and stating the assumptions the query makes about the data.
+
+**Formulas and commands to remember.**
+
+```
+SELECT road, SUM(CASE WHEN severity = 'MAJOR' THEN 1 ELSE 0 END) AS major, COUNT(*) AS n FROM events GROUP BY road;
+```
+
+**Three takeaways.**
+
+- Bucket with CASE; count conditionally with SUM over CASE.
+- Every aggregate query hides an assumption about NULLs; make it explicit.
+- Compose in steps and inspect each.
+
+**Practice.** Answer, in one composed query over the incident log, which road and hour has the highest share of major incidents, excluding rows with unknown severity, and state the assumption that exclusion makes.
+
+</details>
 
 ### Build
 
@@ -2432,6 +3561,41 @@ _course · free (audit) · six weeks · the classic; audit for free_
 
 **PhD at Apple.** Ng's courses shaped how a generation frames ML projects around iterative diagnosis, and his later data-centric argument, that data quality dominates model choice on most real problems, is the thesis of this entire pipeline. For a lead, the course is also the common vocabulary a mixed team can be assumed to share.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Course 1, supervised learning with regression and classification: what ML is, linear regression with one and many variables, the cost function, gradient descent, feature scaling, learning rate, polynomial features, logistic regression, decision boundaries, the logistic cost, overfitting and regularization. Course 2, advanced algorithms: neural networks (neurons, layers, forward propagation, TensorFlow, vectorization), training (activations, multiclass with softmax, Adam, layer types), advice for applying ML (evaluation, bias and variance, learning curves, error analysis, data augmentation, transfer learning, skewed data with precision and recall and F1), and decision trees (splits by entropy and information gain, one-hot, regression trees, random forests, XGBoost).
+
+**Key ideas, in order.**
+
+1. Linear regression: model f(x) = wx + b; squared-error cost J(w, b) = (1/2m) Σ (f(xᵢ) − yᵢ)²; gradient descent updates w ← w − α ∂J/∂w and b ← b − α ∂J/∂b simultaneously; the learning rate α too small is slow, too large diverges; plot J against iterations.
+2. Multiple features: vectorized f(x) = w·x + b; feature scaling (mean normalization, z-score) so gradient descent converges; feature engineering (products, polynomials) lets a linear model fit curves; checking convergence.
+3. Logistic regression: sigmoid g(z) = 1/(1 + e^{−z}); f(x) = g(w·x + b) read as P(y = 1 | x); decision boundary where w·x + b = 0; the logistic loss −y log f − (1 − y) log(1 − f) (convex, unlike squared error on a sigmoid); gradient descent has the same form as for linear regression.
+4. Overfitting: high variance versus high bias; fixes are more data, fewer features, or regularization; the regularized cost adds (λ/2m) Σ wⱼ², shrinking weights; regularization for logistic regression.
+5. Neural networks: a layer computes a = g(Wx + b) for several units; layers stack; forward propagation; matrix form; TensorFlow's `Sequential` and `Dense`; ReLU versus sigmoid and why ReLU trains better; softmax for multiclass with the categorical cross-entropy; numerically stable implementation with logits; Adam as adaptive learning rates.
+6. Applying ML: evaluate on a test set; choose models on a cross-validation set; diagnose bias (high training error) versus variance (large gap to validation error); learning curves; regularization and model size trade-offs; the iterative loop of error analysis on misclassified examples; adding data, augmentation, synthesis, transfer learning.
+7. Skewed classes: precision = TP/(TP + FP), recall = TP/(TP + FN), the F1 score as their harmonic mean, and choosing a threshold by the trade-off.
+8. Decision trees: choose the split maximizing information gain (reduction in entropy H(p) = −p log₂ p − (1 − p) log₂(1 − p)); stopping criteria; continuous features by thresholds; regression trees by variance reduction; tree ensembles by bagging (random forests) and boosting (XGBoost); when to use trees (tabular) versus networks (unstructured).
+
+**Formulas and commands to remember.**
+
+```
+J(w,b) = (1/2m) Σ (w·xᵢ + b − yᵢ)²;  w ← w − α (1/m) Σ (f(xᵢ) − yᵢ) xᵢ
+L = −y log f(x) − (1 − y) log(1 − f(x))
+H(p) = −p log₂ p − (1 − p) log₂(1 − p);  gain = H(root) − (w_L H(L) + w_R H(R))
+F1 = 2PR/(P + R)
+```
+
+**Three takeaways.**
+
+- Diagnose bias versus variance first; the fix is different for each.
+- Precision, recall and the threshold are the vocabulary of alerts.
+- Trees for tables, networks for unstructured data; information gain is how a tree chooses.
+
+**Practice.** Reproduce the course's bias-variance diagnosis on the traffic features: plot training and validation AP against LightGBM's number of leaves and label the underfitting and overfitting regions.
+
+</details>
+
 #### [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/)
 
 _book · free · three weeks · free PDF; the clearest account of trees and boosting_
@@ -2447,6 +3611,40 @@ _book · free · three weeks · free PDF; the clearest account of trees and boos
 **Stanford grad.** After ISLP, go to ESL for proofs and depth. ISLP's boosting section gives the additive-model view; combine it with Friedman's 2001 paper for the gradient view that LightGBM implements. Note where ISLP's examples assume independent rows and how each method's assumptions change under temporal dependence.
 
 **PhD at Apple.** As a citation for standard methods and as a teaching text it is the reference, and its evolution from R to Python editions tracks the field's tooling. For research, its framing of methods as estimators with bias and variance you can reason about is the habit that distinguishes a careful ML engineer from a library user.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapter 2, statistical learning: what it is, prediction versus inference, parametric and nonparametric, the bias-variance trade-off, the classification setting and the Bayes classifier, k-nearest neighbors. Chapter 3, linear regression: simple and multiple, coefficient estimates and their accuracy, model fit, qualitative predictors, interactions, nonlinearity, potential problems, comparison with KNN. Chapter 4, classification: logistic regression, multinomial, generative models (LDA, QDA, naive Bayes), comparison, generalized linear models (Poisson regression). Chapter 8, tree-based methods: regression and classification trees, pruning, bagging, random forests, boosting, Bayesian additive regression trees.
+
+**Key ideas, in order.**
+
+1. The setup: Y = f(X) + ε; we estimate f for prediction or to understand which inputs matter; reducible versus irreducible error; parametric methods assume a form (linear), nonparametric do not (KNN) and need more data; flexibility versus interpretability.
+2. Assessing accuracy: training MSE falls with flexibility but test MSE is U-shaped; expected test error = variance + bias² + irreducible noise; flexible methods have low bias and high variance; cross-validation estimates test error.
+3. Classification: the error rate; the Bayes classifier assigns the most probable class and is the lower bound; KNN estimates conditional probabilities locally; small k is flexible (low bias, high variance).
+4. Linear regression: least-squares estimates, standard errors and confidence intervals for coefficients, t-tests, R² and residual standard error; multiple regression and the F-test; qualitative predictors as dummies; interaction terms; polynomial terms; diagnostics for nonlinearity, correlated errors (time series!), heteroscedasticity, outliers, high leverage, and collinearity (VIF).
+5. Logistic regression: the logit model log(p/(1 − p)) = β₀ + β₁x; maximum likelihood estimation; interpreting coefficients as changes in log odds; multiple logistic regression and confounding; multinomial for several classes.
+6. Generative classifiers: model P(X | Y) and the prior, apply Bayes; LDA (shared covariance, linear boundary), QDA (separate covariances), naive Bayes (independent features); ROC curves and the trade-off between sensitivity and specificity; when each method wins.
+7. Trees: recursive binary splitting to minimize RSS or Gini/entropy; cost-complexity pruning chosen by cross-validation; trees are interpretable but high variance.
+8. Ensembles: bagging averages trees grown on bootstrap samples and out-of-bag error estimates test error; random forests decorrelate trees by sampling m of p predictors at each split; boosting grows trees sequentially on residuals with shrinkage λ, depth d and B trees chosen by cross-validation; variable importance; BART as a Bayesian ensemble.
+
+**Formulas and commands to remember.**
+
+```
+E[(y₀ − f̂(x₀))²] = Var(f̂(x₀)) + [Bias(f̂(x₀))]² + Var(ε)
+log(p(X)/(1 − p(X))) = β₀ + β₁X
+Boosting: f̂ ← f̂ + λ f̂ᵇ, where f̂ᵇ is a depth-d tree fit to the residuals r ← r − λ f̂ᵇ(x)
+```
+
+**Three takeaways.**
+
+- Test error is U-shaped in flexibility; the bias-variance decomposition says why.
+- Logistic coefficients are log odds ratios; generative classifiers model the inputs instead.
+- Boosting fits small trees to residuals slowly; shrinkage and the number of trees trade off.
+
+**Practice.** Fit logistic regression, LDA and a random forest to the same traffic features on the chronological split; report AP and a ROC curve for each and explain the ordering using the chapter's arguments about bias and variance.
+
+</details>
 
 #### [Google's Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course)
 
@@ -2464,6 +3662,42 @@ _course · free · about 15 hours · free; the practitioner's course, videos and
 
 **PhD at Apple.** A free, maintained, vendor-flavored but sound curriculum; useful as a shared baseline for a mixed team.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Modules: introduction to ML; linear regression (loss, gradient descent, hyperparameters); logistic regression (sigmoid, log loss, regularization); classification (thresholds, confusion matrix, accuracy, precision, recall, ROC and AUC, prediction bias); working with numerical data (scaling, clipping, binning, scrubbing, qualities of good features); categorical data (one-hot, hashing, feature crosses); datasets, generalization and overfitting (splits, imbalanced data, transformations); neural networks (nodes, layers, activations, backpropagation, multiclass); embeddings; large language models (tokens, transformers, fine-tuning); production ML systems; AutoML; and fairness (types of bias, identifying and mitigating).
+
+**Key ideas, in order.**
+
+1. Linear regression and gradient descent: the L2 loss, learning rate, batch size, epochs, and the interactive exercise showing convergence and divergence; hyperparameters versus parameters.
+2. Logistic regression: sigmoid output as probability, log loss, and why regularization (L2, early stopping) is needed when features are many.
+3. Classification metrics: the confusion matrix; accuracy fails on imbalance; precision and recall move oppositely with the threshold; the ROC curve and AUC as threshold-free ranking quality; prediction bias as a sanity check (mean prediction should match the mean label).
+4. Numerical features: normalization (z-score, log scaling, clipping), binning by quantiles, scrubbing bad values (missing, duplicates, out-of-range), and what makes a feature good (clear meaning, sensible range, stable over time).
+5. Categorical features: one-hot encoding, sparse representations, feature hashing, and feature crosses (rain × hour) to give linear models interactions.
+6. Generalization: train, validation and test splits; the danger of tuning on test; data leakage; imbalanced data handling by downsampling and upweighting; time-based splits when order matters.
+7. Neural networks: hidden layers add nonlinearity through activation functions; backpropagation trains them; softmax for multiclass; failure modes (vanishing gradients, dead ReLUs) and fixes.
+8. Embeddings: mapping sparse categories to dense vectors learned from data; nearest neighbors in embedding space.
+9. Production ML: static versus dynamic training, offline versus online inference, data dependencies, and the checklist of what can go wrong after launch.
+10. Fairness: reporting, historical, automation and selection biases; evaluating for bias with confusion matrices per group; demographic parity, equality of opportunity and counterfactual fairness as criteria; mitigation approaches.
+
+**Formulas and commands to remember.**
+
+```
+log loss = −(1/N) Σ [y log p + (1 − y) log(1 − p)]
+precision = TP/(TP + FP);  recall = TP/(TP + FN)
+prediction bias = mean(predictions) − mean(labels)
+```
+
+**Three takeaways.**
+
+- Prediction bias is a cheap calibration check; a model whose mean prediction differs from the base rate is mis-specified.
+- Feature crosses are how linear models get interactions; trees find them alone.
+- Fairness evaluation is confusion matrices per group; start there.
+
+**Practice.** Compute the prediction bias of the LightGBM model per hour of day and per station; where it is largest, explain why and whether calibration fixes it.
+
+</details>
+
 #### [scikit-learn: Getting Started and the tutorials](https://scikit-learn.org/stable/getting_started.html)
 
 _docs · free · an afternoon · free; the workflow end to end in a few lines_
@@ -2479,6 +3713,39 @@ _docs · free · an afternoon · free; the workflow end to end in a few lines_
 **Stanford grad.** The examples gallery is an underused resource: each example is a small, correct experiment with a figure, and many are directly reusable for the evaluation report.
 
 **PhD at Apple.** scikit-learn's documentation is a reference for how to document an API; its tutorials are a model of teaching by runnable example.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Getting Started: fitting and predicting with estimators, transformers and preprocessors, pipelines, model evaluation with cross-validation, automatic parameter search. The tutorials: an introduction to machine learning with scikit-learn (learning and predicting, model persistence, conventions), a tutorial on statistical learning (settings, supervised learning with kNN, linear models and SVMs, model selection with cross-validation and grid search, unsupervised learning with clustering and decomposition, and putting it together with pipelines), and the text-data tutorial.
+
+**Key ideas, in order.**
+
+1. Estimators: every model implements `fit(X, y)` and `predict(X)`; classifiers also `predict_proba`; X is a 2-D array of shape (n_samples, n_features), y is 1-D; fitted attributes end with an underscore (`coef_`).
+2. Transformers: `fit` learns (a scaler's mean and standard deviation), `transform` applies; `fit_transform` does both; `StandardScaler`, `OneHotEncoder`, `SimpleImputer`; `ColumnTransformer` applies different transformers to different columns.
+3. Pipelines: `make_pipeline(StandardScaler(), LogisticRegression())` chains steps so preprocessing is fit only on training data, preventing leakage; the whole pipeline is one estimator you can cross-validate and search.
+4. Evaluation: `train_test_split` (with `shuffle=False` for time), `cross_validate` and `cross_val_score` with a chosen `scoring` (`'average_precision'`), `TimeSeriesSplit` for ordered data, and the metrics module.
+5. Search: `GridSearchCV` and `RandomizedSearchCV` over a pipeline's parameters with `step__param` names, refitting the best, and reading `cv_results_`; `HalvingRandomSearchCV` for budgets.
+6. Statistical learning tutorial: supervised learning as estimating a function; kNN and the curse of dimensionality; linear regression, ridge and lasso with the shrinkage trade-off; logistic regression; SVMs with kernels; cross-validation generators; clustering (k-means, hierarchical) and decomposition (PCA, ICA); model persistence with `joblib`.
+7. Conventions: input is cast to float64 unless specified, refitting overwrites, multiclass is handled by the estimator, and `set_params` updates hyperparameters.
+
+**Formulas and commands to remember.**
+
+```
+pipe = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))
+scores = cross_val_score(pipe, X, y, cv=TimeSeriesSplit(5), scoring='average_precision')
+search = RandomizedSearchCV(pipe, {'logisticregression__C': loguniform(1e-3, 1e2)}, n_iter=20, cv=TimeSeriesSplit(5), scoring='average_precision').fit(X, y)
+```
+
+**Three takeaways.**
+
+- Put preprocessing inside the pipeline so it is fit on training folds only.
+- Use `TimeSeriesSplit`, never the default shuffled folds, for this data.
+- Search over `step__param` names and read `cv_results_`, not only `best_score_`.
+
+**Practice.** Build a pipeline of imputer, scaler and logistic regression for the traffic features, cross-validate it with `TimeSeriesSplit`, and randomized-search its regularization strength; compare with LightGBM.
+
+</details>
 
 #### [R2D3: A Visual Introduction to Machine Learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/)
 
@@ -2496,6 +3763,36 @@ _interactive · free · half an hour · free; trees and overfitting as an animat
 
 **PhD at Apple.** An example of explanation as design, useful as a reference for how far interactive storytelling can carry a technical concept.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part 1: using a dataset of homes in San Francisco and New York, a decision tree is built step by step by finding the split (on elevation, price per square foot, and so on) that best separates the cities, growing branches until the training data are classified; the tree is then tested on new homes. Part 2: model tuning and the bias-variance trade-off, showing a tree that fits training data perfectly but fails on test data, and how limiting depth trades training accuracy for generalization.
+
+**Key ideas, in order.**
+
+1. A decision tree asks a series of yes-or-no questions about features; each question splits the data into two groups that are purer than before; the sequence of questions forms a tree with leaves that predict a class.
+2. Choosing a split: try thresholds on each feature, measure how well each separates the classes (the animation shows the boundary sliding), keep the best; repeat on each branch.
+3. Depth and purity: more splits fit the training data better; a fully grown tree memorizes it, including its noise; accuracy on training data is not the goal.
+4. Testing: hold out data the tree never saw; the fully grown tree's test accuracy is worse than a shallower tree's; that gap is overfitting.
+5. Bias and variance: a shallow tree is too simple (high bias, systematic errors); a deep tree is too sensitive to the particular training data (high variance, errors change with the sample); the best depth balances them; more data reduces variance.
+6. Tuning: limit depth or minimum samples per leaf, choose by validation performance, and expect the same trade-off in every model class.
+
+**Formulas and commands to remember.**
+
+```
+training accuracy rises with depth; test accuracy rises then falls
+```
+
+**Three takeaways.**
+
+- A tree is a sequence of threshold questions chosen greedily by purity.
+- Perfect training accuracy is a warning, not a result.
+- Depth and minimum leaf size are the dials that control variance.
+
+**Practice.** Grow a single decision tree on the traffic features with depths 2, 6 and unlimited; report training and validation AP for each and mark where overfitting begins.
+
+</details>
+
 #### [MLU-Explain (Amazon)](https://mlu-explain.github.io/)
 
 _interactive · free · an hour per essay · free; visual essays on precision, ROC, cross-validation and more_
@@ -2511,6 +3808,39 @@ _interactive · free · an hour per essay · free; visual essays on precision, R
 **Stanford grad.** Good for teaching and for checking your own intuition; the pages are correct and current, and their sources are cited.
 
 **PhD at Apple.** A curated set of explanations from an industry group; their choice of topics is a fair map of what practitioners most often misunderstand.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Interactive essays: linear regression; logistic regression; decision trees; random forests; precision and recall; ROC and AUC; cross-validation; train, test and validation sets; bias-variance trade-off; double descent (two essays); neural networks; reinforcement learning; equality of odds; and others.
+
+**Key ideas, in order.**
+
+1. Linear regression: the least-squares line, residuals, and how the coefficients respond as you drag points; assumptions and diagnostics.
+2. Logistic regression: the sigmoid boundary, log loss, and how the boundary moves as weights change; interpretation as probability.
+3. Decision trees and random forests: splits, impurity, the effect of depth; bootstrapping and feature subsampling making trees different; averaging reduces variance; out-of-bag estimates.
+4. Precision and recall: the confusion matrix with sliders for the threshold; why both matter under imbalance; F1.
+5. ROC and AUC: sweeping the threshold traces the curve; AUC as the probability that a random positive ranks above a random negative; its insensitivity to class balance.
+6. Cross-validation and splits: k-fold with animation; why the test set is used once; the validation set for tuning; leakage.
+7. Bias-variance and double descent: the classical U-shaped test error; then the modern observation that past the interpolation threshold, larger models can improve again; what that does and does not change in practice.
+8. Neural networks: neurons, layers, activations and training on a toy dataset; the effect of width and depth.
+9. Equality of odds: a fairness criterion asking for equal true-positive and false-positive rates across groups; its conflict with calibration when base rates differ.
+
+**Formulas and commands to remember.**
+
+```
+AUC = P(score(random positive) > score(random negative))
+```
+
+**Three takeaways.**
+
+- AUC is a ranking probability; average precision is what alerts need under imbalance.
+- Cross-validation estimates test error only if folds respect the data's structure.
+- Equality of odds and calibration cannot both hold when base rates differ.
+
+**Practice.** Using the ROC and precision-recall essays as guides, plot both curves for the LightGBM model and explain in two sentences why they tell different stories at 5 % positives.
+
+</details>
 
 #### [StatQuest with Josh Starmer (YouTube)](https://statquest.org/)
 
@@ -2528,6 +3858,40 @@ _video · free · hours, as needed · free; one idea per video, worked with numb
 
 **PhD at Apple.** A reminder that clarity is a research skill; the channel's popularity among practitioners reflects a gap textbooks leave, and it is the resource to hand to a stakeholder who wants to know what a boosted tree actually does.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Hundreds of short videos, each one concept: statistics fundamentals (mean, variance, distributions, p-values, hypothesis testing, confidence intervals, maximum likelihood), machine learning fundamentals (bias and variance, cross-validation, confusion matrices, sensitivity and specificity, ROC and AUC), linear models (regression, R², logistic regression series, regularization with ridge, lasso and elastic net), trees (decision trees, regression trees, random forests, AdaBoost, gradient boost series, XGBoost series), support vector machines, PCA and clustering, neural networks and backpropagation, and more.
+
+**Key ideas, in order.**
+
+1. Maximum likelihood: pick the parameters that make the observed data most probable; for a normal, the sample mean and variance; for logistic regression, the coefficients that maximize the product of predicted probabilities of the observed classes.
+2. Logistic regression series: fitting a line to log odds, the S-curve back in probability, maximum likelihood instead of least squares, R² analogues and p-values for coefficients, and the meaning of each coefficient.
+3. Bias and variance, cross-validation: bias as inability to capture the true relationship, variance as sensitivity to the training set; k-fold cross-validation to compare methods; the confusion matrix, sensitivity (recall) and specificity, ROC by sweeping thresholds and AUC to compare models.
+4. Regularization: ridge shrinks coefficients toward zero to reduce variance; lasso can zero them (feature selection); elastic net mixes; λ chosen by cross-validation.
+5. Trees and ensembles: building a classification tree with Gini impurity and a regression tree with squared residuals; random forests with bootstrapping plus random feature subsets and out-of-bag error; AdaBoost's weighted stumps; gradient boost for regression (fit trees to residuals, scale by a learning rate) and for classification (residuals of log odds, leaf values from the sum of residuals over the sum of p(1 − p)); XGBoost's similarity scores, gain, pruning by γ, regularization λ, and the second-order derivation.
+6. Support vector machines: the maximal margin classifier, soft margins, and the kernel trick (polynomial, radial) computing high-dimensional dot products cheaply.
+7. PCA and clustering: PCA step by step with singular value decomposition, scree plots and loadings; k-means and hierarchical clustering with distance choices.
+8. Neural networks: a chain of weighted sums and activations, the chain rule for backpropagation worked with actual numbers, gradient descent step by step.
+
+**Formulas and commands to remember.**
+
+```
+Gradient boost (classification): leaf value = Σ residuals / Σ p(1 − p)
+XGBoost similarity = (Σ residuals)² / (Σ p(1 − p) + λ);  gain = sim_L + sim_R − sim_root
+Ridge: minimize Σ (y − ŷ)² + λ Σ βⱼ²
+```
+
+**Three takeaways.**
+
+- Boosting's leaf values come from residuals divided by curvature; XGBoost's gain is the same idea with regularization.
+- Regularization trades a little bias for a lot of variance.
+- Sensitivity and specificity, precision and recall: know which pairs move together.
+
+**Practice.** Follow the gradient boost classification videos with pencil and paper on eight rows of traffic data: compute the initial log odds, the residuals, one tree's leaf values, and the updated predictions.
+
+</details>
+
 #### [Kaggle Learn: Intro to ML, Intermediate ML, Feature Engineering](https://www.kaggle.com/learn/intro-to-machine-learning)
 
 _course · free · weeks · free_
@@ -2543,6 +3907,40 @@ _course · free · weeks · free_
 **Stanford grad.** The courses reflect Kaggle's tabular culture: gradient-boosted trees, engineered features, and careful validation. The competition write-ups they link to are the richer resource; reading three winning solutions for a time-series competition teaches more about leakage and validation than any course.
 
 **PhD at Apple.** Kaggle's tabular consensus (boosted ensembles, careful validation, feature engineering over architecture) has been stable for a decade, and understanding why, which Grinsztajn and colleagues studied systematically, is more valuable than any single course and directly justifies LightGBM as this project's production model.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Intro: how models work, basic data exploration, your first model (decision tree), model validation, underfitting and overfitting, random forests. Intermediate: missing values, categorical variables, pipelines, cross-validation, XGBoost, data leakage. Feature Engineering: what is feature engineering, mutual information, creating features, clustering with k-means, principal component analysis, target encoding.
+
+**Key ideas, in order.**
+
+1. First model: choose a target and features, `DecisionTreeRegressor().fit(X, y)`, predict, and validate on held-out data with mean absolute error; the difference between training and validation error.
+2. Under and overfitting: control tree size with `max_leaf_nodes`; sweep and pick by validation error; random forests average many trees and usually beat a single tree without tuning.
+3. Missing values: drop columns, impute (mean), or impute plus an indicator column; compare by validation score.
+4. Categoricals: drop, ordinal encode, or one-hot (for low cardinality); handle categories unseen in training.
+5. Pipelines and cross-validation: bundle preprocessing and model; `cross_val_score` for a more reliable estimate; the note that folds should respect groups and time when the data have them.
+6. XGBoost: gradient boosting with `n_estimators`, `learning_rate`, `early_stopping_rounds` on a validation set, and `n_jobs`.
+7. Leakage: target leakage (features that become available after the target) and train-test contamination (preprocessing fit on all data); examples and how to detect them.
+8. Feature engineering: mutual information as a first screen for relevance (captures any dependence, is univariate); creating features by arithmetic, counts, breaking down strings and group transforms; k-means cluster labels and distances as features; PCA components and loadings as features; target encoding with smoothing, fit on a separate fold to avoid leakage.
+
+**Formulas and commands to remember.**
+
+```
+from sklearn.feature_selection import mutual_info_classif
+mi = mutual_info_classif(X, y, discrete_features=False)
+target encoding: enc(c) = (n_c · mean_c + m · prior) / (n_c + m)
+```
+
+**Three takeaways.**
+
+- Validation error, not training error, chooses the model.
+- Leakage is the most common cause of a too-good score; target encoding and preprocessing are where it hides.
+- Mutual information is a screen; the model decides what matters.
+
+**Practice.** Compute mutual information between each feature and `y_30`, then implement target encoding of `station_id` out-of-fold in time and check whether it improves validation AP over LightGBM's native categorical handling.
+
+</details>
 
 #### [LightGBM documentation: Parameters, Parameters Tuning](https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html)
 
@@ -2560,6 +3958,41 @@ _docs · free · an hour · free; read before touching a parameter_
 
 **PhD at Apple.** Documentation quality is a production concern. Parameter aliases have caused silent misconfigurations in real systems; the fix is a team configuration schema that validates parameters before training. At scale, also read the distributed-training and GPU pages to understand what changes when the data no longer fits one machine.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Parameters: core (objective, boosting type, learning rate, number of leaves, threads, device), learning control (max depth, min data in leaf, feature and bagging fractions, lambda L1 and L2, min gain to split, early stopping, categorical handling, monotone constraints, linear trees), I/O (max bin, categorical feature specification), objective-specific (is_unbalance, scale_pos_weight, quantile alpha), and metrics. Parameters Tuning: leaf-wise growth, tuning for speed, for accuracy, and against overfitting.
+
+**Key ideas, in order.**
+
+1. Leaf-wise growth: LightGBM grows the leaf with the largest loss reduction first, which converges faster than level-wise but overfits small data unless `num_leaves` and `min_data_in_leaf` are controlled; `max_depth` limits the worst case.
+2. Core parameters: `objective` (`binary`, `regression`, `quantile`, `lambdarank`), `learning_rate` (0.05 to 0.1 typical with early stopping), `num_leaves` (31 default; 63 for millions of rows), `num_threads` (physical cores), `seed`.
+3. Regularization: `min_data_in_leaf` (hundreds for large data), `min_sum_hessian_in_leaf`, `lambda_l1`, `lambda_l2`, `min_gain_to_split`, `feature_fraction` (0.7 to 0.9), `bagging_fraction` with `bagging_freq`, `extra_trees`, `path_smooth`.
+4. Histograms: `max_bin` (255 default) trades accuracy for speed and memory; `min_data_in_bin`; the histogram subtraction trick makes sibling leaves cheap.
+5. Categoricals: declare with `categorical_feature`; LightGBM sorts categories by gradient statistics to find optimal partitions; `cat_smooth`, `cat_l2`, `max_cat_to_onehot`; high-cardinality categories can overfit, so raise `min_data_per_group`.
+6. Imbalance: `is_unbalance=true` or `scale_pos_weight`; both change calibration, so recalibrate afterward; `pos_bagging_fraction` for sampling.
+7. Constraints and shapes: `monotone_constraints` per feature with a method (`basic`, `intermediate`, `advanced`); `linear_tree` fits linear models in leaves for extrapolation; `interaction_constraints`.
+8. Early stopping and metrics: `early_stopping_round`, `metric` (`average_precision`, `auc`, `binary_logloss`, `l1`, `quantile`), `first_metric_only`; validation sets share bins through `reference`.
+9. Tuning guide: for speed use bagging, feature fraction, fewer bins, `max_bin`; for accuracy use larger `max_bin`, smaller learning rate with more rounds, more leaves, more data; against overfitting use smaller leaves, larger `min_data_in_leaf`, bagging and feature fraction, regularization, `max_depth`, `extra_trees`.
+
+**Formulas and commands to remember.**
+
+```
+params = dict(objective='binary', metric='average_precision', learning_rate=0.05, num_leaves=63, min_data_in_leaf=200,
+              feature_fraction=0.8, bagging_fraction=0.8, bagging_freq=1, lambda_l2=1.0, max_bin=255, is_unbalance=True, num_threads=8, seed=0)
+monotone_constraints = [-1 if f == 'down1_speed' else 0 for f in feats]   # P(slow) non-increasing in downstream speed
+```
+
+**Three takeaways.**
+
+- `num_leaves` and `min_data_in_leaf` are the overfitting dials in a leaf-wise learner.
+- Categoricals are handled natively; declare them and regularize high-cardinality ones.
+- Class weighting changes calibration; recalibrate after.
+
+**Practice.** Run three configurations (defaults; the plan's; the plan's with `extra_trees` and `linear_tree`) with early stopping and compare validation AP, training time and the best iteration.
+
+</details>
+
 #### [The boosting papers: Friedman (2001), XGBoost (2016), LightGBM (2017)](https://arxiv.org/abs/1603.02754)
 
 _paper · free · an evening or two · free; the algorithm behind every parameter_
@@ -2575,6 +4008,40 @@ _paper · free · an evening or two · free; the algorithm behind every paramete
 **Stanford grad.** Compare the three on regularization (shrinkage, subsampling, leaf constraints), on categorical handling, and on the assumptions their speed tricks make (GOSS biases the gradient sample). The papers are also a study in how systems contributions (histograms, cache-aware access) can matter as much as algorithmic ones.
 
 **PhD at Apple.** Together they explain why boosted trees are the default for tabular problems in industry and why their implementations converge; the open research is in uncertainty (natural-gradient and probabilistic boosting), in monotone and shape constraints, and in hybrids with neural representations.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Friedman's 'Greedy Function Approximation: A Gradient Boosting Machine': boosting as steepest descent in function space, with algorithms for squared error, absolute error, Huber loss, and binary and multiclass logistic loss, plus shrinkage and subsampling. Chen and Guestrin's 'XGBoost: A Scalable Tree Boosting System': the regularized objective, second-order approximation, split finding (exact and approximate with weighted quantile sketch), sparsity-aware splits, and the system design (cache-aware blocks, out-of-core). Ke et al.'s 'LightGBM: A Highly Efficient Gradient Boosting Decision Tree': histogram-based learning, gradient-based one-side sampling (GOSS) and exclusive feature bundling (EFB), with leaf-wise growth.
+
+**Key ideas, in order.**
+
+1. Function-space gradient descent: we want F minimizing E L(y, F(x)); at step m, compute the negative gradient of the loss at each training point, g_i = −∂L(y_i, F(x_i))/∂F(x_i); fit a base learner h (a regression tree) to the g_i; take a step F ← F + ρ h with ρ by line search; for squared loss g_i are residuals, for logistic loss g_i = y_i − p_i.
+2. Tree-specific refinements: fit one step size per leaf (each leaf minimizes the loss over its region); shrinkage ν scales each tree's contribution (small ν with more trees generalizes better); stochastic gradient boosting subsamples rows each iteration.
+3. XGBoost's objective: L = Σ l(y_i, ŷ_i) + Σ_trees Ω(f), with Ω(f) = γT + ½λ‖w‖² (T leaves, leaf weights w); second-order Taylor expansion with per-row gradient g_i and Hessian h_i gives optimal leaf weight w* = −Σg/(Σh + λ) and objective −½ Σ_leaves (Σg)²/(Σh + λ) + γT.
+4. Split gain: gain = ½ [ (Σg_L)²/(Σh_L + λ) + (Σg_R)²/(Σh_R + λ) − (Σg)²/(Σh + λ) ] − γ; a split is kept if gain > 0; pruning happens naturally through γ.
+5. Finding splits: exact greedy enumerates sorted values; the approximate algorithm proposes candidate thresholds from weighted quantiles (weights h_i); sparsity-aware learning learns a default direction for missing values, which is why NaN is fine.
+6. System design: column blocks in compressed sorted format, cache-aware prefetching, out-of-core computation with block compression and sharding; parallel and distributed training.
+7. LightGBM's histogram algorithm: bin feature values (max_bin), build histograms of gradient sums per bin in O(data × features), find splits over bins in O(bins × features), and compute a child's histogram by subtraction from the parent's.
+8. GOSS: keep all rows with large gradients (they matter more) and a random sample of small-gradient rows, upweighted to keep the gradient estimate unbiased; EFB: bundle mutually exclusive sparse features into one to cut the feature count; leaf-wise growth with depth limit.
+
+**Formulas and commands to remember.**
+
+```
+g_i = −∂L(y_i, F(x_i))/∂F;  for logistic loss with p = σ(F): g_i = y_i − p_i, h_i = p_i(1 − p_i)
+w*_leaf = −Σ_{i∈leaf} g_i / (Σ_{i∈leaf} h_i + λ)
+gain = ½ [G_L²/(H_L + λ) + G_R²/(H_R + λ) − (G_L + G_R)²/(H_L + H_R + λ)] − γ
+```
+
+**Three takeaways.**
+
+- Boosting is gradient descent where the step is a tree; the residual is the gradient.
+- Second-order boosting turns leaf values and split gains into closed forms with gradient and Hessian sums.
+- Histograms, sampling and bundling are why LightGBM handles ten million rows in minutes.
+
+**Practice.** Implement second-order gradient boosting for logistic loss with depth-2 trees in numpy using the leaf-weight and gain formulas, train it on one month of features, and compare its validation AP with LightGBM at the same number of trees.
+
+</details>
 
 #### [Why do tree-based models still outperform deep learning on tabular data? (Grinsztajn, Oyallon, Varoquaux, 2022)](https://arxiv.org/abs/2207.08815)
 
@@ -2592,6 +4059,36 @@ _paper · free · an evening or two · free; the evidence for the production cho
 
 **PhD at Apple.** A rare example of a negative-result benchmark shaping practice. For a lead deciding on architecture, it is the citation that ends the argument for tabular problems, and its limitations define exactly where an argument remains.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A benchmark of 45 tabular datasets (medium size, numerical and mixed features, classification and regression) comparing tuned gradient-boosted trees and random forests with tuned MLPs, ResNet-style networks and tabular transformers, with a fixed hyperparameter-search budget; then three controlled experiments explaining why trees win.
+
+**Key ideas, in order.**
+
+1. Benchmark design: datasets curated to be truly tabular (heterogeneous columns, not too easy, not tiny), balanced accuracy for classification and R² for regression, and a random search over hyperparameters with the same budget per model, reported as performance versus number of search iterations.
+2. Result: tree-based models (XGBoost, gradient boosting, random forests) beat the neural models on most datasets with medium data, especially with mixed numerical and categorical features; the gap narrows with more data and more tuning but does not close in their regime.
+3. Finding 1, smoothness: networks are biased toward smooth functions; smoothing the target (Gaussian kernel) hurts trees more than networks, showing trees exploit irregular, threshold-like target functions that tabular data often have.
+4. Finding 2, uninformative features: removing uninformative features barely hurts trees but helps networks; adding random features hurts networks more; MLP-like models are less robust to useless columns.
+5. Finding 3, rotation invariance: rotating the feature space (mixing columns) does not affect MLPs but destroys the meaning of columns, and trees, which are not rotation-invariant, suffer; the natural basis of tabular data carries information that rotation-invariant learners ignore.
+6. Implications: for tabular data, prefer tree ensembles unless there is structure (images, sequences, graphs) or very large data; feature selection helps networks; and inductive bias, not capacity, explains the gap.
+
+**Formulas and commands to remember.**
+
+```
+balanced accuracy = (TPR + TNR)/2;  budget-matched random search over hyperparameters
+```
+
+**Three takeaways.**
+
+- Inductive bias explains the gap: trees fit irregular targets, ignore useless columns and keep the column basis.
+- The result is for medium tabular data; the traffic graph structure is the one argument for a network here.
+- Report benchmarks with tuning budgets; the headline depends on them.
+
+**Practice.** Replicate finding 2 on the traffic features: add ten random columns and compare the drop in validation AP for LightGBM and for the MLP.
+
+</details>
+
 #### [Interpretable Machine Learning (Molnar), the SHAP chapter](https://christophm.github.io/interpretable-ml-book/shap.html)
 
 _book · free · an evening · free online_
@@ -2608,6 +4105,38 @@ _book · free · an evening · free online_
 
 **PhD at Apple.** Interpretability in products is a communication and accountability tool as much as a technical one. SHAP's computational cost at scale and its misuse as causal explanation are both live issues, and Molnar's book is the best neutral survey to hand to a product partner or a regulator before a discussion about what the model 'thinks'.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Shapley values (the game-theory definition, properties, estimation) and SHAP: the definition as an additive feature attribution method, KernelSHAP, TreeSHAP, and the global explanations built from many local ones (feature importance, summary plots, dependence plots, interaction values, clustering), with advantages and disadvantages.
+
+**Key ideas, in order.**
+
+1. Shapley value: for a prediction f(x), the contribution of feature j is the average, over all orderings of features, of the change in prediction when j is added to the features already present; it satisfies efficiency (contributions sum to f(x) − E[f]), symmetry, dummy and additivity, and is the only attribution with those properties.
+2. Estimation: exact Shapley values need 2^p coalitions; Monte Carlo sampling of orderings approximates them; absent features are replaced by values from the data (marginal expectation), which creates unrealistic combinations when features are correlated.
+3. SHAP as additive attribution: φ₀ + Σ φ_j = f(x); KernelSHAP fits a weighted linear model over coalitions with a specific kernel so the coefficients are Shapley values; TreeSHAP computes exact values for tree ensembles in polynomial time by walking the trees and tracking subset weights.
+4. Global views: mean absolute SHAP per feature as importance; the summary (beeswarm) plot showing each feature's SHAP values colored by feature value, which reveals direction and spread; dependence plots of SHAP against feature value with interaction coloring; SHAP interaction values; clustering rows by SHAP vectors.
+5. Caveats: SHAP explains the model, not the world; correlated features share credit in a way that depends on the background distribution; marginal versus conditional expectations differ; interventional TreeSHAP versus path-dependent; explanations can be gamed; computation cost for KernelSHAP is high.
+6. Practical use here: debugging (a feature with a suspicious SHAP direction indicates leakage or a bug), per-station failure analysis (which features drive misses), and communication (a force plot for one alert).
+
+**Formulas and commands to remember.**
+
+```
+φ_j = Σ_{S ⊆ F∖{j}} |S|!(p − |S| − 1)!/p! [f(S ∪ {j}) − f(S)]
+f(x) = φ₀ + Σ_j φ_j  (efficiency)
+explainer = shap.TreeExplainer(model); sv = explainer.shap_values(X); shap.summary_plot(sv, X)
+```
+
+**Three takeaways.**
+
+- Shapley values are the unique fair split of a prediction among features; SHAP computes them for models.
+- They attribute the model's output, not causes; correlated features blur the picture.
+- Use them to debug and to explain single predictions, not to rank causes.
+
+**Practice.** Compute TreeSHAP for the 30-minute model on a rainy weekday afternoon and on a dry Sunday; compare the top five contributing features and check that they sum to the logit difference from the base value.
+
+</details>
+
 #### [scikit-learn user guide: Model evaluation, Probability calibration](https://scikit-learn.org/stable/modules/model_evaluation.html)
 
 _docs · free · an evening · free; the metrics you will report_
@@ -2623,6 +4152,40 @@ _docs · free · an evening · free; the metrics you will report_
 **Stanford grad.** scikit-learn's implementations are the de facto standard, so knowing their exact conventions (how ties are handled in average precision, the interpolation choices in the precision-recall curve, the binning strategies in `calibration_curve`) matters when comparing your numbers with a paper's.
 
 **PhD at Apple.** The guide is also a model of documentation: definitions, references, examples, and caveats in one place. Your team's metric library should meet that bar, with the label definition and the split protocol versioned alongside the metric code so a number can always be traced to how it was computed.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Model evaluation: the `scoring` parameter and scorer objects; classification metrics (accuracy, balanced accuracy, precision, recall, F-measure, precision-recall curve and average precision, ROC and AUC, log loss, Brier score, Matthews correlation, confusion matrix, classification report, multiclass and multilabel averaging); regression metrics (MAE, MSE, RMSE, MAPE, R², pinball loss); clustering metrics; dummy estimators as baselines. Probability calibration: calibration curves (reliability diagrams), `CalibratedClassifierCV` with sigmoid and isotonic methods, and guidance on which classifiers are miscalibrated and why.
+
+**Key ideas, in order.**
+
+1. Scorers: `scoring='average_precision'` in cross-validation and search; `make_scorer` for custom metrics with `greater_is_better` and `needs_proba`; metrics functions take `y_true, y_pred` or `y_score`.
+2. Threshold metrics: confusion matrix; precision, recall, F-beta with `average` options for multiclass (`macro`, `micro`, `weighted`); balanced accuracy for imbalance; `classification_report`.
+3. Ranking metrics: `precision_recall_curve` (returns precision, recall, thresholds) and `average_precision_score` (a step-wise area, no interpolation); `roc_curve` and `roc_auc_score`; the guide's warning that ROC-AUC can be optimistic under heavy imbalance and precision-recall is more informative.
+4. Probabilistic metrics: `log_loss` (needs clipped probabilities), `brier_score_loss` (mean squared error of probabilities), both proper scoring rules that reward calibration and refinement.
+5. Regression metrics: `mean_absolute_error`, `mean_squared_error` (and RMSE), `mean_absolute_percentage_error`, `r2_score`, `mean_pinball_loss` for quantiles, `d2_pinball_score`.
+6. Baselines: `DummyClassifier(strategy='prior')` and `DummyRegressor` produce the no-skill references every model must beat; the guide recommends reporting them.
+7. Calibration: `calibration_curve(y, p, n_bins, strategy='uniform'|'quantile')` gives mean predicted probability and observed fraction per bin; well-calibrated models track the diagonal; naive Bayes pushes toward 0 and 1, SVMs and boosted trees are sigmoid-shaped miscalibrated, random forests pull toward the middle.
+8. Calibrating: `CalibratedClassifierCV(estimator, method='sigmoid'|'isotonic', cv=...)` fits the calibration map on held-out folds; sigmoid (Platt) assumes a logistic distortion and works with little data; isotonic is nonparametric and needs more data; calibration must never be fit on training predictions; with time series, provide a chronological split or calibrate manually.
+
+**Formulas and commands to remember.**
+
+```
+p, r, thr = precision_recall_curve(y, s); ap = average_precision_score(y, s)
+frac_pos, mean_pred = calibration_curve(y, p, n_bins=10, strategy='quantile')
+IsotonicRegression(out_of_bounds='clip').fit(p_val, y_val)
+```
+
+**Three takeaways.**
+
+- Average precision for ranking under imbalance; Brier and log loss for probabilities; dummy estimators as the floor.
+- Calibration is measured with a reliability curve and fixed on held-out data.
+- Boosted trees need calibration; isotonic when validation has thousands of positives, Platt otherwise.
+
+**Practice.** Report AP, ROC-AUC, Brier and log loss for LightGBM and for the dummy prior classifier on the validation split; then calibrate with isotonic and with Platt on the same split and compare Brier scores on the test split.
+
+</details>
 
 ### Build
 
@@ -3002,6 +4565,42 @@ _docs · free · an afternoon · free; one page per method with its pitfalls_
 
 **PhD at Apple.** scikit-learn's documentation is a public good and a standard; its design decisions (no GPU, no deep learning, stability over novelty) are a deliberate scope that has kept it reliable for fifteen years, which is a lesson in library governance.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Supervised: linear models (OLS, ridge, lasso, elastic net, logistic, quantile, robust), kernel ridge, SVMs, SGD, nearest neighbors, Gaussian processes, naive Bayes, decision trees, ensembles (bagging, forests, boosting, stacking), multiclass and multioutput strategies, feature selection, semi-supervised, isotonic regression, calibration, neural networks. Unsupervised: Gaussian mixtures, manifold learning, clustering (k-means, affinity propagation, mean shift, spectral, hierarchical, DBSCAN, HDBSCAN, OPTICS, BIRCH), biclustering, decomposition (PCA, kernel PCA, truncated SVD, dictionary learning, factor analysis, ICA, NMF, LDA), covariance estimation, novelty and outlier detection, density estimation.
+
+**Key ideas, in order.**
+
+1. Linear models: OLS minimizes ‖Xw − y‖²; ridge adds α‖w‖² (stable under collinearity); lasso adds α‖w‖₁ (sparse); elastic net mixes; `LogisticRegression` with `C` (inverse regularization), solvers and `class_weight`; `QuantileRegressor` with the pinball loss; robust regressors (Huber, RANSAC) for outliers.
+2. SVMs: `SVC` with `C` and `kernel` (`linear`, `rbf` with `gamma`, `poly`); the margin, support vectors, and the cost of scaling to many rows (quadratic to cubic); `LinearSVC` for large linear problems; probabilities only via internal calibration.
+3. Nearest neighbors: `KNeighborsClassifier` with `n_neighbors` and `weights`; algorithms (brute, KD-tree, ball tree) and when each is efficient; the need for scaling.
+4. Naive Bayes: Gaussian, multinomial, Bernoulli, complement variants; fast, good for text, poorly calibrated.
+5. Trees and ensembles: `DecisionTreeClassifier` criteria (Gini, entropy), `max_depth`, `min_samples_leaf`, cost-complexity pruning `ccp_alpha`; `RandomForest` with `n_estimators`, `max_features`, out-of-bag score; `HistGradientBoosting` (histogram-based, native NaN and categorical support, early stopping, monotone constraints) as the built-in LightGBM-like learner; `StackingClassifier`.
+6. Multiclass and outputs: one-vs-rest and one-vs-one wrappers; `MultiOutputClassifier`; `ClassifierChain`.
+7. Feature selection: variance threshold, univariate tests, `SelectFromModel`, recursive feature elimination, sequential selection, all inside pipelines to avoid leakage.
+8. Clustering: k-means (inertia, `n_init`, k-means++ initialization, mini-batch), hierarchical (linkage types, dendrograms, connectivity constraints), DBSCAN (`eps`, `min_samples`, noise label −1), HDBSCAN (varying density), spectral (graph Laplacian); evaluation with silhouette, Calinski-Harabasz, Davies-Bouldin, and against labels with adjusted Rand and mutual information.
+9. Decomposition: PCA (explained variance ratio, whitening, randomized solver), kernel PCA, truncated SVD for sparse data, NMF for non-negative parts, ICA for independent sources; manifold methods (t-SNE, Isomap, UMAP outside sklearn) for visualization only.
+10. Outliers and density: `IsolationForest`, `LocalOutlierFactor`, `OneClassSVM`, elliptic envelope; `KernelDensity` with bandwidth; Gaussian mixtures with `n_components`, covariance types and BIC for selection.
+
+**Formulas and commands to remember.**
+
+```
+Ridge: min ‖Xw − y‖² + α‖w‖²;  Lasso: min ½‖Xw − y‖² + α‖w‖₁
+k-means: min Σ_k Σ_{x∈C_k} ‖x − μ_k‖²
+silhouette(i) = (b_i − a_i)/max(a_i, b_i)
+```
+
+**Three takeaways.**
+
+- `HistGradientBoosting` is the in-library equivalent of LightGBM and supports NaN, categoricals and monotone constraints.
+- Choose clustering by data shape (density, hierarchy, spherical) and judge it by stability and use, not by one score.
+- Feature selection belongs inside the pipeline.
+
+**Practice.** Cluster stations by weekly profile with k-means and with hierarchical linkage; compare silhouettes, plot the dendrogram, and check whether the clusters match freeway and direction.
+
+</details>
+
 #### [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/)
 
 _book · free · three weeks · now chapters 6 (regularization), 9 (SVMs) and 12 (unsupervised)_
@@ -3017,6 +4616,40 @@ _book · free · three weeks · now chapters 6 (regularization), 9 (SVMs) and 12
 **Stanford grad.** After ISLP, go to ESL for proofs and depth. ISLP's boosting section gives the additive-model view; combine it with Friedman's 2001 paper for the gradient view that LightGBM implements. Note where ISLP's examples assume independent rows and how each method's assumptions change under temporal dependence.
 
 **PhD at Apple.** As a citation for standard methods and as a teaching text it is the reference, and its evolution from R to Python editions tracks the field's tooling. For research, its framing of methods as estimators with bias and variance you can reason about is the habit that distinguishes a careful ML engineer from a library user.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapter 2, statistical learning: what it is, prediction versus inference, parametric and nonparametric, the bias-variance trade-off, the classification setting and the Bayes classifier, k-nearest neighbors. Chapter 3, linear regression: simple and multiple, coefficient estimates and their accuracy, model fit, qualitative predictors, interactions, nonlinearity, potential problems, comparison with KNN. Chapter 4, classification: logistic regression, multinomial, generative models (LDA, QDA, naive Bayes), comparison, generalized linear models (Poisson regression). Chapter 8, tree-based methods: regression and classification trees, pruning, bagging, random forests, boosting, Bayesian additive regression trees.
+
+**Key ideas, in order.**
+
+1. The setup: Y = f(X) + ε; we estimate f for prediction or to understand which inputs matter; reducible versus irreducible error; parametric methods assume a form (linear), nonparametric do not (KNN) and need more data; flexibility versus interpretability.
+2. Assessing accuracy: training MSE falls with flexibility but test MSE is U-shaped; expected test error = variance + bias² + irreducible noise; flexible methods have low bias and high variance; cross-validation estimates test error.
+3. Classification: the error rate; the Bayes classifier assigns the most probable class and is the lower bound; KNN estimates conditional probabilities locally; small k is flexible (low bias, high variance).
+4. Linear regression: least-squares estimates, standard errors and confidence intervals for coefficients, t-tests, R² and residual standard error; multiple regression and the F-test; qualitative predictors as dummies; interaction terms; polynomial terms; diagnostics for nonlinearity, correlated errors (time series!), heteroscedasticity, outliers, high leverage, and collinearity (VIF).
+5. Logistic regression: the logit model log(p/(1 − p)) = β₀ + β₁x; maximum likelihood estimation; interpreting coefficients as changes in log odds; multiple logistic regression and confounding; multinomial for several classes.
+6. Generative classifiers: model P(X | Y) and the prior, apply Bayes; LDA (shared covariance, linear boundary), QDA (separate covariances), naive Bayes (independent features); ROC curves and the trade-off between sensitivity and specificity; when each method wins.
+7. Trees: recursive binary splitting to minimize RSS or Gini/entropy; cost-complexity pruning chosen by cross-validation; trees are interpretable but high variance.
+8. Ensembles: bagging averages trees grown on bootstrap samples and out-of-bag error estimates test error; random forests decorrelate trees by sampling m of p predictors at each split; boosting grows trees sequentially on residuals with shrinkage λ, depth d and B trees chosen by cross-validation; variable importance; BART as a Bayesian ensemble.
+
+**Formulas and commands to remember.**
+
+```
+E[(y₀ − f̂(x₀))²] = Var(f̂(x₀)) + [Bias(f̂(x₀))]² + Var(ε)
+log(p(X)/(1 − p(X))) = β₀ + β₁X
+Boosting: f̂ ← f̂ + λ f̂ᵇ, where f̂ᵇ is a depth-d tree fit to the residuals r ← r − λ f̂ᵇ(x)
+```
+
+**Three takeaways.**
+
+- Test error is U-shaped in flexibility; the bias-variance decomposition says why.
+- Logistic coefficients are log odds ratios; generative classifiers model the inputs instead.
+- Boosting fits small trees to residuals slowly; shrinkage and the number of trees trade off.
+
+**Practice.** Fit logistic regression, LDA and a random forest to the same traffic features on the chronological split; report AP and a ROC curve for each and explain the ordering using the chapter's arguments about bias and variance.
+
+</details>
 
 #### [Google's Clustering course](https://developers.google.com/machine-learning/clustering)
 
@@ -3034,6 +4667,36 @@ _course · free · a few hours · free; similarity, k-means and how to judge clu
 
 **PhD at Apple.** A free, focused mini-course; useful as the standard reference when a team disagrees about what a clustering result means.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Clustering overview and workflow; similarity measures (manual and supervised, embeddings); k-means (algorithm, choosing k, advantages and disadvantages); interpreting results and evaluating cluster quality (cardinality, magnitude, downstream performance); and a summary with a worked example.
+
+**Key ideas, in order.**
+
+1. Uses of clustering: generalization (fill missing values from cluster mates), compression (represent by cluster id), privacy (aggregate), and exploration (structure); clustering is unsupervised, so quality is judged by use.
+2. Similarity: prepare data (normalize numerical features, log-transform skewed ones, one-hot or embed categoricals); a manual similarity combines per-feature distances; a supervised similarity learns an embedding (an autoencoder) and measures distance in it; the similarity measure decides the clusters more than the algorithm.
+3. k-means: choose k centroids, assign each point to the nearest, recompute centroids as means, repeat until assignments stop changing; it minimizes within-cluster squared distance; initialization matters (k-means++), so run several times; it assumes spherical clusters of similar size and is sensitive to outliers and scale.
+4. Choosing k: plot total loss against k and look for the elbow; consider the use case; silhouette as a complementary measure; there is no single right k.
+5. Interpreting: check cluster cardinality (sizes) and magnitude (sum of distances) for anomalies; examine features per cluster; verify that similar examples cluster together and dissimilar apart; test clusters in a downstream task.
+6. Alternatives: density-based, hierarchical and distribution-based methods for non-spherical or nested structure.
+
+**Formulas and commands to remember.**
+
+```
+assign: c_i = argmin_k ‖x_i − μ_k‖²;  update: μ_k = mean{x_i : c_i = k}
+```
+
+**Three takeaways.**
+
+- The similarity measure is the modelling decision; the algorithm is secondary.
+- Run k-means several times and compare; check cardinality and magnitude for oddities.
+- Judge clusters by what they are for.
+
+**Practice.** Cluster stations by their standardized weekly speed profile with k = 3 to 8; plot loss against k, inspect cardinalities, and describe each cluster's typical week in one sentence.
+
+</details>
+
 #### [Information Theory, Inference, and Learning Algorithms (MacKay)](https://www.inference.org.uk/mackay/itila/)
 
 _book · free · a semester, selectively · free; entropy, coding and learning as one subject_
@@ -3049,6 +4712,40 @@ _book · free · a semester, selectively · free; entropy, coding and learning a
 **Stanford grad.** MacKay's treatment of the information-theoretic view of learning (chapters on inference and on neural networks as inference) is the intellectual background for variational methods and for the information bottleneck.
 
 **PhD at Apple.** A classic, free, and still one of the best-written technical books in the field; its lectures (also free) are a model of teaching.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I, data compression: probability, entropy and inference; the source coding theorem; symbol codes; stream codes. Part II, noisy-channel coding: dependent random variables, the noisy-channel coding theorem, error-correcting codes. Part III, further topics in information theory. Part IV, probabilities and inference: an example inference task (clustering), maximum likelihood and clustering, exact marginalization, Laplace's method, model comparison and Occam's razor, Monte Carlo methods, variational methods, and decision theory. Part V, neural networks: single neurons, capacity, Hopfield networks, Boltzmann machines, supervised learning in multilayer networks, learning as inference, Gaussian processes, deconvolution. Part VI, sparse graph codes.
+
+**Key ideas, in order.**
+
+1. Probability and inference: the sum and product rules, Bayes' theorem as inference, likelihood, priors, and the argument that all inference is probability; the entropy of a distribution and Gibbs' inequality; information content as −log p.
+2. Source coding: a source with entropy H can be compressed to about H bits per symbol and no fewer; Huffman codes for symbols, arithmetic coding for streams; the link to prediction: a good predictive model is a good compressor.
+3. Noisy channels: mutual information as the information a received symbol gives about the sent one; channel capacity as the maximum over input distributions; error-correcting codes achieve rates up to capacity; a reading-level pass suffices for this course.
+4. Clustering as inference: k-means as a hard assignment, soft k-means with responsibilities, and the connection to Gaussian mixtures and expectation-maximization; maximum likelihood versus Bayesian posteriors over parameters.
+5. Model comparison: the evidence (marginal likelihood) automatically penalizes complexity, giving an Occam's razor without ad hoc terms; Laplace's method approximates the evidence with a Gaussian around the mode.
+6. Monte Carlo and variational methods: importance sampling, rejection sampling, Metropolis, Gibbs sampling, slice sampling; variational free energy minimization as an alternative to sampling; these are the algorithms behind the Bayesian phase.
+7. Neural networks as inference: a neuron as a probabilistic classifier, learning as maximizing a posterior, regularization as priors, error bars on predictions from the posterior, and Gaussian processes as the infinite-width limit of a network with a Bayesian prior.
+8. Decision theory: expected utility; the point that a probability model plus a loss function yields the decision, which is exactly the alert threshold rule.
+
+**Formulas and commands to remember.**
+
+```
+H(X) = Σ p(x) log₂ (1/p(x));  I(X; Y) = H(X) − H(X|Y)
+evidence P(D | M) = ∫ P(D | θ, M) P(θ | M) dθ
+soft k-means: r_k(x) ∝ exp(−β ‖x − μ_k‖²)
+```
+
+**Three takeaways.**
+
+- Prediction and compression are the same problem; cross-entropy measures both.
+- The marginal likelihood is a built-in Occam's razor.
+- Sampling and variational methods are the two ways to compute Bayesian answers.
+
+**Practice.** Implement soft k-means with a temperature parameter on the daily profiles, watch it become hard k-means as the temperature drops, and relate the responsibilities to a Gaussian mixture's posterior.
+
+</details>
 
 #### [StatQuest with Josh Starmer (YouTube)](https://statquest.org/)
 
@@ -3066,6 +4763,40 @@ _video · free · hours, as needed · the videos on k-means, PCA, SVMs and regul
 
 **PhD at Apple.** A reminder that clarity is a research skill; the channel's popularity among practitioners reflects a gap textbooks leave, and it is the resource to hand to a stakeholder who wants to know what a boosted tree actually does.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Hundreds of short videos, each one concept: statistics fundamentals (mean, variance, distributions, p-values, hypothesis testing, confidence intervals, maximum likelihood), machine learning fundamentals (bias and variance, cross-validation, confusion matrices, sensitivity and specificity, ROC and AUC), linear models (regression, R², logistic regression series, regularization with ridge, lasso and elastic net), trees (decision trees, regression trees, random forests, AdaBoost, gradient boost series, XGBoost series), support vector machines, PCA and clustering, neural networks and backpropagation, and more.
+
+**Key ideas, in order.**
+
+1. Maximum likelihood: pick the parameters that make the observed data most probable; for a normal, the sample mean and variance; for logistic regression, the coefficients that maximize the product of predicted probabilities of the observed classes.
+2. Logistic regression series: fitting a line to log odds, the S-curve back in probability, maximum likelihood instead of least squares, R² analogues and p-values for coefficients, and the meaning of each coefficient.
+3. Bias and variance, cross-validation: bias as inability to capture the true relationship, variance as sensitivity to the training set; k-fold cross-validation to compare methods; the confusion matrix, sensitivity (recall) and specificity, ROC by sweeping thresholds and AUC to compare models.
+4. Regularization: ridge shrinks coefficients toward zero to reduce variance; lasso can zero them (feature selection); elastic net mixes; λ chosen by cross-validation.
+5. Trees and ensembles: building a classification tree with Gini impurity and a regression tree with squared residuals; random forests with bootstrapping plus random feature subsets and out-of-bag error; AdaBoost's weighted stumps; gradient boost for regression (fit trees to residuals, scale by a learning rate) and for classification (residuals of log odds, leaf values from the sum of residuals over the sum of p(1 − p)); XGBoost's similarity scores, gain, pruning by γ, regularization λ, and the second-order derivation.
+6. Support vector machines: the maximal margin classifier, soft margins, and the kernel trick (polynomial, radial) computing high-dimensional dot products cheaply.
+7. PCA and clustering: PCA step by step with singular value decomposition, scree plots and loadings; k-means and hierarchical clustering with distance choices.
+8. Neural networks: a chain of weighted sums and activations, the chain rule for backpropagation worked with actual numbers, gradient descent step by step.
+
+**Formulas and commands to remember.**
+
+```
+Gradient boost (classification): leaf value = Σ residuals / Σ p(1 − p)
+XGBoost similarity = (Σ residuals)² / (Σ p(1 − p) + λ);  gain = sim_L + sim_R − sim_root
+Ridge: minimize Σ (y − ŷ)² + λ Σ βⱼ²
+```
+
+**Three takeaways.**
+
+- Boosting's leaf values come from residuals divided by curvature; XGBoost's gain is the same idea with regularization.
+- Regularization trades a little bias for a lot of variance.
+- Sensitivity and specificity, precision and recall: know which pairs move together.
+
+**Practice.** Follow the gradient boost classification videos with pencil and paper on eight rows of traffic data: compute the initial log odds, the residuals, one tree's leaf values, and the updated predictions.
+
+</details>
+
 #### [Random Search for Hyper-Parameter Optimization (Bergstra, Bengio, 2012)](https://jmlr.org/papers/v13/bergstra12a.html)
 
 _paper · free · an evening or two · free; why random beats grid_
@@ -3081,6 +4812,36 @@ _paper · free · an evening or two · free; why random beats grid_
 **Stanford grad.** Compare with Hyperband and Bayesian optimization papers; random search remains the honest baseline that every tuning method must beat, and it parallelizes trivially.
 
 **PhD at Apple.** A rare methodology paper that changed practice immediately; for a lead, its message is that a well-chosen search space and a fixed budget matter more than the search algorithm.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** An empirical and theoretical case that random search over hyperparameters beats grid search for the same number of trials, on neural networks and deep belief networks, with an analysis based on low effective dimensionality and a discussion of quasi-random sequences and of the reproducibility of experiments.
+
+**Key ideas, in order.**
+
+1. The problem: hyperparameters (learning rate, layer sizes, regularization) are chosen by trial; grid search evaluates all combinations of a few values per dimension; the number of trials grows exponentially with dimensions.
+2. Low effective dimensionality: on most problems, only a few hyperparameters matter, and which ones differ by dataset; a grid with k values per dimension tries only k distinct values of the important one, wasting the rest on repeats.
+3. Random search: sample each hyperparameter from its own distribution independently; every trial has a distinct value for every dimension, so the important ones are explored densely; the experiments show equal or better results in a fraction of the trials.
+4. Practical benefits: trials are independent and can run in parallel or be stopped and extended; a failed trial does not break the design; adding a new hyperparameter does not require restarting.
+5. Quasi-random sequences: low-discrepancy sequences (Sobol, Halton) spread points more evenly than pure random, with a small extra gain.
+6. Method: define sensible distributions (log-uniform for learning rates and regularization), fix a budget, run, and analyze which hyperparameters actually changed the score.
+
+**Formulas and commands to remember.**
+
+```
+learning_rate ~ LogUniform(1e-3, 0.3); num_leaves ~ Uniform{15, …, 255}; min_data_in_leaf ~ LogUniform(20, 2000)
+```
+
+**Three takeaways.**
+
+- Random search is the honest baseline every tuner should beat.
+- Use log-uniform distributions for scale-like parameters.
+- Analyze the results to learn which parameters matter; that is more valuable than the best trial.
+
+**Practice.** Run 30 random trials and 30 grid trials over four LightGBM parameters with the same ranges; plot the best validation AP so far against trial number for each.
+
+</details>
 
 #### [Optuna documentation](https://optuna.readthedocs.io/)
 
@@ -3098,6 +4859,41 @@ _docs · free · an afternoon · free; tuning with pruning in an hour_
 
 **PhD at Apple.** Tuning libraries are infrastructure; the questions at scale are distributed trials, warm starts across model versions, and integration with experiment tracking, all of which Optuna's docs address at a level worth reading before building your own.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Tutorial: the objective function and trials, samplers (TPE default, random, CMA-ES, grid), pruners (median, successive halving, Hyperband) with integration callbacks, multi-objective optimization, user attributes, saving and resuming studies with storage, distributed optimization, visualization (history, importance, parallel coordinates, slices, contours), and best practices for reproducibility.
+
+**Key ideas, in order.**
+
+1. Define-by-run: the objective function suggests values inside itself (`trial.suggest_float('lr', 1e-3, 0.3, log=True)`, `suggest_int`, `suggest_categorical`), builds and evaluates the model, and returns the score; conditional search spaces are natural.
+2. Studies: `optuna.create_study(direction='maximize', sampler=..., pruner=..., storage='sqlite:///study.db', study_name=...)`; `study.optimize(objective, n_trials=30, timeout=...)`; `study.best_trial`, `best_params`, `trials_dataframe()`.
+3. Samplers: TPE models good and bad regions with density estimates and samples where the ratio is favorable; random sampler as baseline; CMA-ES for continuous spaces; grid for exhaustive small spaces.
+4. Pruning: report intermediate values (`trial.report(score, step)`) and stop unpromising trials (`trial.should_prune()`); the LightGBM integration callback reports each boosting round; median pruner and Hyperband implement successive halving.
+5. Visualization and importance: optimization history, parameter importances (functional ANOVA), slice plots per parameter, parallel coordinates for interactions, and contour plots.
+6. Reproducibility and scale: seed the sampler, log every trial's parameters and score, persist the study in a database to resume or to run trials in parallel processes on the Mac's cores.
+
+**Formulas and commands to remember.**
+
+```
+def objective(trial):
+    params = dict(objective='binary', metric='average_precision', learning_rate=trial.suggest_float('lr', 1e-3, 0.3, log=True),
+                  num_leaves=trial.suggest_int('leaves', 15, 255, log=True), min_data_in_leaf=trial.suggest_int('mdl', 20, 2000, log=True),
+                  feature_fraction=trial.suggest_float('ff', 0.5, 1.0), num_threads=8, verbose=-1)
+    m = lgb.train(params, dtr, 3000, valid_sets=[dva], callbacks=[lgb.early_stopping(100), optuna.integration.LightGBMPruningCallback(trial, 'average_precision')])
+    return m.best_score['valid_0']['average_precision']
+```
+
+**Three takeaways.**
+
+- Suggest inside the objective; pruning inside the training loop.
+- Persist the study; resume and parallelize for free.
+- Read the importance plot before the best parameters.
+
+**Practice.** Tune four LightGBM parameters with TPE and pruning under a 30-trial budget, persist the study, and report parameter importances and the gain over defaults on the chronological validation split.
+
+</details>
+
 #### [Visual Information Theory (Olah)](https://colah.github.io/posts/2015-09-Visual-Information/)
 
 _essay · free · an hour · free; entropy and KL with pictures_
@@ -3113,6 +4909,37 @@ _essay · free · an hour · free; entropy and KL with pictures_
 **Stanford grad.** Olah's other essays (on neural network representations, on attention) are of the same quality; his work on interpretability is where the visual method meets research.
 
 **PhD at Apple.** An example of explanation as research communication at its best; when you write for a broad technical audience, this is the standard.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A visual essay on information theory: optimal codes and code lengths, entropy, cross-entropy and its asymmetry, KL divergence, entropy and multiple variables (joint, conditional, mutual information), and the connection to machine learning.
+
+**Key ideas, in order.**
+
+1. Codes: to send messages about outcomes, give short codewords to frequent outcomes; a codeword of length L costs a fraction 1/2^L of the code space; the cheapest code assigns length −log₂ p(x) to outcome x.
+2. Entropy: the expected code length under the optimal code, H(p) = −Σ p(x) log₂ p(x); it measures uncertainty in bits; uniform is maximal, certain is zero.
+3. Cross-entropy: the expected length when you use a code optimized for q but events follow p, H(p, q) = −Σ p(x) log₂ q(x); always at least H(p); not symmetric, because the wrong code hurts differently in each direction.
+4. KL divergence: the extra bits, KL(p‖q) = H(p, q) − H(p); zero only when the distributions match; the essay's rectangles show why it is asymmetric and why a code that ignores a possible event costs infinitely.
+5. Multiple variables: joint entropy H(X, Y); conditional entropy H(Y|X) = H(X, Y) − H(X); mutual information I(X; Y) = H(X) + H(Y) − H(X, Y) = H(Y) − H(Y|X), the reduction in uncertainty about one from knowing the other; the Venn-like diagram of these quantities.
+6. Machine learning: minimizing cross-entropy between labels and predictions minimizes the KL to the truth (the entropy of the truth is fixed); log loss is measured in nats; mutual information as a dependence measure for feature screening.
+
+**Formulas and commands to remember.**
+
+```
+H(p) = −Σ p log₂ p;  H(p, q) = −Σ p log₂ q;  KL(p‖q) = H(p, q) − H(p) ≥ 0
+I(X; Y) = H(Y) − H(Y|X) = Σ p(x, y) log [p(x, y)/(p(x)p(y))]
+```
+
+**Three takeaways.**
+
+- Cross-entropy is the cost of the wrong codebook; minimizing it moves your model toward the truth.
+- KL is not a distance; the direction matters.
+- Mutual information is the reduction in surprise one variable gives about another.
+
+**Practice.** Compute the entropy of the slow-episode label per hour of day, the cross-entropy of the LightGBM predictions, and the mutual information between the label and `down1_speed` binned into ten quantiles.
+
+</details>
 
 ### Build
 
@@ -3436,6 +5263,39 @@ _book · free · three weeks · free online; the forecasting book_
 
 **PhD at Apple.** Hyndman's wider work (the M4 and M5 forecasting competitions, hierarchical reconciliation, feature-based model selection) is the empirical forecasting literature. The M5 result, gradient-boosted models on lag features winning at scale, is direct evidence for this project's choice of LightGBM as the production model.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Getting started (what can be forecast, forecasting steps, the statistical perspective); time series graphics (plots, seasonal plots, scatterplots, lag plots, autocorrelation, white noise); time series decomposition (transformations, components, moving averages, classical and STL decomposition); time series features; the forecaster's toolbox (simple methods, fitted values and residuals, residual diagnostics, forecast distributions and prediction intervals, evaluating accuracy on training and test sets, time series cross-validation); regression models with time series features (trend, seasonality, dummies, Fourier terms, selecting predictors, forecasting with regression); ARIMA (stationarity and differencing, autoregressive and moving-average models, non-seasonal and seasonal ARIMA, estimation and order selection, forecasting).
+
+**Key ideas, in order.**
+
+1. What is forecastable: depends on how well the factors are understood, how much data exist, whether the forecast affects the outcome (it does, for traffic alerts), and the horizon; the steps: define the problem, gather information, exploratory analysis, choose models, use and evaluate.
+2. Graphics: time plots, seasonal plots (each day overlaid, which shows the daily cycle in traffic), seasonal subseries plots, lag plots, and the autocorrelation function; trend, seasonality and cycles; white noise's ACF within ±2/√T.
+3. Decomposition: Box-Cox transforms to stabilize variance; additive versus multiplicative components; moving averages to estimate trend; STL for robust decomposition with multiple seasonalities (daily and weekly).
+4. Simple methods as baselines: mean, naive (last value, which is persistence), seasonal naive (same time last cycle, which is the profile), drift; residuals should be uncorrelated with zero mean; prediction intervals from residual variance; bootstrapped intervals.
+5. Evaluation: point forecast errors (MAE, RMSE, MAPE, MASE scaled by a naive forecast's in-sample MAE); the training-test split in time; time series cross-validation (rolling origin) where each fold trains on data before its test point; evaluating forecast distributions with quantile and CRPS scores.
+6. Regression with time features: linear regression on trend, seasonal dummies, holidays, Fourier terms (sin and cos pairs for a period, exactly the minute-of-day encoding), intervention dummies and lagged predictors; selecting predictors by AICc or cross-validation; ex-ante versus ex-post forecasts (you only have forecasts of predictors at forecast time, which is the weather point).
+7. ARIMA: stationarity, differencing (and seasonal differencing) to reach it; AR(p) as regression on lags, MA(q) as regression on past errors, ARIMA(p, d, q); the ACF and PACF for identification; maximum likelihood estimation; order selection by AICc; seasonal ARIMA; forecasting and intervals; the point that ARIMA is a linear model on lags with a principled error structure.
+
+**Formulas and commands to remember.**
+
+```
+MASE = MAE / MAE_naive_in-sample
+Fourier terms: sin(2πkt/m), cos(2πkt/m) for k = 1..K
+ARIMA(p, d, q): (1 − Σ φ_i B^i)(1 − B)^d y_t = c + (1 + Σ θ_j B^j) ε_t
+```
+
+**Three takeaways.**
+
+- Naive and seasonal naive are the baselines; report MASE so skill is comparable across series.
+- Rolling-origin evaluation is the only honest one for time series.
+- Fourier terms encode seasonality for any model; the sine and cosine time features are this idea.
+
+**Practice.** Decompose one station's speed with STL into daily and weekly components, then compare seasonal naive, a regression with Fourier terms and holiday dummies, and LightGBM on a rolling-origin evaluation with MASE.
+
+</details>
+
 #### [Kaggle Learn: Time Series](https://www.kaggle.com/learn/time-series)
 
 _course · free · half a day · free; lag features and hybrids in an afternoon_
@@ -3451,6 +5311,37 @@ _course · free · half a day · free; lag features and hybrids in an afternoon_
 **Stanford grad.** The hybrid idea generalizes to 'physics plus residual', which lesson 10's advanced prompt asks about, and its Fourier treatment of seasonality is the linear analogue of what a recurrent network learns. Short courses like this are where practitioner defaults come from, so know what they teach and where they stop.
 
 **PhD at Apple.** The design principle it plants, decompose into predictable structure and a learned residual, is robust across production forecasters and is how a classical model can remain as a fallback when a learned model goes stale.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Linear regression with time series (time-step and lag features); trend (moving averages, polynomial trend, forecasting with trend); seasonality (seasonal plots, indicators, Fourier features, periodograms); time series as features (serial dependence, cycles, lag plots, choosing lags); hybrid models (residuals, combining a linear model and a boosted model); forecasting with machine learning (horizons, multistep strategies: multioutput, direct, recursive, DirRec).
+
+**Key ideas, in order.**
+
+1. Two kinds of features: time-dependent (a time-step counter, trend) and serially dependent (lags); a linear model on a time index fits trend, on lags fits autocorrelation.
+2. Trend: moving-average smoothing to see it, deterministic trend features (linear, quadratic) from a `DeterministicProcess`, and the risk of extrapolating polynomials.
+3. Seasonality: seasonal indicators (one-hot for weekday) for short periods; Fourier features (pairs of sin and cos at harmonics of the period) for long periods; the periodogram to pick how many harmonics.
+4. Lags: partial autocorrelation to choose lags; lag plots to see nonlinearity; leading indicators as lagged exogenous series; the leakage risk when lags are computed after a target shift.
+5. Hybrids: fit a linear model to trend and seasonality, then a second model (gradient boosting) to the residuals, because trees cannot extrapolate trend; feature-transforming versus target-transforming learners.
+6. Multistep forecasting: define the forecast origin, horizon and lead; multioutput models predict all steps at once; the direct strategy trains one model per step (this project's choice); recursive feeds predictions back; DirRec combines; each has bias and variance trade-offs.
+
+**Formulas and commands to remember.**
+
+```
+y_{t+h} = f_h(y_t, y_{t−1}, …, x_t)   (direct strategy, one model per h)
+residual = y − linear_trend_seasonal;  boost(residual)
+```
+
+**Three takeaways.**
+
+- Trend and seasonality by linear features, the rest by lags; hybrids let trees do what they are good at.
+- Choose the multistep strategy deliberately; direct is simplest and robust.
+- Lags are computed before, and never from, the shifted target.
+
+**Practice.** Fit a hybrid of the profile (as the seasonal model) plus LightGBM on residual speed, and compare its 30-minute MAE with LightGBM on raw speed.
+
+</details>
 
 #### [statsmodels documentation: one ARIMA fit on one station](https://www.statsmodels.org/stable/tsa.html)
 
@@ -3468,6 +5359,37 @@ _docs · free · an afternoon · free; do it once to know what it is_
 
 **PhD at Apple.** Classical models remain the interpretable baseline and a source of principled uncertainty that deep models lack. A production system often keeps a simple statistical model as the fallback when the learned model is stale or its inputs are missing, and statsmodels is where that fallback would be built.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The time-series analysis module: ARIMA and SARIMAX models (specification, fitting, diagnostics, forecasting), exponential smoothing, state-space models, unit root tests, ACF and PACF functions and plots, seasonal decomposition, and VAR models.
+
+**Key ideas, in order.**
+
+1. Specification: `ARIMA(endog, order=(p, d, q), seasonal_order=(P, D, Q, s), exog=...)`; `SARIMAX` for exogenous regressors (incidents, rain); trend terms.
+2. Fitting and output: `.fit()` by maximum likelihood; the summary shows coefficients with standard errors, AIC and BIC, and diagnostic tests (Ljung-Box for residual autocorrelation, Jarque-Bera for normality, heteroscedasticity).
+3. Diagnostics: `plot_diagnostics()` (standardized residuals, histogram, Q-Q plot, correlogram); `acf`, `pacf`, `plot_acf`, `plot_pacf` for identification; `adfuller` and `kpss` for stationarity.
+4. Forecasting: `.forecast(steps)` and `.get_forecast(steps)` with `.conf_int()` for intervals; `predict` with dynamic forecasting; `.apply` to new data with fixed parameters for out-of-sample evaluation.
+5. Decomposition and smoothing: `seasonal_decompose` and `STL`; `ExponentialSmoothing` (Holt-Winters) with additive or multiplicative seasonality.
+6. State space: `UnobservedComponents` for local level and trend with seasonal terms; the Kalman filter underlying SARIMAX; `VAR` for several series jointly.
+
+**Formulas and commands to remember.**
+
+```
+m = ARIMA(s, order=(2, 0, 1)).fit(); print(m.summary()); fc = m.get_forecast(12); fc.predicted_mean, fc.conf_int()
+sm.tsa.acf(s, nlags=48); plot_pacf(s, lags=48)
+```
+
+**Three takeaways.**
+
+- ARIMA diagnostics (residual ACF, Ljung-Box) are useful checks for any model's residuals.
+- SARIMAX is the classical way to add exogenous inputs.
+- Forecast intervals from ARIMA are model-based; compare their coverage with empirical ones.
+
+**Practice.** Fit ARIMA(2,0,1) and SARIMAX with a rain regressor to one station's speed, forecast an hour, and compare MAE and interval coverage with persistence over a week of rolling forecasts.
+
+</details>
+
 #### [traffic-simulation.de and its model documentation (Treiber, Kesting)](https://traffic-simulation.de/)
 
 _interactive · free · an evening · free simulator and model docs; the physics of jams_
@@ -3483,6 +5405,37 @@ _interactive · free · an evening · free simulator and model docs; the physics
 **Stanford grad.** Use simulator-generated data for stress tests on regimes rare in the archive and as a baseline for physics-informed components; the source code of the simulation is open and readable.
 
 **PhD at Apple.** Coupling learned forecasters with open simulators is where counterfactual evaluation starts; the site and its code are the practical entry, and the Intelligent Driver Model is simple enough to make differentiable.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** An interactive microscopic traffic simulator with scenarios (ring road, on-ramp, off-ramp, road works, uphill grade, traffic lights, roundabout) and controls for inflow, truck fraction, driver parameters, and speed limits; documentation of the models it runs: the Intelligent Driver Model for car-following and MOBIL for lane changing, plus explanations of the traffic phenomena you can produce.
+
+**Key ideas, in order.**
+
+1. Car-following: each vehicle accelerates based on its own speed, the gap to the leader and the speed difference; the Intelligent Driver Model has a desired speed v₀, time headway T, minimum gap s₀, maximum acceleration a and comfortable deceleration b, and produces realistic gaps and stop-and-go waves.
+2. Lane changing: MOBIL changes lanes when the changing vehicle gains acceleration and the disadvantage imposed on others is below a politeness-weighted threshold, with safety limits.
+3. Phenomena to produce: free flow, capacity, breakdown at an on-ramp (a bottleneck), the jam propagating upstream at 10 to 15 mph against traffic, stop-and-go waves on the ring road with no bottleneck (instability from a small perturbation), capacity drop after breakdown, and the effect of speed limits and truck share.
+4. Macroscopic reading: plotting flow against density from the simulation gives the fundamental diagram; the slope between congested states is the wave speed; the on-ramp scenario shows why a queue forms upstream of the merge.
+5. Control experiments: ramp metering (limiting on-ramp inflow) delays or prevents breakdown; variable speed limits smooth waves; both are the setting for the reinforcement-learning control exercise.
+6. Data generation: the simulator's source is open; run it headlessly to produce synthetic detector data for testing the forecaster on rare regimes.
+
+**Formulas and commands to remember.**
+
+```
+IDM: dv/dt = a [1 − (v/v₀)^δ − (s*(v, Δv)/s)²],  s* = s₀ + vT + vΔv/(2√(ab))
+wave speed w = Δq/Δk between two traffic states
+```
+
+**Three takeaways.**
+
+- A jam needs only a bottleneck and enough demand; it then travels upstream at a nearly constant speed.
+- Stop-and-go waves can arise with no bottleneck at all; traffic is an unstable system near capacity.
+- Ramp metering works by keeping the mainline below breakdown density.
+
+**Practice.** Run the on-ramp scenario, raise inflow until breakdown, measure how many seconds the jam's tail takes to move 500 m upstream, convert to mph, and compare with the shockwave speed estimated from one station's fundamental diagram.
+
+</details>
 
 #### [Kaggle: Store Sales, Time Series Forecasting competition](https://www.kaggle.com/competitions/store-sales-time-series-forecasting)
 
@@ -3500,6 +5453,37 @@ _dataset · free · a week · free; forecasting practice off the traffic data_
 
 **PhD at Apple.** A free, standing benchmark for time-series practice and for calibrating a newcomer's forecasting skill.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A getting-started competition: forecast daily unit sales for product families across Favorita stores in Ecuador for 16 days, using training sales, store metadata, oil prices, holidays and events, and transactions; evaluated by root mean squared logarithmic error; with a companion tutorial series and many public notebooks.
+
+**Key ideas, in order.**
+
+1. The data: a long table of date, store, family and sales; auxiliary tables for stores (type, cluster, city), oil price (a macro driver), holidays (national, regional, local, transferred), and transactions; the test period follows training.
+2. Feature ideas: lags respecting the 16-day horizon (a lag of at least 16 days for direct models, or a recursive scheme), rolling statistics, calendar features (day of week, payday effects on the 15th and month end), holiday flags with regional matching, oil price and its lags, and store and family identifiers as categoricals.
+3. Models: a global LightGBM across all series (target log1p sales); hybrids with a linear trend and seasonal model plus boosted residuals; per-family models; ensembles.
+4. Validation: hold out the last 16 days of training as a validation window, and better, several such windows; compare validation RMSLE with the public leaderboard to see the gap.
+5. Leakage traps in public notebooks: rolling features computed with the current day, target encodings fit on all data, and using test-period information (holidays are fine, sales are not).
+6. The metric: RMSLE penalizes underprediction more than overprediction and handles zeros; it matches a log-transformed target.
+
+**Formulas and commands to remember.**
+
+```
+RMSLE = √( mean (log(1 + ŷ) − log(1 + y))² )
+lag_16 = sales.groupby(['store','family']).shift(16)
+```
+
+**Three takeaways.**
+
+- Respect the horizon when building lags.
+- Use several validation windows and compare with the leaderboard to measure your own selection bias.
+- A log target plus a global boosted model is the strong, simple baseline.
+
+**Practice.** Build a global LightGBM with horizon-safe lags, calendar and holiday features, validate on three 16-day windows, submit once, and record the gap between validation and leaderboard scores.
+
+</details>
+
 #### [The M5 forecasting competition and its findings (Makridakis, Spiliotis, Assimakopoulos)](https://www.kaggle.com/competitions/m5-forecasting-accuracy)
 
 _dataset · free · days · free; the largest evidence for global boosted models_
@@ -3515,6 +5499,37 @@ _dataset · free · days · free; the largest evidence for global boosted models
 **Stanford grad.** The M-competition series (M1 through M6) is the empirical forecasting literature; read the M4 findings alongside M5 to see how the consensus moved from statistical ensembles to boosted global models, and what the organizers concluded about deep learning's role.
 
 **PhD at Apple.** Competitions are natural experiments about what works under a fixed protocol; their limitations (leaderboard overfitting, no deployment costs) are as instructive as their results. For a forecasting team, M5's write-ups are the closest thing to a field manual.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The competition (42,840 hierarchical daily sales series from Walmart, 28-day horizon, accuracy track scored by weighted RMSSE across aggregation levels, uncertainty track scored by weighted scaled pinball loss over nine quantiles) and the organizers' papers on background, findings and the winning methods.
+
+**Key ideas, in order.**
+
+1. The data and hierarchy: items within departments within categories within stores within states; the metric averages performance across all levels with weights by dollar sales, so both bottom-level and aggregate forecasts matter.
+2. Findings: gradient-boosted trees (LightGBM) on lag, rolling, calendar and price features dominated; cross-learning across series (one global model) beat per-series models; simple statistical methods were competitive baselines and useful ensemble members; combining models helped; external information (prices, events) mattered.
+3. Validation: the public leaderboard's validation period misled many teams; those who validated on multiple time windows generalized better; the point about selection bias and rolling-origin evaluation.
+4. Uncertainty track: quantile forecasts from boosted models and from distributional assumptions; empirical scaling from point forecasts worked; coverage was often poor at extreme quantiles.
+5. Practical recipes: features such as lags at 7, 14, 28 days, rolling means and standard deviations, days since last sale, calendar and event flags, price changes; tweedie or Poisson objectives for intermittent counts; recursive versus direct strategies; ensembling over seeds and windows.
+6. Limits: a competition metric is not a business objective; leaderboard overfitting; compute-heavy solutions; but the evidence for global boosted models on many related series is strong.
+
+**Formulas and commands to remember.**
+
+```
+RMSSE = √( mean_h (y_{t+h} − ŷ_{t+h})² / mean_t (y_t − y_{t−1})² )
+pinball(q) = mean( max(q(y − ŷ), (q − 1)(y − ŷ)) )
+```
+
+**Three takeaways.**
+
+- Global boosted models on lag and calendar features are the empirical default for many related series.
+- Validate on several windows; the leaderboard is one draw.
+- Scaled metrics (RMSSE, MASE) make series comparable.
+
+**Practice.** Adopt the M5 feature recipe (lags 1, 3, 6, 12 steps; rolling 30 and 60 minute means and standard deviations; calendar flags) for the traffic regression and evaluate with a scaled error across three validation windows.
+
+</details>
 
 ### Build
 
@@ -3722,6 +5737,37 @@ _video · free · two hours · free; four videos, watch before Karpathy_
 
 **PhD at Apple.** Its visual language has become the standard for explaining networks to non-specialists. Reuse the logic of its diagrams when presenting the spatio-temporal network to a product team, and its treatment of what a layer 'sees' as a caution when someone asks what the model has learned.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Four core videos: what a neural network is (neurons, layers, weights, biases, activations, the digit example), how it learns (the cost function, gradient descent, the meaning of the negative gradient), what backpropagation is doing (intuition for which weights to nudge, averaging over examples, stochastic gradient descent), and backpropagation calculus (the chain rule on a chain of neurons, then on layers).
+
+**Key ideas, in order.**
+
+1. A network: an input layer of pixel activations (784 for a 28×28 digit), hidden layers, an output layer of 10 activations; each neuron's activation is a weighted sum of the previous layer's activations plus a bias, squashed (sigmoid in the video, ReLU in practice); the weights and biases are the parameters (about 13,000 for the example).
+2. Layers as matrices: a layer computes a = σ(Wa_prev + b); the whole network is a chain of such steps; the hope that hidden layers detect edges and then shapes is not exactly what happens, which the video is honest about.
+3. Learning: a cost is the squared difference between output activations and the desired one-hot output, averaged over examples; the parameters are a point in a high-dimensional space and the cost is a landscape; gradient descent moves downhill; the gradient's components say which parameters matter most.
+4. Backpropagation intuition: for one example, the output error says which output activations should go up or down; each is influenced by its weights (in proportion to the previous activations), its bias, and the previous activations (in proportion to the weights); summing the desired changes over all outputs gives the desired change to the previous layer, and the process repeats backward; averaging over a batch gives the gradient; stochastic gradient descent uses mini-batches.
+5. The calculus: for a chain of single neurons, the cost's sensitivity to a weight is the product of ∂z/∂w = a_prev, ∂a/∂z = σ′(z) and ∂C/∂a = 2(a − y); for layers, the same with sums over the next layer's neurons; the gradient vector collects all of these.
+
+**Formulas and commands to remember.**
+
+```
+a^(L) = σ(W^(L) a^(L−1) + b^(L))
+∂C/∂w^(L) = a^(L−1) · σ′(z^(L)) · 2(a^(L) − y)
+∂C/∂a^(L−1) = Σ_j w_j^(L) σ′(z_j^(L)) 2(a_j^(L) − y_j)
+```
+
+**Three takeaways.**
+
+- A network is a chain of matrix multiplications and squashes; learning is descending a cost landscape.
+- Backpropagation is the chain rule organized layer by layer, reusing sensitivities.
+- Mini-batches trade gradient accuracy for speed.
+
+**Practice.** Redraw the four-neuron chain from the last video, write its three partial derivatives, and check them on numbers with a finite difference in numpy.
+
+</details>
+
 #### [TensorFlow Playground](https://playground.tensorflow.org/)
 
 _interactive · free · fifteen minutes · free; poke a network in the browser_
@@ -3737,6 +5783,36 @@ _interactive · free · fifteen minutes · free; poke a network in the browser_
 **Stanford grad.** Its role for you is demonstration when teaching; it cannot show the high-dimensional effects (initialization statistics, batch norm) that matter in practice.
 
 **PhD at Apple.** A reminder that a well-designed toy can carry a concept further than a lecture; it is the demo to open when a stakeholder asks what a neural network 'is'.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A browser neural network on four 2-D datasets (circle, exclusive-or, Gaussian clusters, spiral) with controls for features (x₁, x₂, squares, product, sines), hidden layers and neurons, activation (ReLU, tanh, sigmoid, linear), learning rate, regularization (L1, L2) and its rate, batch size, noise, and train-test ratio, with live visualization of each neuron's function and the decision boundary.
+
+**Key ideas, in order.**
+
+1. Linear limits: with only x₁ and x₂ as features and no hidden layer, the boundary is a line; the circle and spiral cannot be fit; adding x₁² and x₂² lets a linear model fit the circle, which is feature engineering.
+2. Hidden layers: with raw features and one hidden layer of a few neurons, the network learns its own features; each neuron's panel shows a half-plane (ReLU) or a smooth ramp (tanh); the output combines them into curved boundaries.
+3. Learning rate: too high and the loss oscillates or explodes; too low and it crawls; watch the training loss curve.
+4. Activation: linear activations collapse the network to a linear model no matter the depth; ReLU trains fast; tanh gives smooth boundaries; sigmoid saturates.
+5. Regularization: L2 shrinks weights and smooths the boundary; L1 zeroes some; too much underfits; noise in the data shows overfitting as a boundary that wraps around individual points, visible as a gap between training and test loss.
+6. The spiral: hard for small networks; needs more neurons or engineered sine features; depth helps up to a point; a lesson in inductive bias and in why feature engineering and depth are partial substitutes.
+
+**Formulas and commands to remember.**
+
+```
+neuron output = activation(w₁x₁ + w₂x₂ + b)
+```
+
+**Three takeaways.**
+
+- Hidden layers learn features; engineered features can replace them for simple structure.
+- The learning rate is the first dial to check when training misbehaves.
+- Regularization smooths the boundary; noise plus capacity produces overfitting you can see.
+
+**Practice.** Fit the spiral three ways: raw features with two hidden layers, engineered sine features with no hidden layer, and raw features with L2 regularization; record the test loss of each and explain the differences.
+
+</details>
 
 #### [Neural Networks: Zero to Hero (Karpathy), micrograd and makemore](https://karpathy.ai/zero-to-hero.html)
 
@@ -3754,6 +5830,39 @@ _video · free · three weeks · free; backprop from scratch, the best there is_
 
 **PhD at Apple.** Karpathy's teaching sets the bar for from-scratch pedagogy, and his emphasis on reading gradients and activations is the diagnostic culture a research team should share. For a lead, the course is the fastest way to give a strong engineer without deep-learning background a working mental model in a week.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** micrograd: a scalar-valued automatic differentiation engine and a tiny neural network library built from scratch, with the chain rule implemented as backward functions on a computation graph. makemore: a series building character-level language models on a list of names, from a bigram count model to a neural bigram, an MLP following Bengio et al., diagnostics of activations and gradients with batch normalization, a manual backward pass through the whole MLP, a WaveNet-like hierarchical model, and (in the follow-up) a GPT built from scratch.
+
+**Key ideas, in order.**
+
+1. micrograd: a `Value` object stores data, a gradient, the operation that produced it and its children; each operation defines a local derivative; `backward()` topologically sorts the graph and applies the chain rule in reverse, accumulating gradients; a neuron, layer and MLP are built from `Value`s; training is a loop of forward, zero grads, backward, update.
+2. Bigram model: counts of next characters as a probability table; the negative log-likelihood as the training objective; the same model as a one-layer network with one-hot inputs and softmax outputs trained by gradient descent, showing that counting and learning coincide.
+3. The MLP language model: embed characters into a small vector space, concatenate a context window, a hidden tanh layer, a softmax over the next character; mini-batches, learning-rate search by sweeping and watching the loss, train-validation-test splits, and overfitting versus capacity; visualizing the embedding space.
+4. Activations and gradients: initialization scale matters (saturated tanh kills gradients; too-large logits give confident wrong initial predictions); Kaiming initialization; batch normalization to standardize pre-activations, its running statistics, and its interaction with biases; diagnostic plots of activation and gradient distributions and of the update-to-data ratio.
+5. Manual backpropagation: deriving the backward pass through cross-entropy, linear layers, tanh, batch norm and the embedding by hand and matching PyTorch's autograd exactly; the exercise that makes autograd transparent.
+6. Hierarchical models: fusing characters progressively with a tree of layers (WaveNet-style dilated structure), organizing code into PyTorch-like modules, and the importance of checking shapes.
+7. GPT from scratch: tokenization, the bigram baseline, self-attention as a weighted average with learned weights (queries, keys, values, scaling, masking), multi-head attention, feed-forward blocks, residual connections and layer norm, and scaling up.
+
+**Formulas and commands to remember.**
+
+```
+class Value: ... def __mul__(self, other): out = Value(self.data * other.data, (self, other), '*'); def _backward(): self.grad += other.data * out.grad; other.grad += self.data * out.grad
+loss = −mean(log p[next_char]);  logits = h @ W2 + b2;  h = tanh(emb.view(-1, block*d) @ W1 + b1)
+batchnorm: x̂ = (x − mean_batch)/√(var_batch + ε);  y = γ x̂ + β
+```
+
+**Three takeaways.**
+
+- Autograd is a graph of local derivatives applied in reverse; you can write it in a hundred lines.
+- Initialization and normalization decide whether training starts well; look at the activation statistics.
+- Attention is a data-dependent weighted average; everything else in a transformer is plumbing.
+
+**Practice.** Build micrograd from the lecture without copying, train lesson 7's logistic regression with it, then implement the manual backward pass for the MLP and match PyTorch's gradients to 1e-6.
+
+</details>
+
 #### [PyTorch tutorials: Learn the Basics; the MPS backend notes](https://pytorch.org/tutorials/beginner/basics/intro.html)
 
 _docs · free · an afternoon · free_
@@ -3769,6 +5878,41 @@ _docs · free · an afternoon · free_
 **Stanford grad.** The advanced tutorials (custom autograd functions, `torch.compile`, distributed training) are the next layer. For this project, test whether `torch.compile` helps on MPS rather than assuming; support is uneven. The tutorials on saving and loading, and on reproducibility, are the ones that prevent embarrassment at handover.
 
 **PhD at Apple.** PyTorch's eager, Pythonic design is why research iterates fast; its deployment story (TorchScript's decline, ExecuTorch, ONNX and Core ML export) is where production effort goes. Knowing both ends, and the operator-support gaps between them, is what lets you promise a model can ship on a device.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Learn the Basics: quickstart; tensors (creation, attributes, operations, bridging with numpy); datasets and dataloaders (built-in datasets, custom `Dataset`, `DataLoader` iteration); transforms; build the neural network (`nn.Module`, layers, `forward`, parameters); automatic differentiation (`autograd`, computational graphs, `requires_grad`, `backward`, disabling gradients); optimizing model parameters (hyperparameters, the training loop, loss functions, optimizers); save and load the model. The MPS notes: enabling the Metal backend on Apple silicon, checking availability, moving tensors and models, and limitations.
+
+**Key ideas, in order.**
+
+1. Tensors: like numpy arrays with device placement and autograd; `torch.tensor`, `zeros`, `rand`; `.shape`, `.dtype`, `.device`; indexing, joining, arithmetic, matrix multiply with `@`, in-place ops with a trailing underscore; `.numpy()` and `from_numpy` share memory on CPU.
+2. Data: a `Dataset` implements `__len__` and `__getitem__`; a `DataLoader` batches, shuffles and iterates; for a tabular tensor already in memory, slicing by index permutations is faster than a DataLoader with Python overhead.
+3. Models: subclass `nn.Module`, define layers in `__init__`, compute in `forward`; `nn.Sequential`, `nn.Linear`, `nn.ReLU`; `model.parameters()`; move with `.to(device)`; `model.train()` and `model.eval()` switch dropout and batch norm behavior.
+4. Autograd: tensors with `requires_grad=True` record operations; `loss.backward()` computes gradients into `.grad`; gradients accumulate, so `optimizer.zero_grad()` each step; `torch.no_grad()` for inference; `detach()` to stop tracking.
+5. Training loop: for each batch, compute predictions, loss (`nn.BCEWithLogitsLoss`, `nn.CrossEntropyLoss`), `backward`, `optimizer.step()`; validation loop under `no_grad` with `eval()`; hyperparameters (epochs, batch size, learning rate); optimizers `SGD`, `Adam`, `AdamW`.
+6. Saving: `torch.save(model.state_dict(), path)` and `model.load_state_dict(torch.load(path))`; save the class definition alongside; checkpoints include optimizer state for resuming.
+7. MPS: `torch.backends.mps.is_available()`, `device = torch.device('mps')`; supported dtypes are float32 and float16 (no float64); some operators are unimplemented and `PYTORCH_ENABLE_MPS_FALLBACK=1` routes them to the CPU; unified memory means no host-device copies but also a shared budget; small batches are launch-bound, so benchmark against the CPU.
+
+**Formulas and commands to remember.**
+
+```
+for xb, yb in batches:
+    opt.zero_grad(); loss = lossf(net(xb).squeeze(1), yb); loss.backward(); opt.step()
+net.eval()
+with torch.no_grad(): p = torch.sigmoid(net(Xva)).cpu().numpy()
+device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
+```
+
+**Three takeaways.**
+
+- Zero the gradients, forward, loss, backward, step; and `eval()` plus `no_grad()` at inference.
+- Keep tensors on the device and batch large; Python overhead per batch dominates small models.
+- MPS is float32 only and launch-bound for tiny models; measure.
+
+**Practice.** Write the training loop for the MLP without a DataLoader (index permutations on device tensors), add early stopping on validation AP, and compare epoch time on CPU and MPS at batch sizes 256 and 8192.
+
+</details>
 
 #### [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/)
 
@@ -3786,6 +5930,40 @@ _book · free · reference, chapters as needed · free, PyTorch throughout_
 
 **PhD at Apple.** A living, open textbook with code in several frameworks is itself a research-infrastructure achievement. Cite it for standard architectures, use its implementations as reference points when reproducing papers, and note its authors' choice to include the messy practical chapters most textbooks omit.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapter 3, linear neural networks for regression (linear regression, its implementation from scratch and concisely, generalization, weight decay). Chapter 4, linear networks for classification (softmax regression, the image classification dataset, implementations, generalization in classification, environment and distribution shift). Chapter 5, multilayer perceptrons (MLPs, implementation, forward and backward propagation, numerical stability and initialization, generalization, dropout, a Kaggle house-price example). Chapter 9, recurrent neural networks (sequences, text to sequence, language models, RNNs, implementation, backpropagation through time). Chapter 10, modern RNNs (LSTM, GRU, deep and bidirectional RNNs, machine translation data, encoder-decoder, sequence-to-sequence, beam search).
+
+**Key ideas, in order.**
+
+1. Linear regression as a network: the model, squared loss, minibatch stochastic gradient descent with learning rate and batch size, vectorization, the normal-distribution view of squared loss; from-scratch implementation with manual gradients, then `nn.Linear` and `MSELoss`.
+2. Generalization and weight decay: training versus generalization error, model selection with validation, underfitting and overfitting versus capacity and data; L2 penalty as weight decay in the optimizer.
+3. Softmax regression: one-hot targets, softmax outputs, cross-entropy loss and its gradient (softmax minus one-hot), the log-sum-exp trick for stability, accuracy as a metric; distribution shift (covariate, label, concept) and why test data may not match.
+4. MLPs: hidden layers with nonlinear activations (ReLU, sigmoid, tanh) give universal approximation; forward propagation, the computational graph, backpropagation through it, and memory for stored activations.
+5. Numerical stability: vanishing and exploding gradients from products of Jacobians, symmetry breaking by random initialization, Xavier initialization derived from keeping variances constant across layers; dropout as noise injection (zero units with probability p, scale by 1/(1 − p), off at test time).
+6. Sequences: autoregressive models, the Markov assumption, tokenization and vocabularies, language modelling as next-token prediction, perplexity; RNNs with a hidden state h_t = φ(x_t W_xh + h_{t−1} W_hh + b), the character-level RNN from scratch, gradient clipping, truncated backpropagation through time and its analysis.
+7. Gated RNNs: LSTM's input, forget and output gates with a memory cell; GRU's reset and update gates; why gates mitigate vanishing gradients; deep and bidirectional RNNs (bidirectional only when the whole sequence is available, never for forecasting).
+8. Encoder-decoder: encoding a sequence to a state, decoding a sequence from it, teacher forcing during training, greedy versus beam search decoding, BLEU for evaluation.
+
+**Formulas and commands to remember.**
+
+```
+softmax(o)_j = exp(o_j)/Σ_k exp(o_k);  ∂L/∂o = softmax(o) − y
+Xavier: Var(w) = 2/(n_in + n_out)
+GRU: r = σ(x W_xr + h W_hr + b_r); z = σ(x W_xz + h W_hz + b_z); h̃ = tanh(x W_xh + (r ⊙ h) W_hh + b_h); h_new = z ⊙ h + (1 − z) ⊙ h̃
+```
+
+**Three takeaways.**
+
+- Cross-entropy's gradient is prediction minus target; that pattern runs from logistic regression to language models.
+- Initialization keeps variances constant across layers; dropout injects noise; both are about stability and generalization.
+- A GRU's gates decide what to keep and what to overwrite; that is the memory the traffic net uses.
+
+**Practice.** Implement the GRU cell from the chapter's equations in PyTorch, verify it matches `nn.GRUCell` on random inputs, and use it as the sequence encoder in the spatio-temporal net.
+
+</details>
+
 #### [Understanding Deep Learning (Prince)](https://udlbook.github.io/udlbook/)
 
 _book · free · reference, chapters as needed · free PDF; chapters 1 to 9 now, the rest in phase 8_
@@ -3801,6 +5979,40 @@ _book · free · reference, chapters as needed · free PDF; chapters 1 to 9 now,
 **Stanford grad.** The chapters on generative models (VAEs, GANs, normalizing flows, diffusion) are a compact, correct introduction with the math intact, and the chapter on ethics is unusually careful for a technical text. Use it as the reference when reading current papers.
 
 **PhD at Apple.** A free, modern, rigorous textbook is a public good; it is the one to recommend to a new graduate student and the one to cite for standard architectures in the current idiom. Its figures are also the model for how to draw a network in a paper.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction; supervised learning; shallow networks; deep networks; loss functions; fitting models; gradients and initialization; measuring performance; regularization; convolutional networks; residual networks; transformers; graph neural networks; unsupervised learning; generative adversarial networks; normalizing flows; variational autoencoders; diffusion models; reinforcement learning; why does deep learning work; deep learning and ethics.
+
+**Key ideas, in order.**
+
+1. Shallow and deep networks: a shallow network is a linear combination of ReLU-transformed linear functions, producing piecewise linear maps with regions; depth composes such maps and creates exponentially many regions per parameter; universal approximation with width, efficiency with depth.
+2. Losses from maximum likelihood: choose a distribution over outputs (Gaussian gives least squares, Bernoulli gives binary cross-entropy, categorical gives softmax cross-entropy, others give robust or heteroscedastic losses); the network predicts the distribution's parameters.
+3. Fitting: gradient descent, stochastic gradient descent, momentum, Adam; learning-rate schedules and warmup; backpropagation derived for the general case with the forward pass storing activations; initialization that preserves variance (He), and the analysis of exploding and vanishing signals.
+4. Measuring performance: noise, bias and variance; the double-descent curve; hyperparameter search; the importance of test sets; the curse of dimensionality and how real data lie on lower-dimensional manifolds.
+5. Regularization: explicit (L2, early stopping), implicit (SGD's noise, larger learning rates), heuristic (ensembling, dropout, augmentation, transfer learning, multi-task, self-supervision), and the general picture of why regularized deep networks generalize.
+6. Architectures: convolutions (invariance, equivariance, pooling, receptive fields, classic networks), residual connections (why depth trained poorly before them, batch and layer norm), transformers (dot-product attention, positional information, encoder and decoder, scaling, vision transformers), graph networks (adjacency, node embeddings, message passing, graph-level and node-level tasks, spectral and spatial views).
+7. Generative models: GANs (minimax, mode collapse, Wasserstein), normalizing flows (invertible transformations and exact likelihoods), VAEs (the ELBO, reparameterization, posterior collapse), diffusion (forward noising, reverse denoising, the training objective, conditioning and guidance).
+8. Reinforcement learning basics, the chapter on why deep learning works (loss landscapes, overparameterization, lottery tickets, adversarial examples) and the ethics chapter (bias, explainability, misuse, environmental cost).
+
+**Formulas and commands to remember.**
+
+```
+deep network: y = φ_K ∘ … ∘ φ_1(x), each φ = ReLU(W h + b)
+ELBO = E_q[log p(x|z)] − KL(q(z|x) ‖ p(z))
+attention(Q, K, V) = softmax(QKᵀ/√d) V
+```
+
+**Three takeaways.**
+
+- Every loss is a negative log-likelihood of some output distribution.
+- Depth buys expressive piecewise-linear maps; normalization and residuals make depth trainable.
+- Generative families differ in how they make likelihood tractable: flows exactly, VAEs by bounds, diffusion by denoising, GANs not at all.
+
+**Practice.** Implement a two-layer ReLU network on one input and plot its output to count linear regions as you add hidden units, then read the chapter's argument about depth and regions and relate it to your plot.
+
+</details>
 
 #### [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/)
 
@@ -3818,6 +6030,38 @@ _course · free · eight weeks · free; the practitioner's counterweight to the 
 
 **PhD at Apple.** fast.ai's research output (training-efficiency results, transfer learning for text) shows that practitioner-driven groups produce research results. Its philosophy of accessible deep learning shaped how many teams onboard engineers, and its lesson structure is a reasonable template for an internal course on this pipeline.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Lessons: getting started (a working image classifier in minutes, what ML is, transfer learning); deployment (data cleaning with the model, a web app); neural net foundations (from scratch: a linear model, then a network, SGD, the training loop); natural language (fine-tuning a language model then a classifier); from-scratch model (tabular, neural nets from foundations); random forests (bagging, out-of-bag, feature importance, partial dependence, tree interpretation); collaborative filtering (embeddings, dot products, biases, weight decay); convolutions (kernels, stride, padding, channels); data ethics; and the book's later chapters (ResNets, architecture details, training tricks, a CNN from scratch).
+
+**Key ideas, in order.**
+
+1. Top-down: train a state-of-the-art classifier first with a pretrained backbone and fine-tuning, then learn why it works; the argument that transfer learning is the default for images and text.
+2. The training loop from foundations: parameters, predictions, loss, gradients (autograd), step, repeat; from a linear model on MNIST digits to a network with ReLU; mini-batches; the learning-rate finder (increase the rate until the loss explodes and pick a point before) and the one-cycle schedule.
+3. Tabular: random forests as the first model (fast, robust, informative), out-of-bag error, feature importance by permutation, partial dependence plots, removing redundant features, extrapolation failure of trees and the test for out-of-domain data; then neural nets on tabular data with categorical embeddings; ensembling both.
+4. Collaborative filtering: users and items as embeddings whose dot product plus biases predicts a rating; training with weight decay; interpreting embedding dimensions; the same idea gives station embeddings for the traffic net.
+5. Text: tokenization, numericalization, language-model pretraining on the domain corpus, then fine-tuning a classifier (ULMFiT), which is the recipe for the incident headline classifier.
+6. Convolutions: a kernel sliding over an image, stride and padding, channels, receptive fields, batch norm, and building a ResNet; the practical rules (start with a pretrained model, progressive resizing, test-time augmentation, mixup, label smoothing).
+7. Ethics: feedback loops, bias, disinformation, and the responsibility of practitioners; checked in every project through questions about data provenance and affected people.
+
+**Formulas and commands to remember.**
+
+```
+learn = vision_learner(dls, resnet18, metrics=error_rate); learn.lr_find(); learn.fine_tune(3)
+rating ≈ u_user · v_item + b_user + b_item
+```
+
+**Three takeaways.**
+
+- Start from a pretrained model whenever one exists; train from scratch only for tabular data or when you must.
+- The learning-rate finder and one-cycle schedule remove most guesswork from training.
+- Random forests are the fast, interpretable first model for tables; embeddings turn categories into geometry.
+
+**Practice.** Fine-tune a pretrained ResNet on a small folder of your own photos with the learning-rate finder and one-cycle, then fine-tune a small pretrained language model on incident headlines for severity and compare with a bag-of-words baseline.
+
+</details>
+
 #### [A Gentle Introduction to Graph Neural Networks (Distill, 2021)](https://distill.pub/2021/gnn-intro/)
 
 _interactive · free · an evening · free, interactive; message passing before CS224W_
@@ -3833,6 +6077,38 @@ _interactive · free · an evening · free, interactive; message passing before 
 **Stanford grad.** It is deliberately introductory; the formal treatment (spectral versus spatial convolutions, expressiveness) is in CS224W and the survey literature. Its value is fixing the vocabulary before those.
 
 **PhD at Apple.** Distill's format, interactive and peer-reviewed, is the high bar for explanatory writing in ML; this article and its companion on graph convolutions are what to point a collaborator to before a graph-learning discussion.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** What a graph is and how to represent one (nodes, edges, global context; adjacency matrices and lists), where graphs appear (molecules, social networks, text and images as graphs), the kinds of tasks (graph-level, node-level, edge-level), the challenges of learning on graphs, the GNN as layers that update node, edge and global embeddings, message passing between neighbors, pooling for predictions, and an interactive playground plus a discussion of design choices (depth, aggregation, learned edges, attention).
+
+**Key ideas, in order.**
+
+1. Representation: a graph has node attributes, edge attributes and global attributes; adjacency lists scale better than dense matrices; node ordering must not matter (permutation invariance), which rules out treating the adjacency matrix as an image.
+2. Tasks: predict a property of the whole graph (molecule toxicity), of each node (station is slow), or of each edge (road segment congestion); the traffic problem is node-level prediction on a fixed graph.
+3. The simplest GNN: apply separate small networks to each node, edge and global vector, keeping the structure; predictions by a classifier on the updated node vectors; pooling (sum, mean, max) to move information between nodes and edges when one is missing.
+4. Message passing: each node gathers its neighbors' vectors, aggregates them (sum or mean), and updates its own with a learned function; stacking k layers lets information travel k hops; this is graph convolution, and the neighbor mixing of the spatio-temporal net is one layer of it with directed neighbors.
+5. Global context: a master node connected to everything, or a global vector updated from pooled nodes and edges, so distant nodes can communicate.
+6. Design choices shown in the playground: number of layers, embedding dimension, aggregation function, and which attributes to pass; performance is not monotone in depth, since over-smoothing makes node embeddings indistinguishable.
+7. Related ideas: graph attention (learned weights per neighbor), graph sampling and batching for large graphs, learned or inferred edges, and comparisons with sequences and images as special graphs.
+
+**Formulas and commands to remember.**
+
+```
+h_v ← UPDATE( h_v, AGGREGATE({ h_u : u ∈ N(v) }) )
+with directed neighbors: h ← h + W_u (A_up h) + W_d (A_down h)
+```
+
+**Three takeaways.**
+
+- A GNN is repeated neighbor aggregation with learned update functions; depth equals hops.
+- Permutation invariance is the constraint that shapes every design.
+- More layers is not better past a few hops; over-smoothing sets in.
+
+**Practice.** Using the playground's design choices as a checklist, rerun the spatio-temporal net with one, two and four rounds of neighbor mixing and with sum versus mean aggregation, and record validation AP at 60 minutes for each.
+
+</details>
 
 #### [DCRNN (Li et al., ICLR 2018) and STGCN (Yu et al., IJCAI 2018)](https://arxiv.org/abs/1707.01926)
 
@@ -3850,6 +6126,40 @@ _paper · free · an evening or two · the two traffic papers; first pass now, s
 
 **PhD at Apple.** These papers set the benchmark protocol the field still uses, and their limitations (fixed sensor sets, no incidents or weather, no transfer across networks) are the open problems. Reproducing them on the M1 with a reduced configuration and then adding incident and weather features to the same protocol is a publishable direction.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** DCRNN, 'Diffusion Convolutional Recurrent Neural Network: Data-Driven Traffic Forecasting': models spatial dependency as a diffusion process on a directed graph, replaces the matrix multiplications in a GRU with diffusion convolutions, and uses a sequence-to-sequence architecture with scheduled sampling; evaluated on METR-LA and PEMS-BAY at 15, 30 and 60 minutes. STGCN, 'Spatio-Temporal Graph Convolutional Networks: A Deep Learning Framework for Traffic Forecasting': stacks spatio-temporal blocks of gated temporal convolutions around a graph convolution, without recurrence, for faster training; evaluated on BJER4 and PeMSD7.
+
+**Key ideas, in order.**
+
+1. Problem setting: a sensor graph with N nodes and a weighted adjacency from road-network distances (a thresholded Gaussian kernel), a history of T steps of speed per node, predict the next T′ steps; metrics MAE, RMSE, MAPE at each horizon; baselines historical average, ARIMA with Kalman filter, VAR, SVR, feed-forward and LSTM networks.
+2. Diffusion convolution: a random walk on the graph with transition matrix D_O⁻¹W (forward) and its reverse D_I⁻¹Wᵀ (backward); the diffusion convolution of a signal X with filter parameters θ sums powers k = 0..K−1 of both transition matrices weighted by θ, capturing upstream and downstream influence separately; K is the number of hops.
+3. DCGRU: a GRU whose reset, update and candidate computations use diffusion convolutions instead of dense matrices, so the hidden state of each node is updated from its own history and its graph neighbors' states.
+4. Sequence to sequence: an encoder DCGRU reads the history; a decoder DCGRU produces the T′ future steps; scheduled sampling feeds the decoder its own predictions with increasing probability during training to reduce exposure bias.
+5. Results: DCRNN improves over baselines by larger margins at longer horizons; ablations show both the diffusion (spatial) and recurrent (temporal) components matter; the learned filters localize around each sensor along the road.
+6. STGCN: each ST-Conv block is a temporal gated convolution (1-D convolution over time with a gated linear unit), a spatial graph convolution (spectral, with a Chebyshev polynomial approximation of order K, or a first-order approximation), and another temporal convolution; blocks stack and an output layer maps to the horizon; no recurrence means fast, parallel training.
+7. Graph convolution in STGCN: the normalized Laplacian L = I − D⁻½WD⁻½; a spectral filter approximated by Chebyshev polynomials T_k(L̃) up to order K, giving K-hop localization; the first-order approximation reduces to a normalized adjacency multiplication.
+8. Comparisons: STGCN trains faster and performs well at short and medium horizons; DCRNN handles direction through forward and backward walks; both assume a fixed known graph, which Graph WaveNet later relaxes.
+
+**Formulas and commands to remember.**
+
+```
+DCRNN: X ⋆_G f_θ = Σ_{k=0}^{K−1} ( θ_{k,1} (D_O⁻¹W)^k + θ_{k,2} (D_I⁻¹Wᵀ)^k ) X
+DCGRU: r = σ(Θ_r ⋆_G [X_t, H_{t−1}] + b_r); u = σ(Θ_u ⋆_G [X_t, H_{t−1}] + b_u); C = tanh(Θ_C ⋆_G [X_t, r ⊙ H_{t−1}] + b_C); H_t = u ⊙ H_{t−1} + (1 − u) ⊙ C
+STGCN block: Γ₁ ⋆_T ReLU( Θ ⋆_G (Γ₀ ⋆_T X) ),  Θ ⋆_G x ≈ Σ_k θ_k T_k(L̃) x
+```
+
+**Three takeaways.**
+
+- Diffusion convolution with forward and backward walks is how a model respects the direction of a road.
+- A graph-convolutional GRU is a GRU whose weights act along the graph; the traffic net is a small one.
+- Spectral (Chebyshev) and spatial (random-walk) convolutions both give K-hop locality; the choice is about direction and cost.
+
+**Practice.** Implement the two-hop diffusion convolution with the registry's forward and backward transition matrices in PyTorch and use it inside a GRU cell; train on Fremont data and compare with the hand-made neighbor features at 60 minutes.
+
+</details>
+
 #### [Neural Networks and Deep Learning (Nielsen)](http://neuralnetworksanddeeplearning.com/)
 
 _book · free · a week · free; the best written backpropagation chapter_
@@ -3865,6 +6175,39 @@ _book · free · a week · free; the best written backpropagation chapter_
 **Stanford grad.** It predates modern architectures and optimizers, which is fine for its purpose: the foundations, explained better than most textbooks.
 
 **PhD at Apple.** A free classic; still the recommendation for anyone who wants to understand backpropagation rather than call it.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapter 1, using neural nets to recognize handwritten digits (perceptrons, sigmoid neurons, architecture, gradient descent, a from-scratch implementation). Chapter 2, how the backpropagation algorithm works (notation, the four fundamental equations, proof, algorithm, code, why it is fast). Chapter 3, improving the way networks learn (cross-entropy cost, softmax, overfitting and regularization, weight initialization, hyperparameter choice, other techniques). Chapter 4, a visual proof that neural nets can compute any function. Chapter 5, why deep networks are hard to train (vanishing gradients). Chapter 6, deep learning (convolutional networks and recent progress).
+
+**Key ideas, in order.**
+
+1. Perceptrons and sigmoid neurons: a perceptron thresholds a weighted sum; a sigmoid neuron smooths the threshold so small weight changes cause small output changes, which makes learning by gradient possible; a network of layers; the digit task with 784 inputs, a hidden layer and 10 outputs.
+2. Gradient descent: the quadratic cost, the gradient, the update rule, stochastic gradient descent with mini-batches and epochs; a 74-line numpy implementation that reaches about 95 % accuracy.
+3. The four equations of backpropagation: the error at the output layer δ^L = ∇_a C ⊙ σ′(z^L); the error in terms of the next layer δ^l = ((w^{l+1})ᵀ δ^{l+1}) ⊙ σ′(z^l); the bias gradient ∂C/∂b = δ; the weight gradient ∂C/∂w^l_{jk} = a^{l−1}_k δ^l_j; the algorithm is a forward pass, an output error, a backward pass, and the gradient; it is fast because it computes all partial derivatives in one backward pass.
+4. Improving learning: the cross-entropy cost avoids the learning slowdown of quadratic cost with sigmoids (its gradient is proportional to the error); softmax with log-likelihood; regularization (L2, L1, dropout, augmentation) against overfitting, with experiments; weight initialization with variance 1/n_in to avoid saturation; heuristics for learning rate, early stopping, schedules, and mini-batch size; momentum and other activations.
+5. Universality: a visual argument that a hidden layer of sigmoid neurons can build step functions and bumps and therefore approximate any continuous function to arbitrary accuracy; universality is about existence, not learnability.
+6. Vanishing gradients: in deep sigmoid networks, gradients in early layers are products of terms smaller than one and shrink exponentially (or explode), so early layers learn slowly; the instability is inherent to gradient-based learning in deep chains and motivates ReLU, careful initialization and normalization.
+7. Convolutional networks: local receptive fields, shared weights (feature maps), pooling; a network for digits reaching over 99 %; the chapter's tour of ensembles, dropout and augmentation, and the state of the field.
+
+**Formulas and commands to remember.**
+
+```
+δ^L = ∇_a C ⊙ σ′(z^L);  δ^l = ((w^{l+1})ᵀ δ^{l+1}) ⊙ σ′(z^l)
+∂C/∂b^l_j = δ^l_j;  ∂C/∂w^l_{jk} = a^{l−1}_k δ^l_j
+cross-entropy: C = −(1/n) Σ [y ln a + (1 − y) ln(1 − a)];  ∂C/∂w ∝ (a − y)
+```
+
+**Three takeaways.**
+
+- The four equations are backpropagation; memorize their shape and every framework becomes readable.
+- Cross-entropy fixes the sigmoid's learning slowdown; initialization and ReLU fix vanishing gradients.
+- Universality is an existence result; learnability and generalization are separate questions.
+
+**Practice.** Implement the four equations for a one-hidden-layer network in numpy, train it on the traffic features, and confirm the gradients against finite differences and against lesson 9's implementation.
+
+</details>
 
 #### [The Little Book of Deep Learning (Fleuret)](https://fleuret.org/francois/lbdl.html)
 
@@ -3882,6 +6225,38 @@ _book · free · a weekend · free; the whole field in 150 small pages_
 
 **PhD at Apple.** A free, expert summary; the kind of document to hand a strong engineer who needs the whole picture in a weekend.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I, foundations: machine learning (learning from data, basis function regression, under and overfitting, categories of models); efficient computation (GPUs, tensors); training (losses, autoregressive models, gradient descent, backpropagation, training protocols, the benefits of scale). Part II, deep models: model components (layers, linear, activations, pooling, dropout, normalizing, skip connections, attention, token embedding, positional encoding); architectures (MLP, convolutional networks, attention models). Part III, applications: prediction (image denoising, classification, detection, segmentation, speech recognition, text-image, reinforcement learning) and synthesis (text generation, image generation). A closing chapter on what is missing.
+
+**Key ideas, in order.**
+
+1. Foundations: a model is a parametric function; learning minimizes a loss on training data; generalization requires capacity matched to data; the categories of tasks (regression, classification, density modelling, generation).
+2. Computation: tensors as the data structure, GPUs as parallel matrix engines, memory bandwidth as the bottleneck, and why batching matters.
+3. Training: cross-entropy and its relatives; autoregressive factorization for sequences; stochastic gradient descent with momentum and Adam; backpropagation through the computational graph with stored activations; training protocols (validation, learning-rate schedules, early stopping) and the empirical benefits of scale (more data, more parameters, more compute improve smoothly).
+4. Components: linear layers, convolutional layers (1-D and 2-D, stride, padding, dilation, transposed), activations (ReLU, GELU, and others), pooling, dropout, batch and layer normalization with their statistics, skip connections and why they help optimization, attention layers (query, key, value, multi-head, causal masking), token embeddings and positional encodings.
+5. Architectures: the MLP; convolutional networks (LeNet, ResNet, and the receptive-field view); attention models (the transformer encoder and decoder, GPT as a decoder-only model, the vision transformer).
+6. Applications: how each task is cast as a loss over a network's outputs (denoising as regression, detection with box regression and class heads, segmentation as per-pixel classification, speech with CTC, text-image with contrastive alignment, reinforcement learning with value networks) and how generation works (autoregressive sampling, diffusion).
+7. What is missing: recurrent networks, GANs, graph networks, self-supervision, and the training details of large models, with pointers.
+
+**Formulas and commands to remember.**
+
+```
+autoregressive: p(x_1..x_T) = Π_t p(x_t | x_{<t})
+layer norm: y = γ (x − μ)/σ + β over the feature dimension
+```
+
+**Three takeaways.**
+
+- Every architecture is a stack of a dozen component types; know the components and any diagram is legible.
+- Autoregressive factorization plus cross-entropy is how sequence generation is trained.
+- Skip connections and normalization are what make depth optimizable.
+
+**Practice.** Read the components chapter, then list which components the spatio-temporal net uses and which it could add (layer norm, skip connections, attention over stations), and test one addition.
+
+</details>
+
 #### [A Recipe for Training Neural Networks (Karpathy)](https://karpathy.github.io/2019/04/25/recipe/)
 
 _essay · free · an hour · free; the checklist that prevents silent failures_
@@ -3897,6 +6272,36 @@ _essay · free · an hour · free; the checklist that prevents silent failures_
 **Stanford grad.** Read it with Karpathy's course on activations and gradients statistics; together they are the practical theory of training diagnostics.
 
 **PhD at Apple.** A widely used piece of practitioner wisdom; for a lead, it is the shared protocol to require before anyone reports a result.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A blog post arguing that neural network training fails silently and must be built incrementally, with a step-by-step recipe: become one with the data; set up an end-to-end skeleton with dumb baselines; overfit; regularize; tune; squeeze out the juice.
+
+**Key ideas, in order.**
+
+1. Failure is silent: shapes broadcast wrongly, labels are off by one, learning rates are off by orders of magnitude, and the loss still goes down; only a disciplined process catches it.
+2. Become one with the data: look at hundreds of examples, find duplicates, corrupt labels, imbalances, biases; think about what features a simple model would use; plot distributions and outliers.
+3. Skeleton and baselines: fix the seed; simplify (no augmentation, no fancy schedules); verify the initial loss equals the expected value for random predictions (for binary cross-entropy at prevalence p, −[p log p + (1 − p) log(1 − p)]); initialize the final layer's bias to the base rate; build human and simple baselines; a model that predicts from inputs and one with inputs zeroed should differ; overfit one batch to zero loss; verify decreasing training loss with capacity; visualize exactly what enters the network just before it does; visualize prediction dynamics on a fixed batch; use backpropagation to chart dependencies (a loss on one example should produce gradients only for that example); generalize a special case first.
+4. Overfit: get a model large enough to overfit the training set, then regularize; use the standard architecture for the domain; Adam with learning rate 3e-4 is a safe start; add complexity one piece at a time; disable learning-rate decay at first.
+5. Regularize: more real data, augmentation, creative augmentation, pretraining, fewer inputs, smaller model, smaller batch, dropout (carefully with batch norm), weight decay, early stopping on validation; a larger model with early stopping often beats a small one.
+6. Tune: random search over hyperparameters rather than grid; Bayesian optimization if you like; squeeze: ensembles, and train longer than you think.
+
+**Formulas and commands to remember.**
+
+```
+initial BCE ≈ −[p log p + (1 − p) log(1 − p)] for prevalence p;  final bias = log(p/(1 − p))
+```
+
+**Three takeaways.**
+
+- Verify the loss at initialization and overfit one batch before anything else.
+- Add one thing at a time and keep a fixed batch to watch.
+- Regularize after you can overfit, not before.
+
+**Practice.** Apply the recipe to the spatio-temporal net: check the initial loss against the prevalence formula, set the output bias to the base rate, overfit two batches, then add neighbor mixing and early stopping one step at a time with a log of each change and its effect.
+
+</details>
 
 #### [UvA Deep Learning Tutorials](https://uvadlc-notebooks.readthedocs.io/)
 
@@ -3914,6 +6319,38 @@ _docs · free · an afternoon · free notebooks; initialization, optimization, t
 
 **PhD at Apple.** A free, maintained set of reference implementations; useful when reproducing a paper and needing a correct baseline component.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Notebooks: introduction to PyTorch; activation functions; optimization and initialization; inception, ResNet and DenseNet; transformers and multi-head attention; graph neural networks; energy-based models; deep autoencoders; normalizing flows; autoregressive image modelling; vision transformers; meta-learning; self-supervised contrastive learning; plus a JAX track and guides on scaling.
+
+**Key ideas, in order.**
+
+1. Activation functions: sigmoid, tanh, ReLU, LeakyReLU, ELU, Swish compared by gradient behavior and by training experiments; the vanishing-gradient plots per layer.
+2. Optimization and initialization: constant versus random initialization, variance analysis leading to Xavier and Kaiming, the effect of activation choice; SGD, momentum and Adam compared on a small model; learning-rate effects; the notebook's diagnostic plots of gradient norms per layer.
+3. ResNets and friends: skip connections, bottlenecks, pre-activation blocks, DenseNet's concatenation, and what each does to optimization.
+4. Transformers: scaled dot-product attention implemented from scratch, multi-head attention, the encoder block, positional encoding, learning-rate warmup and why it matters, and experiments on sequence tasks (reversing, set anomaly detection).
+5. Graph neural networks: graph convolution as normalized adjacency multiplication, graph attention layers from scratch, node classification on Cora, and PyTorch Geometric usage.
+6. Generative and self-supervised: autoencoders with latent visualization, normalizing flows with coupling layers, autoregressive PixelCNN, energy-based models with contrastive divergence, and SimCLR contrastive learning with augmentations and a linear probe.
+
+**Formulas and commands to remember.**
+
+```
+attention = softmax(QKᵀ/√d_k) V;  MultiHead = Concat(head_1..head_h) W^O
+GCN layer: H′ = D̂⁻½ Â D̂⁻½ H W with Â = A + I
+Kaiming: Var(w) = 2/n_in for ReLU
+```
+
+**Three takeaways.**
+
+- Initialization and activation choices are visible in per-layer gradient statistics; plot them.
+- Attention and graph convolution are a few lines each when written from scratch.
+- Contrastive pretraining plus a linear probe is the standard test of a representation.
+
+**Practice.** Run the optimization notebook's gradient-norm diagnostics on the spatio-temporal net, then reimplement its GCN layer with the registry's adjacency and compare with the two-hop mixing layer.
+
+</details>
+
 #### [The training-recipe papers: Adam (Kingma, Ba, 2014), Batch Normalization (Ioffe, Szegedy, 2015), Dropout (Srivastava et al., 2014)](https://arxiv.org/abs/1412.6980)
 
 _paper · free · an evening or two · free; the three tricks behind the standard recipe_
@@ -3929,6 +6366,38 @@ _paper · free · an evening or two · free; the three tricks behind the standar
 **Stanford grad.** Together with later corrections (AdamW's decoupled weight decay, layer normalization for transformers, batch norm's issues at small batch size) they are the history of the training recipe; reading them teaches how empirical claims in ML get revised.
 
 **PhD at Apple.** Canonical citations; for research, the interesting part is the gap between their stated explanations and the later understanding, which is a lesson in how the field learns.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Adam: an optimizer with per-parameter adaptive learning rates from exponential moving averages of the gradient and its square, with bias correction, convergence analysis and experiments. Batch normalization: normalizing each layer's inputs per mini-batch with learned scale and shift, its effect on training speed and on allowable learning rates, and inference with population statistics. Dropout: randomly dropping units during training to prevent co-adaptation, its interpretation as training an exponential ensemble, the weight-scaling rule at test time, and experiments across domains.
+
+**Key ideas, in order.**
+
+1. Adam's update: m_t = β₁m_{t−1} + (1 − β₁)g_t; v_t = β₂v_{t−1} + (1 − β₂)g_t²; bias-corrected m̂ = m_t/(1 − β₁ᵗ), v̂ = v_t/(1 − β₂ᵗ); θ ← θ − α m̂/(√v̂ + ε); defaults α = 1e-3, β₁ = 0.9, β₂ = 0.999, ε = 1e-8; the effective step is bounded by α and invariant to gradient scale; later AdamW decouples weight decay from the gradient.
+2. Why Adam: momentum smooths noisy gradients; dividing by the root of the second moment equalizes step sizes across parameters with different gradient scales; bias correction fixes the early steps when the averages start at zero.
+3. Batch normalization: for each feature, normalize over the mini-batch to zero mean and unit variance, then scale by γ and shift by β (learned); during inference use running averages of mean and variance; place before the nonlinearity; it allows higher learning rates, makes initialization less critical and regularizes slightly; the paper's 'internal covariate shift' explanation was later disputed in favor of loss-landscape smoothing.
+4. Batch norm caveats: depends on batch size (small batches give noisy statistics), behaves differently in training and evaluation (`model.eval()` matters), interacts with dropout, and is unsuitable for sequence models where layer normalization is used.
+5. Dropout: during training, each unit is kept with probability p (0.5 hidden, 0.8 inputs typical) and dropped otherwise; at test time, all units are kept and weights scaled by p (or inverted dropout scales at training time); the network cannot rely on specific co-adapted units; it approximates averaging over 2ⁿ thinned networks; experiments show consistent gains on vision, speech and text with larger models and longer training.
+6. Practical combination: Adam(W) with a learning-rate schedule, normalization appropriate to the architecture, dropout tuned by validation; the three form the default recipe that most models still use in some form.
+
+**Formulas and commands to remember.**
+
+```
+Adam: θ_t = θ_{t−1} − α · m̂_t / (√v̂_t + ε)
+BatchNorm: y = γ (x − μ_B)/√(σ_B² + ε) + β
+Dropout (inverted): h ← h ⊙ mask / p, mask ~ Bernoulli(p)
+```
+
+**Three takeaways.**
+
+- Adam normalizes step sizes per parameter; its defaults work across most problems.
+- Batch norm stabilizes training but ties the model to batch statistics; use layer norm for sequences.
+- Dropout is ensemble averaging in disguise; scale correctly at test time.
+
+**Practice.** Train the MLP with SGD, SGD with momentum and Adam at three learning rates each, with and without dropout 0.2, and tabulate validation AP and epochs to early stop.
+
+</details>
 
 ### Build
 
@@ -4296,6 +6765,40 @@ _book · free · reference, chapters as needed · now chapters 10 to 18: convolu
 
 **PhD at Apple.** A free, modern, rigorous textbook is a public good; it is the one to recommend to a new graduate student and the one to cite for standard architectures in the current idiom. Its figures are also the model for how to draw a network in a paper.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction; supervised learning; shallow networks; deep networks; loss functions; fitting models; gradients and initialization; measuring performance; regularization; convolutional networks; residual networks; transformers; graph neural networks; unsupervised learning; generative adversarial networks; normalizing flows; variational autoencoders; diffusion models; reinforcement learning; why does deep learning work; deep learning and ethics.
+
+**Key ideas, in order.**
+
+1. Shallow and deep networks: a shallow network is a linear combination of ReLU-transformed linear functions, producing piecewise linear maps with regions; depth composes such maps and creates exponentially many regions per parameter; universal approximation with width, efficiency with depth.
+2. Losses from maximum likelihood: choose a distribution over outputs (Gaussian gives least squares, Bernoulli gives binary cross-entropy, categorical gives softmax cross-entropy, others give robust or heteroscedastic losses); the network predicts the distribution's parameters.
+3. Fitting: gradient descent, stochastic gradient descent, momentum, Adam; learning-rate schedules and warmup; backpropagation derived for the general case with the forward pass storing activations; initialization that preserves variance (He), and the analysis of exploding and vanishing signals.
+4. Measuring performance: noise, bias and variance; the double-descent curve; hyperparameter search; the importance of test sets; the curse of dimensionality and how real data lie on lower-dimensional manifolds.
+5. Regularization: explicit (L2, early stopping), implicit (SGD's noise, larger learning rates), heuristic (ensembling, dropout, augmentation, transfer learning, multi-task, self-supervision), and the general picture of why regularized deep networks generalize.
+6. Architectures: convolutions (invariance, equivariance, pooling, receptive fields, classic networks), residual connections (why depth trained poorly before them, batch and layer norm), transformers (dot-product attention, positional information, encoder and decoder, scaling, vision transformers), graph networks (adjacency, node embeddings, message passing, graph-level and node-level tasks, spectral and spatial views).
+7. Generative models: GANs (minimax, mode collapse, Wasserstein), normalizing flows (invertible transformations and exact likelihoods), VAEs (the ELBO, reparameterization, posterior collapse), diffusion (forward noising, reverse denoising, the training objective, conditioning and guidance).
+8. Reinforcement learning basics, the chapter on why deep learning works (loss landscapes, overparameterization, lottery tickets, adversarial examples) and the ethics chapter (bias, explainability, misuse, environmental cost).
+
+**Formulas and commands to remember.**
+
+```
+deep network: y = φ_K ∘ … ∘ φ_1(x), each φ = ReLU(W h + b)
+ELBO = E_q[log p(x|z)] − KL(q(z|x) ‖ p(z))
+attention(Q, K, V) = softmax(QKᵀ/√d) V
+```
+
+**Three takeaways.**
+
+- Every loss is a negative log-likelihood of some output distribution.
+- Depth buys expressive piecewise-linear maps; normalization and residuals make depth trainable.
+- Generative families differ in how they make likelihood tractable: flows exactly, VAEs by bounds, diffusion by denoising, GANs not at all.
+
+**Practice.** Implement a two-layer ReLU network on one input and plot its output to count linear regions as you add hidden units, then read the chapter's argument about depth and regions and relate it to your plot.
+
+</details>
+
 #### [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/)
 
 _book · free · reference, chapters as needed · now chapters 7, 8 and 11: convolutions and attention_
@@ -4311,6 +6814,40 @@ _book · free · reference, chapters as needed · now chapters 7, 8 and 11: conv
 **Stanford grad.** Its graph-neural-network coverage is thin; use CS224W for that. Its attention chapters are the bridge to spatio-temporal transformers, and its chapter on computational performance (asynchrony, memory, multi-device) is the right background before profiling on unified memory.
 
 **PhD at Apple.** A living, open textbook with code in several frameworks is itself a research-infrastructure achievement. Cite it for standard architectures, use its implementations as reference points when reproducing papers, and note its authors' choice to include the messy practical chapters most textbooks omit.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapter 3, linear neural networks for regression (linear regression, its implementation from scratch and concisely, generalization, weight decay). Chapter 4, linear networks for classification (softmax regression, the image classification dataset, implementations, generalization in classification, environment and distribution shift). Chapter 5, multilayer perceptrons (MLPs, implementation, forward and backward propagation, numerical stability and initialization, generalization, dropout, a Kaggle house-price example). Chapter 9, recurrent neural networks (sequences, text to sequence, language models, RNNs, implementation, backpropagation through time). Chapter 10, modern RNNs (LSTM, GRU, deep and bidirectional RNNs, machine translation data, encoder-decoder, sequence-to-sequence, beam search).
+
+**Key ideas, in order.**
+
+1. Linear regression as a network: the model, squared loss, minibatch stochastic gradient descent with learning rate and batch size, vectorization, the normal-distribution view of squared loss; from-scratch implementation with manual gradients, then `nn.Linear` and `MSELoss`.
+2. Generalization and weight decay: training versus generalization error, model selection with validation, underfitting and overfitting versus capacity and data; L2 penalty as weight decay in the optimizer.
+3. Softmax regression: one-hot targets, softmax outputs, cross-entropy loss and its gradient (softmax minus one-hot), the log-sum-exp trick for stability, accuracy as a metric; distribution shift (covariate, label, concept) and why test data may not match.
+4. MLPs: hidden layers with nonlinear activations (ReLU, sigmoid, tanh) give universal approximation; forward propagation, the computational graph, backpropagation through it, and memory for stored activations.
+5. Numerical stability: vanishing and exploding gradients from products of Jacobians, symmetry breaking by random initialization, Xavier initialization derived from keeping variances constant across layers; dropout as noise injection (zero units with probability p, scale by 1/(1 − p), off at test time).
+6. Sequences: autoregressive models, the Markov assumption, tokenization and vocabularies, language modelling as next-token prediction, perplexity; RNNs with a hidden state h_t = φ(x_t W_xh + h_{t−1} W_hh + b), the character-level RNN from scratch, gradient clipping, truncated backpropagation through time and its analysis.
+7. Gated RNNs: LSTM's input, forget and output gates with a memory cell; GRU's reset and update gates; why gates mitigate vanishing gradients; deep and bidirectional RNNs (bidirectional only when the whole sequence is available, never for forecasting).
+8. Encoder-decoder: encoding a sequence to a state, decoding a sequence from it, teacher forcing during training, greedy versus beam search decoding, BLEU for evaluation.
+
+**Formulas and commands to remember.**
+
+```
+softmax(o)_j = exp(o_j)/Σ_k exp(o_k);  ∂L/∂o = softmax(o) − y
+Xavier: Var(w) = 2/(n_in + n_out)
+GRU: r = σ(x W_xr + h W_hr + b_r); z = σ(x W_xz + h W_hz + b_z); h̃ = tanh(x W_xh + (r ⊙ h) W_hh + b_h); h_new = z ⊙ h + (1 − z) ⊙ h̃
+```
+
+**Three takeaways.**
+
+- Cross-entropy's gradient is prediction minus target; that pattern runs from logistic regression to language models.
+- Initialization keeps variances constant across layers; dropout injects noise; both are about stability and generalization.
+- A GRU's gates decide what to keep and what to overwrite; that is the memory the traffic net uses.
+
+**Practice.** Implement the GRU cell from the chapter's equations in PyTorch, verify it matches `nn.GRUCell` on random inputs, and use it as the sequence encoder in the spatio-temporal net.
+
+</details>
 
 #### [CS231n: Convolutional Neural Networks for Visual Recognition, course notes](https://cs231n.github.io/)
 
@@ -4328,6 +6865,40 @@ _course · free · weeks · free; the convolutional foundations with worked coun
 
 **PhD at Apple.** CS231n shaped how a generation learned deep learning; knowing it tells you what practitioners take for granted. For a lead, its assignments are a fair calibration of what 'can implement a network from scratch' means.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Modules: image classification (data-driven approach, k-nearest neighbor, validation, the curse of dimensionality); linear classification (score function, SVM and softmax losses, regularization); optimization (loss landscapes, gradient computation, gradient descent, mini-batches); backpropagation (chain rule, staged computation, gradients of vector operations); neural networks part 1 (architectures, activations, representational power), part 2 (data preprocessing, weight initialization, batch normalization, regularization, loss functions), part 3 (gradient checks, sanity checks, monitoring training, hyperparameter optimization, ensembles); convolutional networks (architecture, layers, patterns, case studies, computational considerations); understanding and visualizing; transfer learning and fine-tuning.
+
+**Key ideas, in order.**
+
+1. Linear classification: a score function f(x) = Wx + b maps pixels to class scores; the multiclass SVM loss wants the correct score to exceed others by a margin; the softmax loss interprets scores as unnormalized log probabilities and minimizes cross-entropy; L2 regularization on W; the bias trick appends a constant feature.
+2. Optimization: numerical versus analytic gradients; gradient checking with centered differences and relative error; step size; mini-batch gradient descent; the loss as a function of parameters, with the geometric picture of the SVM loss as a piecewise-linear bowl.
+3. Backpropagation: any expression is a graph of gates; each gate computes its local gradient; the chain rule multiplies backward; sigmoid, max and multiply gates as examples; gradients of matrix-matrix multiplications by dimension analysis (dW = dOut · Xᵀ shapes must match); staged computation for readability.
+4. Neural networks: layers of neurons with activations (sigmoid's saturation and non-zero-centered issues, tanh, ReLU's speed and dying units, Leaky ReLU, Maxout); fully connected architectures; universal approximation; why larger networks with proper regularization beat smaller ones.
+5. Setting up: mean subtraction and normalization; initialization pitfalls (all zeros fails; small random numbers shrink activations; calibrate variance with 1/√n and Kaiming's 2/n for ReLU); batch normalization; regularization by L2, L1, max norm, dropout, and data augmentation; loss choices for classification, attribute prediction and regression.
+6. Learning and evaluation: gradient checks with care (double precision, kinks, few points); sanity checks (initial loss value, overfit a tiny subset); monitoring loss curves, train/validation accuracy gap, update-to-weight ratios (about 1e-3), activation and gradient histograms; parameter updates (SGD, momentum, Nesterov, per-parameter methods such as Adagrad, RMSprop, Adam); learning-rate decay; hyperparameter search by random search on log scales in stages; model ensembles.
+7. Convolutional networks: the convolution layer's filters, receptive field, depth, stride, zero-padding, and the output size formula (W − F + 2P)/S + 1; parameter sharing; pooling; normalization layers; the standard pattern (conv-ReLU repeated, pool, fully connected); case studies (LeNet, AlexNet, VGG, GoogLeNet, ResNet) and their memory and compute budgets.
+8. Transfer learning: use a pretrained network as a fixed feature extractor or fine-tune some layers; rules by dataset size and similarity; smaller learning rates for pretrained layers.
+
+**Formulas and commands to remember.**
+
+```
+conv output size = (W − F + 2P)/S + 1
+softmax loss L_i = −log( e^{f_{y_i}} / Σ_j e^{f_j} )
+relative error = |f′_a − f′_n| / max(|f′_a|, |f′_n|)  (gradient check; < 1e-7 good)
+```
+
+**Three takeaways.**
+
+- Every deep model is gates plus the chain rule; learn to compute gradients by shape.
+- Sanity checks (initial loss, overfit a subset, update ratios) catch most bugs.
+- Convolutions buy parameter sharing and locality; the output-size formula is the arithmetic of architecture.
+
+**Practice.** Implement a 2-D convolution and max pooling forward and backward in numpy, verify with the course's gradient check recipe, and count parameters and multiply-adds for a three-layer network on 32×32 images.
+
+</details>
+
 #### [The Illustrated Transformer (Alammar)](https://jalammar.github.io/illustrated-transformer/)
 
 _essay · free · an hour · free; read before the paper_
@@ -4343,6 +6914,40 @@ _essay · free · an hour · free; read before the paper_
 **Stanford grad.** It omits positional encodings' subtleties, training dynamics and scaling; those come from the papers and from Prince's chapter 12. For spatio-temporal traffic models, the relevant transfer is attention over stations (spatial attention) and over time steps, which later traffic transformers use.
 
 **PhD at Apple.** Alammar's posts are the standard first explanation across the industry; for briefing non-specialists on what a language model does, they remain the reference, and their visual grammar is worth adopting in talks.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A visual walk through the transformer for translation: the encoder-decoder stack, embeddings, self-attention at a high level and in detail (queries, keys, values, scores, softmax, weighted sum), matrix form, multi-head attention, positional encoding, residuals and layer normalization, the decoder's masked attention and encoder-decoder attention, the final linear and softmax layer, training with cross-entropy and label smoothing, and greedy versus beam decoding.
+
+**Key ideas, in order.**
+
+1. Overall structure: an encoder stack (six identical layers of self-attention plus feed-forward) and a decoder stack (self-attention, encoder-decoder attention, feed-forward); inputs are word embeddings plus positional encodings; all positions are processed in parallel.
+2. Self-attention step by step: for each input vector, compute a query, a key and a value by three learned matrices; score each position against every other by dot product of query and key; divide by the square root of the key dimension; softmax; multiply each value by its softmax weight and sum; the result is a context-aware vector for the position.
+3. Matrix form: Q = XW_Q, K = XW_K, V = XW_V; Z = softmax(QKᵀ/√d_k)V; the attention matrix is positions × positions.
+4. Multi-head attention: several sets of Q, K, V matrices give several attention 'perspectives'; concatenate the heads' outputs and project with W_O; heads attend to different relations (the illustrated 'it' attending to 'animal' and to 'tired').
+5. Positional encoding: a vector added to each embedding encoding position with sinusoids of different frequencies, so the model can use order and relative distances; the illustrated pattern of interleaved sines and cosines.
+6. Residuals and normalization: each sub-layer's output is added to its input and layer-normalized, which stabilizes training and lets information bypass a layer.
+7. Decoder: masked self-attention (future positions set to −∞ before softmax) so predictions depend only on earlier outputs; encoder-decoder attention uses queries from the decoder and keys and values from the encoder's output; the final linear layer maps to vocabulary logits and softmax to probabilities; generation is step by step.
+8. Training: the target distribution is one-hot (or smoothed); the loss is cross-entropy summed over positions; decoding greedily or with beam search.
+
+**Formulas and commands to remember.**
+
+```
+Attention(Q, K, V) = softmax(QKᵀ/√d_k) V
+PE(pos, 2i) = sin(pos/10000^{2i/d});  PE(pos, 2i+1) = cos(pos/10000^{2i/d})
+LayerNorm(x + Sublayer(x))
+```
+
+**Three takeaways.**
+
+- Attention is a softmax-weighted average of values, with weights from query-key similarity.
+- Multiple heads and stacked layers let different relations be captured in parallel.
+- Masking is what makes a decoder autoregressive.
+
+**Practice.** Implement single-head and then multi-head self-attention in numpy for six tokens with random embeddings, print the attention matrices, then add a causal mask and confirm the upper triangle is zero.
+
+</details>
 
 #### [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762)
 
@@ -4360,6 +6965,40 @@ _paper · free · an evening or two · free; the paper, with the post open besid
 
 **PhD at Apple.** A canonical citation; for research, the interesting questions are the ones it opened (efficiency of attention, positional information, what attention learns) rather than what it settled.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The paper: motivation (recurrence limits parallelism; attention allows constant path length between positions), the model architecture (encoder-decoder stacks, scaled dot-product attention, multi-head attention, position-wise feed-forward networks, embeddings and softmax, positional encoding), why self-attention (complexity per layer, parallelizable operations, path length), training (data, hardware, schedule with warmup, regularization by residual dropout and label smoothing), results on translation with BLEU and cost, model variations (heads, key size, model size, dropout, positional encoding), and English constituency parsing.
+
+**Key ideas, in order.**
+
+1. Architecture: N = 6 layers each side; d_model = 512; each encoder layer has multi-head self-attention and a feed-forward network with residual connections and layer normalization; the decoder adds masked self-attention and attention over encoder outputs.
+2. Scaled dot-product attention: softmax(QKᵀ/√d_k)V; scaling prevents large dot products from pushing softmax into regions with tiny gradients when d_k is large; compared with additive attention, it is faster in practice.
+3. Multi-head attention: h = 8 heads with d_k = d_v = 64; project Q, K, V to lower dimensions per head, attend in parallel, concatenate and project; total cost similar to one full-dimensional head.
+4. Feed-forward: two linear layers with ReLU applied identically at each position (inner dimension 2048); embeddings shared between input, output and the pre-softmax linear layer, scaled by √d_model.
+5. Positional encoding: sinusoids at geometric frequencies so relative positions are linear functions; learned positions performed similarly; sinusoids may extrapolate to longer sequences.
+6. Why self-attention: per-layer complexity O(n²·d) versus O(n·d²) for recurrence; sequential operations O(1) versus O(n); maximum path length O(1) versus O(n); restricted attention for very long sequences.
+7. Training details: byte-pair or word-piece vocabularies; batches by approximate length; Adam with β₂ = 0.98 and a learning rate that warms up linearly for 4000 steps then decays as the inverse square root of the step; dropout 0.1 on residuals and embeddings; label smoothing 0.1 hurts perplexity but helps accuracy and BLEU; checkpoint averaging; beam search with size 4 and length penalty.
+8. Results and ablations: state of the art on English-German and English-French at a fraction of prior training cost; single-head attention is worse than multi-head but too many heads also hurt; reducing key size hurts; bigger models help; dropout is needed.
+
+**Formulas and commands to remember.**
+
+```
+lr = d_model^{−0.5} · min(step^{−0.5}, step · warmup^{−1.5})
+MultiHead(Q, K, V) = Concat(head_1, …, head_h) W^O,  head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)
+FFN(x) = max(0, xW₁ + b₁)W₂ + b₂
+```
+
+**Three takeaways.**
+
+- Constant path length between any two positions is the reason attention beat recurrence on long-range structure.
+- The scaling by √d_k and the warmup schedule are small details that decide whether it trains.
+- The ablation table is the model for how to report architecture choices.
+
+**Practice.** Implement one encoder layer from the paper's equations in PyTorch (multi-head attention, feed-forward, residuals, layer norm, sinusoidal positions), and train it as a temporal encoder over 12 traffic steps in place of the GRU.
+
+</details>
+
 #### [Hugging Face LLM course](https://huggingface.co/learn/llm-course/chapter1/1)
 
 _course · free · two weeks · free; the practical stack for language models_
@@ -4375,6 +7014,38 @@ _course · free · two weeks · free; the practical stack for language models_
 **Stanford grad.** Later chapters and the companion courses (agents, reinforcement learning from human feedback) track current practice; the course is a good index of what the ecosystem considers standard at any moment.
 
 **PhD at Apple.** The Hugging Face ecosystem is where much of applied NLP lives; its course is also a reference for how open model sharing and evaluation are organized, which matters for reproducibility and licensing decisions in a product.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: transformer models (NLP and LLMs, what transformers can do, how they work, architectures, bias and limitations); using transformers (pipelines, models, tokenizers, handling multiple sequences, putting it together); fine-tuning a pretrained model (processing data, training with the Trainer API, a full training loop, learning curves); sharing models and tokenizers; the datasets library; the tokenizers library (byte-pair encoding, WordPiece, Unigram, training a tokenizer); classical NLP tasks (token classification, masked language modelling, translation, summarization, causal language modelling, question answering); building and sharing demos; reasoning models and fine-tuning with reinforcement learning (later chapters).
+
+**Key ideas, in order.**
+
+1. Pipelines: `pipeline('text-classification')` and others wrap preprocessing, model and postprocessing; the model hub; the three stages inside a pipeline (tokenizer, model, head).
+2. Transformer families: encoder (BERT-like, bidirectional, for classification and token tasks), decoder (GPT-like, causal, for generation), encoder-decoder (T5, BART, for sequence-to-sequence); pretraining then fine-tuning as transfer learning; attention masks; biases inherited from data.
+3. Tokenizers: word, character and subword tokenization; BPE merges, WordPiece scoring, Unigram pruning; special tokens, attention masks, padding and truncation, offsets; training a tokenizer on your own corpus (incident headlines have their own vocabulary).
+4. Fine-tuning: load a dataset, tokenize with dynamic padding, `AutoModelForSequenceClassification` with a fresh head, `TrainingArguments` and `Trainer`, or a manual loop with `accelerate`; evaluation with metrics; learning rates around 2e-5 for fine-tuning; a few epochs.
+5. Datasets: loading, mapping, filtering, streaming large data, saving; combining with pandas.
+6. Tasks: token classification (named entities such as route names), masked language modelling for domain adaptation, causal language modelling for generation, summarization and translation with encoder-decoders, question answering with span prediction.
+7. Demos: Gradio apps for sharing a model; the model card as documentation.
+
+**Formulas and commands to remember.**
+
+```
+tok = AutoTokenizer.from_pretrained(name); model = AutoModelForSequenceClassification.from_pretrained(name, num_labels=3)
+Trainer(model, TrainingArguments(output_dir, learning_rate=2e-5, num_train_epochs=3, per_device_train_batch_size=16), train_dataset=..., eval_dataset=..., compute_metrics=...).train()
+```
+
+**Three takeaways.**
+
+- Encoders classify, decoders generate, encoder-decoders transform; pick by task.
+- Fine-tuning is a small learning rate, a fresh head and a few epochs.
+- Tokenization decides what the model sees; train one on your domain if the vocabulary is odd.
+
+**Practice.** Fine-tune a small encoder on incident headlines for severity with the Trainer API, log macro F1 per epoch, and compare with a bag-of-words logistic regression and with a version whose tokenizer was trained on the headlines.
+
+</details>
 
 #### [Speech and Language Processing, 3rd edition draft (Jurafsky, Martin)](https://web.stanford.edu/~jurafsky/slp3/)
 
@@ -4392,6 +7063,40 @@ _book · free · reference · free; the textbook for the language chapters_
 
 **PhD at Apple.** A free, continuously revised textbook by leading researchers is the field's reference; its revision history is itself a record of how fast the field moved.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I, fundamental algorithms: words, tokens and unicode; n-gram language models; naive Bayes and sentiment; logistic regression; vector semantics and embeddings; neural networks; large language models; transformers; masked language models; model alignment, prompting and in-context learning. Part II, NLP applications: information retrieval and RAG; machine translation; question answering; chatbots; annotation; speech recognition and synthesis. Part III, linguistic structure: sequence labelling, parsing, semantics, discourse.
+
+**Key ideas, in order.**
+
+1. Text normalization: tokenization (including byte-pair encoding's learn-and-apply algorithm), normalization, lemmatization and stemming, sentence segmentation, edit distance.
+2. N-gram models: the chain rule and the Markov approximation; maximum likelihood estimates; perplexity as the inverse probability per word; smoothing (Laplace, interpolation, backoff, Kneser-Ney) to handle unseen n-grams; the same ideas underlie neural language models' evaluation.
+3. Classification: naive Bayes for text with bag-of-words counts, its assumptions, and sentiment features; logistic regression with features, cross-entropy loss, gradient descent, regularization and multinomial (softmax) classification; evaluation with precision, recall, F1, cross-validation and statistical significance tests (bootstrap).
+4. Vector semantics: distributional hypothesis; term-document and term-term matrices; TF-IDF; PMI; word2vec's skip-gram with negative sampling and its objective; properties of embeddings (similarity, analogies, bias); visualization; evaluation.
+5. Neural networks and neural language models: feed-forward networks, the feed-forward language model with embeddings and a context window, training with cross-entropy; the transformer chapter derives attention, multi-head, positional embeddings, the language modelling head and training; masked language models (BERT) with masked and span objectives, fine-tuning for classification and sequence labelling; large language models: decoding (greedy, beam, top-k, top-p, temperature), pretraining data, scaling laws, evaluation.
+6. Alignment and prompting: instruction tuning, preference alignment (RLHF and direct preference optimization), prompting, in-context learning, chain of thought, and evaluation of LLMs.
+7. Applications: information retrieval with vector models and dense retrieval; retrieval-augmented generation; question answering; machine translation with encoder-decoders and BLEU; dialogue systems and their evaluation; speech features, CTC and attention-based ASR, TTS.
+8. Structure: part-of-speech tagging and named entity recognition with HMMs and CRFs and with neural sequence labelling; constituency and dependency parsing; semantic roles; coreference.
+
+**Formulas and commands to remember.**
+
+```
+perplexity = P(w₁…w_N)^{−1/N}
+skip-gram with negative sampling: maximize log σ(c·w) + Σ_k log σ(−c_k·w)
+top-p sampling: sample from the smallest set of tokens whose cumulative probability exceeds p
+```
+
+**Three takeaways.**
+
+- Perplexity is cross-entropy exponentiated; language models are evaluated by surprise.
+- Embeddings come from predicting context; similarity is what the objective rewards.
+- Decoding choices (temperature, top-p) change outputs as much as the model does.
+
+**Practice.** Train word2vec-style embeddings on the incident headlines with a small implementation, inspect nearest neighbors of 'collision' and 'I-880', then compute the perplexity of a bigram model on held-out headlines.
+
+</details>
+
 #### [LLMs-from-scratch repository (Raschka)](https://github.com/rasbt/LLMs-from-scratch)
 
 _code · free · two weeks · free notebooks; a GPT you built yourself_
@@ -4407,6 +7112,38 @@ _code · free · two weeks · free notebooks; a GPT you built yourself_
 **Stanford grad.** It stops at small scale; the scaling questions (data curation, distributed training, evaluation) are in the ultra-scale playbook and CS336. The instruction-tuning notebook is a compact account of supervised fine-tuning.
 
 **PhD at Apple.** A from-scratch implementation is the fastest route to reading language-model papers critically; for a lead, assigning the repository to an engineer is a reliable way to build a real mental model before they touch a production model.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapter notebooks: understanding large language models; working with text data (tokenization, byte-pair encoding, data sampling with a sliding window, token and positional embeddings); coding attention mechanisms (simplified attention, trainable weights, causal masking, dropout, multi-head); implementing a GPT model (layer normalization, GELU, feed-forward, shortcut connections, the transformer block, the full GPT, generating text); pretraining on unlabeled data (loss, training loop, decoding strategies, loading pretrained weights); fine-tuning for classification; fine-tuning to follow instructions; plus appendices on PyTorch, LoRA and more.
+
+**Key ideas, in order.**
+
+1. Data pipeline: a tokenizer (implementing simple tokenization, then using BPE via tiktoken), a dataset of sliding windows of context length with inputs and targets shifted by one, embeddings of dimension d_model plus learned positional embeddings.
+2. Attention from scratch: dot products between token vectors as scores, softmax to weights, weighted sums; adding trainable W_q, W_k, W_v; scaling by √d_k; causal masking with an upper-triangular mask before softmax; dropout on weights; multi-head as a batched computation with reshapes.
+3. GPT block: layer norm (implemented), GELU (implemented), feed-forward (expand by 4, GELU, project back), shortcut connections around attention and feed-forward, and the stacked block; the full model with an output head tied to the vocabulary; parameter counting (the 124 M configuration).
+4. Pretraining: cross-entropy over next-token logits, training and validation loss, a training loop with evaluation, text generation with temperature and top-k, saving and loading, and loading OpenAI's GPT-2 weights into the implementation to verify it.
+5. Classification fine-tuning: replace the output head with a class head, fine-tune selected layers, use the last token's representation, evaluate accuracy on a spam dataset.
+6. Instruction fine-tuning: format instruction-input-response prompts, mask the prompt in the loss, batch with padding, train, generate responses, and evaluate with another model as a judge; the appendix on LoRA for parameter-efficient fine-tuning.
+
+**Formulas and commands to remember.**
+
+```
+mask = torch.triu(torch.ones(T, T), diagonal=1).bool(); scores.masked_fill_(mask, -inf)
+x = x + attn(norm1(x)); x = x + ff(norm2(x))   # pre-norm transformer block
+loss = F.cross_entropy(logits.flatten(0, 1), targets.flatten())
+```
+
+**Three takeaways.**
+
+- A GPT is embeddings, N pre-norm blocks of masked attention and feed-forward, and a tied output head.
+- Loading public weights into your own implementation is the proof it is right.
+- Fine-tuning replaces or adapts the head and trains a few layers with a small learning rate.
+
+**Practice.** Build the model at a tiny scale (d_model 128, 4 layers), pretrain on the concatenated incident headlines and the repository's markdown for a few minutes on MPS, generate text, then fine-tune it for headline severity and compare with the encoder classifier.
+
+</details>
 
 #### [Intro to Large Language Models (Karpathy, video)](https://www.youtube.com/watch?v=zjkBMFhNj_g)
 
@@ -4424,6 +7161,38 @@ _video · free · one hour · free; one hour, the whole picture_
 
 **PhD at Apple.** The talk to send to a stakeholder before a discussion about using a language model in a product; its security section is the part most people skip and should not.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A one-hour talk: what an LLM is (two files: parameters and code), how the parameters are obtained (pretraining as lossy compression of internet text), what next-token prediction learns, how a base model becomes an assistant (fine-tuning on conversations, comparison labels and reinforcement learning from human feedback), the leaderboard and open versus closed models, scaling laws, tool use and multimodality, the 'system 1 versus system 2' aspiration, self-improvement, customization, the LLM as an operating system, and security (jailbreaks, prompt injection, data poisoning).
+
+**Key ideas, in order.**
+
+1. The artifact: a large language model is a file of billions of parameters and a few hundred lines of code to run them; running it is easy, obtaining the parameters is the expensive part.
+2. Pretraining: take a large chunk of the internet's text, train a transformer to predict the next token, at a cost of thousands of GPUs for weeks; the result compresses knowledge into weights, imperfectly, which is why it can produce plausible but wrong facts.
+3. What is learned: predicting the next token well forces learning grammar, facts, reasoning patterns and styles; sampling produces text that resembles the training distribution.
+4. From base model to assistant: fine-tune on a smaller, high-quality set of question-answer conversations written by people following guidelines; then improve with comparison labels (people rank responses) used to train a reward model and optimize the assistant with reinforcement learning; the stages have different data scales.
+5. Scaling: performance improves predictably with parameters and data; capabilities appear as models grow; the reason for the compute race.
+6. Tool use and modalities: models call a calculator, run code, search the web, view and generate images, and process speech; the picture of an LLM as a kernel orchestrating tools.
+7. Directions: deliberate 'system 2' thinking through tree search and self-checking, self-improvement in verifiable domains, customization with documents and fine-tuning.
+8. Security: jailbreaks (role-play, encodings), prompt injection through documents and web pages, backdoors from poisoned training data; the model executes instructions in its input, which is why untrusted text must be treated as data.
+
+**Formulas and commands to remember.**
+
+```
+p(next token | context) → sample → append → repeat
+```
+
+**Three takeaways.**
+
+- An LLM is compressed text plus a sampler; its facts are reconstructions.
+- The assistant is a base model plus supervised and preference fine-tuning.
+- Prompt injection means any text the model reads can try to command it; design accordingly.
+
+**Practice.** Write a one-page explanation of the talk's three training stages for a colleague, then design a prompt-injection test for the headline-extraction task and show whether a local model follows injected instructions.
+
+</details>
+
 #### [Stanford CS224N: Natural Language Processing with Deep Learning](https://web.stanford.edu/class/cs224n/)
 
 _course · free · a quarter · free lectures; embeddings to transformers, rigorously_
@@ -4439,6 +7208,39 @@ _course · free · a quarter · free lectures; embeddings to transformers, rigor
 **Stanford grad.** CS224N's evolution across years is a record of the field; its final lectures on current research are a fair map of open problems.
 
 **PhD at Apple.** The standard graduate NLP course; knowing it lets you calibrate what a new hire in language modelling can be assumed to know.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Lectures: word vectors (word2vec, GloVe, evaluation); neural classifiers and backpropagation; dependency parsing; recurrent networks and language models; sequence-to-sequence, attention and machine translation; transformers; pretraining (BERT, GPT, T5); prompting, instruction finetuning and RLHF; efficient adaptation; natural language generation; question answering; interpretability and analysis; model analysis and explanation; multimodal models; and ethics and the future. Assignments: word2vec from scratch, a dependency parser, a neural machine translation system, and a transformer-based final project.
+
+**Key ideas, in order.**
+
+1. Word vectors: the distributional idea; word2vec's skip-gram objective maximizing the probability of context words with a softmax over the vocabulary, made tractable by negative sampling; gradient derivations; GloVe as weighted least squares on co-occurrence logs; intrinsic evaluation (analogies, similarity) and extrinsic evaluation (downstream tasks).
+2. Classification and backpropagation: a window-based classifier, softmax and cross-entropy, matrix calculus for gradients, and computation graphs; regularization, dropout, vectorization, and nonlinearities.
+3. Language models and RNNs: n-gram models and sparsity, fixed-window neural models, RNNs applying the same weights at each step, training with teacher forcing, perplexity, vanishing and exploding gradients, LSTMs, bidirectional and multi-layer RNNs.
+4. Sequence to sequence and attention: encoder-decoder translation, beam search, BLEU, and attention as a solution to the bottleneck (a weighted sum of encoder states per decoder step, with dot-product, multiplicative and additive variants).
+5. Transformers: self-attention's advantages, the barriers (order, nonlinearity, future leakage) and their fixes (positions, feed-forward layers, masking), multi-head attention, scaling, residuals and layer norm, and the encoder-decoder variants.
+6. Pretraining: the pretrain-finetune paradigm; decoders (GPT), encoders (BERT's masked language modelling and its variants), encoder-decoders (T5's span corruption); what pretraining teaches; scaling and emergent abilities.
+7. Adaptation: prompting and in-context learning, chain of thought, instruction finetuning, RLHF (reward models from human comparisons, policy optimization) and its limits; parameter-efficient finetuning (adapters, LoRA, prefix tuning).
+8. Generation and analysis: decoding methods and their failure modes, evaluation of generated text (automatic metrics, human evaluation), probing and behavioral analysis of what models learn, and the ethical issues of bias and misuse.
+
+**Formulas and commands to remember.**
+
+```
+skip-gram: J = −(1/T) Σ_t Σ_{−m≤j≤m, j≠0} log P(w_{t+j} | w_t),  P(o | c) = exp(u_oᵀ v_c)/Σ_w exp(u_wᵀ v_c)
+attention scores e_i = s_tᵀ h_i;  α = softmax(e);  a_t = Σ α_i h_i
+```
+
+**Three takeaways.**
+
+- Word vectors come from predicting context; attention generalizes 'which context matters' to a learned weighting.
+- Pretrain then finetune is the paradigm; the objectives differ by architecture.
+- RLHF and preference optimization are how models become helpful; their reward models are learned from comparisons.
+
+**Practice.** Do the word2vec assignment's gradient derivations for skip-gram with negative sampling, implement it in numpy on the incident headlines, and evaluate embeddings by nearest neighbors of route names.
+
+</details>
 
 #### [Hugging Face Computer Vision course](https://huggingface.co/learn/computer-vision-course/unit0/welcome/welcome)
 
@@ -4456,6 +7258,39 @@ _course · free · weeks · free; current vision practice with notebooks_
 
 **PhD at Apple.** A free, maintained map of practical vision tooling; useful for calibrating what a modern vision baseline is before proposing anything custom.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Units: fundamentals of computer vision (images as arrays, preprocessing, augmentation, feature extraction); convolutional networks (architectures, transfer learning); vision transformers (patches, attention, variants, fine-tuning); multimodal models (vision-language, CLIP, captioning, VQA); generative models (GANs, diffusion, evaluation); basic CV tasks (classification, detection, segmentation with the transformers library); video and video processing; 3-D vision and scene reconstruction; model optimization for deployment (quantization, pruning, distillation, ONNX); synthetic data; zero-shot and few-shot vision; ethics and biases; outlook.
+
+**Key ideas, in order.**
+
+1. Fundamentals: image representations (channels, dtypes, color spaces), classical preprocessing (resizing, normalization), augmentation (flips, crops, color jitter) and why it regularizes, and the shift from hand features to learned ones.
+2. Convolutional networks: LeNet to ResNet to ConvNeXt, transfer learning with the transformers library's image classification models, feature extractors, and fine-tuning with the Trainer.
+3. Vision transformers: split an image into patches, embed them linearly, add positions and a class token, run a transformer encoder; ViT needs pretraining at scale; DeiT, Swin and hierarchical variants; fine-tuning on small datasets.
+4. Multimodal: CLIP's contrastive alignment of image and text embeddings enabling zero-shot classification; captioning and visual question answering with vision-language models; retrieval.
+5. Generative: GAN basics and diffusion pipelines from the diffusers library; evaluation with FID and human judgment.
+6. Tasks: object detection (DETR-style transformers, YOLO-style detectors, boxes, non-maximum suppression, mAP), semantic and instance segmentation (masks, IoU), and the pipelines to run them.
+7. Deployment: quantization to int8, pruning, distillation into small students, export to ONNX, latency and memory on edge devices; the same constraints as on-device traffic counting.
+8. Ethics: dataset bias, surveillance, consent, and evaluation across groups.
+
+**Formulas and commands to remember.**
+
+```
+ViT: patches (P×P) → linear embed → + position → transformer encoder → class token → head
+CLIP: maximize cosine similarity of matched image-text pairs, minimize for mismatched (symmetric cross-entropy over a batch)
+```
+
+**Three takeaways.**
+
+- Pretrained backbones plus fine-tuning cover most vision tasks; ViTs and ConvNets are both viable.
+- CLIP-style alignment gives zero-shot classification from text labels.
+- Deployment is quantization, pruning and distillation; measure on the device.
+
+**Practice.** Fine-tune a small pretrained vision model on a folder of your own photos with the transformers library, export it to ONNX, quantize it, and compare accuracy and inference time before and after.
+
+</details>
+
 #### [The generative-model papers: VAE (Kingma, Welling, 2013), GAN (Goodfellow et al., 2014), DDPM (Ho, Jain, Abbeel, 2020)](https://arxiv.org/abs/1312.6114)
 
 _paper · free · an evening or two · free; the three originals_
@@ -4471,6 +7306,40 @@ _paper · free · an evening or two · free; the three originals_
 **Stanford grad.** The later literature (Wasserstein GANs, hierarchical VAEs, score-based models, latent diffusion) builds directly on these; reading the originals shows what each solved and what it left.
 
 **PhD at Apple.** Canonical citations; the interesting research questions are those they opened: evaluation, controllability, and the unification of the three families through score matching.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Auto-Encoding Variational Bayes: variational inference with a recognition network, the evidence lower bound, the reparameterization trick, and the VAE with Gaussian latent variables. Generative Adversarial Nets: a generator and a discriminator trained as a minimax game, the theoretical optimum, and the practical alternating training with a non-saturating generator loss. Denoising Diffusion Probabilistic Models: a Markov chain of Gaussian noising, its reverse learned by a network, the simplified noise-prediction objective, and high-quality image samples.
+
+**Key ideas, in order.**
+
+1. VAE setup: latent variable z with prior p(z) = N(0, I), a decoder p_θ(x | z) and an encoder q_φ(z | x) approximating the intractable posterior; maximize the ELBO log p(x) ≥ E_q[log p_θ(x | z)] − KL(q_φ(z | x) ‖ p(z)).
+2. Reparameterization: sample z = μ_φ(x) + σ_φ(x) ⊙ ε with ε ~ N(0, I) so gradients flow to the encoder; the KL term between diagonal Gaussians has a closed form; minibatch estimates make it stochastic gradient variational Bayes.
+3. VAE behavior: the reconstruction term wants informative latents, the KL term wants them close to the prior; sampling z from the prior generates new data; blurry samples with Gaussian likelihoods; posterior collapse when the decoder is too strong.
+4. GAN game: the discriminator D maximizes log D(x) + log(1 − D(G(z))); the generator G minimizes log(1 − D(G(z))) (or maximizes log D(G(z)) for better gradients early); at the optimum D(x) = p_data/(p_data + p_g) and the game's value relates to the Jensen-Shannon divergence; alternating gradient steps in practice.
+5. GAN behavior: sharp samples, no likelihood, unstable training, mode collapse; later fixes (Wasserstein loss, gradient penalties, spectral normalization, progressive growing) address the instability.
+6. DDPM setup: forward noising with a linear β schedule over T = 1000 steps; the reverse Gaussian with learned mean; the variational bound rewritten as KLs between Gaussians; the noise-prediction parameterization; the simplified unweighted objective works better than the exact bound.
+7. DDPM behavior: slow sampling (T network passes), excellent sample quality and diversity, a connection to denoising score matching and Langevin dynamics, and progressive lossy decompression as a view of the process.
+8. Comparing the three: VAEs optimize a likelihood bound and give an encoder; GANs optimize a two-player game and give sharp samples without likelihoods; diffusion models optimize a bound that reduces to denoising regression, are stable to train, and dominate quality at the cost of sampling time.
+
+**Formulas and commands to remember.**
+
+```
+ELBO = E_{q(z|x)}[log p(x|z)] − KL(q(z|x) ‖ p(z));  z = μ + σ ⊙ ε
+min_G max_D E_x[log D(x)] + E_z[log(1 − D(G(z)))]
+L_DDPM = E ‖ε − ε_θ(√ᾱ_t x_0 + √(1 − ᾱ_t) ε, t)‖²
+```
+
+**Three takeaways.**
+
+- The three families differ in what they optimize: a likelihood bound, a game, or a denoising regression.
+- The reparameterization trick is what makes stochastic layers trainable.
+- Stability and sample quality explain diffusion's dominance; sampling cost is its price.
+
+**Practice.** Train a VAE and a DDPM on daily speed profiles with the same small MLP budget; compare sample sharpness, training stability (loss curves over seeds) and the distribution of the 8 am speed against the real data.
+
+</details>
 
 #### [Self-Supervised Representation Learning (Weng, Lil'Log)](https://lilianweng.github.io/posts/2019-11-10-self-supervised/)
 
@@ -4488,6 +7357,37 @@ _essay · free · an hour · free; the pretraining objectives, surveyed_
 
 **PhD at Apple.** A well-maintained survey; the practical entry to the pretraining literature before the papers.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Why self-supervised learning; image-based pretext tasks (distortion, patches, colorization, generative modelling, contrastive predictive coding); video-based (tracking, frame sequence, video colorization); control-based; contrastive methods pointer; and, through its companion posts, contrastive learning (InfoNCE, SimCLR, MoCo, BYOL, SwAV, CLIP) and masked prediction.
+
+**Key ideas, in order.**
+
+1. Motivation: labels are expensive; the data contain supervision if you hide part and predict it; pretrain on unlabeled data, then transfer with a linear probe or fine-tuning.
+2. Pretext tasks: predict rotation, relative patch position, jigsaw order, colorization, inpainting; they learn useful features but the task is not the goal; evaluation is by downstream transfer.
+3. Contrastive learning: pull together representations of two views of the same input (augmentations) and push apart other inputs; the InfoNCE loss is a softmax over similarities with one positive and many negatives; its minimization maximizes a lower bound on mutual information between views.
+4. Method variations: SimCLR (large batches for negatives, a projection head, strong augmentation), MoCo (a momentum encoder and a queue of negatives), BYOL and SimSiam (no negatives; a predictor and a stop-gradient), SwAV (online clustering), CLIP (image-text pairs).
+5. Masked prediction: masked language modelling and masked autoencoders for images predict hidden parts from context; simpler than contrastive methods and scales well.
+6. Evaluation: linear probing (freeze the encoder, train a linear classifier), fine-tuning, k-nearest-neighbor accuracy, and transfer to other tasks; representation collapse as the failure mode and how each method avoids it.
+7. For time series: two augmented views of a window (jitter, scaling, masking) as positives; or masked-step prediction; then a linear probe for the traffic label.
+
+**Formulas and commands to remember.**
+
+```
+InfoNCE: L = −log [ exp(sim(z_i, z_j)/τ) / Σ_{k≠i} exp(sim(z_i, z_k)/τ) ]
+```
+
+**Three takeaways.**
+
+- Contrastive objectives learn invariances chosen by the augmentations.
+- A linear probe is the honest measure of a representation.
+- Masked prediction is the simplest scalable pretext task.
+
+**Practice.** Implement SimCLR-style contrastive pretraining on 60-minute station windows with jitter and masking augmentations, then train a linear probe for `y_30` and compare AP with a probe on raw features.
+
+</details>
+
 #### [Stanford CS336: Language Modeling from Scratch](https://cs336.stanford.edu/)
 
 _course · free · a quarter · free lectures and assignments; how models are really built_
@@ -4503,6 +7403,39 @@ _course · free · a quarter · free lectures and assignments; how models are re
 **Stanford grad.** Compare its curriculum with the ultra-scale playbook and with the papers on data curation; together they are the current state of the art in how language models are built, at a level that lets you read the industrial reports.
 
 **PhD at Apple.** The course is a snapshot of what a research lab considers foundational in 2026; for a lead, its assignments define what an engineer joining an LLM team should be able to do.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Lectures and assignments covering the full stack: tokenization (BPE from scratch); the transformer architecture and its modern variants (RMSNorm, rotary embeddings, SwiGLU, attention variants); training (optimizers, learning rate schedules, mixed precision, systems considerations); GPU kernels and performance (FlashAttention, Triton kernels); parallelism (data, tensor, pipeline); scaling laws and their use; data (crawling, filtering, deduplication, mixing); alignment (supervised fine-tuning, preference optimization, RL for reasoning); evaluation and safety. Assignments: build a tokenizer and transformer, systems and kernels, scaling, data, alignment.
+
+**Key ideas, in order.**
+
+1. Tokenization from scratch: byte-level BPE training (count pairs, merge the most frequent, repeat), encoding and decoding, special tokens, pre-tokenization with regular expressions, and the effect of vocabulary size on sequence length and compute.
+2. Architecture in 2026: pre-norm blocks with RMSNorm, rotary positional embeddings applied to queries and keys, SwiGLU feed-forward, grouped-query or multi-query attention for inference efficiency, no biases, tied or untied embeddings; the assignment builds all of it in PyTorch.
+3. Training: AdamW with cosine schedules and warmup, gradient clipping, mixed precision with bfloat16, checkpointing, and the resource accounting of memory (parameters, gradients, optimizer state, activations) and FLOPs (≈ 6 × parameters × tokens for training).
+4. Systems: profiling, memory-bound versus compute-bound kernels, FlashAttention's tiling to avoid materializing the attention matrix, writing a Triton kernel, and benchmarking; distributed training with data parallelism and sharded optimizer state, tensor and pipeline parallelism, communication costs.
+5. Scaling laws: fitting loss against compute, parameters and tokens; using small runs to choose the size of a large run; the Chinchilla trade-off; the assignment estimates laws under a budget.
+6. Data: what pretraining corpora contain, filtering for quality and safety, deduplication (exact and near-duplicate with MinHash), language identification, mixing domains, and the observation that data work dominates outcomes.
+7. Alignment: supervised fine-tuning on instructions, preference data, direct preference optimization, reinforcement learning with verifiable rewards for reasoning; evaluation on benchmarks and its pitfalls; safety considerations.
+
+**Formulas and commands to remember.**
+
+```
+training FLOPs ≈ 6 · N_params · N_tokens
+RMSNorm(x) = x / √(mean(x²) + ε) · g
+memory ≈ params (2 bytes) + grads (2) + Adam states (8) + activations
+```
+
+**Three takeaways.**
+
+- Most of a language model is systems and data; the architecture is a small part.
+- Six times parameters times tokens is the compute; plan with it.
+- Deduplication and filtering move results more than most architectural changes.
+
+**Practice.** Implement byte-level BPE training and encoding from scratch, train a 2000-token vocabulary on the repository's text, and measure the compression ratio against character-level tokens.
+
+</details>
 
 #### [What are Diffusion Models? (Weng, Lil'Log)](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/)
 
@@ -4520,6 +7453,40 @@ _essay · free · an hour · free; the generative-model survey to read first_
 
 **PhD at Apple.** A well-maintained survey post is often more useful than a review paper because it is revised; cite the papers, but read the post first.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Generative model families compared (GAN, VAE, flow, diffusion); the forward diffusion process (adding Gaussian noise over steps, the closed form at any step); the reverse process and its parameterization; the variational objective and its simplification to predicting noise (DDPM); connections to score-based generative modelling and stochastic differential equations; speeding up sampling (DDIM, progressive distillation, consistency models); latent diffusion; conditioned generation (classifier guidance, classifier-free guidance); model architecture (U-Net, diffusion transformers); and a quick summary.
+
+**Key ideas, in order.**
+
+1. Forward process: q(x_t | x_{t−1}) = N(√(1 − β_t) x_{t−1}, β_t I) for t = 1..T with a variance schedule; the closed form q(x_t | x_0) = N(√ᾱ_t x_0, (1 − ᾱ_t) I) with ᾱ_t = Π(1 − β_s), so any noisy version is one sample away.
+2. Reverse process: p_θ(x_{t−1} | x_t) = N(μ_θ(x_t, t), Σ_θ) learned by a network; the true posterior q(x_{t−1} | x_t, x_0) is Gaussian with known mean, which lets the objective be written as KL terms.
+3. Objective: the variational bound decomposes into per-step KL divergences; parameterizing the mean through predicted noise ε_θ gives the simplified loss L_simple = E‖ε − ε_θ(√ᾱ_t x_0 + √(1 − ᾱ_t) ε, t)‖², a regression from a noisy sample and a timestep to the noise.
+4. Sampling: start from pure Gaussian noise and apply the learned reverse step T times, adding noise at each step except the last; DDIM makes a deterministic, faster sampler by changing the process without retraining; distillation and consistency models reduce steps to a few or one.
+5. Score matching view: the noise predictor estimates the score ∇ log p(x_t); annealed Langevin dynamics and the SDE formulation unify diffusion models and score-based models.
+6. Latent diffusion: run the diffusion in the latent space of an autoencoder to cut cost, which is how large image models work.
+7. Conditioning: classifier guidance uses a classifier's gradient to steer sampling; classifier-free guidance trains with and without the condition and extrapolates between them at sampling with a guidance scale.
+8. Architectures: U-Nets with attention and timestep embeddings; diffusion transformers operating on latent patches.
+
+**Formulas and commands to remember.**
+
+```
+q(x_t | x_0) = N(√ᾱ_t x_0, (1 − ᾱ_t) I)
+L_simple = E_{t, x_0, ε} ‖ ε − ε_θ(√ᾱ_t x_0 + √(1 − ᾱ_t) ε, t) ‖²
+classifier-free guidance: ε̃ = (1 + w) ε_θ(x_t, c) − w ε_θ(x_t)
+```
+
+**Three takeaways.**
+
+- Diffusion training is regression from a noisy input and a timestep to the noise; that simplicity is why it works.
+- Sampling is iterative denoising; most later work is about making it faster.
+- Guidance trades diversity for fidelity to a condition.
+
+**Practice.** Implement DDPM on one-dimensional daily speed profiles (288 values) with a small MLP as the noise predictor, train on the Mac mini, sample new profiles, and compare their 5 pm distribution with real ones.
+
+</details>
+
 #### [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/)
 
 _course · free · eight weeks · the vision and text lessons, with transfer learning throughout_
@@ -4535,6 +7502,38 @@ _course · free · eight weeks · the vision and text lessons, with transfer lea
 **Stanford grad.** The fastai library's abstractions can hide details you need for a custom model such as the spatio-temporal network. Learn the ideas from the course, then implement in plain PyTorch. The course's lessons on collaborative filtering and on tabular embeddings are the clearest introduction to learned representations for categorical data.
 
 **PhD at Apple.** fast.ai's research output (training-efficiency results, transfer learning for text) shows that practitioner-driven groups produce research results. Its philosophy of accessible deep learning shaped how many teams onboard engineers, and its lesson structure is a reasonable template for an internal course on this pipeline.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Lessons: getting started (a working image classifier in minutes, what ML is, transfer learning); deployment (data cleaning with the model, a web app); neural net foundations (from scratch: a linear model, then a network, SGD, the training loop); natural language (fine-tuning a language model then a classifier); from-scratch model (tabular, neural nets from foundations); random forests (bagging, out-of-bag, feature importance, partial dependence, tree interpretation); collaborative filtering (embeddings, dot products, biases, weight decay); convolutions (kernels, stride, padding, channels); data ethics; and the book's later chapters (ResNets, architecture details, training tricks, a CNN from scratch).
+
+**Key ideas, in order.**
+
+1. Top-down: train a state-of-the-art classifier first with a pretrained backbone and fine-tuning, then learn why it works; the argument that transfer learning is the default for images and text.
+2. The training loop from foundations: parameters, predictions, loss, gradients (autograd), step, repeat; from a linear model on MNIST digits to a network with ReLU; mini-batches; the learning-rate finder (increase the rate until the loss explodes and pick a point before) and the one-cycle schedule.
+3. Tabular: random forests as the first model (fast, robust, informative), out-of-bag error, feature importance by permutation, partial dependence plots, removing redundant features, extrapolation failure of trees and the test for out-of-domain data; then neural nets on tabular data with categorical embeddings; ensembling both.
+4. Collaborative filtering: users and items as embeddings whose dot product plus biases predicts a rating; training with weight decay; interpreting embedding dimensions; the same idea gives station embeddings for the traffic net.
+5. Text: tokenization, numericalization, language-model pretraining on the domain corpus, then fine-tuning a classifier (ULMFiT), which is the recipe for the incident headline classifier.
+6. Convolutions: a kernel sliding over an image, stride and padding, channels, receptive fields, batch norm, and building a ResNet; the practical rules (start with a pretrained model, progressive resizing, test-time augmentation, mixup, label smoothing).
+7. Ethics: feedback loops, bias, disinformation, and the responsibility of practitioners; checked in every project through questions about data provenance and affected people.
+
+**Formulas and commands to remember.**
+
+```
+learn = vision_learner(dls, resnet18, metrics=error_rate); learn.lr_find(); learn.fine_tune(3)
+rating ≈ u_user · v_item + b_user + b_item
+```
+
+**Three takeaways.**
+
+- Start from a pretrained model whenever one exists; train from scratch only for tabular data or when you must.
+- The learning-rate finder and one-cycle schedule remove most guesswork from training.
+- Random forests are the fast, interpretable first model for tables; embeddings turn categories into geometry.
+
+**Practice.** Fine-tune a pretrained ResNet on a small folder of your own photos with the learning-rate finder and one-cycle, then fine-tune a small pretrained language model on incident headlines for severity and compare with a bag-of-words baseline.
+
+</details>
 
 ### Build
 
@@ -4862,6 +7861,38 @@ _course · free · weeks · free; the systems view, as lecture notes_
 
 **PhD at Apple.** A free snapshot of the systems consensus; for a lead, the notes align a team's vocabulary before architecture discussions.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Lecture notes: understanding ML production (research versus production, the ML system's components); data engineering (data sources, formats, storage, processing, batch and streaming); training data (sampling, labelling, class imbalance, augmentation); feature engineering (missing values, scaling, encoding, crosses, positional features, leakage, importance, generalization); model development (selection, ensembles, experiment tracking, distributed training, AutoML); evaluation (baselines, calibration, slicing, perturbation, invariance, directional expectation, model calibration, confidence measurement); deployment (batch versus online prediction, model compression, edge); monitoring (data distribution shifts, detection, addressing); continual learning and test in production; infrastructure and tooling; the human side.
+
+**Key ideas, in order.**
+
+1. Production versus research: different objectives (business metrics, latency, cost), data that shifts, fairness and interpretability requirements; the ML system is data, features, model, serving, monitoring and the people around them.
+2. Data engineering: first-party and third-party data, row-major versus column-major formats (CSV versus Parquet), text versus binary, relational versus NoSQL, ETL versus ELT, batch versus stream processing, and the dataflow of a feature pipeline.
+3. Training data: sampling strategies (random, stratified, importance), labelling (hand labels, natural labels with delays, weak supervision, semi-supervision, active learning), class imbalance (metrics, resampling, cost-sensitive learning), augmentation.
+4. Features: handling missing values (MCAR, MAR, MNAR), scaling, discretization, encoding categoricals (including hashing for unbounded categories), feature crossing, positional features, and leakage (from splitting time-correlated data randomly, from scaling before splitting, from imputation statistics, from duplicates, from group leakage); feature importance and generalization across time.
+5. Model development: start simple, beware of state-of-the-art claims, tracking and versioning experiments and data, debugging, distributed training (data and model parallelism), AutoML; the six tips for model selection.
+6. Evaluation: baselines (random, zero-rule, simple heuristic, human, existing solution), perturbation tests for robustness, invariance tests for fairness, directional expectation tests, calibration, confidence measurement, and slice-based evaluation to find groups where the model fails.
+7. Deployment: batch prediction (periodic, cheap, stale) versus online prediction (on request, fresh, needs fast features), the unified pipeline for streaming and batch features, model compression (low-rank, distillation, pruning, quantization), and edge deployment with its constraints.
+8. Monitoring and continual learning: natural causes of failure, covariate shift, label shift, concept shift; detection by statistics and two-sample tests over time windows; addressing by retraining; stateless retraining versus stateful fine-tuning; the four stages toward continual learning; test in production with shadow deployment, A/B tests, canaries, interleaving, bandits.
+
+**Formulas and commands to remember.**
+
+```
+covariate shift: P(X) changes, P(Y|X) fixed;  label shift: P(Y) changes, P(X|Y) fixed;  concept drift: P(Y|X) changes
+```
+
+**Three takeaways.**
+
+- Leakage and imbalance are handled at the data and feature stages, not by the model.
+- Evaluate by slices, perturbations and baselines before believing an aggregate number.
+- Batch prediction is the right default until freshness is worth the complexity of online serving.
+
+**Practice.** Run slice-based evaluation of the traffic model by station, hour and rain, add a perturbation test (jitter speeds by 2 mph) and an invariance test (shift timestamps by a week), and write up any slice where AP falls below persistence.
+
+</details>
+
 #### [MLflow documentation](https://mlflow.org/docs/latest/)
 
 _docs · free · an afternoon · free; experiment tracking and a model registry_
@@ -4877,6 +7908,39 @@ _docs · free · an afternoon · free; experiment tracking and a model registry_
 **Stanford grad.** MLflow is one of several tools for the same job; the concepts (runs, artifacts, registry, lineage) are what matter and transfer to any platform.
 
 **PhD at Apple.** Experiment tracking is infrastructure for reproducibility; the research-relevant question is whether a result can be traced to code, data and parameters a year later, which the tool makes routine.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Components: tracking (runs, experiments, parameters, metrics, artifacts, tags, autologging, the tracking server and UI, backends and artifact stores), models (the MLmodel format, flavors for LightGBM, PyTorch and scikit-learn, signatures and input examples, logging and loading, `pyfunc` for custom models), the model registry (registered models, versions, aliases and tags, stage transitions and annotations), projects (packaging runs with dependencies), deployment (serving a model locally as a REST endpoint, batch inference), and evaluation utilities.
+
+**Key ideas, in order.**
+
+1. Tracking: `mlflow.set_experiment('traffic1')`; inside `with mlflow.start_run():` log `mlflow.log_params(params)`, `mlflow.log_metric('val_ap', ap, step=i)`, `mlflow.log_artifact('output/evaluation_report.json')`, tags for git commit and data hash; autologging for LightGBM and PyTorch captures most of it.
+2. Storage: a local file store by default, a SQLite backend for a UI with search, an artifact directory; `mlflow ui` shows runs, compares parameters and metrics, and plots curves.
+3. Models: `mlflow.lightgbm.log_model(model, 'model', signature=infer_signature(X, p))` records the model with its flavor, environment and input schema; `mlflow.pyfunc.load_model(uri)` loads any flavor uniformly; custom `pyfunc` wrappers bundle preprocessing (the feature module) with the model, which is how training and serving share one artifact.
+4. Registry: `mlflow.register_model(uri, 'traffic-h30')` creates a version; aliases (`champion`, `challenger`) point serving at a version; descriptions and tags record evaluation results; transitions are audited.
+5. Serving and batch: `mlflow models serve -m models:/traffic-h30@champion` starts a REST endpoint; batch scoring with `mlflow.pyfunc.spark_udf` or a loaded model over a DataFrame.
+6. Reproducibility: log the code version, the data manifest hash and the environment (`conda.yaml` or `requirements.txt`) with every run; a run id names a result exactly.
+
+**Formulas and commands to remember.**
+
+```
+with mlflow.start_run(tags={'commit': sha, 'data': manifest_hash}):
+    mlflow.log_params(params); model = lgb.train(...); mlflow.log_metric('val_ap', best)
+    mlflow.lightgbm.log_model(model, 'model', signature=infer_signature(Xva, pva))
+mlflow.register_model(f'runs:/{run_id}/model', 'traffic-h30'); client.set_registered_model_alias('traffic-h30', 'champion', version)
+```
+
+**Three takeaways.**
+
+- A run id plus logged code, data and environment names a result reproducibly.
+- A `pyfunc` model that bundles preprocessing is the cure for training-serving skew.
+- Aliases (champion, challenger) make promotion and rollback one command.
+
+**Practice.** Log every training run of the three horizons with parameters, metrics, the evaluation report and a signed model; register them; point `champion` at the best; then roll back to the previous version and show the serving loop follows the alias.
+
+</details>
 
 #### [Evidently, open-source ML monitoring documentation](https://docs.evidentlyai.com/)
 
@@ -4894,6 +7958,37 @@ _docs · free · an afternoon · free; drift and performance reports_
 
 **PhD at Apple.** Open-source monitoring made a piece of production practice inspectable; useful as a reference implementation when designing a team's own.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Concepts (reports, tests, metrics, presets; reference versus current data; column mapping), data drift (per-column statistical tests chosen by type and size, dataset drift share, embeddings drift), data quality (missing values, ranges, duplicates, correlations), regression and classification performance (metrics, error analysis, by segment), target drift, test suites with conditions for CI or scheduled checks, and monitoring dashboards over time (workspace, snapshots, panels).
+
+**Key ideas, in order.**
+
+1. Reference and current: monitoring compares a current window of data with a reference (the training set or a stable period); the column mapping declares target, prediction, numerical, categorical and datetime columns.
+2. Drift detection: for numerical columns, Kolmogorov-Smirnov or Wasserstein distance (large data) and for categoricals chi-square or Jensen-Shannon; thresholds; the dataset-level share of drifted columns; PSI available; embeddings drift for learned representations; the caveat that drift is a signal to investigate, not a verdict.
+3. Data quality: missing-value rates, out-of-range values, new categories, duplicates, constant columns, and correlation changes, which catch pipeline breakages before they reach the model.
+4. Performance: classification reports with precision, recall, F1, ROC-AUC, PR curves, confusion matrices, class representation and probability distributions; regression with error distributions and error bias by feature; both by segment, which is slice-based evaluation.
+5. Tests and conditions: a test suite states expectations (`TestShareOfDriftedColumns(lt=0.3)`, `TestColumnValueMin(column='speed', gte=0)`) and passes or fails, suitable for a scheduled job that writes a weekly file and alerts on failure.
+6. Monitoring over time: snapshots stored per run, dashboards with panels of metrics over time, and comparisons across model versions.
+
+**Formulas and commands to remember.**
+
+```
+report = Report(metrics=[DataDriftPreset(), DataQualityPreset()]); report.run(reference_data=train_df, current_data=week_df); report.save_html('output/monitor/week.html')
+suite = TestSuite(tests=[TestShareOfDriftedColumns(lt=0.3), TestColumnValueMin(column='speed', gte=0)])
+```
+
+**Three takeaways.**
+
+- Compare a current window with a reference; drift per column is a screen, the dataset share is the alarm.
+- Data quality tests catch pipeline breaks earlier than performance metrics can.
+- Test suites with thresholds turn monitoring into a pass-or-fail job.
+
+**Practice.** Build a weekly Evidently test suite for the feature table (drift share, speed range, null rate, category checks) and a performance report once labels arrive; compare its drift verdicts with your PSI implementation.
+
+</details>
+
 #### [The Turing Way](https://book.the-turing-way.org/)
 
 _book · free · weeks · free; reproducible research as a handbook_
@@ -4909,6 +8004,37 @@ _book · free · weeks · free; reproducible research as a handbook_
 **Stanford grad.** A useful reference for the norms of open research and for collaboration practices; its community process is itself a model.
 
 **PhD at Apple.** For a lab or team, the handbook is a ready-made standard for research practice and a source of onboarding material.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Guides: reproducible research (overview, open research, version control, licensing, research data management, reproducible environments, code reviewing, code testing, code quality, research compendia, notebooks, credit, continuous integration, risk assessment, case studies); project design (planning, communication, collaboration, data management plans); communication (writing, presenting, figures, making research accessible); collaboration (teams, maintainers, working remotely); ethical research (consent, data protection, algorithmic impact); and community handbook.
+
+**Key ideas, in order.**
+
+1. Reproducibility definitions: reproducible (same data, same analysis, same result), replicable (new data, same analysis), robust (same data, different analysis), generalizable (new data, different analysis); the crisis and the practices that address it.
+2. Version control and environments: git for code with meaningful history; capturing computational environments with package managers, lock files, containers and images; why 'works on my machine' is not reproducible.
+3. Research data management: FAIR principles (findable, accessible, interoperable, reusable), data organization and naming, metadata, storage and backup, sharing and licensing, sensitive data handling, and data documentation (README, data dictionaries).
+4. Code quality and testing: readable code, style guides, linters, documentation, testing (unit, integration, regression, smoke, runtime), continuous integration to run tests automatically, and code review as a practice.
+5. Compendia and notebooks: a research compendium bundles data, code, environment and results; notebooks are for exploration and communication and should be converted to scripts for pipelines; version notebooks sensibly.
+6. Ethics and impact: consent, privacy, data protection regulation, algorithmic impact assessments, and accessibility of outputs; credit and authorship.
+7. Communication: writing clearly, figures that convey one message, presenting, and making research accessible to different audiences.
+
+**Formulas and commands to remember.**
+
+```
+FAIR: findable, accessible, interoperable, reusable
+```
+
+**Three takeaways.**
+
+- Reproducible means same data, same code, same environment give the same result; name each explicitly.
+- A compendium (data, code, environment, results) is the unit of reproducible work.
+- Documentation and licensing are part of the deliverable.
+
+**Practice.** Turn the repository into a research compendium: a README that states how to reproduce the evaluation report, a data dictionary for the feature table, a lock file, a license, and a CI run that rebuilds from the fixture.
+
+</details>
 
 #### [Site Reliability Engineering (Google), the free book](https://sre.google/sre-book/table-of-contents/)
 
@@ -4926,6 +8052,38 @@ _book · free · selected chapters, a week · free; SLOs, on-call and postmortem
 
 **PhD at Apple.** A foundational operations text; ML systems inherit all of its concerns plus data and model drift.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I, introduction (SRE's approach, the production environment). Part II, principles (embracing risk, service level objectives, eliminating toil, monitoring distributed systems, automation, release engineering, simplicity). Part III, practices (alerting from time-series data, being on call, effective troubleshooting, emergency response, managing incidents, postmortem culture, tracking outages, testing for reliability, software engineering in SRE, load balancing, handling overload, cascading failures, distributed consensus, cron at scale, data pipelines, data integrity, launches). Part IV, management (training, dealing with interrupts, operational load, communication). Part V, conclusions.
+
+**Key ideas, in order.**
+
+1. Risk and objectives: 100 % reliability is the wrong target; define service level indicators (latency, availability, freshness, correctness), objectives for them, and an error budget that balances reliability against change velocity.
+2. Monitoring: the four golden signals (latency, traffic, errors, saturation); symptoms versus causes; white-box and black-box; alerts must be actionable and rare; pages for urgent, tickets for the rest; avoid alerting on causes you cannot act on.
+3. Toil and automation: repetitive, manual, automatable work should be automated; the hierarchy of automation from manual to self-healing; cron at scale and data pipelines as chapters directly relevant to scheduled jobs.
+4. Alerting from time series: rules over aggregated metrics with rate and windowing; the pitfalls of thresholds on raw values; alerting on error budget burn rates.
+5. On call and incidents: structured on-call with limits; troubleshooting as hypothesis testing (triage, examine, diagnose, test, treat); incident management with roles (commander, operations, communication); the postmortem as a blameless document with timeline, root cause, actions and lessons.
+6. Release and testing: canaries, gradual rollouts, feature flags, rollback capability; testing for reliability (unit, integration, system, production tests, canary tests); simplicity as a reliability strategy.
+7. Data pipelines and integrity: periodic pipelines' failure modes (thundering herd, moiré), workflow systems, and the principle that backups are useless unless restores are tested.
+
+**Formulas and commands to remember.**
+
+```
+error budget = 1 − SLO;  spend it on change, stop changes when it is exhausted
+golden signals: latency, traffic, errors, saturation
+```
+
+**Three takeaways.**
+
+- Set objectives and an error budget; they decide when to ship and when to stop.
+- Alert on symptoms that need action; page rarely.
+- Blameless postmortems with actions are how a system gets more reliable.
+
+**Practice.** Write SLOs for the alert service (freshness under 10 minutes, availability, correctness proxy), a golden-signals dashboard spec, an alerting rule on freshness, an on-call runbook, and a postmortem template.
+
+</details>
+
 #### [Hypothesis documentation (property-based testing)](https://hypothesis.readthedocs.io/)
 
 _docs · free · an afternoon · free; tests that invent their own edge cases_
@@ -4941,6 +8099,42 @@ _docs · free · an afternoon · free; tests that invent their own edge cases_
 **Stanford grad.** For data code, properties are often the only tractable specification; the technique is also a way to document assumptions executably, which the data-contract exercise needs.
 
 **PhD at Apple.** Property-based testing is underused in ML engineering; adopting it for feature libraries is a cheap, high-yield practice.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Quick start, the `@given` decorator and strategies (integers, floats, text, lists, dictionaries, datetimes, `from_type`, `builds`, composite strategies, `sampled_from`, `one_of`, filtering, mapping), shrinking of failing examples, settings (max examples, deadlines, database of failures), stateful testing (rule-based state machines), the numpy and pandas extras (arrays, DataFrames with column strategies), health checks, and integration with pytest.
+
+**Key ideas, in order.**
+
+1. Property-based testing: instead of fixed inputs, describe the space of inputs with strategies and state a property that must hold for all; Hypothesis generates many cases, biased toward edge cases (empty, zero, NaN, boundaries), and reports a minimal failing example after shrinking.
+2. Strategies: `st.integers(min_value, max_value)`, `st.floats(allow_nan=False, min_value=0, max_value=100)`, `st.lists(st.floats(...), min_size=1)`, `st.datetimes(timezones=...)`, `st.sampled_from(station_ids)`, `st.builds(Event, ...)`, `@st.composite` for structured inputs; `.filter` and `.map` to constrain or transform.
+3. Properties worth stating for data code: invariants (cleaned speeds within bounds), round trips (write Parquet then read equals original), idempotence (cleaning twice equals once), comparisons with a reference implementation (numpy versus SQL lag), and metamorphic relations (shifting timestamps by a day shifts features accordingly).
+4. Failures and reproducibility: failing examples are saved in a local database and replayed first next time; `@example` pins specific cases; `settings(max_examples=500, deadline=None)` for slow functions.
+5. Stateful testing: define a state machine with rules (add rows, clean, compute features) and invariants checked after each step, which tests sequences of operations on the pipeline.
+6. numpy and pandas extras: `arrays(dtype, shape, elements)` and `data_frames(columns=[column('speed', elements=st.floats(0, 100))])` to generate DataFrames that match the schema.
+
+**Formulas and commands to remember.**
+
+```
+@given(st.lists(st.floats(0, 100, allow_nan=False), min_size=13))
+def test_lag_matches_reference(speeds):
+    s = pd.Series(speeds)
+    assert s.shift(3).equals(lag_feature(s, 3))
+@given(data_frames(columns=[column('speed', elements=st.floats(-10, 300)), column('occ', elements=st.floats(-1, 2))]))
+def test_bounds_after_clean(df):
+    out = apply_bounds(df); assert out.speed.dropna().between(0, 100).all()
+```
+
+**Three takeaways.**
+
+- State properties, not examples; let the tool search for the counterexample.
+- Round trips, idempotence and reference comparisons are the properties data code has.
+- Shrunk failing examples are the best bug reports you will get.
+
+**Practice.** Write five property tests for the cleaning and feature modules (bounds, idempotence, Parquet round trip, lag versus reference, timestamp-shift metamorphic), run them, and pin any failing example with `@example`.
+
+</details>
 
 #### [Made With ML (Mohandas)](https://madewithml.com/)
 
@@ -4958,6 +8152,38 @@ _course · free · weeks · free; testing, monitoring and pipelines with code_
 
 **PhD at Apple.** A free, opinionated, code-first MLOps curriculum is rare. Use it to align a team on practices before choosing a platform, and note which of its practices survive the translation to a single-machine deployment: most of them, which says something about what MLOps actually is.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A course in lessons: design (setup, product and system design), data (preparation, exploration, preprocessing, distributed data), model (training, tracking, tuning, evaluation, serving), developing (scripting, command line, packaging, organization, logging, documentation, styling, pre-commit), testing (code, data, models), deploying (systems, serving, workflows), iterating (continual learning and monitoring), with a companion repository.
+
+**Key ideas, in order.**
+
+1. Product and system design: start from the user and the business objective, define the ML task, consider the data and the constraints, and plan the feedback loops; the design document template.
+2. Data: exploratory analysis with intent, splitting (stratified, or by time and group), preprocessing (cleaning, feature engineering) that runs identically in training and inference, and distributed data loading.
+3. Training and tracking: a baseline first, then increasing complexity; experiment tracking with MLflow (parameters, metrics, artifacts), tuning with a search library, and evaluation that is overall, per class, per slice, with behavioral tests (invariance, directional, minimum functionality).
+4. Developing: moving from notebooks to scripts and packages, a command-line interface, organization (config, data, models, utilities), logging levels and handlers, documentation from docstrings, style (black, isort, flake8) and pre-commit hooks so checks run before every commit.
+5. Testing: unit tests with pytest (fixtures, parametrization, markers, coverage), data tests with expectations (schema, ranges, uniqueness, null rates) run on every new batch, and model tests (behavioral tests, training tests such as overfitting a batch, inference tests).
+6. Deploying: serving as a REST API with batch and online inference, packaging models with their preprocessing, containerizing, workflows and orchestration of the pipeline steps, scaling with a distributed framework.
+7. Iterating: monitoring system health, data quality, drift (using statistical tests and drift libraries), and performance; retraining triggers; the continual-learning loop with human review.
+
+**Formulas and commands to remember.**
+
+```
+pre-commit hooks: black, isort, flake8, pytest -m 'not slow'
+data test: assert df.speed.between(0, 100).all(); assert df.groupby('station_id').size().eq(288).all()
+```
+
+**Three takeaways.**
+
+- Notebooks to packages, with configs, logging and a CLI, is the transition that makes a project maintainable.
+- Test code, data and models; each catches different failures.
+- Behavioral tests on models (invariance, directional expectations) are cheap and revealing.
+
+**Practice.** Convert the pipeline into a package with a CLI (`traffic clean`, `traffic features`, `traffic train`), add pre-commit hooks, and write three data tests and two behavioral model tests.
+
+</details>
+
 #### [Machine Learning Engineering (Burkov)](https://www.mlebook.com/)
 
 _book · free · weeks · free to read online_
@@ -4973,6 +8199,38 @@ _book · free · weeks · free to read online_
 **Stanford grad.** It is opinionated and short. Where it disagrees with Huyen (for instance, on how much automation a small team needs), both positions are worth thinking through, and the disagreement itself is a useful prompt for deciding what this project's phase 7 should actually build.
 
 **PhD at Apple.** A concise practitioner reference is useful for writing internal guidelines, and its brevity forces prioritization, which senior engineers need more than additional content. Its structure is a reasonable skeleton for an engineering-standards document for an ML team.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction (what is ML engineering, when to use ML, the project lifecycle); before the project (prioritization, team, cost, integration, risks); data collection and preparation (questions about data, common problems, good data, data leakage, partitioning, imputation, augmentation, sampling, storage, versioning, documentation, reproducibility); feature engineering (properties of good features, techniques, leakage, standardization, discretization, missing values, stacking, dimensionality, storage and documentation); supervised model training (parts 1 and 2: baselines, algorithm selection, pipelines, hyperparameters, learning curves, evaluation, calibration, troubleshooting); model evaluation (offline, online, A/B tests, bandits); model deployment (patterns, serving, environments, monitoring, maintenance); model serving, monitoring and maintenance; a conclusion.
+
+**Key ideas, in order.**
+
+1. When ML: when rules are too complex or change too fast, when data exist, when errors are tolerable; the lifecycle from goal definition to maintenance; the team's roles.
+2. Data problems: high cost, bad quality (noise, bias, low predictive power, outdated examples, outliers, leakage), and the properties of good data (informative, coverage, reflects real inputs, unbiased, not the result of the model's own feedback, consistent, big enough).
+3. Leakage catalog: target leakage through features that contain the target or its consequences, contamination of the test set by preprocessing, duplicates across splits, time-series shuffling, and group leakage; detection by suspiciously high scores and by feature importance.
+4. Partitioning and imputation: sizes of train, validation and test; stratification; imputation methods and indicator columns; augmentation for images and text; sampling strategies for imbalance.
+5. Features: predictive, computable fast, reliable, uncorrelated with each other, unitary and stable across time; techniques (one-hot, binning, normalization, standardization, embeddings, hashing); handling missing values; feature stores and documentation; schemas.
+6. Training: establish baselines, choose algorithms by data size and interpretability needs, build pipelines, tune hyperparameters with cross-validation appropriate to the data, read learning curves for bias and variance, evaluate with the right metrics, calibrate probabilities, troubleshoot (loss not decreasing, overfitting, underfitting) and version models with their data and code.
+7. Evaluation and deployment: offline metrics, then online evaluation with A/B tests (statistical power, interference) or bandits; deployment patterns (static, dynamic on the server, on device, in the browser); serving modes (batch, streaming, on demand); monitoring for performance decay, data changes and pipeline failures; maintenance and retraining policies.
+
+**Formulas and commands to remember.**
+
+```
+good feature: predictive, fast, reliable, uncorrelated, unitary, stable
+learning curve: plot validation error against training size; a gap that closes with data means variance
+```
+
+**Three takeaways.**
+
+- A leakage checklist applied before training saves the most embarrassment per minute of any practice.
+- Features have engineering properties (fast, reliable, stable) beyond predictive power.
+- Deployment is a choice of pattern and serving mode driven by freshness and cost.
+
+**Practice.** Audit the traffic feature table against the book's leakage catalog and feature-property list, and write a one-page report of what passes, what fails and what you changed.
+
+</details>
 
 #### [Full Stack Deep Learning](https://fullstackdeeplearning.com/)
 
@@ -4990,6 +8248,37 @@ _course · free · weeks · free; the production lifecycle with labs_
 
 **PhD at Apple.** Its evolution across years is a snapshot of how industry practice changed; for a lead, it is the course to point engineers to when they move from research code to a product.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Lectures: when to use ML and how to set up projects; development infrastructure and tooling (software engineering, compute, resource management, frameworks, experiment management, all-in-one platforms); troubleshooting and testing (testing ML code, troubleshooting training, resource management); data management (sources, labelling, versioning, feature stores); deployment (serving patterns, edge, monitoring); continual learning; foundation models; ML teams and project management; ethics. Labs: a text-recognizer application built end to end with experiment tracking, tests, a web deployment and monitoring.
+
+**Key ideas, in order.**
+
+1. Project setup: ML projects fail when the problem is wrong (unclear value, infeasible, no data); prioritize by impact and feasibility; define the baseline and the metric; plan the lifecycle (planning, data, training, deployment) as a loop.
+2. Tooling: version control, code review, continuous integration; compute options (local GPUs, cloud, spot instances) and cost; resource managers; frameworks (PyTorch) and their ecosystem; experiment tracking; the recommended stack for a small team.
+3. Troubleshooting training: start simple, implement and debug (shape errors, casting, out-of-memory, loss not decreasing), evaluate against baselines, improve (tuning, bigger models, more data), the bug taxonomy and a systematic process; testing ML code with unit tests, data tests, training tests and integration tests; CI for ML.
+4. Data management: data sources and pipelines, labelling tools and strategies (crowdsourcing, in-house, active learning, weak supervision), data versioning levels, feature stores and their tradeoffs.
+5. Deployment: batch versus online, model-in-service versus model-as-service, REST APIs, serverless, model servers, edge deployment (quantization, distillation, hardware), and the decision matrix; monitoring (operational metrics, data drift, performance with delayed labels), alerting and dashboards.
+6. Continual learning: the retraining loop, triggers, evaluation before promotion, and the organizational maturity ladder.
+7. Foundation models and teams: using pretrained models, prompt engineering and fine-tuning as a development pattern; roles on ML teams, hiring, and managing projects that are inherently uncertain.
+
+**Formulas and commands to remember.**
+
+```
+deployment matrix: batch | online × server | edge, chosen by latency, freshness, cost and privacy
+```
+
+**Three takeaways.**
+
+- Troubleshooting training is a process: simplify, verify shapes and losses, compare with baselines, then add.
+- Data labelling and versioning are engineering tasks with tools; plan them.
+- Deployment and monitoring decisions follow from latency, freshness, cost and privacy.
+
+**Practice.** Set up continuous integration for the repository that runs the fast tests and a smoke training run on a fixture on every push, and document the deployment decision for the alert service using the lecture's matrix.
+
+</details>
+
 #### [Rules of Machine Learning (Zinkevich, Google)](https://developers.google.com/machine-learning/guides/rules-of-ml)
 
 _docs · free · an hour · free; 43 rules from hard experience_
@@ -5005,6 +8294,37 @@ _docs · free · an hour · free; 43 rules from hard experience_
 **Stanford grad.** Some rules are specific to large consumer products (ranking, human-in-the-loop labels) and do not transfer to a one-machine forecaster; identifying which is a useful exercise in generalizing engineering advice.
 
 **PhD at Apple.** A primary source on how a large organization thinks about ML systems, written before MLOps was a word; read with Sculley's technical-debt paper as a pair.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Forty-three rules in four phases: before machine learning (launch without ML, design metrics first, choose ML over heuristics when it is complex); ML phase 1, the first pipeline (keep the first model simple, get the infrastructure right, test the infrastructure, separate the model from the serving logic, detect problems before exporting, watch for silent failures, give features owners); feature engineering (launch and iterate, start with observed features, explore with directly observed features, use meta-features, combine features, use human-understandable features, prefer features that generalize, clean up unused features); human analysis (measure the delta between models, choose utility measures that reflect user behavior, look for patterns in errors, quantify undesirable behavior, watch training-serving skew); ML phase 3, slowed growth (do not overthink the objective, keep ensembles simple, launch when plateaued, consider diversity and negative feedback).
+
+**Key ideas, in order.**
+
+1. Before ML: if a heuristic gives most of the value, ship it and collect data; design and implement metrics first so you can measure everything later; ML makes sense when the problem is complex and data exist.
+2. First pipeline: choose a simple objective, build the end-to-end pipeline (data in, model out, predictions served) with simple features, and get it working; most gains come from pipeline and features, not the model; test the infrastructure independently of the model; separate the model from the serving policy.
+3. Skew and silent failures: log the features at serving time and train on the logged features; monitor for feature drift and missing features; a table left stale for weeks is a silent failure; every feature has an owner and documentation.
+4. Features: start with observed or reported features rather than learned ones; combine and modify features in human-understandable ways (discretization, crosses); the number of feature weights you can learn scales with the data you have; prefer features that generalize across contexts; remove features that are not used.
+5. Analysis: measure the difference between models on held-out data and on real traffic; the utility of a model is what users do, so choose metrics that reflect behavior; look for patterns in errors and turn them into features; quantify undesirable behavior separately from the objective.
+6. Skew, again: differences between training and serving pipelines, between training and serving data, and between the feedback loop and the model; the fix is one code path and logging.
+7. Late phase: complex ensembles rarely pay; when gains plateau, launch; diversity and negative feedback matter for long-term utility.
+
+**Formulas and commands to remember.**
+
+```
+Rule: log features at serving time; train on logged features
+```
+
+**Three takeaways.**
+
+- Metrics and infrastructure before models; the first model is a pipeline test.
+- Training-serving skew is fought with one feature path and serving-time logs.
+- Human-understandable features that generalize beat clever learned ones early on.
+
+**Practice.** Score the traffic pipeline against the 43 rules; for the five most violated, write the concrete change (for instance, logging serving-time features) and implement one.
+
+</details>
 
 #### [The ML Test Score (Breck, Cai, Nielsen, Salib, Sculley, 2017)](https://research.google/pubs/the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction/)
 
@@ -5022,6 +8342,35 @@ _paper · free · an hour · free; the production-readiness rubric_
 
 **PhD at Apple.** A rare attempt to quantify production readiness; its limits (a checklist cannot weight items by risk) point toward risk-based test design, which is an open engineering problem in ML systems.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A rubric of 28 tests in four categories, features and data (7), model development (7), ML infrastructure (7) and monitoring (7), each scored by whether it is done manually or automated, with an overall score interpretation from 'more of a research project' to 'exceptional levels of automated testing and monitoring'.
+
+**Key ideas, in order.**
+
+1. Features and data: feature expectations are captured in a schema; all features are beneficial (measured by removal); no feature's cost outweighs its benefit; features adhere to meta-level requirements (privacy, policy); the data pipeline has appropriate privacy controls; new features can be added quickly; all input feature code is tested.
+2. Model development: model specs are reviewed and versioned; offline and online metrics correlate; all hyperparameters have been tuned; the impact of model staleness is known; a simpler model is not better; model quality is sufficient on important data slices; the model is tested for considerations of inclusion.
+3. Infrastructure: training is reproducible (determinism, seeds); model specs are unit tested (a training run on synthetic data reaches a target); the full pipeline is integration tested; model quality is validated before serving; the model is debuggable on single examples; models are tested via a canary before serving; models can be rolled back quickly.
+4. Monitoring: dependency changes result in notification; data invariants hold in training and serving inputs; training and serving features compute the same values; models are not too stale; the model is numerically stable; the system has no dramatic regressions in training speed, latency, throughput or memory; the model has not regressed in prediction quality on served data.
+5. Scoring: for each test, 0 if not done, 0.5 if done manually, 1 if automated and repeated; the category score is the sum; the overall score is the minimum over categories, which rewards balance; the paper's survey shows most teams score low on monitoring.
+
+**Formulas and commands to remember.**
+
+```
+score = min over categories of Σ_tests {0, 0.5 manual, 1 automated}
+```
+
+**Three takeaways.**
+
+- Testing ML means testing data, model, infrastructure and monitoring, and the weakest category is the score.
+- Automated beats manual because manual checks decay.
+- Canary, rollback and training-serving feature equality are the infrastructure tests that matter most here.
+
+**Practice.** Score the pipeline on all 28 tests honestly, then automate the three cheapest missing ones (schema check, golden-day feature equality, canary evaluation) and rescore.
+
+</details>
+
 #### [Hidden Technical Debt in Machine Learning Systems (Sculley et al., 2015)](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html)
 
 _paper · free · an hour, twice · free; ten pages, read twice_
@@ -5037,6 +8386,37 @@ _paper · free · an hour, twice · free; ten pages, read twice_
 **Stanford grad.** Later work, on ML test scores and on data-validation systems for production pipelines, operationalizes the paper's warnings; read it together with those follow-ups and with Huyen's chapter 8. The paper's concept of the CACE principle, changing anything changes everything, is the reason retraining needs a canary.
 
 **PhD at Apple.** A foundational engineering paper whose legacy is the field of ML systems and MLOps. At your level the exercise is to separate which debts are inherent to ML (data dependencies, feedback) from which are ordinary software engineering, and to identify where research, rather than discipline, could reduce the inherent ones.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A paper arguing that ML systems carry all the maintenance problems of software plus ML-specific ones: complex models erode boundaries (entanglement, correction cascades, undeclared consumers); data dependencies cost more than code dependencies (unstable inputs, underutilized inputs, static analysis of data dependencies); feedback loops (direct and hidden); ML-system anti-patterns (glue code, pipeline jungles, dead experimental code paths, abstraction debt, common smells); configuration debt; dealing with changes in the external world (fixed thresholds, monitoring and testing); and other areas (data testing, reproducibility, process management, cultural debt).
+
+**Key ideas, in order.**
+
+1. Entanglement: changing anything changes everything (CACE); adding, removing or reweighting a feature changes the importance of all others, so features cannot be improved in isolation; mitigations include isolating models and monitoring prediction changes.
+2. Correction cascades: a model built on top of another to correct it creates a dependency that makes both hard to improve; undeclared consumers use a model's outputs silently and break when it changes; access controls and service-level agreements help.
+3. Data dependencies: unstable input signals (another system's output that changes qualitatively), underutilized dependencies (legacy, bundled, epsilon and correlated features that add little but cost), and the need for tooling to analyze data dependencies as static analysis does for code.
+4. Feedback loops: direct (a model influences its own future training data) and hidden (two systems influence each other through the world); traffic alerts changing traffic is a direct loop.
+5. Anti-patterns: glue code around packages, pipeline jungles from incremental data preparation, dead experimental branches, abstraction debt from lacking standard interfaces, and smells (plain-old-data types, multiple languages, prototypes in production).
+6. Configuration debt: configurations are code; they need review, testing and versioning; the paper's list of configuration requirements (easy to specify a change, hard to make a mistake, easy to see the diff, assertable, detectable unused settings).
+7. Changing world: fixed thresholds in dynamic systems, monitoring prediction bias, action limits, upstream producers; testing data and reproducibility; process management and cultural debt (rewarding deletion of features and complexity).
+
+**Formulas and commands to remember.**
+
+```
+CACE: changing anything changes everything
+```
+
+**Three takeaways.**
+
+- ML debt is mostly data and dependency debt; treat features and inputs as owned, versioned dependencies.
+- Feedback loops are inherent when a model acts on the world; monitor for them.
+- Configuration and pipelines are code and deserve the same review and tests.
+
+**Practice.** Draw the dependency graph of the pipeline (inputs, stages, outputs, consumers), mark unstable inputs and feedback loops, and list the configuration values that would silently change results if edited.
+
+</details>
 
 #### [launchd.info and the pytest documentation](https://www.launchd.info/)
 
@@ -5054,6 +8434,45 @@ _docs · free · an afternoon · free_
 
 **PhD at Apple.** Tooling choices are context-dependent. The durable skill is specifying a job's contract, idempotence, timeout, alerting, and retry policy, independently of the scheduler, so that migrating from launchd to a cluster scheduler later is mechanical rather than a redesign.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** launchd.info: what launchd is, agents versus daemons, property list files and their keys (Label, Program and ProgramArguments, StartInterval, StartCalendarInterval, RunAtLoad, KeepAlive, WorkingDirectory, EnvironmentVariables, StandardOutPath, StandardErrorPath, ThrottleInterval), the file locations, loading and unloading with launchctl, debugging, and a configuration reference. pytest: getting started, how-to guides (assertions, fixtures, marks, parametrize, temporary directories, monkeypatching, capturing output, skipping, doctests, plugins), configuration files, and the API reference.
+
+**Key ideas, in order.**
+
+1. launchd model: the system service manager starts jobs on demand, on a schedule or at load; user agents live in `~/Library/LaunchAgents` and run when the user is logged in; daemons in `/Library/LaunchDaemons` run as root at boot; a plist is an XML dictionary describing one job.
+2. Scheduling keys: `StartInterval` runs every N seconds (missed runs while asleep are coalesced into one on wake, unlike cron which skips); `StartCalendarInterval` runs at specified minute, hour, day, weekday, month; `RunAtLoad` runs immediately when loaded; `KeepAlive` restarts on exit.
+3. Environment: jobs run with a minimal environment; set `EnvironmentVariables` (PATH, secrets are better read from a file), `WorkingDirectory`, and full paths to the interpreter; log with `StandardOutPath` and `StandardErrorPath`.
+4. Operations: `launchctl load ~/Library/LaunchAgents/com.traffic1.predict.plist` (or `bootstrap` on newer systems), `launchctl list | grep traffic1`, `launchctl unload`; `ThrottleInterval` prevents rapid restarts; permissions (Full Disk Access) apply to the executable.
+5. pytest basics: test discovery (`test_*.py`, `test_*` functions), plain `assert` with introspection, running with `-q`, `-x`, `-k expr`, `-m marker`, `--lf` for last failed; exit codes for CI.
+6. Fixtures: functions decorated with `@pytest.fixture` provide setup (and teardown with `yield`); scopes (function, module, session); `conftest.py` shares fixtures; built-in fixtures `tmp_path`, `monkeypatch` (set environment variables, patch attributes), `capsys`, `caplog`.
+7. Parametrize and marks: `@pytest.mark.parametrize('case', [...])` runs one test over many inputs; custom markers (`slow`, `integration`) registered in configuration; `skip` and `xfail`; `pytest.raises` for exceptions; `pytest.approx` for floats.
+8. Configuration and plugins: `pyproject.toml` `[tool.pytest.ini_options]` for paths and markers; `pytest-cov` for coverage; `pytest-xdist` for parallel runs; `hypothesis` as a plugin.
+
+**Formulas and commands to remember.**
+
+```
+<key>StartInterval</key><integer>300</integer>
+@pytest.fixture
+def day():
+    return pd.read_parquet('tests/fixtures/one_day.parquet')
+
+@pytest.mark.parametrize('col', ['speed', 'occ', 'flow'])
+def test_bounds(day, col):
+    assert day[col].dropna().between(0, 3000).all()
+```
+
+**Three takeaways.**
+
+- launchd coalesces missed runs after sleep and has no cron-like environment; set paths and logs explicitly.
+- Fixtures and parametrize are most of pytest; `conftest.py` is where shared setup lives.
+- Register markers and use `-m` so slow integration tests do not block quick feedback.
+
+**Practice.** Write the four launchd plists and load them, confirm they run with `launchctl list` and the log files, and write a `conftest.py` with a one-day fixture used by three parametrized tests.
+
+</details>
+
 #### [FastAPI documentation](https://fastapi.tiangolo.com/)
 
 _docs · free · an afternoon · free; a door on the predictor in an afternoon_
@@ -5069,6 +8488,45 @@ _docs · free · an afternoon · free; a door on the predictor in an afternoon_
 **Stanford grad.** Its async model and deployment guidance (workers, reverse proxies) are the practical side of serving; for batch-predict pipelines a web API is optional, for a dashboard it is the interface.
 
 **PhD at Apple.** Framework choice matters less than the service contract; FastAPI's docs are also a good example of documentation that teaches the underlying concepts rather than only the library.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Tutorial: first steps, path parameters, query parameters, request body (Pydantic models), validations, multiple parameters, body fields, nested models, example data, extra data types, cookies and headers, response models, status codes, form data, file uploads, error handling, path operation configuration, JSON encoding, body updates, dependencies, security, middleware, CORS, SQL databases, bigger applications, background tasks, metadata and docs, static files, testing, debugging. Advanced guide and deployment (servers, workers, Docker, HTTPS).
+
+**Key ideas, in order.**
+
+1. First steps: `app = FastAPI()`; a function decorated with `@app.get('/path')` returns JSON; run with a server (`uvicorn` or `fastapi run`); the automatic interactive docs at `/docs` from the OpenAPI schema.
+2. Parameters: path parameters typed in the signature (`station_id: int`) are validated and converted; query parameters are untyped path arguments with defaults; `Annotated` with `Query`, `Path` for constraints (`ge`, `le`, `max_length`).
+3. Request and response bodies: Pydantic models declare fields and types; the body is parsed, validated and documented; `response_model` filters and validates output; nested models, lists, enums; status codes and `HTTPException` for errors with detail.
+4. Dependencies: functions injected with `Depends`, used for shared resources (the loaded model), parameters, authentication; dependencies with `yield` for setup and teardown; app lifespan events to load the model once at startup.
+5. Operations: middleware for logging and timing, CORS, background tasks for work after the response, static files, and settings via environment variables with a Pydantic settings class.
+6. Testing: `TestClient` from Starlette calls the app in-process for tests; the golden test replays a stored day through the endpoint.
+7. Deployment: run with multiple worker processes behind a reverse proxy with HTTPS; containerize with a slim image; health-check endpoints; the docs' deployment concepts (security, running on startup, restarts, replication, memory).
+
+**Formulas and commands to remember.**
+
+```
+class PredictRequest(BaseModel):
+    station_id: int
+    horizon: Literal[15, 30, 60]
+
+@app.post('/predict', response_model=PredictResponse)
+def predict(req: PredictRequest, model=Depends(get_model)):
+    ...
+with TestClient(app) as c:
+    assert c.post('/predict', json={'station_id': 400001, 'horizon': 30}).status_code == 200
+```
+
+**Three takeaways.**
+
+- Type hints are the API contract; validation and docs come free.
+- Load the model once with lifespan or a cached dependency; never per request.
+- Test through `TestClient` with a golden day.
+
+**Practice.** Wrap the predictor with a `/predict` endpoint and a `/health` endpoint, load models at startup, write a `TestClient` test that replays one stored day, and measure p50 and p99 latency for 100 requests.
+
+</details>
 
 #### [Docker, Get started guide](https://docs.docker.com/get-started/)
 
@@ -5086,6 +8544,43 @@ _docs · free · an afternoon · free; the service in a box_
 
 **PhD at Apple.** Containerization is the boundary that makes reproducibility and deployment mechanical; the research-relevant question is whether your experiment can be rerun from an image and a data hash a year later.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Overview (what a container is, images, registries), the getting-started workshop (containerize an application, update the application, share the application, persist data with volumes, use bind mounts, multi-container applications with Compose, image-building best practices), Dockerfile reference (FROM, RUN, COPY, WORKDIR, ENV, CMD, ENTRYPOINT), and guides on multi-stage builds and multi-platform images.
+
+**Key ideas, in order.**
+
+1. Concepts: an image is a read-only layered filesystem plus metadata; a container is a running instance with its own process namespace; a registry stores images; containers share the host kernel and are lighter than virtual machines.
+2. Dockerfile: `FROM python:3.12-slim`, `WORKDIR /app`, `COPY requirements.txt .`, `RUN pip install --no-cache-dir -r requirements.txt`, `COPY . .`, `CMD ['python', '19_predict_live.py']`; order for cache efficiency (dependencies before code); `.dockerignore` to exclude data, `.env`, `.git`.
+3. Building and running: `docker build -t traffic1:latest .`, `docker run --rm -p 8000:8000 traffic1`, `-e` for environment variables, `-v` for volumes; logs with `docker logs`; `exec` for a shell inside.
+4. Data: containers are ephemeral; volumes persist data managed by Docker; bind mounts map a host directory (`-v $PWD/data:/app/data`) so models and data stay outside the image.
+5. Compose: a YAML file describing several services (the API, a scheduler, a monitoring dashboard) with networks, volumes and environment; `docker compose up`.
+6. Best practices: small base images, multi-stage builds to drop build tools, pin versions, run as a non-root user, one process per container, health checks, and multi-platform images for Apple silicon and x86 (`--platform`).
+7. Security: never bake secrets into images; pass them at runtime; scan images; keep base images updated.
+
+**Formulas and commands to remember.**
+
+```
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ['uvicorn', 'serve:app', '--host', '0.0.0.0', '--port', '8000']
+docker build -t traffic1 . && docker run --rm -p 8000:8000 -v $PWD/models:/app/models traffic1
+```
+
+**Three takeaways.**
+
+- Dependencies before code in the Dockerfile so rebuilds are fast.
+- Data and models mount from outside; the image holds code and libraries only.
+- Secrets are runtime inputs, never image layers.
+
+**Practice.** Containerize the prediction service with a slim image, a `.dockerignore`, models mounted as a volume and a health check; run the golden test against the container and note the image size.
+
+</details>
+
 #### [PyTorch distributed overview](https://pytorch.org/tutorials/beginner/dist_overview.html)
 
 _docs · free · an afternoon · free; what you would need past one machine_
@@ -5101,6 +8596,37 @@ _docs · free · an afternoon · free; what you would need past one machine_
 **Stanford grad.** Distributed training is where systems knowledge (communication, memory hierarchy) meets ML; the overview links the pieces you will meet in the ultra-scale playbook and in any large-model paper's training section.
 
 **PhD at Apple.** The distributed stack is a research area in itself (compilers, sharding strategies, fault tolerance); for a lead, the practical question is which parallelism a model needs and what it costs in engineering time.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The overview page maps PyTorch's distributed features: the `torch.distributed` communication package (process groups, collectives, backends NCCL and Gloo), data-parallel training (`DistributedDataParallel`), model-parallel and sharded training (`FullyShardedDataParallel`, tensor parallel, pipeline parallel), the launcher (`torchrun`), elastic training, and pointers to tutorials for each.
+
+**Key ideas, in order.**
+
+1. Process groups and collectives: each device runs one process; `init_process_group(backend)`; collectives `all_reduce`, `broadcast`, `all_gather`, `reduce_scatter`; NCCL for GPUs, Gloo for CPUs; rank and world size.
+2. DistributedDataParallel: replicate the model on every process, give each a different shard of data (`DistributedSampler`), run forward and backward locally, and all-reduce gradients so every replica updates identically; gradient bucketing overlaps communication with backward computation; use it instead of the older `DataParallel`.
+3. Fully sharded data parallel: shard parameters, gradients and optimizer state across processes and gather parameters just in time per layer, cutting memory per device at the cost of communication; mixed precision and CPU offload options; checkpointing sharded state.
+4. Tensor and pipeline parallelism: split individual layers' matrices across devices (tensor parallel) or assign layers to devices in sequence with micro-batches (pipeline parallel); combined with data parallelism for large models.
+5. Launching and resilience: `torchrun --nproc_per_node=8 train.py` sets ranks and environment; elastic training restarts on failure with a changed world size; checkpoint regularly and resume.
+6. Debugging and profiling: `TORCH_DISTRIBUTED_DEBUG`, timeouts, deadlocks from mismatched collectives, and the profiler's view of communication versus compute.
+
+**Formulas and commands to remember.**
+
+```
+dist.init_process_group('nccl'); model = DDP(model.to(rank), device_ids=[rank]); sampler = DistributedSampler(ds)
+torchrun --nproc_per_node=8 train.py
+```
+
+**Three takeaways.**
+
+- DDP is gradient all-reduce across replicas; FSDP shards state to fit bigger models.
+- One process per device, and every process must run the same collectives in the same order.
+- Checkpoint and resume; large runs fail.
+
+**Practice.** Read the DDP tutorial and write the modifications the spatio-temporal net's training script would need to run on eight GPUs (sampler, wrapper, launcher), even though you cannot run them on the Mac; then explain where FSDP would become necessary.
+
+</details>
 
 #### [The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)](https://huggingface.co/spaces/nanotron/ultrascale-playbook)
 
@@ -5118,6 +8644,38 @@ _book · free · weeks · free; how the largest models are actually trained_
 
 **PhD at Apple.** Open, measured engineering knowledge of this kind is rare; the playbook is both a reference and a model of how to publish systems results.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Sections: a high-level overview of training on one GPU (memory usage of parameters, gradients, optimizer state and activations; activation recomputation; gradient accumulation; profiling); data parallelism (all-reduce, overlapping communication, bucketing, gradient accumulation with DP, ZeRO stages 1 to 3); tensor parallelism (sharding matrix multiplications, sequence parallelism); context parallelism (ring attention); pipeline parallelism (schedules: all-forward-all-backward, one-forward-one-backward, interleaved, zero-bubble); expert parallelism; combining strategies and finding the best configuration; GPU internals (kernels, fused kernels, FlashAttention, mixed precision); and benchmarks from thousands of runs.
+
+**Key ideas, in order.**
+
+1. Memory on one GPU: in mixed precision, parameters (2 bytes) plus gradients (2) plus Adam states in fp32 (8) plus master weights (4) give about 16 bytes per parameter, before activations, which scale with batch, sequence length, hidden size and layers; activation recomputation trades compute for memory; gradient accumulation simulates a larger batch.
+2. Data parallelism: replicas average gradients with all-reduce; overlap communication with the backward pass by bucketing; ZeRO-1 shards optimizer state, ZeRO-2 also gradients, ZeRO-3 also parameters (this is FSDP), with all-gather and reduce-scatter replacing all-reduce.
+3. Tensor parallelism: split a linear layer's weight by columns or rows across GPUs so each computes part of the matrix multiply, with an all-reduce (or all-gather) to combine; attention heads split naturally; sequence parallelism shards the non-matmul parts (layer norm, dropout) along the sequence.
+4. Context parallelism: for very long sequences, shard the sequence across GPUs and pass keys and values around a ring (ring attention) so attention over the full sequence is computed piecewise.
+5. Pipeline parallelism: assign consecutive layers to GPUs; micro-batches fill the pipeline; the bubble (idle time) depends on the schedule; one-forward-one-backward and interleaved schedules cut it; zero-bubble schedules split backward into two parts.
+6. Expert parallelism and combinations: mixture-of-experts layers place experts on different GPUs; a 5-D parallelism space (data, tensor, sequence/context, pipeline, expert); rules of thumb for choosing (fit the model, then fit the batch, then optimize throughput), and the playbook's benchmark tables.
+7. GPU internals: streaming multiprocessors, memory hierarchy, arithmetic intensity, kernel fusion, FlashAttention's tiled computation avoiding the n² matrix, mixed precision (bf16 compute, fp32 master), and profiling with traces.
+
+**Formulas and commands to remember.**
+
+```
+memory per parameter (mixed precision, Adam) ≈ 2 + 2 + 8 + 4 = 16 bytes
+training FLOPs ≈ 6 · N · D;  throughput = FLOPs / (time × peak FLOP/s) = MFU
+```
+
+**Three takeaways.**
+
+- Fit first (sharding, recomputation), then fill (batch), then optimize (overlap, kernels).
+- Every parallelism trades memory for communication; overlap hides it.
+- Model FLOP utilization is the number to report for a training system.
+
+**Practice.** Compute the memory footprint of a 1-billion-parameter model under mixed precision with Adam, with and without ZeRO-3 across 8 GPUs, and estimate its training time for 20 billion tokens at 40 % utilization on a stated GPU.
+
+</details>
+
 #### [Scaling Laws for Neural Language Models (Kaplan et al., 2020)](https://arxiv.org/abs/2001.08361)
 
 _paper · free · an evening or two · free; measure before assuming bigger helps_
@@ -5134,6 +8692,38 @@ _paper · free · an evening or two · free; measure before assuming bigger help
 
 **PhD at Apple.** Understanding scaling is now part of research strategy; the open questions include what scales with what, and where data quality dominates quantity.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Empirical power laws for language-model loss as a function of model size (non-embedding parameters), dataset size and compute, over several orders of magnitude; the weak dependence on architectural details (depth versus width); the sample-efficiency of large models; the overfitting law relating model and data size; training curves and their predictability; the compute-optimal allocation (train very large models and stop before convergence); and transfer to other distributions.
+
+**Key ideas, in order.**
+
+1. Setup: decoder-only transformers trained on WebText2 with next-token cross-entropy in nats; sweep parameters N from 768 to 1.5 billion (excluding embeddings), tokens D from 22 million to 23 billion, and compute C.
+2. Power laws: with enough data and compute, L(N) ≈ (N_c/N)^{α_N} with α_N ≈ 0.076; with a fixed model and limited data, L(D) ≈ (D_c/D)^{α_D} with α_D ≈ 0.095; with limited compute at optimal allocation, L(C) ≈ (C_c/C)^{α_C} with α_C ≈ 0.050; straight lines on log-log plots across six orders of magnitude.
+3. Architecture matters little: at fixed N, varying depth, width, heads and feed-forward ratio changes loss only mildly within a broad range; the total parameter count dominates.
+4. Overfitting: a joint law L(N, D) shows that data must grow sublinearly with model size (D ∝ N^{0.74}) to avoid an overfitting penalty; the paper's fitted expression combines both terms.
+5. Sample efficiency and training curves: larger models reach a given loss with fewer tokens and steps; the loss curve L(N, S) is predictable early; critical batch size grows as loss falls.
+6. Compute-optimal training: for a compute budget, the best strategy is a very large model trained on relatively little data and stopped well before convergence; most compute should go to model size, with data growing slowly (a conclusion later revised by compute-optimal analyses that found data should grow proportionally).
+7. Generalization: loss on other text distributions tracks training loss with a constant offset, so improvements transfer.
+
+**Formulas and commands to remember.**
+
+```
+L(N) ≈ (N_c/N)^{α_N},  α_N ≈ 0.076;  L(D) ≈ (D_c/D)^{α_D},  α_D ≈ 0.095
+L(N, D) ≈ [ (N_c/N)^{α_N/α_D} + D_c/D ]^{α_D}
+```
+
+**Three takeaways.**
+
+- Loss follows power laws in size, data and compute; extrapolation is a legitimate planning tool.
+- Architecture details matter far less than scale in this regime.
+- The compute-optimal allocation depends on methodology; later work corrected the data share.
+
+**Practice.** Fit a power law of validation log loss against training months for LightGBM and for the spatio-temporal net on the traffic data, and use it to predict the gain from a second year of data.
+
+</details>
+
 #### [Training Compute-Optimal Large Language Models (Hoffmann et al., 2022)](https://arxiv.org/abs/2203.15556)
 
 _paper · free · an evening or two · free; the correction to the scaling laws_
@@ -5149,6 +8739,36 @@ _paper · free · an evening or two · free; the correction to the scaling laws_
 **Stanford grad.** Later work refines the trade-off for inference cost and data quality; the paper's fitted laws remain the reference point for planning training runs.
 
 **PhD at Apple.** Together with its predecessor it defines how the field reasons about compute allocation; for research strategy, it is the argument for data over parameters.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** A study of how to split a fixed compute budget between model size and training tokens, using three approaches (fix model size and vary tokens; IsoFLOP profiles; fit a parametric loss function), finding that models had been under-trained and that parameters and tokens should scale roughly equally; training Chinchilla (70 billion parameters, 1.4 trillion tokens) with the same compute as Gopher (280 billion) and showing it is better; and downstream evaluations.
+
+**Key ideas, in order.**
+
+1. Three approaches: (1) for each model size, train with several token counts and find where loss is minimized for each compute level; (2) for fixed compute (IsoFLOP curves), vary model size and find the minimum; (3) fit L(N, D) = E + A/N^α + B/D^β and minimize under the constraint C ≈ 6ND; all three agree that N and D should scale about equally with compute.
+2. Correction to earlier laws: the previous scaling analysis used a fixed learning-rate schedule length regardless of training length; setting the cosine schedule to match each run's actual length changed the fitted exponents and the conclusion.
+3. Chinchilla: 70 billion parameters trained on 1.4 trillion tokens outperforms Gopher (280 billion, 300 billion tokens) and other larger models on language modelling and downstream tasks, with a smaller inference cost.
+4. The rule of thumb: about 20 tokens per parameter at compute-optimality; later work notes that when inference cost matters, training smaller models on more tokens than compute-optimal is better still.
+5. Data implications: compute-optimal training of large models needs trillions of high-quality tokens, which makes data collection and filtering the binding constraint.
+
+**Formulas and commands to remember.**
+
+```
+L(N, D) = E + A/N^α + B/D^β;  minimize subject to C = 6ND
+compute-optimal: N_opt ∝ C^{0.5}, D_opt ∝ C^{0.5};  roughly 20 tokens per parameter
+```
+
+**Three takeaways.**
+
+- Under a fixed budget, grow data and parameters together.
+- A methodological detail (schedule length) reversed a headline conclusion; check methodology before believing a law.
+- Inference cost argues for smaller models trained longer than compute-optimal.
+
+**Practice.** Using the fitted form L = E + A/N^α + B/D^β with the paper's constants, compute the optimal N and D for three compute budgets and plot the IsoFLOP curves.
+
+</details>
 
 ### Build
 
@@ -5449,6 +9069,43 @@ _book · free · a semester · free; the standard first book_
 
 **PhD at Apple.** The canonical reference; its authors' later essays on the field's direction are worth reading alongside. For a lead, it is the book to require before anyone proposes RL for a control problem.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I, tabular methods: the k-armed bandit (action values, epsilon-greedy, optimistic initial values, UCB, gradient bandits); finite Markov decision processes (agent-environment interface, returns, policies, value functions, Bellman equations, optimality); dynamic programming (policy evaluation, policy improvement, policy iteration, value iteration, generalized policy iteration); Monte Carlo methods (prediction, estimation of action values, control, off-policy with importance sampling); temporal-difference learning (TD(0), Sarsa, Q-learning, expected Sarsa, double learning); n-step bootstrapping; planning and learning with tabular models (Dyna, prioritized sweeping, MCTS). Part II, approximate methods: on-policy prediction with function approximation (gradient MC, semi-gradient TD, linear methods, feature construction), on-policy control (semi-gradient Sarsa, average reward), off-policy methods and the deadly triad, eligibility traces (TD(lambda)), policy gradient (REINFORCE, actor-critic). Part III: psychology, neuroscience, applications (TD-Gammon, Atari, AlphaGo), frontiers.
+
+**Key ideas, in order.**
+
+1. The problem: an agent chooses actions, receives rewards and new states, and seeks to maximise expected discounted return; learning from evaluative (not instructive) feedback creates the exploration-exploitation trade-off.
+2. MDPs and Bellman equations: the state value v_pi(s) is the expected return from s under policy pi; it satisfies a recursive consistency equation; the optimal value v* satisfies the Bellman optimality equation, and a greedy policy with respect to v* is optimal.
+3. Dynamic programming assumes a known model: policy evaluation iterates the Bellman equation to a fixed point; policy improvement acts greedily; alternating them (generalized policy iteration) is the pattern behind almost every RL algorithm.
+4. Monte Carlo learns from complete episodes without a model by averaging returns; off-policy learning reweights returns from a behaviour policy with importance-sampling ratios, at the price of variance.
+5. Temporal difference learns from incomplete episodes by bootstrapping: update the estimate toward reward plus discounted estimate of the next state. Sarsa is on-policy (uses the action actually taken); Q-learning is off-policy (uses the max); double Q-learning removes maximisation bias.
+6. n-step methods and eligibility traces interpolate between MC (high variance, no bias) and TD(0) (low variance, bias); TD(lambda) averages all n-step returns with weights (1-lambda) lambda^(n-1).
+7. Planning uses a model to simulate experience; Dyna interleaves real and simulated updates; MCTS builds a search tree from rollouts guided by value estimates.
+8. Function approximation: with large state spaces, values are parameterised (linear in features, or a network) and updated by semi-gradient TD; combining bootstrapping, off-policy learning and function approximation (the deadly triad) can diverge.
+9. Policy gradient methods parameterise the policy directly; the policy gradient theorem gives an unbiased gradient estimate from sampled returns (REINFORCE); a learned baseline or critic reduces variance (actor-critic).
+
+**Formulas and commands to remember.**
+
+```
+return: G_t = R_{t+1} + gamma R_{t+2} + gamma^2 R_{t+3} + ...
+Bellman: v_pi(s) = sum_a pi(a|s) sum_{s',r} p(s',r|s,a) [r + gamma v_pi(s')]
+TD(0): V(S_t) <- V(S_t) + alpha [R_{t+1} + gamma V(S_{t+1}) - V(S_t)]
+Q-learning: Q(S,A) <- Q(S,A) + alpha [R + gamma max_a Q(S',a) - Q(S,A)]
+policy gradient: grad J(theta) = E_pi[ G_t grad log pi(A_t|S_t, theta) ]
+```
+
+**Three takeaways.**
+
+- Generalized policy iteration (evaluate, then improve) is the skeleton of every RL method.
+- TD learning bootstraps; MC does not; the choice trades bias for variance.
+- Function approximation plus off-policy plus bootstrapping can diverge, so read Chapter 11 before trusting a deep RL result.
+
+**Practice.** Implement tabular Q-learning and Sarsa on a small gridworld and on a signal-timing toy (a queue that grows with arrivals and drains when the light is green); plot learning curves and show that Q-learning finds the shorter but riskier path in the cliff-walking example.
+
+</details>
+
 #### [David Silver's Reinforcement Learning course (UCL, DeepMind)](https://www.davidsilver.uk/teaching/)
 
 _video · free · ten lectures, two weeks · free lectures alongside the book_
@@ -5464,6 +9121,41 @@ _video · free · ten lectures, two weeks · free lectures alongside the book_
 **Stanford grad.** The course predates much of deep RL; pair it with Spinning Up for algorithms and with recent surveys for offline RL. Its value is conceptual clarity.
 
 **PhD at Apple.** A widely used lecture series that defines the shared vocabulary of the field; useful as a common reference when a team discusses control problems.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Ten lectures: introduction to RL; Markov decision processes; planning by dynamic programming; model-free prediction (MC and TD); model-free control (on-policy and off-policy); value function approximation (incremental methods, batch methods, DQN); policy gradient methods (finite difference, Monte Carlo policy gradient, actor-critic, natural gradient); integrating learning and planning (model-based RL, Dyna, simulation-based search, MCTS); exploration and exploitation (bandits, optimism, Thompson sampling, information state search); case study of classic games (Backgammon, checkers, chess, Go, poker).
+
+**Key ideas, in order.**
+
+1. The RL problem is framed by reward hypothesis, history and state, the Markov property, and the three agent components (policy, value function, model); the distinction between prediction (evaluate a policy) and control (find the best one) organises the course.
+2. MDP lecture: Markov processes, reward processes, decision processes; the Bellman expectation and optimality equations in matrix and recursive form; the existence of a deterministic optimal policy.
+3. Dynamic programming: iterative policy evaluation, policy iteration and value iteration are contraction mappings, so they converge; asynchronous and prioritised sweeps.
+4. Model-free prediction: MC averages returns, TD bootstraps; the bias-variance argument; TD(lambda) with forward (lambda-return) and backward (eligibility trace) views, which are equivalent for offline updates.
+5. Model-free control: on-policy MC and Sarsa with GLIE exploration; off-policy Q-learning; the role of importance sampling and why Q-learning avoids it.
+6. Function approximation: incremental gradient methods with linear and nonlinear features; batch methods (least-squares, experience replay with fixed targets as in DQN) stabilise learning.
+7. Policy gradient: score function, the policy gradient theorem, REINFORCE, reducing variance with a critic and with baselines, compatible function approximation, natural policy gradient.
+8. Model-based RL and search: learn a model from experience, plan with it; Dyna; forward search; MCTS with UCT and its success in Go.
+9. Exploration: regret, optimism in the face of uncertainty (UCB), probability matching (Thompson sampling), information-state MDPs; contextual bandits.
+
+**Formulas and commands to remember.**
+
+```
+UCB: A_t = argmax_a [ Q_t(a) + c sqrt( ln t / N_t(a) ) ]
+lambda-return: G_t^lambda = (1-lambda) sum_n lambda^(n-1) G_t^(n)
+actor-critic update: theta <- theta + alpha grad log pi(a|s) Q_w(s,a)
+```
+
+**Three takeaways.**
+
+- Prediction and control are separate problems and every algorithm is a pairing of one evaluation method with one improvement rule.
+- Off-policy learning lets one dataset evaluate many policies, which is why Q-learning and DQN are so widely used.
+- Exploration is a statistical problem (regret) with principled solutions (UCB, Thompson) that beat epsilon-greedy.
+
+**Practice.** Watch lectures 1 to 5 alongside Sutton and Barto chapters 1 to 6, then reproduce the lecture's gridworld DP demo in NumPy, and implement UCB and Thompson sampling on a bandit that chooses which of three ramp-meter rates to use.
+
+</details>
 
 #### [Spinning Up in Deep RL (OpenAI)](https://spinningup.openai.com/)
 
@@ -5481,6 +9173,39 @@ _docs · free · a week · free; clean algorithms and a reading list_
 
 **PhD at Apple.** A useful teaching resource and a reminder that reproducible baselines were a problem the field had to solve deliberately.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** An introduction (key concepts and terminology; kinds of RL algorithms; intro to policy optimization with derivations), a list of key papers by topic (model-free, exploration, transfer, hierarchy, memory, model-based, meta-RL, scaling, safety, imitation, reproducibility), and clean, single-file implementations with documentation of VPG, TRPO, PPO, DDPG, TD3 and SAC, plus exercises and advice on doing RL research.
+
+**Key ideas, in order.**
+
+1. Terminology: states and observations, action spaces, policies (deterministic and stochastic, with log-probability computation for categorical and diagonal Gaussian policies), trajectories, reward and return, the RL objective, value functions and advantage functions.
+2. Taxonomy: model-free versus model-based; within model-free, policy optimisation (on-policy, stable) versus Q-learning (off-policy, sample-efficient but less stable); hybrids (DDPG, SAC).
+3. Policy gradient derivation: the log-derivative trick turns the gradient of an expectation into an expectation of gradients; reward-to-go and baselines reduce variance without bias; the general form with advantage estimates.
+4. Vanilla policy gradient: collect trajectories, estimate advantages with a value network (generalized advantage estimation), take one gradient step; simple and on-policy.
+5. Trust region and PPO: limit each policy update so performance does not collapse; TRPO by a KL constraint solved with conjugate gradient; PPO by a clipped surrogate objective that is simpler and works nearly as well.
+6. Off-policy actor-critic: DDPG learns a deterministic policy and Q function with replay and target networks; TD3 adds twin critics, target smoothing and delayed policy updates; SAC maximises entropy-regularised return with a stochastic policy.
+7. Research advice: read for breadth, reproduce results, run many seeds, measure with learning curves, and tune one thing at a time; RL results are noisy and easy to fool yourself with.
+
+**Formulas and commands to remember.**
+
+```
+log-derivative: grad E[R(tau)] = E[ sum_t grad log pi(a_t|s_t) R(tau) ]
+PPO clip: L = E[ min( r_t A_t, clip(r_t, 1-eps, 1+eps) A_t ) ], r_t = pi_theta(a|s)/pi_old(a|s)
+GAE: A_t = sum_l (gamma lambda)^l delta_{t+l}, delta_t = r_t + gamma V(s_{t+1}) - V(s_t)
+```
+
+**Three takeaways.**
+
+- Policy gradient is one derivation; every on-policy algorithm is that derivation plus a variance-reduction and a step-size control.
+- PPO's clipped objective is the practical default for on-policy learning; SAC for continuous control off-policy.
+- Run several seeds; a single learning curve in deep RL proves nothing.
+
+**Practice.** Implement VPG from the pseudocode on CartPole with a value baseline, then swap in the PPO clip, and plot five-seed learning curves for each; write one paragraph on what the clip changed.
+
+</details>
+
 #### [Causal Inference: The Mixtape (Cunningham)](https://mixtape.scunning.com/)
 
 _book · free · selected chapters, two weeks · free; applied causal methods with code_
@@ -5496,6 +9221,40 @@ _book · free · selected chapters, two weeks · free; applied causal methods wi
 **Stanford grad.** Its treatment of difference-in-differences includes the recent literature on staggered adoption, which is relevant to evaluating roadwork or policy changes across corridors. Read it alongside the causal machine-learning literature.
 
 **PhD at Apple.** A free, current, applied causal-inference text; for a product team asking what an alert causes, it is the accessible primer before the formal one.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction; probability and regression review; directed acyclic graphs; potential outcomes causal model (physical randomisation, randomisation inference, Fisher's sharp null); matching and subclassification (exact matching, approximate matching, propensity scores, coarsened exact matching); regression discontinuity (sharp, fuzzy, bandwidth, density tests, placebo tests); instrumental variables (LATE, weak instruments, heterogeneous effects); panel data (fixed effects); difference-in-differences (the 2x2, parallel trends, event studies, staggered adoption and the Bacon decomposition, Callaway-Sant'Anna); synthetic control; with Stata, R and Python code throughout.
+
+**Key ideas, in order.**
+
+1. Potential outcomes: each unit has Y(1) and Y(0); the individual effect is their difference and is never observed; the average treatment effect requires assumptions (SUTVA, ignorability) to identify from data; randomisation makes treatment independent of potential outcomes.
+2. DAGs: draw the assumed causal structure; the backdoor criterion says which variables to condition on to block confounding paths; conditioning on a collider opens a path and creates bias (selection bias).
+3. Matching and propensity scores: under conditional independence given X, compare treated to similar controls; the propensity score p(X) = P(D=1|X) reduces dimensionality; check overlap (common support) and balance; inverse probability weighting.
+4. Regression discontinuity: when treatment is assigned by a cutoff on a running variable, units just above and below are comparable; estimate with local linear regression on each side, test for manipulation with a density test at the cutoff, run placebo cutoffs.
+5. Instrumental variables: an instrument affects treatment but affects the outcome only through treatment; two-stage least squares; the estimate is a local average treatment effect for compliers; weak instruments bias toward OLS.
+6. Difference-in-differences: compare the change in the treated group to the change in the control group; parallel trends is the identifying assumption; event-study plots check pre-trends; with staggered adoption the two-way fixed effects estimator can be badly biased because it uses already-treated units as controls.
+7. Synthetic control: build a weighted combination of untreated units that matches the treated unit's pre-period trajectory; inference by placebo permutation across donor units.
+
+**Formulas and commands to remember.**
+
+```
+ATE = E[Y(1) - Y(0)];  naive difference = ATE + selection bias + heterogeneity bias
+DiD: (E[Y_T,post] - E[Y_T,pre]) - (E[Y_C,post] - E[Y_C,pre])
+2SLS: first stage D = pi Z + X gamma + v, second stage Y = beta D_hat + X delta + u
+propensity weighting: E[Y(1)] = E[ D Y / p(X) ]
+```
+
+**Three takeaways.**
+
+- Identification comes from assumptions and design, not from the size of the dataset.
+- Draw the DAG before the regression; it says what to control for and what never to control for.
+- For policy questions about roads (a new ramp meter, a lane closure), difference-in-differences on nearby untreated segments is the natural design.
+
+**Practice.** Take a real or simulated change on one Fremont segment (a new signal timing), pick control segments, run a difference-in-differences with an event-study plot, and test the parallel-trends assumption with pre-period leads.
+
+</details>
 
 #### [Causal Inference: What If (Hernán, Robins)](https://miguelhernan.org/whatifbook)
 
@@ -5513,6 +9272,39 @@ _book · free · part 1, three weeks · free; the rigorous base, part 1 now_
 
 **PhD at Apple.** The epidemiological tradition of causal inference is the most careful one about assumptions; for a product that intervenes (alerts that change traffic), it is the framework for saying what you can and cannot learn from logged data.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I, causal inference without models: definition of causal effect (individual and average effects, randomisation, counterfactuals); randomised experiments (conditional randomisation, standardisation, inverse probability weighting); observational studies (identifiability conditions, exchangeability, positivity, consistency); effect modification; interaction; graphical representation (DAGs, d-separation, backdoor); confounding; selection bias; measurement bias; random variability. Part II, causal inference with models: why models, IP weighting and marginal structural models, standardisation and the parametric g-formula, g-estimation of structural nested models, outcome regression and propensity scores, instrumental variables, causal survival analysis, variable selection. Part III, time-varying treatments: treatment-confounder feedback, g-methods for time-varying treatments, target trial emulation.
+
+**Key ideas, in order.**
+
+1. The three identifiability conditions: exchangeability (treated and untreated would have had the same outcome distribution had they received the same treatment), positivity (every covariate stratum has some treated and some untreated), consistency (the observed outcome under the received treatment equals the counterfactual).
+2. Standardisation and IP weighting are two ways to use conditional exchangeability given L: compute stratum-specific risks and average over the population, or reweight each unit by 1/P(A|L) to create a pseudo-population without confounding; they give the same answer nonparametrically.
+3. DAGs encode the assumptions: d-separation determines which independencies hold; confounding is an open backdoor path; selection bias is conditioning on a collider or a descendant of one; measurement bias comes from mismeasured variables.
+4. With many covariates, models are needed: the marginal structural model fits a model for the causal effect using IP weights; the parametric g-formula models the outcome given treatment and covariates and standardises; doubly robust estimators combine both.
+5. Instrumental variables need four conditions (relevance, exclusion, exchangeability of the instrument, and monotonicity or homogeneity for point identification); the IV estimate is the ratio of reduced-form to first-stage effects.
+6. Time-varying treatments with treatment-confounder feedback break conventional regression: adjusting for a time-varying confounder that is also affected by earlier treatment blocks part of the effect and opens collider paths; the g-methods (IP weighting, g-formula, g-estimation) handle this.
+7. The target trial: specify the randomised trial you would run (eligibility, treatment strategies, assignment, follow-up, outcome, causal contrast, analysis), then emulate each component with observational data; this discipline prevents most design errors.
+
+**Formulas and commands to remember.**
+
+```
+standardisation: E[Y^a] = sum_l E[Y | A=a, L=l] P(L=l)
+IP weight: W^A = 1 / f(A | L);  stabilised: f(A) / f(A|L)
+IV: E[Y^{a=1}] - E[Y^{a=0}] = (E[Y|Z=1]-E[Y|Z=0]) / (E[A|Z=1]-E[A|Z=0])
+```
+
+**Three takeaways.**
+
+- Every causal claim from observational data rests on exchangeability, positivity and consistency; state them explicitly.
+- Standardisation and IP weighting are the same estimand computed two ways; doubly robust estimators hedge the modelling risk.
+- Time-varying treatments (traffic interventions that respond to congestion they then affect) need g-methods, not regression.
+
+**Practice.** Write the target trial for 'does activating ramp metering at 6 am reduce bottleneck probability by 7 am?', list eligibility, strategies, outcome and the contrast, then implement IP weighting with a logistic model for metering given the previous hour's state.
+
+</details>
+
 #### [Introduction to Causal Inference (Brady Neal), course and book draft](https://www.bradyneal.com/causal-inference-course)
 
 _course · free · weeks · free; causal inference for ML people, from zero_
@@ -5528,6 +9320,40 @@ _course · free · weeks · free; causal inference for ML people, from zero_
 **Stanford grad.** Read it as the bridge between the Mixtape's applied methods and Hernán and Robins's rigor; its treatment of the estimand and of identification is a clean template for writing your own causal question.
 
 **PhD at Apple.** A free, ML-oriented causal course is the right shared reference for an engineering team beginning to ask what a system's outputs cause.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Course videos and a book draft: motivation (Simpson's paradox, correlation is not causation, what is causation); potential outcomes (individual and average effects, the fundamental problem, ignorability, exchangeability, conditional exchangeability, positivity, no interference, consistency, adjustment formula); the flow of association and causation in graphs (chains, forks, colliders, d-separation, Markov assumption); causal models (structural causal models, interventions, the backdoor adjustment); randomised experiments; nonidentifiability; frontdoor adjustment and do-calculus; estimation (COM estimators, propensity scores, IPW, doubly robust, matching, double machine learning, causal forests); unobserved confounding (bounds, sensitivity analysis); instrumental variables; difference-in-differences; causal discovery (from observational and interventional data); transfer learning and transportability; counterfactuals and mediation.
+
+**Key ideas, in order.**
+
+1. Simpson's paradox shows that the right answer depends on the causal structure, not the data alone: whether to condition on the subgroup variable depends on whether it is a confounder or a mediator.
+2. Potential outcomes and the identification assumptions; the adjustment formula turns a causal quantity into a statistical one under conditional exchangeability and positivity; the positivity-unconfoundedness trade-off as you condition on more variables.
+3. Graphs: association flows along chains and forks and is blocked at colliders; conditioning reverses each; d-separation gives the full rule; the backdoor criterion selects adjustment sets.
+4. Structural causal models: variables as functions of parents and noise; interventions replace an equation (do-operator); the difference between conditioning and intervening.
+5. Beyond backdoor: the frontdoor criterion identifies effects through a mediator even with unobserved confounding; do-calculus gives three rules that are complete for identification.
+6. Estimation: conditional-outcome models plug a fitted regression into the adjustment formula (S-learner, T-learner, X-learner), propensity-based methods reweight, doubly robust estimators combine, and double ML orthogonalises to use flexible learners; causal forests estimate heterogeneous effects.
+7. Unobserved confounding cannot be tested; sensitivity analysis (how strong would a confounder need to be to explain the effect away) and bounds are the honest response.
+8. Causal discovery attempts to learn the graph from data: constraint-based (PC), score-based, and functional (additive noise) methods, each with strong assumptions.
+
+**Formulas and commands to remember.**
+
+```
+adjustment: E[Y | do(t)] = E_W[ E[Y | t, W] ]
+frontdoor: P(y|do(t)) = sum_m P(m|t) sum_t' P(y|t',m) P(t')
+doubly robust (AIPW): tau = mean[ mu1(X) - mu0(X) + T (Y - mu1(X))/e(X) - (1-T)(Y - mu0(X))/(1-e(X)) ]
+```
+
+**Three takeaways.**
+
+- Conditioning is not intervening; the do-operator makes the distinction precise.
+- Chains and forks transmit association; colliders block it, and conditioning on them opens it.
+- Flexible ML can estimate causal effects only inside a design (adjustment sets, orthogonalisation) that justifies the estimand.
+
+**Practice.** Draw the DAG for rain, time of day, upstream flow, metering and bottleneck; find a valid backdoor set; estimate the metering effect with a T-learner (two LightGBM models) and with AIPW, and compare.
+
+</details>
 
 #### [Fairness and Machine Learning (Barocas, Hardt, Narayanan)](https://fairmlbook.org/)
 
@@ -5545,6 +9371,40 @@ _book · free · three weeks · free; the graduate text_
 
 **PhD at Apple.** The standard graduate text; for a lead deploying a public system, its framing of fairness as a socio-technical question, not a metric, is the one that survives contact with real decisions.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction (demographic disparities, the machine-learning loop, the state of society, the trouble with measurement, from data to models, the pitfalls of action, feedback loops, getting concrete with a toy example); when is automated decision-making legitimate; classification (formal setup, group fairness criteria: independence, separation, sufficiency; incompatibilities; calibration; scoring, ROC, trade-offs); relative notions of fairness (individual fairness, distance, counterfactuals); causality (causal models, counterfactual fairness, path-specific effects, the trouble with causal reasoning about race); understanding United States anti-discrimination law; testing discrimination in practice (audits, testing, observational studies, adversarial testing); a broader view of discrimination; datasets (histories, benchmarks, harms of datasets); and a chapter on the limits of fairness through the lens of the book's arguments.
+
+**Key ideas, in order.**
+
+1. Disparities enter through the loop: what the world is like, what is measured (the target variable as a construct), how the data are sampled, how the model is fitted, and how decisions feed back into the world.
+2. Three group criteria for a score R, attribute A, outcome Y: independence (R independent of A), separation (R independent of A given Y: equal error rates), sufficiency (Y independent of A given R: calibration by group); any two are incompatible except in degenerate cases.
+3. Classification with a threshold: ROC curves per group show what is achievable; equalised odds may require different thresholds per group; the COMPAS debate is a sufficiency-versus-separation disagreement.
+4. Individual fairness: similar individuals treated similarly under a task-specific metric; counterfactual fairness: the decision would not change had the protected attribute been different, which requires a causal model.
+5. Causal reasoning about protected attributes is fraught (what does it mean to intervene on race); path-specific effects distinguish legitimate from illegitimate pathways but need justification for each path.
+6. Legal frameworks (disparate treatment versus disparate impact, the four-fifths rule, business necessity) constrain what interventions are allowed and do not map cleanly onto statistical criteria.
+7. Testing discrimination: audit studies, correspondence tests, algorithmic audits with synthetic inputs, observational comparisons and their pitfalls (conditioning on post-decision variables).
+8. Datasets have histories; benchmark culture shapes what gets built; datasets can cause harm through representation, privacy and downstream use.
+
+**Formulas and commands to remember.**
+
+```
+independence: P(R | A=a) = P(R | A=b)
+separation: P(R | Y=y, A=a) = P(R | Y=y, A=b)  (equal TPR and FPR)
+sufficiency: P(Y | R=r, A=a) = P(Y | R=r, A=b)  (calibration by group)
+```
+
+**Three takeaways.**
+
+- Fairness criteria conflict, so a choice among them is a value judgement that must be made explicitly.
+- Measurement is where most unfairness enters: the target variable is a proxy for a construct.
+- For a traffic model, the relevant groups are geographic: corridors and neighbourhoods; check error rates per station group.
+
+**Practice.** Compute AP, calibration and false-negative rate per station group (north versus south of the interchange, or by neighbourhood income if joined to census tracts); write one page on which criterion matters for whom and why.
+
+</details>
+
 #### [The Algorithmic Foundations of Differential Privacy (Dwork, Roth)](https://www.cis.upenn.edu/~aaroth/privacybook.html)
 
 _book · free · weeks · free from the authors; chapters 1 to 3_
@@ -5560,6 +9420,41 @@ _book · free · weeks · free from the authors; chapters 1 to 3_
 **Stanford grad.** Later work covers private deep learning, local differential privacy (as used on devices), and privacy accounting; the monograph is the base for reading it. Its examples of failed anonymization are the argument for the definition.
 
 **PhD at Apple.** Differential privacy is deployed at scale in operating systems and statistical agencies; the research frontier is utility at practical privacy budgets and privacy under continual release, which is exactly what a streaming traffic system does.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: the promise of differential privacy; basic terms (the model of computation, randomised response, the definition, its properties: post-processing, group privacy, composition); basic techniques and composition (randomised response, the Laplace mechanism, the exponential mechanism, composition theorems, the sparse vector technique); releasing linear queries with correlated error (SmallDB, private multiplicative weights, iterative constructions); generalisations (mechanisms via alpha-nets, the iterative construction mechanism, connections to learning); boosting for queries; when data are drawn from a distribution (query release via Gaussian noise, generalisation); lower bounds and separation results; differential privacy and computational complexity; differential privacy and mechanism design; differential privacy and machine learning (SQ learning, private PAC learning, empirical risk minimisation); additional models (local, pan-private, continual observation); reflections.
+
+**Key ideas, in order.**
+
+1. Definition: a mechanism M is (epsilon, delta)-differentially private if for all neighbouring databases x and y and all output sets S, P(M(x) in S) <= exp(epsilon) P(M(y) in S) + delta; the guarantee is about the mechanism, not the data, and it holds against any auxiliary information.
+2. Properties: immunity to post-processing (no further computation can weaken it), group privacy (k changes cost k epsilon), sequential composition (epsilons add), parallel composition (disjoint data does not add), and advanced composition (roughly sqrt(k) growth for k mechanisms with a delta).
+3. Laplace mechanism: add Laplace(Delta f / epsilon) noise to a numeric query with L1 sensitivity Delta f; Gaussian mechanism for (epsilon, delta) with L2 sensitivity; sensitivity is computed over neighbouring databases.
+4. Exponential mechanism: choose an output with probability proportional to exp(epsilon u(x, r) / (2 Delta u)), for any utility function u; the general tool for non-numeric outputs.
+5. Sparse vector technique: answer only queries whose noisy value exceeds a noisy threshold, paying privacy only for the answers above threshold; the basis of many adaptive algorithms.
+6. Releasing many queries: for a database of size n and k linear queries, error can scale like sqrt(log k) per query for the synthetic-data approaches (SmallDB, multiplicative weights), far better than independent noise.
+7. Learning privately: SQ-learnable classes are privately learnable; private ERM by output perturbation, objective perturbation or noisy gradient descent (the ancestor of DP-SGD).
+8. Local model: each user randomises their own data before sending (randomised response is the prototype); more private, much noisier (error scales like sqrt(n) instead of constant).
+
+**Formulas and commands to remember.**
+
+```
+(eps, delta)-DP: P[M(x) in S] <= e^eps P[M(y) in S] + delta for neighbours x, y
+Laplace mechanism: M(x) = f(x) + Lap(Delta_1 f / eps)
+Gaussian mechanism: sigma >= sqrt(2 ln(1.25/delta)) Delta_2 f / eps
+randomised response (p=1/2 truth): eps = ln 3
+```
+
+**Three takeaways.**
+
+- Privacy is a property of the algorithm that releases the output, and it composes: every release spends budget.
+- Sensitivity is the key computation; bounding it (clipping) is what makes noise calibrated.
+- Traffic counts per station per five minutes are a query with sensitivity one per vehicle; the noise needed is small at the aggregate and large at the individual level.
+
+**Practice.** Implement the Laplace mechanism for hourly counts at one station with eps in {0.1, 1, 10}, plot the noisy series against the true one, then implement sequential composition tracking for a day of hourly releases.
+
+</details>
 
 #### [Model Cards for Model Reporting (Mitchell et al., 2019) and Datasheets for Datasets (Gebru et al., 2018)](https://arxiv.org/abs/1810.03993)
 
@@ -5577,6 +9472,36 @@ _paper · free · an evening or two · free; documentation you will actually fil
 
 **PhD at Apple.** Model and data documentation are now expected in responsible deployment; for a lead, they are the artifacts a review board or regulator will ask for first.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Model cards: motivation, the proposed sections (model details, intended use, factors, metrics, evaluation data, training data, quantitative analyses with disaggregated results, ethical considerations, caveats and recommendations) and two worked examples (a smile detector and a toxicity classifier) with intersectional evaluations. Datasheets: motivation from electronics datasheets, questions grouped by stage (motivation, composition, collection process, preprocessing and labelling, uses, distribution, maintenance), and worked examples.
+
+**Key ideas, in order.**
+
+1. A model card states who built the model and why, what it is for and not for, which factors (groups, instruments, environments) affect performance, which metrics and thresholds are used, and how it performs across those factors, so users can judge fitness for their use.
+2. Disaggregated evaluation is the core: report metrics per relevant group and intersections, with confidence intervals; a single aggregate hides the failures that matter.
+3. Ethical considerations and caveats document known risks, sensitive data, and the conditions under which results should not be trusted.
+4. A datasheet answers, for every dataset, why it was created, what is in it (instances, labels, missing data, sensitive attributes, splits), how it was collected (who, mechanism, timeframe, consent), how it was processed, what it has been used for and should not be used for, how it is distributed and licensed, and who maintains it and how errata are handled.
+5. Both documents are meant to be written by the people who made the artefact, at creation time, and to travel with it; they shift accountability from users guessing to makers stating.
+
+**Formulas and commands to remember.**
+
+```
+model card sections: details, intended use, factors, metrics, evaluation data, training data, quantitative analyses, ethics, caveats
+datasheet stages: motivation, composition, collection, preprocessing, uses, distribution, maintenance
+```
+
+**Three takeaways.**
+
+- Documentation that travels with the artefact is part of the artefact.
+- Disaggregated metrics with intervals are the heart of a model card.
+- Write the datasheet for the PeMS extract once, and every later user of the data starts from the right assumptions.
+
+**Practice.** Write a model card for the LightGBM bottleneck predictor (with AP per station, per hour bucket and per weather condition) and a datasheet for the cleaned PeMS-plus-511 dataset, each two pages, and commit them next to the model.
+
+</details>
+
 #### [Google's Recommendation Systems course](https://developers.google.com/machine-learning/recommendation)
 
 _course · free · weeks · free; the architecture of ranking systems_
@@ -5592,6 +9517,38 @@ _course · free · weeks · free; the architecture of ranking systems_
 **Stanford grad.** It is introductory and Google-flavored; the research literature on exposure bias, off-policy evaluation and fairness in ranking is where the hard questions live.
 
 **PhD at Apple.** A useful shared reference for the structure of ranking systems; for a lead, its staged architecture is the design pattern for any system that shows people an ordered list.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Modules: introduction (what recommendations are, terminology: items, queries, embeddings; the common architecture: candidate generation, scoring, re-ranking); candidate generation (content-based filtering, collaborative filtering, matrix factorisation, objective choice, weighted matrix factorisation, SGD versus WALS, pros and cons, deep neural network models, softmax training, negative sampling, folding, and retrieval with approximate nearest neighbours); scoring (why a separate model, choosing the objective, positional bias); re-ranking (freshness, diversity, fairness); with a Colab on matrix factorisation for MovieLens.
+
+**Key ideas, in order.**
+
+1. The pipeline: candidate generation narrows millions of items to hundreds cheaply, scoring ranks those with a richer model, and re-ranking applies constraints (freshness, diversity, policy).
+2. Content-based filtering represents items by features and recommends items similar to what a user liked; it does not need other users but cannot expand tastes.
+3. Collaborative filtering uses the interaction matrix; matrix factorisation learns user and item embeddings whose dot product predicts the interaction; the unobserved entries need a weight (weighted MF) or the model predicts everything as observed.
+4. Solving MF: SGD is flexible but slow to converge; weighted alternating least squares alternates closed-form solves and parallelises well.
+5. DNN models generalise MF: item towers and query towers with side features; softmax over items as a classification objective, trained with sampled negatives; folding is the failure mode where unrelated groups of embeddings land near each other.
+6. Retrieval: with embeddings, nearest-neighbour search (exact or approximate) returns candidates in milliseconds.
+7. Scoring uses a separate model with more features and the right objective (click, watch time, satisfaction) and corrects for positional bias; re-ranking adds freshness and diversity and enforces fairness constraints.
+
+**Formulas and commands to remember.**
+
+```
+MF objective: sum_{(i,j) observed} (A_ij - U_i . V_j)^2 + w0 sum_{(i,j) unobserved} (U_i . V_j)^2 + lambda (||U||^2 + ||V||^2)
+softmax over items: p(j | x) = exp(psi(x) . V_j) / sum_k exp(psi(x) . V_k)
+```
+
+**Three takeaways.**
+
+- Retrieval then scoring then re-ranking is the architecture; each stage has its own objective and budget.
+- Unobserved interactions are not negatives; weight them or sample them, or the model degenerates.
+- The same two-tower and nearest-neighbour idea applies to any 'find similar' problem, including similar stations or similar days.
+
+**Practice.** Build a day-similarity retriever: embed each day of Fremont data with a small autoencoder or with its hourly speed profile, retrieve the ten nearest days for a held-out day, and use their outcomes as a k-NN forecast; compare to LightGBM.
+
+</details>
 
 #### [Recommender Systems chapter, Dive into Deep Learning](https://d2l.ai/chapter_recommender-systems/index.html)
 
@@ -5609,6 +9566,38 @@ _book · free · weeks · free; matrix factorization to ranking, with code_
 
 **PhD at Apple.** A free, runnable reference for the classical recommender methods; useful as the baseline set when a team proposes something new.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Sections: overview (collaborative filtering, explicit and implicit feedback, recommendation tasks); the MovieLens dataset (loading, statistics, splitting); matrix factorisation (model, implementation, training, evaluation); AutoRec (rating prediction with autoencoders); personalised ranking (Bayesian personalised ranking loss, hinge loss); neural collaborative filtering (NeuMF); sequence-aware recommendation (Caser); feature-rich recommender systems (click-through rate prediction and the Criteo dataset); factorisation machines; deep factorisation machines.
+
+**Key ideas, in order.**
+
+1. Explicit feedback (ratings) versus implicit (clicks, views); rating prediction versus ranking; evaluation with RMSE for ratings and with hit rate and AUC for ranking.
+2. Matrix factorisation with user and item biases, trained by minimising squared error on observed ratings; a clean implementation in a few dozen lines.
+3. AutoRec reconstructs a user's or item's rating vector with an autoencoder, masking unobserved entries in the loss.
+4. Personalised ranking: BPR maximises the probability that an observed item ranks above an unobserved one for the same user; pairwise losses fit implicit feedback better than pointwise regression.
+5. NeuMF combines a generalised MF branch and an MLP branch on concatenated embeddings; sequence-aware models (Caser) apply convolutions over the embeddings of the last L items.
+6. Feature-rich CTR prediction: sparse categorical features one-hot encoded at scale; factorisation machines model pairwise feature interactions with low-rank factors in linear time; DeepFM adds an MLP over shared embeddings.
+
+**Formulas and commands to remember.**
+
+```
+MF with biases: r_hat_ui = p_u . q_i + b_u + b_i + mu
+BPR: maximise sum ln sigma(r_hat_ui - r_hat_uj) - lambda ||theta||^2 for observed i, unobserved j
+FM: y_hat = w0 + sum_i w_i x_i + sum_{i<j} (v_i . v_j) x_i x_j
+```
+
+**Three takeaways.**
+
+- Implicit feedback needs pairwise ranking losses, not regression on missing entries.
+- Factorisation machines are the bridge between recommenders and general tabular models with interactions.
+- The chapter's implementations are short enough to read fully; do so before using a library.
+
+**Practice.** Implement matrix factorisation and BPR on MovieLens-100k from the chapter, then adapt FM to predict bottleneck probability from one-hot station, hour and weekday features, and compare to LightGBM on the same features.
+
+</details>
+
 #### [Hugging Face Deep RL course](https://huggingface.co/learn/deep-rl-course/unit0/introduction)
 
 _course · free · four weeks · free; train agents hands-on_
@@ -5624,6 +9613,39 @@ _course · free · four weeks · free; train agents hands-on_
 **Stanford grad.** It is practice-first; its coverage of offline RL and of off-policy evaluation, which the alerting problem needs, is thin, so read those from the literature.
 
 **PhD at Apple.** A free, maintained practical course; a good calibration of what a working RL baseline looks like before proposing a control experiment.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Units: introduction to deep RL (the RL framework, exploration, two approaches, tasks); Q-learning (value-based methods, Bellman, MC and TD, Q-learning implementation for FrozenLake and Taxi); deep Q-learning (DQN, experience replay, fixed targets, double DQN, Atari); policy gradient (REINFORCE with CartPole and Pixelcopter); actor-critic (A2C, robotics environments); multi-agent RL and self-play; PPO (theory, implementation from scratch, Unity ML-Agents and VizDoom); with bonus units on Godot, Sample Factory, Optuna, and decision transformers; with hands-on notebooks and a leaderboard.
+
+**Key ideas, in order.**
+
+1. The framework: agent, environment, state or observation, action, reward; episodic and continuing tasks; exploration-exploitation; policy-based and value-based methods; the notebooks use Gymnasium and Stable-Baselines3.
+2. Q-learning from scratch: a Q-table, epsilon-greedy with decay, the TD update; the two tabular environments make the algorithm concrete before any network.
+3. DQN: a network approximates Q; experience replay breaks correlation between consecutive samples; a fixed target network stabilises the regression target; double DQN decouples selection and evaluation of the max; frame stacking gives temporal context.
+4. REINFORCE: sample episodes, compute returns, take a gradient step on log-probability weighted by return; high variance, no bootstrapping.
+5. Actor-critic (A2C): the critic's value estimate replaces the return, and the advantage reduces variance; synchronous parallel environments for throughput.
+6. PPO: the clipped surrogate objective and the implementation details that matter (advantage normalisation, value clipping, entropy bonus, multiple epochs over the batch, learning rate annealing); implemented from scratch in the unit.
+7. Multi-agent RL: self-play, cooperative and competitive settings; the ML-Agents SoccerTwos environment; the difficulty of non-stationarity when other agents learn.
+
+**Formulas and commands to remember.**
+
+```
+DQN loss: (r + gamma max_a Q_target(s', a) - Q(s, a))^2
+double DQN target: r + gamma Q_target(s', argmax_a Q(s', a))
+A2C advantage: A = r + gamma V(s') - V(s)
+```
+
+**Three takeaways.**
+
+- Value-based methods learn a Q function and act greedily; policy-based methods learn the policy directly; actor-critic uses both.
+- Replay and target networks are what made deep Q-learning work; their absence is why naive DQN diverges.
+- PPO's implementation details are as important as the objective; the unit's from-scratch build is the way to learn them.
+
+**Practice.** Complete units 2 and 4 (Q-learning and REINFORCE), then write a Gymnasium environment for a single ramp meter with a queue and mainline density, and train PPO with Stable-Baselines3 on the M1 to reduce total delay.
+
+</details>
 
 #### [Gymnasium documentation](https://gymnasium.farama.org/)
 
@@ -5641,6 +9663,37 @@ _docs · free · an afternoon · free; the environment interface, and how to bui
 
 **PhD at Apple.** A shared interface made RL research comparable; the same lesson applies to any experimental platform you build.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Basic usage (creating an environment, the step and reset loop, observation and action spaces, seeding), the Env API (step returns observation, reward, terminated, truncated, info; render modes; close), spaces (Box, Discrete, MultiDiscrete, MultiBinary, Text, Tuple, Dict, Sequence, Graph), wrappers (observation, action and reward wrappers, TimeLimit, RecordEpisodeStatistics, FrameStack, normalisation, vectorised wrappers), vector environments (sync and async), environment creation (writing a custom Env, registration, checking with the environment checker), the built-in environments (classic control, Box2D, toy text, MuJoCo, Atari via ALE), and migration notes from Gym.
+
+**Key ideas, in order.**
+
+1. The interaction loop: reset returns the first observation and info; step takes an action and returns observation, reward, terminated, truncated, info; terminated means the MDP ended, truncated means a time limit cut it, which matters for bootstrapping.
+2. Spaces describe valid observations and actions, with sampling and containment checks; a Dict space packages multiple inputs; Box handles continuous vectors with bounds.
+3. Wrappers modify environments without changing their code: normalise observations, clip actions, stack frames, record episode returns, enforce time limits; compose them in order.
+4. Custom environments implement reset, step, render and the spaces; registration lets gym.make find them; the passive environment checker validates the API contract.
+5. Vector environments run many copies for throughput; automatic resets and the final-observation convention need care.
+6. Seeding for reproducibility: seed on reset and seed the action space; determinism still depends on the underlying simulator.
+
+**Formulas and commands to remember.**
+
+```
+obs, info = env.reset(seed=0);  obs, r, terminated, truncated, info = env.step(a);  done = terminated or truncated
+bootstrapping rule: if truncated and not terminated, target = r + gamma V(s')
+```
+
+**Three takeaways.**
+
+- Terminated and truncated are different, and confusing them biases value estimates.
+- Write the environment as a plain class first, then register it; check it with the environment checker before training anything.
+- Wrappers are the right place for normalisation and time limits, not the environment itself.
+
+**Practice.** Implement a ramp-meter environment: state is (queue length, mainline density, time of day), action is metering rate from a Discrete(4), reward is negative total delay; wrap with TimeLimit(288) and RecordEpisodeStatistics, and run the checker.
+
+</details>
+
 #### [SUMO, Simulation of Urban MObility, documentation](https://sumo.dlr.de/docs/)
 
 _docs · free · an afternoon · free; a city's traffic, car by car_
@@ -5656,6 +9709,39 @@ _docs · free · an afternoon · free; a city's traffic, car by car_
 **Stanford grad.** Simulator-to-reality gaps are the central issue: calibrate demand and driver parameters against PeMS counts, and evaluate any learned controller under demand shifts. The documentation on calibration and on the TraCI interface is the practical reference.
 
 **PhD at Apple.** Open simulators are where counterfactual questions about alerts and routing become answerable; SUMO with a learned forecaster and a control policy is a complete research platform on one machine.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** User documentation: installation, the tutorials (Hello SUMO, quick start, OSM web wizard, driving in circles, public transport, TraCI examples), networks (importing from OpenStreetMap with netconvert, generating with netgenerate, editing with netedit, edges, lanes, junctions, connections, traffic lights), demand (trips, routes, flows, calibrators, randomTrips, duarouter, marouter, origin-destination matrices, vehicle types and car-following models), simulation (sumo and sumo-gui, outputs: trips, edge data, lane data, detectors, FCD, emissions), TraCI (the control interface with Python bindings, and libsumo for speed), traffic lights (static, actuated, and controlled through TraCI), and tools (visualisation, calibration, detector import).
+
+**Key ideas, in order.**
+
+1. A SUMO scenario is a network (nodes, edges, lanes, connections, signals), a demand (vehicles with types and routes over time) and a configuration; the OSM web wizard produces all three for any real area, including the I-880 and I-680 corridors.
+2. Car-following models (Krauss, IDM, Wiedemann) determine microscopic behaviour; lane-changing models determine weaving; parameters such as desired headway and acceleration shape the emergent capacity.
+3. Demand can be trips (origin, destination, departure) routed by duarouter, flows with rates, or calibrated to match detector counts; getting demand right is most of the work in matching a real corridor.
+4. Detectors in the simulation (induction loops, lane area, multi-entry-exit) produce outputs that look like PeMS data: counts, occupancy, speed per interval; this is how simulated and real data align.
+5. TraCI lets a Python program step the simulation and read or write state each step: vehicle positions and speeds, detector values, signal phases; this is the bridge to RL and to closed-loop control experiments.
+6. Traffic lights can be static programs, actuated by detectors, or set by TraCI; ramp meters are traffic lights on on-ramps in this model.
+7. Outputs: aggregated edge and lane data, per-vehicle trip information (delay, time loss), floating car data for trajectories; use them for evaluation.
+
+**Formulas and commands to remember.**
+
+```
+run: sumo -c fremont.sumocfg --tripinfo-output trips.xml
+TraCI loop: traci.start(cmd); while traci.simulation.getMinExpectedNumber() > 0: traci.simulationStep(); ...
+IDM desired gap: s* = s0 + v T + v dv / (2 sqrt(a b))
+```
+
+**Three takeaways.**
+
+- Simulation gives labelled counterfactuals (what if metering changed) that observational data never can; it is also only as good as its demand calibration.
+- Simulated detectors produce PeMS-shaped data, so the same feature and model code can run on both.
+- TraCI plus Gymnasium is the path to RL on a realistic corridor.
+
+**Practice.** Use the OSM web wizard to build the I-880 segment through Fremont, add induction loops at the real station locations, calibrate a morning-peak demand so that simulated speeds roughly match PeMS, and write a TraCI script that reads loop speeds every five minutes.
+
+</details>
 
 #### [Fairlearn user guide](https://fairlearn.org/)
 
@@ -5673,6 +9759,39 @@ _docs · free · an afternoon · free; fairness assessment and mitigation in cod
 
 **PhD at Apple.** A maintained open-source reference for fairness assessment; useful for standardizing audits across a team's models.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** User guide: fairness in machine learning (harms, group fairness, the sensitive-feature concept, fairness metrics and constraints, limitations); assessment (MetricFrame for disaggregated metrics with grouping, intersections, aggregations such as difference and ratio; plotting; common fairness metrics such as demographic parity and equalised odds differences); mitigation (preprocessing with correlation remover; reductions approach with exponentiated gradient and grid search for constraints such as demographic parity, equalised odds, true-positive-rate parity, bounded group loss; postprocessing with threshold optimiser); with an API reference and worked examples.
+
+**Key ideas, in order.**
+
+1. Fairness is about harms (allocation, quality of service) to groups defined by sensitive features; the library helps assess and mitigate, but choosing the criterion is a human decision.
+2. MetricFrame computes any metric overall and per group (and intersections) and reports difference, ratio, min and max across groups; this is disaggregated evaluation as a data structure.
+3. Constraints as objects: demographic parity (selection rates equal), equalised odds (TPR and FPR equal), true-positive-rate parity, error-rate parity, bounded group loss for regression.
+4. Reductions: exponentiated gradient reduces constrained classification to a sequence of cost-sensitive problems solved by any base learner, producing a randomised classifier; grid search produces a deterministic one from a grid of relabelings.
+5. Postprocessing: threshold optimiser picks per-group thresholds (possibly randomised) on a fitted scorer to satisfy a constraint while maximising an objective; requires the sensitive feature at prediction time.
+6. Preprocessing: correlation remover linearly removes correlation between features and sensitive features; a blunt tool with clear limits.
+7. Limitations section: metrics assume the sensitive feature is measured well, group definitions are contestable, and satisfying a metric does not make a system fair.
+
+**Formulas and commands to remember.**
+
+```
+demographic parity difference: max_a P(h=1|A=a) - min_a P(h=1|A=a)
+equalised odds difference: max over y of max_a P(h=1|Y=y,A=a) - min_a P(h=1|Y=y,A=a)
+MetricFrame(metrics={'ap': average_precision_score}, y_true=y, y_pred=s, sensitive_features=group)
+```
+
+**Three takeaways.**
+
+- MetricFrame is the reusable piece: any metric, any grouping, differences and ratios in one object.
+- Mitigation methods trade accuracy for a constraint; measure the trade-off rather than assuming it is small.
+- The library's own limitations page is required reading; the numbers are not a certificate.
+
+**Practice.** Wrap the bottleneck model's validation predictions in a MetricFrame grouped by station group and hour bucket, report AP and FNR differences, then run a threshold optimiser for equal FNR across station groups and show what it costs in overall AP.
+
+</details>
+
 #### [Programming Differential Privacy (Near, Abuah)](https://programming-dp.com/)
 
 _book · free · weeks · free; privacy mechanisms as runnable notebooks_
@@ -5689,6 +9808,41 @@ _book · free · weeks · free; privacy mechanisms as runnable notebooks_
 
 **PhD at Apple.** A free, executable textbook is the right onboarding for engineers who will implement private releases; its examples are a starting point for a team's own privacy library.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction; de-identification and its failures (linkage attacks, aggregation, differencing attacks); k-anonymity; differential privacy (the definition, the Laplace mechanism, counting queries); properties (sequential and parallel composition, post-processing); sensitivity (global, local, clipping for unbounded attributes); approximate differential privacy (the Gaussian mechanism, vector-valued queries); local sensitivity and smooth sensitivity (propose-test-release, sample and aggregate); Rényi and zero-concentrated DP; the exponential mechanism; the sparse vector technique; machine learning with DP (noisy gradient descent, gradient clipping, private logistic regression); local differential privacy (randomised response, unary encoding); synthetic data; with Python code and exercises in every chapter.
+
+**Key ideas, in order.**
+
+1. De-identification fails because auxiliary data enable linkage; aggregate statistics leak through differencing attacks; k-anonymity is fragile under homogeneity and background knowledge.
+2. The definition and the Laplace mechanism, applied in code to counting queries on a census dataset; the noise is tiny relative to the count and the privacy is formal.
+3. Composition and post-processing in practice: a loop that answers k queries spends k epsilon; disjoint histogram bins spend epsilon once; any transformation of a private output is free.
+4. Sensitivity: counts have sensitivity one; sums of bounded values have the bound as sensitivity; unbounded values must be clipped to a chosen bound, which costs accuracy and must be chosen without looking at the data (or privately).
+5. Gaussian mechanism and vector queries with L2 sensitivity; approximate DP variants (Rényi DP, zCDP) give tighter composition for many iterations, which matters for training.
+6. Noisy gradient descent: clip each example's gradient to norm C, sum, add Gaussian noise with scale proportional to C, average, step; account for the total privacy spent over epochs; this is DP-SGD.
+7. Local DP: each participant randomises before sending; unary encoding for histograms; error is much larger than in the central model.
+8. Synthetic data: release a private histogram or marginals and sample from them; usable for low-dimensional queries.
+
+**Formulas and commands to remember.**
+
+```
+Laplace counting query: count + np.random.laplace(loc=0, scale=1/eps)
+clipped sum sensitivity: b for values clipped to [0, b]
+DP-SGD step: g = sum_i clip(g_i, C) + N(0, sigma^2 C^2 I); theta <- theta - eta g / n
+sequential composition: total eps = sum_i eps_i
+```
+
+**Three takeaways.**
+
+- Code the mechanisms yourself once; the concepts become concrete when noise is a line of NumPy.
+- Clipping bounds sensitivity and is the main knob in private learning.
+- Accounting (how much epsilon a whole pipeline spends) is where real systems fail; track it from the first query.
+
+**Practice.** Work through the chapters on sensitivity and DP-SGD, then train a private logistic regression for bottleneck-in-15-minutes on the features with eps = 1 over the whole training run, and report AP versus the non-private model.
+
+</details>
+
 #### [Performative Prediction (Perdomo, Zrnic, Mendler-Dünner, Hardt, 2020)](https://arxiv.org/abs/2002.06673)
 
 _paper · free · an evening or two · free; the theory of alerts that change traffic_
@@ -5704,6 +9858,38 @@ _paper · free · an evening or two · free; the theory of alerts that change tr
 **Stanford grad.** Subsequent work covers strategic behavior, optimization methods for performative risk, and connections to causal inference and reinforcement learning; for traffic, the open question is estimating the distribution map from logged alerts.
 
 **PhD at Apple.** A foundational framing for any system that acts on its predictions; a research program on alerting policies would start here and with the causal-inference literature.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The paper: motivation (predictions that influence the outcomes they predict, such as traffic forecasts that change routes); the framework (a distribution map from model parameters to a data distribution; performative risk; performative stability and performative optimality as solution concepts); repeated risk minimisation and repeated gradient descent (retraining on the induced distribution); convergence results under strong convexity, smoothness and a sensitivity condition on the distribution map; the gap between stable and optimal points; connections to strategic classification, causal inference and RL; experiments on a credit-scoring simulation.
+
+**Key ideas, in order.**
+
+1. Performativity: deploying a model theta changes the distribution D(theta) of the data; the loss that matters is the performative risk, the expected loss under the distribution the model induces, not under the training distribution.
+2. Two solution concepts: a performatively optimal model minimises performative risk; a performatively stable model is optimal for the distribution it induces (a fixed point of retraining); stable points are what retraining converges to, and they are not optimal in general.
+3. Repeated risk minimisation (retrain on the data your model produced) converges to a stable point at a linear rate when the loss is strongly convex and smooth and the distribution map is epsilon-sensitive with epsilon small relative to the strong convexity over the smoothness; otherwise it can oscillate or diverge.
+4. Repeated gradient descent with a small step behaves similarly with weaker requirements per step.
+5. The gap between stable and optimal grows with the sensitivity of the distribution map; when the model strongly affects behaviour, retraining is not enough, and one must model the feedback (or optimise the performative risk directly, which later work does).
+6. Applications: strategic classification (agents change features to be classified favourably) is a special case; traffic prediction is the canonical example, since forecasts reroute drivers and change congestion.
+
+**Formulas and commands to remember.**
+
+```
+performative risk: PR(theta) = E_{Z ~ D(theta)} l(Z; theta)
+stable: theta_PS = argmin_theta E_{Z ~ D(theta_PS)} l(Z; theta)
+convergence condition for repeated risk minimisation: eps < gamma / beta (sensitivity, strong convexity, smoothness)
+```
+
+**Three takeaways.**
+
+- A deployed forecast changes what it forecasts; the training distribution is not the deployment distribution by construction.
+- Retraining converges to a stable point, which is not the best model, and can fail to converge when feedback is strong.
+- For a public bottleneck predictor, expect the predictions to shift departure times and routes, and log deployment-era data separately from pre-deployment data.
+
+**Practice.** Simulate a simple performative loop: drivers shift departures earlier by an amount proportional to the predicted bottleneck probability, regenerate the outcome, retrain the model, repeat ten times; plot the AP and the predicted rate over rounds and find the step where it stabilises or oscillates.
+
+</details>
 
 ### Build
 
@@ -5984,6 +10170,42 @@ _book · free · reference · free PDF; the modern reference_
 
 **PhD at Apple.** Murphy's books are the field's encyclopedia. Cite them for standard results and use them to find the original references quickly; for research, their breadth is what lets you place a new idea in the landscape in an afternoon rather than a week.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I foundations: introduction; probability (univariate and multivariate models, Bayes' rule, exponential families, transformations, Monte Carlo); statistics (MLE, MAP, Bayesian and frequentist statistics, bias-variance); decision theory (Bayesian decision theory, ROC, hypothesis testing, calibration); information theory (entropy, relative entropy, mutual information); optimisation (first-order, second-order, stochastic, constrained, proximal, bound optimisation and EM). Part II linear models: linear discriminant analysis, logistic regression, linear regression, generalised linear models. Part III deep networks: MLPs, CNNs, RNNs and transformers. Part IV nonparametric: exemplar methods (k-NN, kernel density), kernel methods (Mercer kernels, GPs, SVMs), trees, forests, bagging, boosting. Part V beyond supervised: dimensionality reduction (PCA, autoencoders, manifolds), clustering, recommender systems, graph embeddings; appendix on notation.
+
+**Key ideas, in order.**
+
+1. Everything is a probabilistic model: a joint or conditional distribution with parameters; learning is inference about parameters (MLE, MAP, Bayesian) and prediction is inference about outputs; this framing unifies regression, classification, deep learning and unsupervised learning.
+2. Exponential families, sufficient statistics and conjugate priors give closed forms for the Gaussian, Bernoulli, categorical and gamma cases; most of applied ML is a special case.
+3. Decision theory separates the model (probabilities) from the action (a threshold chosen to minimise expected loss); calibration and proper scoring rules evaluate the probabilities themselves.
+4. Information theory links compression, likelihood and learning: cross-entropy is the negative log-likelihood, KL is the excess coding cost, mutual information measures dependence.
+5. Optimisation chapter covers gradient descent, momentum, Adam, second-order methods, constrained optimisation with Lagrangians and KKT, proximal methods for sparsity, and EM as bound optimisation.
+6. Linear models are treated fully: logistic regression with its Hessian and IRLS, regularisation, Bayesian linear regression with predictive distributions, GLMs with link functions.
+7. Deep networks chapters give the standard architectures and training recipes with an eye to what they compute probabilistically (softmax outputs as categorical likelihoods, dropout as approximate inference).
+8. Nonparametric methods: kernels and GPs, SVMs as margin maximisers, trees and ensembles (with the bias-variance explanation of bagging and the functional gradient view of boosting).
+9. Unsupervised chapters: PCA as a linear Gaussian latent model, mixture models with EM, and the beginnings of deep generative models.
+
+**Formulas and commands to remember.**
+
+```
+Bayes: p(theta | D) = p(D | theta) p(theta) / p(D)
+cross-entropy = H(p) + KL(p || q)
+logistic regression Hessian: H = X^T diag(mu (1 - mu)) X
+GP posterior mean: K_*^T (K + sigma^2 I)^{-1} y
+```
+
+**Three takeaways.**
+
+- One vocabulary (likelihood, prior, posterior, predictive, decision) covers every model in the book, which is why the book is worth reading front to back.
+- Calibration and proper scoring rules are part of the model, not an afterthought.
+- Chapters 4, 5, 8 and 10 alone (statistics, decision theory, optimisation, logistic regression) fill most of the gaps that practice leaves.
+
+**Practice.** Read chapters 4 through 6 and 10, then write the bottleneck classifier as an explicit probabilistic model (features, Bernoulli likelihood, prior), derive the gradient and Hessian of the log posterior, and fit it with Newton's method on a subsample.
+
+</details>
+
 #### [The Elements of Statistical Learning (Hastie, Tibshirani, Friedman)](https://hastie.su.domains/ElemStatLearn/)
 
 _book · free · reference · free PDF_
@@ -5999,6 +10221,42 @@ _book · free · reference · free PDF_
 **Stanford grad.** Its coverage predates deep learning's rise and the modern boosting libraries, but its statistical framing (estimators, degrees of freedom, shrinkage, model selection) is what explains why those tools work. Pair chapter 10 with the XGBoost and LightGBM papers to see the second-order approximation that made boosting fast.
 
 **PhD at Apple.** Still the canonical citation for many methods, and its authors' later work on sparsity and the lasso is the natural continuation. For a paper, its notation for loss functions and additive models is safe to adopt, and its chapter 7 remains the reference for arguing that a reported gain is within noise.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction; overview of supervised learning (least squares and nearest neighbours, statistical decision theory, the curse of dimensionality, bias-variance); linear regression (subset selection, ridge, lasso, least angle regression, derived directions); linear classification (LDA, logistic regression, separating hyperplanes); basis expansions and regularisation (splines, wavelets, smoothing splines, RKHS); kernel smoothing; model assessment and selection (bias-variance decomposition, optimism, AIC, BIC, MDL, VC dimension, cross-validation, bootstrap); model inference and averaging (bootstrap, Bayesian, EM, MCMC, bagging, stacking, bumping); additive models, trees and related methods (GAMs, CART, PRIM, MARS); boosting and additive trees (AdaBoost as forward stagewise additive modelling, gradient boosting, the right-sized tree, regularisation, interpretation); neural networks; support vector machines and flexible discriminants; prototype methods and nearest neighbours; unsupervised learning (association rules, clustering, SOMs, PCA, ICA, MDS, spectral clustering); random forests; ensemble learning; undirected graphical models; high-dimensional problems.
+
+**Key ideas, in order.**
+
+1. Supervised learning is function estimation under squared or 0-1 loss; the Bayes-optimal predictor is the conditional mean or mode, and every method is an approximation to it with a bias-variance trade-off governed by its effective degrees of freedom.
+2. Shrinkage: ridge shrinks coefficients toward zero smoothly (a Gaussian prior), lasso shrinks and selects (a Laplace prior); least angle regression traces the lasso path; the geometry of the constraint regions explains the difference.
+3. Basis expansions: splines with knots, smoothing splines as penalised regression with a roughness penalty, and the reproducing-kernel view that connects them to kernel methods and Gaussian processes.
+4. Model selection: the optimism of the training error equals twice the covariance between fitted and observed values over n; AIC, BIC and cross-validation estimate test error differently and select differently; the bootstrap estimates variability of anything.
+5. Trees are partitions with piecewise-constant fits, grown greedily and pruned by cost-complexity; they are interpretable, handle mixed data, and are unstable, which bagging and forests fix.
+6. Boosting as forward stagewise additive modelling: AdaBoost minimises exponential loss stagewise; gradient boosting generalises to any differentiable loss by fitting trees to negative gradients; shrinkage and subsampling regularise; tree depth sets interaction order; partial dependence and relative importance interpret the ensemble.
+7. Random forests decorrelate bagged trees by random feature subsets at each split; out-of-bag error is a free cross-validation; variable importance by permutation.
+8. SVMs maximise margin with a kernel; the hinge loss puts them in the same family as logistic regression with a different loss; flexible discriminants generalise LDA.
+9. Unsupervised: clustering as prototype fitting, PCA as the best rank-k reconstruction, spectral clustering from the graph Laplacian; high-dimensional chapter covers regularised discriminants, feature screening and multiple testing.
+
+**Formulas and commands to remember.**
+
+```
+bias-variance: E[(y - f_hat(x))^2] = sigma^2 + Bias^2(f_hat(x)) + Var(f_hat(x))
+ridge: beta = (X^T X + lambda I)^{-1} X^T y;  df(lambda) = trace(X (X^T X + lambda I)^{-1} X^T)
+gradient boosting step: fit tree to r_i = -dL(y_i, f(x_i))/df(x_i), then f <- f + nu sum_j gamma_j 1(x in R_j)
+optimism: E[Err_in] - E[err_train] = (2/N) sum_i Cov(y_hat_i, y_i)
+```
+
+**Three takeaways.**
+
+- Chapter 7 (assessment) and chapter 10 (boosting) explain why LightGBM works and how to tune it; read those first.
+- Effective degrees of freedom is the concept that unifies ridge, splines, trees and boosting.
+- Every method is a bias-variance position; knowing where a method sits tells you what to try next.
+
+**Practice.** Read chapters 7 and 10, then reproduce figure 10.2 style experiments on the Fremont data: AP versus number of boosting rounds for tree depths 1, 2, 4 and 6, with and without shrinkage 0.1, and identify the interaction order the problem needs.
+
+</details>
 
 #### [Understanding Machine Learning: From Theory to Algorithms (Shalev-Shwartz, Ben-David)](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)
 
@@ -6016,6 +10274,41 @@ _book · free · a semester, selectively · free PDF; learning theory with proof
 
 **PhD at Apple.** The base layer for theoretical work; its exercises are qualifying-exam material, and its treatment of stability is the entry point to the generalization theory of SGD.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I foundations: a gentle start (ERM, overfitting, finite hypothesis classes); a formal learning model (PAC, agnostic PAC, the realisability assumption); learning via uniform convergence; the bias-complexity trade-off (no free lunch, error decomposition); the VC dimension (shattering, the fundamental theorem of statistical learning, Sauer's lemma); nonuniform learnability (structural risk minimisation, MDL, Occam's razor); the runtime of learning (computational complexity, hardness). Part II from theory to algorithms: linear predictors (halfspaces, perceptron, linear regression, logistic regression); boosting (weak learnability, AdaBoost, its VC dimension); model selection and validation; convex learning problems; regularisation and stability; stochastic gradient descent; support vector machines; kernel methods; multiclass, ranking and complex prediction; decision trees; nearest neighbour; neural networks. Part III additional models: online learning, clustering, dimensionality reduction, generative models, feature selection. Part IV advanced theory: Rademacher complexities, covering numbers, proof of the fundamental theorem, multiclass learnability, compression bounds, PAC-Bayes.
+
+**Key ideas, in order.**
+
+1. PAC learning formalises 'learning from examples': a class is learnable if some algorithm, with enough samples, outputs a hypothesis whose error is within epsilon of the best in the class with probability 1 - delta; the sample complexity of finite classes is log|H| / epsilon^2.
+2. Uniform convergence: if empirical risks are close to true risks for all hypotheses simultaneously, ERM works; finite classes and finite VC dimension classes have uniform convergence.
+3. The fundamental theorem: for binary classification, PAC learnability, agnostic PAC learnability, uniform convergence and finite VC dimension are equivalent; the sample complexity is proportional to VC dimension over epsilon squared.
+4. No free lunch: without restricting the hypothesis class, no learner beats chance on all distributions; prior knowledge (inductive bias) is necessary; the error decomposition into approximation and estimation error.
+5. Structural risk minimisation and MDL: choose among nested classes by penalising complexity; this justifies regularisation and Occam's razor in a formal sense.
+6. Convex learning problems (convex, Lipschitz or smooth losses over bounded domains) are learnable by SGD with rates 1/sqrt(m); stability of the learning algorithm (regularisation) implies generalisation, an alternative to uniform convergence.
+7. Algorithm chapters derive perceptron, SVM (hard and soft margin, the dual), kernels and the representer theorem, AdaBoost's training-error bound, decision trees, nearest neighbour's curse of dimensionality, and the expressiveness and hardness of neural networks.
+8. Advanced chapters: Rademacher complexity as a data-dependent measure of class richness; covering numbers; compression schemes; PAC-Bayes bounds that depend on a prior over hypotheses.
+
+**Formulas and commands to remember.**
+
+```
+finite class sample complexity: m >= (log(|H|/delta)) / (2 eps^2)  (agnostic)
+VC bound: m_H(eps, delta) ~ (d + log(1/delta)) / eps^2
+Rademacher generalisation: L_D(h) <= L_S(h) + 2 R_m(H) + sqrt(2 log(2/delta) / m)
+SGD for convex Lipschitz: E[L(w_bar)] - L(w*) <= B rho / sqrt(T)
+```
+
+**Three takeaways.**
+
+- Learnability requires a restricted class; generalisation bounds trade class richness (VC, Rademacher) against sample size.
+- Stability and regularisation are a second route to generalisation that explains why SGD on convex losses works.
+- The book's proofs are short enough to read; do at least the finite-class and VC chapters in full.
+
+**Practice.** Prove the finite-class agnostic bound from Hoeffding plus a union bound, then compute an empirical Rademacher complexity for depth-limited trees on the Fremont features by fitting to random labels, and compare the resulting bound to the observed validation gap.
+
+</details>
+
 #### [Convex Optimization (Boyd, Vandenberghe)](https://web.stanford.edu/~boyd/cvxbook/)
 
 _book · free · a semester, selectively · free PDF and lectures_
@@ -6031,6 +10324,40 @@ _book · free · a semester, selectively · free PDF and lectures_
 **Stanford grad.** Convexity is the regime where theory is complete; deep learning is the regime where it is not. Reading Boyd is how you know exactly what guarantees you give up, and its duality chapters are the background for support vector machines and for constrained learning (fairness constraints, monotonicity).
 
 **PhD at Apple.** A canonical reference; its lecture videos are the fastest way for a strong engineer to acquire the optimization vocabulary that research papers assume.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I theory: convex sets (affine and convex sets, operations that preserve convexity, generalised inequalities, separating and supporting hyperplanes, dual cones); convex functions (basic properties, operations that preserve convexity, the conjugate function, quasiconvex and log-concave functions); convex optimisation problems (standard form, equivalent problems, linear programs, quadratic programs, geometric programs, semidefinite programs, vector optimisation); duality (the Lagrange dual, weak and strong duality, Slater's condition, KKT conditions, perturbation and sensitivity analysis). Part II applications: approximation and fitting (norm approximation, regularised approximation, robust approximation, function fitting); statistical estimation (maximum likelihood, MAP, experiment design); geometric problems. Part III algorithms: unconstrained minimisation (descent methods, gradient descent, steepest descent, Newton's method, self-concordance); equality-constrained minimisation; interior-point methods (barrier method, primal-dual methods).
+
+**Key ideas, in order.**
+
+1. Recognising convexity is the skill: a problem that is convex can be solved reliably to global optimality; the calculus of convex sets and functions (compositions, maxima, perspective, conjugates) lets you prove it.
+2. Standard problem classes nest: LP inside QP inside SOCP inside SDP; each has mature solvers; modelling languages (CVXPY) check convexity by disciplined convex programming rules.
+3. Duality: the Lagrangian introduces multipliers; the dual function is always concave and lower-bounds the primal; strong duality holds under Slater's condition; the KKT conditions (stationarity, primal and dual feasibility, complementary slackness) characterise optimality and are the basis of SVM duals, LASSO analysis and interior-point methods.
+4. Sensitivity: dual variables measure how the optimal value changes with constraint perturbations (shadow prices), which is the meaning of the multipliers in regularised learning.
+5. Fitting as optimisation: least squares, L1 and Huber losses as norm approximation; regularisation as a trade-off curve (Pareto); robust approximation for uncertain data; maximum likelihood for exponential families is convex.
+6. Newton's method converges quadratically near the optimum and, for self-concordant functions, in a bounded number of steps independent of the problem constants; gradient descent's rate depends on the condition number.
+7. Interior-point methods solve constrained problems by a sequence of Newton steps on a barrier-augmented objective; polynomial time in practice and in theory.
+
+**Formulas and commands to remember.**
+
+```
+Lagrangian: L(x, lam, nu) = f0(x) + sum lam_i f_i(x) + sum nu_i h_i(x);  g(lam, nu) = inf_x L
+KKT: grad f0 + sum lam_i grad f_i + sum nu_i grad h_i = 0; f_i <= 0; h_i = 0; lam_i >= 0; lam_i f_i = 0
+gradient descent rate (strongly convex, smooth): f(x_k) - p* <= c^k (f(x_0) - p*), c = 1 - m/M
+Newton step: dx = -grad^2 f(x)^{-1} grad f(x)
+```
+
+**Three takeaways.**
+
+- Convexity is the property that makes a problem solvable exactly; learn to recognise and preserve it.
+- KKT conditions and duality explain SVMs, LASSO paths, and the meaning of regularisation weights.
+- Condition number governs gradient descent; Newton's method removes it at the cost of a linear solve.
+
+**Practice.** Read chapters 2 to 5 and 9, then formulate the isotonic calibration step as a convex QP (monotone least squares), solve it with CVXPY, and verify KKT complementary slackness on the solution; compare to scikit-learn's IsotonicRegression.
+
+</details>
 
 #### [CS229 lecture notes (Stanford)](https://cs229.stanford.edu/main_notes.pdf)
 
@@ -6048,6 +10375,41 @@ _course · free · reference · free_
 
 **PhD at Apple.** CS229 is what most ML researchers learned from, so knowing it lets you calibrate what a reviewer or a new hire assumes as background, and what they will not have seen (dependent data, forecasting protocols, calibration under shift) and will need explained.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Main notes: supervised learning (linear regression, LMS, normal equations, probabilistic interpretation, locally weighted regression, logistic regression, Newton's method, GLMs and exponential families, softmax regression); generative learning (Gaussian discriminant analysis, naive Bayes, Laplace smoothing); kernel methods (feature maps, the kernel trick, properties); support vector machines (margins, optimal margin classifier, Lagrange duality, kernels, regularisation, SMO); deep learning (neural networks, backpropagation, vectorisation); generalisation (bias-variance, double descent, sample complexity bounds); regularisation and model selection (cross-validation, Bayesian statistics); unsupervised learning (k-means, mixtures of Gaussians, EM, factor analysis, PCA, ICA); self-supervised and foundation models; reinforcement learning (MDPs, value iteration, policy iteration, continuous states, LQR); with supplementary notes (Hoeffding, convex optimisation overview, the representer theorem).
+
+**Key ideas, in order.**
+
+1. Linear regression from three angles (least squares, gradient descent, maximum likelihood with Gaussian noise) and the normal equations; locally weighted regression as a nonparametric variant.
+2. Logistic regression and Newton's method; then the generalised linear model construction: choose an exponential family for y, set its natural parameter to a linear function of x, and derive the model, the link and the learning rule; softmax falls out for the multinomial.
+3. Generative versus discriminative: GDA models p(x|y) as Gaussians and derives a logistic posterior; naive Bayes for text; when the generative assumption holds it is more sample-efficient, when it does not the discriminative model wins asymptotically.
+4. Kernels and SVMs: functional margin, geometric margin, the primal and dual optimisation problems, the kernel trick, soft margin with slack, and the SMO algorithm for the dual.
+5. Deep learning notes: forward pass, backprop as the chain rule with cached activations, vectorisation over a batch, common layers and initialisation.
+6. Generalisation notes: the bias-variance decomposition, the double-descent phenomenon in modern overparameterised models, and the classical finite-class and VC-based sample complexity bounds (with proofs in the supplement).
+7. EM: the evidence lower bound, E-step as computing posteriors over latents, M-step as maximising the expected complete log-likelihood; mixtures of Gaussians and factor analysis as instances; PCA and ICA as dimensionality reduction.
+8. RL notes: MDPs, Bellman equations, value and policy iteration, model learning, discretisation, fitted value iteration and linear quadratic regulation for continuous control.
+
+**Formulas and commands to remember.**
+
+```
+normal equations: theta = (X^T X)^{-1} X^T y
+GLM: p(y; eta) = b(y) exp(eta^T T(y) - a(eta)), eta = theta^T x
+SVM dual: max sum alpha_i - (1/2) sum alpha_i alpha_j y_i y_j K(x_i, x_j) s.t. 0 <= alpha_i <= C, sum alpha_i y_i = 0
+EM: log p(x) >= sum_z Q(z) log( p(x, z) / Q(z) )
+```
+
+**Three takeaways.**
+
+- The GLM construction is the single most reusable derivation: it generates linear, logistic, Poisson and softmax regression from one recipe.
+- EM is coordinate ascent on a lower bound; once seen that way, every latent-variable algorithm is familiar.
+- The notes are compact and rigorous; use them as the reference to re-derive whatever you use.
+
+**Practice.** Derive Poisson regression for five-minute vehicle counts from the GLM recipe, implement its Newton updates in NumPy, fit it on one station, and compare its deviance to a Gaussian model on the same data.
+
+</details>
+
 #### [CS224W: Machine Learning with Graphs (Stanford)](https://web.stanford.edu/class/cs224w/)
 
 _course · free · a quarter · free lectures_
@@ -6063,6 +10425,41 @@ _course · free · a quarter · free lectures_
 **Stanford grad.** The course's coverage of heterogeneous graphs, knowledge graphs and scalable training (neighbor sampling) is the toolkit for city-scale models, and its assignments in PyTorch Geometric are a practical route to implementing Graph WaveNet without writing every operator by hand.
 
 **PhD at Apple.** CS224W and the PyTorch Geometric ecosystem are the standard entry to graph machine-learning research. Its open problems (expressiveness, scalability, dynamic graphs, transfer across graphs) overlap with traffic forecasting's own, and the course's reading list is a good map of the field.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Lectures and slides: introduction (why graphs, applications, representations); traditional methods (node, link and graph-level features: degree, centrality, clustering coefficient, graphlets, Katz, Weisfeiler-Lehman kernel); node embeddings (random walks, DeepWalk, node2vec, embedding whole graphs); PageRank and matrix factorisation views; message passing and node classification (relational and iterative classification, belief propagation); graph neural networks (the GNN framework, GCN, GraphSAGE, GAT, design space: layers, aggregation, skip connections, normalisation, dropout); GNN augmentation and training (graph manipulation, prediction heads, splitting, training pipeline); theory of GNNs (expressive power, WL test, GIN); heterogeneous graphs and knowledge graphs (RGCN, TransE, DistMult, ComplEx); reasoning over knowledge graphs; frequent subgraph mining; community detection; generative models for graphs (GraphRNN); advanced topics (limitations, position-aware GNNs, identity-aware GNNs, robustness); scaling up (GraphSAGE neighbour sampling, cluster-GCN, simplified GCN); graph transformers; temporal graphs; and applications including traffic and recommender systems.
+
+**Key ideas, in order.**
+
+1. Graphs represent relational data; tasks are at node, edge and graph level; the traditional pipeline hand-designs features (centrality, clustering, graphlets) and feeds them to a classifier.
+2. Node embeddings by random walks: co-occurrence of nodes on short walks defines similarity; node2vec's biased walks interpolate between BFS-like (structural) and DFS-like (community) neighbourhoods; embeddings are learned by a skip-gram objective with negative sampling.
+3. GNNs: each layer aggregates messages from neighbours and updates the node representation; GCN uses normalised mean aggregation, GraphSAGE concatenates and allows other aggregators, GAT learns attention weights per edge; stacking k layers gives a k-hop receptive field; over-smoothing limits depth.
+4. The design space: message computation, aggregation, layer connectivity (skip connections), and graph augmentation (virtual nodes and edges, feature augmentation for featureless nodes); prediction heads for node, edge and graph tasks; transductive versus inductive splits.
+5. Expressive power: message-passing GNNs are at most as powerful as the 1-WL isomorphism test; sum aggregation with injective updates (GIN) reaches that bound; mean and max aggregation lose information.
+6. Heterogeneous graphs need relation-specific weights (RGCN); knowledge-graph embeddings score triples with translation (TransE) or bilinear (DistMult, ComplEx) functions and differ in which relation patterns they can model.
+7. Scaling: full-batch GCN needs the whole graph; neighbour sampling (GraphSAGE), subgraph sampling (cluster-GCN) and precomputed propagation (SGC) make training feasible on large graphs.
+8. Temporal and spatio-temporal graphs: representations that evolve, and the specific pattern of graph convolution combined with temporal modelling that traffic forecasting uses (DCRNN, STGCN, Graph WaveNet appear as case studies).
+
+**Formulas and commands to remember.**
+
+```
+GCN layer: H^{(l+1)} = sigma( D~^{-1/2} A~ D~^{-1/2} H^{(l)} W^{(l)} ), A~ = A + I
+GraphSAGE: h_v <- sigma( W [ h_v ; AGG({h_u : u in N(v)}) ] )
+GAT attention: alpha_vu = softmax_u( LeakyReLU( a^T [W h_v ; W h_u] ) )
+GIN: h_v <- MLP( (1 + eps) h_v + sum_{u in N(v)} h_u )
+```
+
+**Three takeaways.**
+
+- A GNN layer is message, aggregate, update; every architecture is a choice of those three.
+- Sum aggregation is strictly more expressive than mean or max; the 1-WL bound is the ceiling for message passing.
+- The traffic network is a small heterogeneous graph (stations, ramps, direction); a two-layer GCN over the station adjacency is the natural first spatial model.
+
+**Practice.** Build the Fremont station graph (nodes are stations, edges connect consecutive stations per direction and ramp connections), implement a two-layer GCN in PyTorch that takes the last hour of speeds per node, and compare its 15-minute AP with the tabular model's per-station scores.
+
+</details>
 
 #### [A Gentle Introduction to Conformal Prediction (Angelopoulos, Bates)](https://arxiv.org/abs/2107.07511)
 
@@ -6080,6 +10477,40 @@ _paper · free · an evening or two · free; intervals you can defend_
 
 **PhD at Apple.** Conformal methods are the practical route to distribution-free guarantees in products. The research frontier, conditional coverage, dependence, and feedback between predictions and outcomes, is where the traffic alert problem sits, and the tutorial's clarity makes it the right document to hand to a product or legal partner.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Sections: conformal prediction (the recipe with a heuristic notion of uncertainty, a score function, a calibration set, the quantile, and prediction sets that contain the truth with the target probability); examples (classification with softmax scores, adaptive prediction sets, regression with conformalised quantile regression, uncertainty on images, outlier detection, group-balanced and class-conditional coverage, distribution shift with weighted conformal, time series with adaptive conformal inference); evaluating conformal prediction (coverage, set size, conditional coverage checks); how to choose a score (the score determines everything); and the full theory in the appendix (exchangeability, the coverage proof, the upper bound, and the distribution of coverage over calibration sets).
+
+**Key ideas, in order.**
+
+1. The recipe: pick any model, define a nonconformity score s(x, y) that is large when y is implausible under the model, compute scores on a held-out calibration set of size n, take the ceil((n+1)(1-alpha))/n empirical quantile q, and predict the set {y : s(x, y) <= q}; under exchangeability the set contains the true y with probability at least 1 - alpha.
+2. The guarantee is marginal (averaged over test points and calibration sets), distribution-free and model-agnostic; it is not conditional on x, and adaptivity across inputs comes only from a well-designed score.
+3. Classification: the simplest score is 1 minus the softmax of the true class; adaptive prediction sets use the cumulative sorted softmax mass, which gives sets that grow when the model is unsure.
+4. Regression: conformalised quantile regression fits lower and upper quantile models and uses the score max(q_lo - y, y - q_hi), producing intervals with local width; naive absolute-residual scores give constant width.
+5. Beyond exchangeability: covariate shift can be handled with likelihood-ratio weights on the calibration scores; time series break exchangeability, and adaptive conformal inference updates alpha online to track a coverage target.
+6. Evaluation: check empirical coverage over many random calibration splits, look at set sizes (smaller is more informative), and check coverage across groups or bins to see conditional behaviour.
+7. Group-balanced and class-conditional variants calibrate per group to give coverage within each group at the price of more calibration data.
+
+**Formulas and commands to remember.**
+
+```
+q_hat = Quantile( s_1, ..., s_n ; ceil((n+1)(1 - alpha)) / n )
+C(x) = { y : s(x, y) <= q_hat };  P( Y in C(X) ) >= 1 - alpha
+coverage upper bound: P( Y in C(X) ) <= 1 - alpha + 1/(n+1)
+CQR score: s = max( q_lo(x) - y, y - q_hi(x) )
+```
+
+**Three takeaways.**
+
+- Any model plus a calibration set gives valid prediction sets in three lines; the guarantee needs exchangeability, not correctness of the model.
+- The score function decides how informative the sets are; validity is free, sharpness is design.
+- Traffic data are not exchangeable over time, so use weighted or adaptive conformal and check coverage by week.
+
+**Practice.** Take the calibrated LightGBM probability, define the score 1 - p_true, calibrate on one month, and produce prediction sets ({no}, {yes}, or {no, yes}) for the next month; report coverage and the fraction of uninformative two-element sets by hour.
+
+</details>
+
 #### [Adaptive Conformal Inference Under Distribution Shift (Gibbs, Candès, 2021)](https://arxiv.org/abs/2106.00170)
 
 _paper · free · an evening or two · free; coverage that survives seasons_
@@ -6095,6 +10526,37 @@ _paper · free · an evening or two · free; coverage that survives seasons_
 **Stanford grad.** Follow with later work on conformal methods for time series and on risk control; the connection to online learning (regret bounds) explains why the method works without distributional assumptions.
 
 **PhD at Apple.** The practical entry point to valid uncertainty in non-stationary deployed systems; for an alerting product, this line of work is how you keep a false-alarm promise honest over months.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The paper: setting (online prediction with a model that may be arbitrarily wrong and data whose distribution shifts over time); the method (maintain a running miscoverage level alpha_t and update it after each observation by a step gamma toward the target, raising the level after a miss and lowering it after a cover); the main result (the long-run empirical coverage converges to 1 - alpha regardless of the data distribution, with a bound on the deviation that depends only on gamma and the horizon); the relation to the fixed conformal quantile; practical guidance on the step size and on tracking when the shift is gradual or abrupt; experiments on stock-market volatility forecasting and on election-night predictions.
+
+**Key ideas, in order.**
+
+1. Fixed conformal quantiles lose validity under shift; the fix is feedback: treat the miscoverage level as a control variable and adjust it online from the observed hits and misses.
+2. The update: alpha_{t+1} = alpha_t + gamma (alpha - err_t), where err_t is 1 if the interval missed and 0 otherwise; when the model misses too often, alpha_t falls and intervals widen; when it covers too often, alpha_t rises and intervals shrink.
+3. The guarantee is on long-run frequency: the average error over T steps is within (max(alpha_1, 1 - alpha_1) + gamma) / (gamma T) of alpha, for any sequence, adversarial included; there is no distributional assumption.
+4. The trade-off: larger gamma reacts faster to shift but oscillates more; smaller gamma is smoother but slow; the paper suggests values around 0.005 and shows sensitivity.
+5. Local coverage is not guaranteed; the method can alternate between long stretches of over- and under-coverage that average out, which later work (aggregation over gammas, conformal PID) addresses.
+6. The examples show ACI restoring coverage when a volatility model's residual distribution changes after market events, and adjusting on election night as returns arrive.
+
+**Formulas and commands to remember.**
+
+```
+alpha_{t+1} = alpha_t + gamma (alpha - err_t),  err_t = 1{ Y_t not in C_t }
+bound: | (1/T) sum_t err_t - alpha | <= ( max(alpha_1, 1 - alpha_1) + gamma ) / (gamma T)
+```
+
+**Three takeaways.**
+
+- Coverage under shift comes from feedback control, not from the model.
+- One parameter, gamma, trades responsiveness for stability; tune it on a held-out period of shift.
+- For a traffic predictor that runs every five minutes, ACI is the cheapest way to keep interval coverage honest across seasons and incidents.
+
+**Practice.** Implement ACI on top of the conformal sets from the previous guide with gamma = 0.005 and 0.02; simulate a shift by evaluating across a month that includes a holiday week, and plot rolling coverage for fixed conformal versus ACI.
+
+</details>
 
 #### [Statistical Rethinking lectures and course materials (McElreath)](https://github.com/rmcelreath/stat_rethinking_2026)
 
@@ -6112,6 +10574,40 @@ _course · free · ten weeks · free lectures, slides and homework; the Bayesian
 
 **PhD at Apple.** McElreath's causal-first framing is influential in applied statistics; the free lectures make it accessible to a whole team.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Lecture series and course materials: science before statistics (models as golems, causal thinking, DAGs); the garden of forking data (Bayesian updating from first principles, grid approximation); geocentric models (linear regression as a descriptive model, priors, prior predictive simulation, posterior predictive checks); categories and curves (indicator variables, polynomials, splines); elemental confounds (the fork, the pipe, the collider, the descendant; backdoor adjustment; simulation of each); good and bad controls; overfitting and regularisation (information criteria, cross-validation, PSIS-LOO, regularising priors); MCMC (Hamiltonian Monte Carlo, diagnostics, Stan); modelling events (binomial and logistic regression, poisson); ordered categories; multilevel models (varying intercepts, partial pooling, shrinkage); multilevel adventures (varying slopes, covariance among effects); correlated varying effects and Gaussian processes (spatial and phylogenetic); measurement error and missing data; generalised linear madness (scientific models to statistical models); horoscopes (scientific practice).
+
+**Key ideas, in order.**
+
+1. Statistics is downstream of a causal model: draw the DAG, decide the estimand, then choose a statistical model; regression coefficients have no causal meaning without that step.
+2. Bayesian updating from counting: the garden of forking data shows the posterior as the count of ways each hypothesis could produce the data; grid approximation makes it concrete before any sampler.
+3. Priors are assumptions to be simulated: prior predictive simulation shows what the model believes before data, and catches absurd priors; posterior predictive checks show what the model got wrong after.
+4. The four elemental confounds and their remedies: adjust for a fork, do not adjust for a pipe (mediator) when you want the total effect, never adjust for a collider, and beware descendants of these.
+5. Overfitting is controlled by regularising priors and assessed by out-of-sample prediction estimated with PSIS-LOO or WAIC; the two goals (prediction and causal inference) can disagree on which variables to include.
+6. MCMC with HMC: the physics analogy, why it scales, and the diagnostics (R-hat, effective sample size, divergent transitions) that must be checked; Stan and its front ends.
+7. Multilevel models: partial pooling shrinks group estimates toward the population according to how much data each has; varying slopes and correlated effects share strength across parameters; this is the default model for stations, hours and days.
+8. Gaussian processes as continuous-category varying effects (distance between stations as the kernel input); measurement error and missing data as parts of the generative model rather than preprocessing.
+
+**Formulas and commands to remember.**
+
+```
+posterior ∝ likelihood × prior;  grid: p(theta_i | y) = L(y|theta_i) p(theta_i) / sum_j L(y|theta_j) p(theta_j)
+varying intercepts: y_ij ~ Normal(a_j + b x_ij, sigma), a_j ~ Normal(a_bar, sigma_a)
+PSIS-LOO: elpd_loo = sum_i log p(y_i | y_{-i}) estimated by Pareto-smoothed importance sampling
+```
+
+**Three takeaways.**
+
+- Draw the DAG first; the elemental confounds tell you what to adjust for and what to leave alone.
+- Simulate priors and posteriors; a model you cannot simulate from is one you do not understand.
+- Partial pooling across stations and hours is the natural Bayesian model of a corridor and gives honest uncertainty for stations with little data.
+
+**Practice.** Fit a varying-intercept logistic model for bottleneck-in-15 with intercepts per station and per hour in PyMC or Stan, check R-hat and divergences, plot the shrinkage of station intercepts against station sample size, and compare calibration to LightGBM.
+
+</details>
+
 #### [Probabilistic Programming and Bayesian Methods for Hackers (Davidson-Pilon)](https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers)
 
 _book · free · weeks · free; Bayesian models in code first_
@@ -6127,6 +10623,39 @@ _book · free · weeks · free; Bayesian models in code first_
 **Stanford grad.** Probabilistic programming is how applied Bayesian work is done now; the book is the fastest way to a working model, and its limits (no hierarchical depth, dated library versions in places) are easy to work around with the library's current docs.
 
 **PhD at Apple.** A free, code-first introduction; useful for getting a team from Bayesian ideas to running models in a week.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters (as notebooks): introduction (the Bayesian state of mind, Bayes' theorem, probability distributions, a text-message change-point example in PyMC); a little more on PyMC (model building, stochastic and deterministic variables, modelling approaches, the Challenger disaster example, separation plots); opening the black box of MCMC (what it does, the landscape, the algorithms, convergence, autocorrelation, thinning, diagnostics); the greatest theorem never told (the law of large numbers, small-sample bias, ordering Reddit comments by lower bound); would you rather lose an arm or a leg (loss functions, Bayesian decisions, financial prediction, the Price is Right showcase); getting our priorities straight (priors: objective and subjective, empirical Bayes, the Wishart and conjugate priors, examples with bandits and stock returns); Bayesian A/B testing.
+
+**Key ideas, in order.**
+
+1. Bayesian inference as updating beliefs; the posterior over a change point in daily counts is the running example, with PyMC code that declares the generative model and lets the sampler do the work.
+2. Building models in PyMC: prior distributions, deterministic transformations, observed variables; think generatively (how would this data be produced) and write that down.
+3. MCMC intuition: the posterior is a landscape, the sampler wanders it in proportion to height; burn-in, autocorrelation and trace plots; convergence is checked, never assumed.
+4. The law of large numbers and its failure at small n: ranking by posterior mean overrates small samples; use a lower quantile of the posterior for conservative ranking.
+5. Loss functions turn posteriors into decisions: the expected loss under the posterior is minimised, and different losses give different optimal actions; the showcase example makes it concrete.
+6. Priors: flat versus informative, empirical Bayes as a compromise, conjugacy for closed forms; Bayesian bandits as a demonstration of Thompson sampling.
+7. Bayesian A/B testing: posteriors for two conversion rates and the probability that one exceeds the other, replacing p-values with direct statements.
+
+**Formulas and commands to remember.**
+
+```
+change-point model: lambda_t = lambda_1 if t < tau else lambda_2;  y_t ~ Poisson(lambda_t)
+Bayesian decision: a* = argmin_a E_posterior[ L(a, theta) ]
+P(p_A > p_B) = mean over posterior samples of 1{p_A > p_B}
+```
+
+**Three takeaways.**
+
+- Write the generative story, then let the sampler invert it; that is the whole workflow.
+- Small samples are overconfident under naive ranking; use posterior quantiles.
+- Decisions need a loss function, and the posterior makes expected loss computable.
+
+**Practice.** Fit a change-point model to daily bottleneck counts at one station over a year to find when a signal timing or construction change happened; then run a Bayesian A/B comparison of bottleneck rate before and after.
+
+</details>
 
 #### [A Visual Exploration of Gaussian Processes (Distill, 2019)](https://distill.pub/2019/visual-exploration-gaussian-processes/)
 
@@ -6144,6 +10673,38 @@ _interactive · free · an hour · free, interactive; the kernel's effect, seen_
 
 **PhD at Apple.** An exemplary explanation; the model for how to present a Bayesian method to an engineering audience.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** An interactive article: multivariate Gaussians (marginalisation and conditioning); Gaussian processes as distributions over functions defined by a mean and a kernel; kernels (RBF, periodic, linear, and combinations by addition and multiplication, with interactive sliders for length scale, variance and period); prior and posterior with interactive sampling; the influence of noise; conditioning on training points to get the posterior mean and variance; and a short discussion of applications and complexity.
+
+**Key ideas, in order.**
+
+1. A GP is a prior over functions such that any finite set of function values is jointly Gaussian; the kernel defines the covariance between f(x) and f(x') and therefore the smoothness, periodicity and scale of the functions.
+2. Conditioning a multivariate Gaussian on observed components gives a Gaussian over the rest; applied to function values, this is GP regression: the posterior mean interpolates the data, the posterior variance shrinks near data and grows away from it.
+3. Kernel algebra: adding kernels adds behaviours (trend plus periodic), multiplying kernels gates one by the other (locally periodic); the article's sliders make each parameter's effect visible.
+4. Noise enters as a diagonal term on the training covariance, which stops the posterior from interpolating exactly and widens the uncertainty.
+5. Cost is cubic in the number of training points because of the matrix inverse, which motivates sparse and inducing-point approximations for large data.
+
+**Formulas and commands to remember.**
+
+```
+prior: f ~ GP(m(x), k(x, x'))
+posterior mean: mu_* = K_*^T (K + sigma^2 I)^{-1} y
+posterior covariance: Sigma_* = K_** - K_*^T (K + sigma^2 I)^{-1} K_*
+RBF: k(x, x') = sigma_f^2 exp( -|x - x'|^2 / (2 l^2) )
+```
+
+**Three takeaways.**
+
+- A kernel is a statement about function shape; choose it by what you know about the function.
+- GP regression is Gaussian conditioning; uncertainty is a by-product, not an add-on.
+- Daily speed profiles are a natural GP target with a periodic-times-RBF kernel.
+
+**Practice.** Fit a GP with a periodic (24 h) times RBF kernel to one week of five-minute speeds at one station using scikit-learn's GaussianProcessRegressor on a subsample, plot the posterior mean and two-sigma band, and compare interval coverage on the next day to the conformal sets.
+
+</details>
+
 #### [Foundations of Machine Learning (Mohri, Rostamizadeh, Talwalkar), 2nd edition](https://cs.nyu.edu/~mohri/mlbook/)
 
 _book · free · reference · free PDF; learning theory with proofs, a second view_
@@ -6159,6 +10720,41 @@ _book · free · reference · free PDF; learning theory with proofs, a second vi
 **Stanford grad.** Compare with Shalev-Shwartz and Ben-David: Mohri is stronger on kernels, boosting and online learning; the other on stability and convex learning. Together they cover classical learning theory.
 
 **PhD at Apple.** A standard reference; its exercises are qualifying-exam material and its later chapters are entry points to research areas.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction; the PAC learning framework (guarantees for finite consistent and inconsistent hypothesis sets, generalities such as deterministic versus stochastic scenarios and Bayes error, agnostic PAC); Rademacher complexity and VC dimension (generalisation bounds, growth function, Sauer's lemma, lower bounds); model selection (estimation and approximation errors, empirical risk minimisation, structural risk minimisation, cross-validation, n-fold, regularisation-based algorithms, convex surrogate losses); support vector machines (margin theory, primal and dual, soft margin, margin-based generalisation bounds); kernel methods (PDS kernels, kernel SVMs, negative definite kernels, sequence kernels, approximate kernel feature maps); boosting (AdaBoost, margin bounds, game-theoretic interpretation, L1 regularisation, discussion); online learning (mistake bounds, halving, weighted majority, perceptron and winnow, online-to-batch conversion, game-theoretic connection); multiclass classification (uniform margin bounds, one-versus-all, structured prediction); ranking (bipartite ranking, AUC, RankBoost, margin bounds); regression (generalisation bounds, linear, kernel ridge, SVR, lasso, group norm); maximum entropy models (density estimation, conditional maxent, logistic regression as conditional maxent, L1 and L2 regularised maxent); conditional maximum entropy; algorithmic stability; dimensionality reduction (PCA, KPCA, KCCA, Johnson-Lindenstrauss); learning automata and languages; reinforcement learning; with appendices on linear algebra, convex optimisation, probability, concentration inequalities and information theory.
+
+**Key ideas, in order.**
+
+1. PAC framework with careful proofs: consistent finite hypothesis sets get a log|H| / epsilon rate, inconsistent ones (via Hoeffding) a 1/epsilon squared rate; the Bayes error and the noise setting.
+2. Rademacher complexity as the central tool: generalisation bounds for any bounded loss class via symmetrisation; the growth function and VC dimension bound Rademacher complexity by Massart's lemma; lower bounds show these are tight in the worst case.
+3. Margin theory: SVM generalisation bounds depend on the margin and the radius of the data, not on the dimension; the same margin bounds apply to boosting's ensemble, explaining why boosting resists overfitting after training error reaches zero.
+4. Kernels: positive definite symmetric kernels define feature maps into an RKHS; closure properties; normalised kernels; kernel ridge regression and SVR with their duals; approximation of kernels by random features.
+5. Online learning: mistake bounds for perceptron (in terms of margin), weighted majority and exponentiated weights (regret bounds), and the online-to-batch conversion that turns online algorithms into batch learners with guarantees.
+6. Ranking and regression chapters give bounds and algorithms in the same style, including AUC as the bipartite ranking loss and RankBoost.
+7. Maximum entropy: the dual of maximising entropy subject to feature-expectation constraints is a Gibbs distribution; conditional maxent is logistic regression; regularised maxent has generalisation bounds in terms of feature norms.
+8. Stability: an algorithm whose output changes little when one training point changes generalises; regularised kernel algorithms are stable; this gives bounds for kernel ridge and SVM without VC dimension.
+
+**Formulas and commands to remember.**
+
+```
+Rademacher: R_m(G) = E[ sup_{g in G} (1/m) sum_i sigma_i g(z_i) ]
+generalisation: E[g] <= E_hat[g] + 2 R_m(G) + sqrt( log(1/delta) / (2m) )
+margin bound: R(h) <= R_hat_rho(h) + (2/rho) R_m(H) + sqrt( log(1/delta) / (2m) )
+perceptron mistakes <= (r / rho)^2
+```
+
+**Three takeaways.**
+
+- Rademacher complexity is the one tool that yields most bounds in the book, so learn its symmetrisation proof.
+- Margin bounds explain both SVMs and boosting and are dimension-free.
+- Stability gives generalisation for regularised algorithms with no combinatorial argument.
+
+**Practice.** Prove the Rademacher generalisation bound (chapter 3) and the perceptron mistake bound (chapter 8), then compute the margin distribution of the LightGBM score on training data and check whether the fraction below a margin rho tracks validation error as the margin bound suggests.
+
+</details>
 
 #### [PyTorch Geometric documentation](https://pytorch-geometric.readthedocs.io/)
 
@@ -6176,6 +10772,37 @@ _docs · free · an afternoon · free; graph networks without hand-written opera
 
 **PhD at Apple.** The standard toolkit for graph learning research; for a lead, it is the argument for not writing graph operators by hand past the learning stage.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Get started (installation, introduction by example: data handling of graphs, common benchmark datasets, mini-batches, data transforms, learning methods on graphs); tutorials (creating message-passing networks, creating your own datasets, heterogeneous graph learning, loading graphs from CSV, GNN explainability, compiled GNNs, scaling with neighbour sampling, point-cloud and multi-GPU training); advanced concepts (sparse tensor support, memory-efficient aggregations, TorchScript, remote backends); the package reference (torch_geometric.nn layers such as GCNConv, SAGEConv, GATConv, GINConv, ChebConv, models, pooling, normalisation; torch_geometric.data; torch_geometric.loader; torch_geometric.datasets; torch_geometric.transforms; torch_geometric.utils; torch_geometric.explain); and the cheat sheets for GNN layers and pooling.
+
+**Key ideas, in order.**
+
+1. The Data object holds node features x, an edge_index in COO format of shape (2, num_edges), optional edge attributes, labels and masks; graphs are batched by concatenating them into one disconnected graph with a batch vector.
+2. Layers implement message passing: the MessagePassing base class separates message, aggregate and update; writing a custom layer is overriding those; the built-in layers cover the standard architectures.
+3. Datasets and loaders: in-memory datasets for small graphs, NeighborLoader for sampling subgraphs of large graphs, DataLoader for batches of many small graphs; transforms add positional features or normalise.
+4. Heterogeneous graphs: HeteroData with typed nodes and edges, and to_hetero to convert a homogeneous model into one with per-type parameters.
+5. Explainability tools attribute predictions to edges and features; compiled GNNs and sparse-tensor formats speed up training; multi-GPU support via distributed sampling.
+6. The traffic-relevant pieces: static graph with time-varying node features is handled by feeding each time step's feature matrix with the same edge_index, or by using the temporal extension library for recurrent graph layers.
+
+**Formulas and commands to remember.**
+
+```
+data = Data(x=[N, F], edge_index=[2, E], y=[N]);  loader = NeighborLoader(data, num_neighbors=[10, 10], batch_size=256)
+class MyConv(MessagePassing): def forward(self, x, edge_index): return self.propagate(edge_index, x=x); def message(self, x_j): return x_j
+```
+
+**Three takeaways.**
+
+- edge_index in COO plus a features matrix is the whole representation; get comfortable building it from a station adjacency table.
+- MessagePassing's three methods are the implementation of the message, aggregate, update view from CS224W.
+- For a fixed road graph, batch over time windows, not over graphs.
+
+**Practice.** Build the Fremont station graph as a Data object, implement a GCNConv-based model over one hour of speed features per node, train it on the M1 with MPS for the 15-minute bottleneck label, and compare to the hand-built GCN from the CS224W guide.
+
+</details>
+
 #### [Bayesian Data Analysis, 3rd edition (Gelman, Carlin, Stern, Dunson, Vehtari, Rubin)](https://sites.stat.columbia.edu/gelman/book/)
 
 _book · free · reference · free PDF; the applied Bayesian reference_
@@ -6191,6 +10818,42 @@ _book · free · reference · free PDF; the applied Bayesian reference_
 **Stanford grad.** Together with the authors' later work (Stan, workflow papers) it defines current Bayesian practice; its chapter on nonparametric models and on missing data are advanced references.
 
 **PhD at Apple.** The canonical applied Bayesian text; for research, its emphasis on model checking and workflow is the counterweight to treating inference as a black box.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I fundamentals: probability and inference; single-parameter models (binomial, normal, Poisson, exponential, prior distributions, noninformative and weakly informative priors); multiparameter models (nuisance parameters, normal with unknown mean and variance, multinomial, multivariate normal); asymptotics and connections to non-Bayesian approaches; hierarchical models (exchangeability, the rat tumour and eight-schools examples, hierarchical normal model). Part II fundamentals of Bayesian data analysis: model checking (posterior predictive checks, graphical checks, p-values); evaluating, comparing and expanding models (predictive accuracy, information criteria, cross-validation, model averaging); modelling accounting for data collection (ignorability, sampling, experiments, observational studies, censoring); decision analysis. Part III advanced computation: posterior simulation (rejection, importance sampling), Markov chain simulation (Gibbs, Metropolis, convergence, effective sample size), computationally efficient MCMC (HMC, NUTS, Stan), modal and distributional approximations (Laplace, EM, variational inference, expectation propagation). Part IV regression models: linear regression, hierarchical linear models, generalised linear models, models for robust inference, models for missing data. Part V nonlinear and nonparametric models: parametric nonlinear models, basis functions, Gaussian process models, finite mixtures, Dirichlet process models.
+
+**Key ideas, in order.**
+
+1. The three steps: set up a full probability model, condition on data to get the posterior, evaluate the fit and the implications and expand the model; this loop is the practice of Bayesian data analysis.
+2. Single and multiparameter models with conjugate and noninformative priors give closed-form posteriors and build intuition; nuisance parameters are integrated out.
+3. Hierarchical models: exchangeable units share a population distribution; the eight-schools example shows partial pooling and the importance of the between-group variance parameter; the hierarchical model is the default structure for grouped data.
+4. Model checking: posterior predictive checks compare replicated data to observed data on chosen statistics; graphical checks find misfit that summary statistics miss; posterior predictive p-values are diagnostics, not tests.
+5. Model comparison by predictive accuracy: expected log predictive density estimated by WAIC or leave-one-out cross-validation (PSIS-LOO); the discussion of why marginal likelihoods and Bayes factors are fragile.
+6. Data collection matters: the sampling and treatment-assignment mechanisms must be included in the model unless ignorable; censoring, truncation and missing data are modelled, not dropped.
+7. Computation: Gibbs and Metropolis, convergence with multiple chains and R-hat, effective sample size, HMC and NUTS as the modern default; Laplace approximation, EM and variational inference when sampling is too slow.
+8. Regression chapters: Bayesian linear regression with weakly informative priors, hierarchical regressions with varying coefficients, GLMs, robust models with t distributions, and missing-data models with multiple imputation.
+9. Nonparametric chapters: basis expansions, Gaussian processes as priors over functions, mixture models, and Dirichlet processes for an unknown number of components.
+
+**Formulas and commands to remember.**
+
+```
+posterior predictive: p(y_rep | y) = ∫ p(y_rep | theta) p(theta | y) dtheta
+hierarchical normal: y_j ~ N(theta_j, sigma_j^2), theta_j ~ N(mu, tau^2)
+R-hat = sqrt( (W (n-1)/n + B/n) / W ) for within (W) and between (B) chain variances
+WAIC = -2 ( lppd - p_WAIC )
+```
+
+**Three takeaways.**
+
+- Model, condition, check, expand: the workflow matters more than any single model.
+- Hierarchical models are the answer to grouped data with unequal group sizes, which is what a corridor of stations is.
+- Check posteriors predictively and computationally (R-hat, ESS, divergences) before reporting anything.
+
+**Practice.** Fit a hierarchical logistic regression for the 15-minute bottleneck with station-level and hour-level effects in Stan or PyMC, run four chains, check R-hat and ESS, do a posterior predictive check on the hourly bottleneck rate, and compute PSIS-LOO against a pooled model.
+
+</details>
 
 #### [Gaussian Processes for Machine Learning (Rasmussen, Williams)](https://gaussianprocess.org/gpml/)
 
@@ -6208,6 +10871,40 @@ _book · free · two chapters, a week · free; models with their own error bars_
 
 **PhD at Apple.** The canonical reference; Gaussian processes remain the tool of choice for expensive-function optimization and for small-data science, and their theory underlies much of modern uncertainty quantification.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Chapters: introduction; regression (weight-space view with Bayesian linear regression and feature projections, function-space view, varying the hyperparameters, decision theory for regression, an example, smoothing and splines); classification (the Laplace approximation, expectation propagation, experiments); covariance functions (stationary, dot-product, other, making new kernels from old, the Matérn class, periodic and composite kernels); model selection and adaptation of hyperparameters (marginal likelihood, cross-validation, examples for regression and classification); relationships between GPs and other models (RKHS, regularisation, splines, SVMs, least-squares classification, neural networks and the infinite-width limit); theoretical perspectives (equivalent kernels, asymptotics, PAC-Bayes); approximation methods for large datasets (reduced-rank, subset of regressors, Nyström, subset of datapoints, projected process, Bayesian committee machine, iterative solutions); further issues and conclusions; with appendices on mathematics, Gaussian identities and datasets.
+
+**Key ideas, in order.**
+
+1. Two views of GP regression: the weight-space view (Bayesian linear regression in a feature space, with the kernel trick) and the function-space view (a prior over functions with mean and covariance); they coincide, and the function-space view generalises.
+2. The predictive distribution is Gaussian with a closed-form mean and variance; noise appears as a diagonal added to the training covariance; hyperparameters (length scale, signal variance, noise variance) change the fit qualitatively.
+3. Classification is not conjugate: the Laplace approximation and expectation propagation approximate the non-Gaussian posterior over latent functions; EP is generally more accurate.
+4. Covariance functions encode assumptions: the squared exponential is infinitely smooth, the Matérn class controls smoothness by nu, periodic kernels for cycles, ARD length scales per input dimension for relevance; sums and products build structured kernels.
+5. Model selection by the marginal likelihood (evidence), which trades data fit against complexity automatically; its gradients are available in closed form, so hyperparameters are optimised by gradient ascent; cross-validation is the alternative.
+6. Connections: GP regression equals kernel ridge regression with a specific regulariser, splines are GPs with particular kernels, SVMs use the same RKHS with a different loss, and infinitely wide neural networks with Gaussian priors are GPs.
+7. Approximations for large n: low-rank kernel approximations (Nyström, subset of regressors), inducing-point methods (projected process), and iterative linear solvers; these are what make GPs run on tens of thousands of points.
+
+**Formulas and commands to remember.**
+
+```
+predictive mean: f_bar_* = k_*^T (K + sigma_n^2 I)^{-1} y
+predictive variance: V[f_*] = k(x_*, x_*) - k_*^T (K + sigma_n^2 I)^{-1} k_*
+log marginal likelihood: log p(y|X) = -(1/2) y^T K_y^{-1} y - (1/2) log|K_y| - (n/2) log 2 pi
+Matérn nu=3/2: k(r) = sigma^2 (1 + sqrt(3) r / l) exp( -sqrt(3) r / l )
+```
+
+**Three takeaways.**
+
+- The marginal likelihood is the principled way to set kernel hyperparameters and it penalises complexity on its own.
+- Kernel design is model design; ARD length scales tell you which inputs matter.
+- GPs and kernel ridge, splines and wide networks are one family; the GP adds calibrated uncertainty.
+
+**Practice.** Implement GP regression from the formulas in NumPy with a Matérn 3/2 kernel plus a periodic kernel, optimise the log marginal likelihood with scipy on one station-day of speeds, and print the learned length scales and noise; then repeat with sparse inducing points on a week of data.
+
+</details>
+
 #### [Deep Learning (Goodfellow, Bengio, Courville)](https://www.deeplearningbook.org/)
 
 _book · free · reference · free online_
@@ -6223,6 +10920,41 @@ _book · free · reference · free online_
 **Stanford grad.** Part three (representation learning, structured probabilistic models, generative models) frames later research. Some material is dated, but the conceptual chapters remain the shared vocabulary of the field, and its chapter on practical methodology is a good checklist before any training run.
 
 **PhD at Apple.** A canonical citation and a snapshot of the field as of 2016. Knowing what it lacks (attention, scaling laws, modern generative models, the empirical understanding of generalization) is as important as knowing what it contains, and reading it against Murphy's second volume shows how the field's framing has shifted.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** Part I applied math and ML basics: linear algebra; probability and information theory; numerical computation (overflow, conditioning, gradient-based optimisation, constrained optimisation); machine learning basics (learning algorithms, capacity, overfitting, hyperparameters and validation, estimators, bias and variance, MLE, Bayesian statistics, supervised and unsupervised algorithms, SGD, building an ML algorithm, challenges motivating deep learning). Part II deep networks: deep feedforward networks (XOR, gradient-based learning, hidden units, architecture design, backpropagation); regularisation (parameter norm penalties, constrained optimisation, dataset augmentation, noise robustness, semi-supervised, multitask, early stopping, parameter tying, sparse representations, bagging, dropout, adversarial training, tangent methods); optimisation for training (how learning differs from pure optimisation, challenges, basic algorithms, initialisation, adaptive learning rates, second-order methods, strategies and meta-algorithms); convolutional networks; sequence modelling with RNNs (unfolding, teacher forcing, bidirectional, encoder-decoder, deep recurrent, recursive, long-term dependencies, LSTM and GRU, optimisation, explicit memory); practical methodology (performance metrics, default baselines, more data, hyperparameters, debugging); applications. Part III research: linear factor models, autoencoders, representation learning, structured probabilistic models, Monte Carlo methods, the partition function, approximate inference, deep generative models.
+
+**Key ideas, in order.**
+
+1. Deep learning as representation learning: compose simple functions to learn features rather than engineer them; the universal approximation theorem says depth is not needed for expressiveness, but depth helps statistically and computationally.
+2. Feedforward networks: output units paired with losses (linear with squared error, sigmoid with Bernoulli cross-entropy, softmax with categorical cross-entropy), hidden units (ReLU and variants), and backpropagation as reverse-mode differentiation through the computational graph.
+3. Regularisation is any modification that reduces generalisation error but not training error: weight decay as a Gaussian prior, early stopping as L2 in disguise, dropout as an ensemble of subnetworks, data augmentation, noise injection, multitask learning.
+4. Optimisation for training differs from pure optimisation (surrogate losses, minibatches, non-convexity, saddle points and cliffs, long-term dependencies); SGD with momentum, adaptive methods (AdaGrad, RMSProp, Adam), initialisation scale, batch normalisation, curriculum learning.
+5. Convolution as sparse interactions, parameter sharing and equivariance to translation; pooling for invariance; the variants (strides, dilation, tiled convolution) and efficient implementations.
+6. RNNs unfold a recurrence; backpropagation through time; teacher forcing; the vanishing and exploding gradient problem; gated units (LSTM, GRU) as the remedy; encoder-decoder for sequence to sequence.
+7. Practical methodology chapter: choose metrics, start with a default baseline, decide whether to gather more data, tune hyperparameters manually or by random search, and debug with unit tests of gradients and by fitting tiny datasets.
+8. Part III: autoencoders and representation learning, structured probabilistic models, Monte Carlo and the partition function, variational inference, and the generative models of 2016 (VAEs, GANs, autoregressive models).
+
+**Formulas and commands to remember.**
+
+```
+weight decay: J~ = J + (alpha/2) w^T w
+dropout inference: scale weights by keep probability p
+BPTT gradient: dL/dh_t = dL_t/dh_t + (dh_{t+1}/dh_t)^T dL/dh_{t+1}
+LSTM cell: c_t = f_t * c_{t-1} + i_t * c~_t;  h_t = o_t * tanh(c_t)
+```
+
+**Three takeaways.**
+
+- Chapters 6 to 8 (feedforward, regularisation, optimisation) are the durable core; read them fully.
+- Regularisation methods are one idea with many faces; recognise which face each trick is.
+- The practical methodology chapter is a checklist worth rereading before every deep learning project.
+
+**Practice.** Read chapters 6, 7, 8 and 11; then implement dropout, weight decay and early stopping as three separate switches on the GRU challenger, run a small random search over them on the M1, and write a one-page methodology note in the style of chapter 11.
+
+</details>
 
 #### [Graph WaveNet (Wu et al., IJCAI 2019)](https://arxiv.org/abs/1906.00121)
 
@@ -6240,6 +10972,39 @@ _paper · free · an evening or two · free; the third traffic paper_
 
 **PhD at Apple.** For Fremont the learned graph could reveal cross-freeway coupling (I-880 to I-680 through SR-84 and Mission), and testing whether that improves 60-minute skill is a concrete, publishable experiment that fits on the M1. The paper is also a good example of an ablation done properly.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The paper: motivation (spatial dependencies in traffic are not fully captured by the road-distance graph, and RNN-based temporal models are slow); the model (an adaptive adjacency matrix learned from node embeddings, combined with the given graph in a diffusion convolution layer; stacked dilated causal convolutions for temporal modelling, WaveNet-style, with gated activations and skip connections); the training setup (METR-LA and PEMS-BAY, twelve steps in, twelve out, MAE, RMSE, MAPE at 15, 30 and 60 minutes); results that beat DCRNN and STGCN with much faster training; and ablations showing that the adaptive adjacency helps even without any given graph.
+
+**Key ideas, in order.**
+
+1. Spatial modelling: diffusion convolution treats traffic flow as a random walk on the graph in both directions (forward and backward transition matrices) with K steps; the paper adds a learned adaptive adjacency, the softmax of ReLU(E1 E2^T) for node embeddings E1 and E2, which discovers dependencies the road graph misses.
+2. Temporal modelling: dilated causal convolutions with exponentially growing dilation give a receptive field that grows exponentially with depth, so twelve steps are covered by a shallow stack, and the whole model is parallel over time (no recurrence).
+3. Architecture: blocks of gated temporal convolution followed by graph convolution, residual and skip connections, with the skip outputs summed and passed through output layers that produce all twelve horizons at once.
+4. Training: MAE loss with masking of missing values, Adam, dropout, and a curriculum that is not needed because there is no autoregressive decoding.
+5. Results: on METR-LA at 60 minutes, MAE around 3.5 versus DCRNN's 3.6 and STGCN's 4.6, and training several times faster; on PEMS-BAY MAE around 1.95 at 60 minutes; the adaptive-only variant is competitive, meaning the learned graph carries most of the information.
+6. Limitations noted: fixed sensor set (the adaptive adjacency is per-node and does not transfer), and the twelve-step horizon.
+
+**Formulas and commands to remember.**
+
+```
+adaptive adjacency: A_adp = softmax( ReLU( E1 E2^T ) ), E1, E2 in R^{N x c}
+diffusion conv: Z = sum_{k=0}^{K} P_f^k X W_k1 + P_b^k X W_k2 + A_adp^k X W_k3
+gated TCN: h = tanh(Theta1 * x) ⊙ sigmoid(Theta2 * x)
+receptive field with dilations 1, 2, 4, 8: 1 + (k-1)(1+2+4+8)
+```
+
+**Three takeaways.**
+
+- Learning the graph (adaptive adjacency) beats trusting the road graph; the two together are best.
+- Dilated causal convolutions replace RNNs for short horizons with a large speed gain and no exposure bias.
+- This is the reference architecture for the spatio-temporal challenger on the Fremont corridor, at a size that fits the M1.
+
+**Practice.** Implement Graph WaveNet's core (adaptive adjacency, one diffusion layer, two gated TCN blocks) in PyTorch for the Fremont stations with a 12-in, 12-out speed target, train on MPS with masked MAE, and compare 15-, 30- and 60-minute MAE with the GRU challenger and with persistence.
+
+</details>
+
 #### [METR-LA and PEMS-BAY datasets (DCRNN repository)](https://github.com/liyaguang/DCRNN)
 
 _dataset · free · days · free; the benchmark to reproduce on_
@@ -6256,6 +11021,38 @@ _dataset · free · days · free; the benchmark to reproduce on_
 
 **PhD at Apple.** Shared benchmarks made the field comparable and also narrowed it; extending the protocol with incidents and weather, and evaluating episode-level metrics, is a contribution in itself.
 
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The repository for Diffusion Convolutional Recurrent Neural Network: the two datasets (METR-LA, 207 loop detectors in Los Angeles County, four months of five-minute speeds in 2012; PEMS-BAY, 325 sensors in the Bay Area, six months of five-minute speeds in 2017) as HDF5 speed matrices, sensor-location CSVs, and precomputed adjacency matrices from road-network distances with a Gaussian kernel threshold; the data-preparation script that builds sliding windows (twelve steps in, twelve steps out) with time-of-day features and the train/validation/test split by time (70/10/20); the DCRNN model (diffusion convolution inside a GRU cell, encoder-decoder with scheduled sampling); training scripts and configs; evaluation with masked MAE, RMSE and MAPE at 15, 30 and 60 minutes; and the published results tables that every later traffic paper compares against.
+
+**Key ideas, in order.**
+
+1. The data format that became the benchmark standard: a dense (time, sensor) speed matrix with zeros for missing values, sensor coordinates, and a distance-based adjacency; understanding this format lets you read every traffic-forecasting paper's setup.
+2. Adjacency from distances: W_ij = exp(-d_ij^2 / sigma^2) if d_ij <= kappa else 0, with sigma the standard deviation of distances; road-network distance, not Euclidean, and directional.
+3. Windowing: for each time t, input is speeds at t-11 to t plus time-of-day, target is speeds at t+1 to t+12; splits are contiguous in time to avoid leakage.
+4. DCRNN: replaces the matrix multiplications in a GRU with diffusion convolutions over the graph, so the hidden state mixes information from neighbours each step; the decoder generates the twelve outputs autoregressively with scheduled sampling to reduce exposure bias.
+5. Masked metrics: sensors reporting zero (missing) are excluded from both loss and evaluation; the choice of masking affects numbers and must be matched when comparing.
+6. The results table (METR-LA 60-minute MAE 3.60 for DCRNN, 4.59 for STGCN's setting, higher for historical average and ARIMA) is the baseline for the field; PEMS-BAY is easier, with DCRNN at 2.07.
+
+**Formulas and commands to remember.**
+
+```
+adjacency: W_ij = exp( -dist(v_i, v_j)^2 / sigma^2 ) if dist <= kappa else 0
+DCRNN gate: r = sigma( Theta_r *_G [X, H] + b_r ), where *_G is diffusion convolution
+masked MAE = sum_{i: y_i != 0} |y_i - y_hat_i| / count(y_i != 0)
+```
+
+**Three takeaways.**
+
+- The METR-LA and PEMS-BAY format, split and masked metrics are the shared language of traffic forecasting; use the same format for Fremont so results are comparable.
+- Graph construction from road distances with a Gaussian threshold is a standard, and it is also a modelling choice that adaptive adjacency later questioned.
+- PEMS-BAY is Caltrans District 4 data of the same kind as the Fremont PeMS feed, so the pipeline transfers directly.
+
+**Practice.** Convert the Fremont PeMS speeds to the DCRNN HDF5 format with a distance-based adjacency for the local stations, run the repository's data generation script to produce twelve-in twelve-out windows, and train the repository's DCRNN for a few epochs on the M1 to get a comparable 15-minute MAE.
+
+</details>
+
 #### [ETA Prediction with Graph Neural Networks in Google Maps (Derrow-Pinion et al., 2021)](https://arxiv.org/abs/2108.11482)
 
 _paper · free · an evening or two · free; the industrial version_
@@ -6271,6 +11068,38 @@ _paper · free · an evening or two · free; the industrial version_
 **Stanford grad.** Contrast the probe-data setting (trip-based, sparse, privacy-constrained) with fixed-detector data; the modelling choices differ accordingly. Its treatment of training stability is relevant to any graph model retrained monthly.
 
 **PhD at Apple.** One of few public accounts of a deployed spatio-temporal graph model at scale; it frames the open problems (transfer across regions, non-stationarity, coupling with routing) that a research agenda in this area would address.
+
+<details>
+<summary><b>Study guide: learn it here</b></summary>
+
+**What it covers.** The paper: the problem (estimated time of arrival for a route as a sum over road segments, with a supersegment graph that groups segments); the data (segment features such as length, speed limit, road class, real-time and historical speeds and traversal times); the model (a graph network over supersegments with node, edge and graph-level features and outputs, message passing with an edge model, node model and global model; multi-horizon outputs for departure times in the future); the training details that mattered in production (MetaGradients for learning-rate schedules, a combination of losses with Huber terms at node, edge and graph levels, and ensembling via exponential moving averages to reduce serving-time variance); the deployment (regional models, caching of predictions per supersegment, latency constraints); and results showing large reductions in negative ETA outcomes across cities such as Sydney, Tokyo and Taichung.
+
+**Key ideas, in order.**
+
+1. Framing ETA as a graph problem: a route is a path of segments; segments are nodes, adjacencies are edges, and the whole supersegment has a graph-level output (its traversal time); predictions at all three levels are trained jointly so the model learns consistent parts and wholes.
+2. The graph network block: update edges from their endpoints and the global, update nodes from aggregated incident edges and the global, update the global from aggregated nodes and edges; a few rounds of this give each segment context from its neighbourhood.
+3. Features combine static road attributes with real-time and historical speeds over time-of-week buckets; multiple horizons (now, in 10 minutes, in 20 minutes) share the trunk.
+4. Production lessons: training instability across regions was solved with MetaGradients to adapt learning rates online; variance between checkpoints was reduced by averaging parameters (EMA), which mattered more than architecture changes; auxiliary losses on segment-level traversal times regularised the model.
+5. Serving: models per region, predictions cached per supersegment and refreshed on a schedule so that route queries are sums of cached predictions, meeting latency constraints with modest compute.
+6. Evaluation: RMSE on traversal time and the fraction of routes with large negative errors (arrivals later than predicted), by city; improvements of 16 to 51 percent in the negative-outcome metric over the prior production model.
+
+**Formulas and commands to remember.**
+
+```
+graph network: e' = phi_e(e, v_s, v_r, u);  v' = phi_v(v, agg(e' incoming), u);  u' = phi_u(u, agg(v'), agg(e'))
+route ETA = sum over supersegments of predicted traversal time
+EMA of parameters: theta_ema <- beta theta_ema + (1 - beta) theta
+```
+
+**Three takeaways.**
+
+- Multi-level supervision (segment, supersegment, route) makes the parts consistent with the whole.
+- In production, stability and variance reduction (EMA, adaptive learning rates) delivered more than architecture novelty.
+- Cache predictions per graph piece and compose at query time; the same pattern serves a corridor model that predicts per station.
+
+**Practice.** Reframe the Fremont corridor as a supersegment graph (station-to-station segments as nodes), predict segment traversal times with a small graph network with node and graph outputs, train with a Huber loss at both levels, and evaluate corridor travel-time RMSE and the fraction of underestimates by more than five minutes.
+
+</details>
 
 ### Build
 
