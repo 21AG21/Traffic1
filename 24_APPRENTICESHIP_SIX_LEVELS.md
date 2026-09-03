@@ -2,9 +2,9 @@
 
 _September 2026. Supersedes `22_LEARNING_PATH_ML.md` and `23_LESSONS_SIX_LEVELS.md`; companion to `21_PLAN_M1_TRAFFIC_MODEL.md`._
 
-**Everything needed for machine learning, told six times: twelve phases, thirty-nine lessons and one hundred books, from age five to a PhD at Apple.**
+**Everything needed for machine learning, told six times: twelve phases, thirty-nine lessons and 140 free books, courses and papers, from age five to a PhD at Apple.**
 
-The Fremont traffic model is the spine: you build it stage by stage and learn each idea the week it is needed. Around that spine the course covers the rest of the field, from SQL and regression to transformers, reinforcement learning, causal inference and fairness, so nothing needed for real machine-learning work is left out. Every lesson, topic and resource is explained at six levels. Pick a level with the switcher and read the whole course at that height, or turn on every level and watch one idea gain precision rung by rung. Tick things off as you go; progress is saved in this browser.
+The Fremont traffic model is the spine: you build it stage by stage and learn each idea the week it is needed. Around that spine the course covers the rest of the field, from SQL and regression to transformers, reinforcement learning, causal inference and fairness, so nothing needed for real machine-learning work is left out. Every lesson, topic and resource is explained at six levels, and every resource is free. Pick a level with the switcher and read the whole course at that height, or turn on every level and watch one idea gain precision rung by rung. Tick things off as you go; progress is saved in this browser.
 
 The six levels, in order: Age 5, Middle school, High school, Stanford undergrad, Stanford grad, PhD at Apple. Every lesson, topic and resource below carries all six. Links were checked in September 2026.
 
@@ -315,7 +315,7 @@ The cost of a false alarm and of a miss are not equal and are not known when the
 
 #### [Software Carpentry: The Unix Shell, Version Control with Git](https://swcarpentry.github.io/shell-novice/)
 
-_course · free · free, half a day each, exactly the commands you will use_
+_course · free · a day · free, half a day each, exactly the commands you will use_
 
 **Age 5.** Two short lessons on the internet that teach you to talk to the computer by typing, and to use the magic notebook that remembers your work. You follow along and type every command yourself, and the lesson tells you what should happen after each one.
 
@@ -331,7 +331,7 @@ _course · free · free, half a day each, exactly the commands you will use_
 
 #### [Pro Git, chapters 1–3](https://git-scm.com/book/en/v2)
 
-_book · free · free online; enough Git for a year_
+_book · free · a weekend · free online; enough Git for a year_
 
 **Age 5.** A book about a tool called git. Git is like a magic notebook that remembers every version of your drawing, so if you make a mess you can flip back to yesterday's page. The first three chapters teach you how to save a page, look back at old pages, and share the notebook with a friend.
 
@@ -347,7 +347,7 @@ _book · free · free online; enough Git for a year_
 
 #### The repo's own `00_CONCEPTS.md` and `05_PLAN_COMBINED_DATASETS.md`
 
-_docs · free · read them once now, again in phase 4_
+_docs · free · an hour, twice · read them once now, again in phase 4_
 
 **Age 5.** The project's own notes, written by the people who built it. They explain what the helper is for and how the pieces fit together, like the instruction sheet that comes in a toy box.
 
@@ -360,6 +360,38 @@ _docs · free · read them once now, again in phase 4_
 **Stanford grad.** Read them critically. The original plan paired features at t with the label at t, and computed the profile on all history; both are design errors that would have produced flattering numbers. Finding such issues in a design document before code exists is a core research and engineering skill; practice it by writing a one-page review of `05_PLAN_COMBINED_DATASETS.md` as if it were a submission.
 
 **PhD at Apple.** Design documents are where most of the leverage in an ML project lives, and most teams write them badly. The exercise at your level is to write the version a team could execute: explicit interfaces between stages, success criteria with numbers, risks with owners, and what would make you stop. Use these two files as the before, and the flowchart plan as a partial after.
+
+#### [The Missing Semester of Your CS Education (MIT)](https://missing.csail.mit.edu/)
+
+_course · free · a week · free; the tools nobody teaches, in eleven lectures_
+
+**Age 5.** A short free class about the tools programmers use every day but nobody teaches: the typing window, the magic notebook, and how to make the computer do boring jobs for you.
+
+**Middle school.** MIT students made a course about the things regular classes skip: the shell, editors, git, debugging, command-line tools, and automating tasks. Eleven lectures with notes and exercises, all free. Do the shell, editors and git lectures during phase 0.
+
+**High school.** The lectures on the shell and shell tools, on editors (Vim), on data wrangling (pipes, grep, sed, awk), on git, and on debugging and profiling are directly useful. The git lecture's model of commits as a graph is the best short explanation there is; the data-wrangling lecture teaches you to inspect a PeMS file without Python.
+
+**Stanford undergrad.** Its value is the mental models: the shell as a programming environment, git as a content-addressed graph, profiling before optimizing. The exercises are small and worth doing; the notes are good references for the flags you forget.
+
+**Stanford grad.** A compact syllabus of practitioner tooling that most graduate students still lack; its debugging and profiling lecture is a fair summary of how to approach a slow or wrong pipeline stage.
+
+**PhD at Apple.** For onboarding engineers and researchers alike, this is the shortest path to shared tooling literacy; its lecture on metaprogramming (build systems, testing, continuous integration) is the bridge to the engineering phase.
+
+#### [Elements of AI (University of Helsinki)](https://www.elementsofai.com/)
+
+_course · free · about 30 hours · free; the big picture with no math, before the phases begin_
+
+**Age 5.** A gentle online course that explains what artificial intelligence is and is not, with pictures and simple quizzes, made for everyone.
+
+**Middle school.** A free course from the University of Helsinki, no math required: what AI means, how problems are solved by search, how probability handles uncertainty, what machine learning is, how neural networks work, and what AI does to society. About thirty hours, spread over a couple of weeks. A good first map before the phases begin.
+
+**High school.** Do it in the first week for the vocabulary and the big picture: the difference between rules and learning, why probability matters, what a neural network does in outline, and why AI's effects are a social question. The chapter on machine learning is a preview of phase 4 with no code.
+
+**Stanford undergrad.** It is deliberately non-technical; use it to calibrate how you explain the course to others, and note where it simplifies (it treats learning as fitting without discussing evaluation).
+
+**Stanford grad.** A model of public education about a technical field: careful about hype, honest about uncertainty, and concrete about societal effects.
+
+**PhD at Apple.** Worth knowing as the reference for what a general audience can be expected to understand about AI, which matters when you write for policy makers or the public.
 
 ### Build
 
@@ -687,7 +719,7 @@ It samples the feed every 15 minutes; an event that is created and cleared betwe
 
 #### [Automate the Boring Stuff with Python, chapters 1–13 and 16–18](https://automatetheboringstuff.com/)
 
-_book · free · free online; practical from page one_
+_book · free · weeks · free online; practical from page one_
 
 **Age 5.** A friendly book that teaches Python by making the computer do chores for you, like renaming lots of files at once or reading a spreadsheet. It is free to read on the internet, and every chapter ends with something useful you made.
 
@@ -703,7 +735,7 @@ _book · free · free online; practical from page one_
 
 #### [The official Python tutorial, sections 3–9](https://docs.python.org/3/tutorial/)
 
-_docs · free · free; the reference once Sweigart runs out_
+_docs · free · an afternoon · free; the reference once Sweigart runs out_
 
 **Age 5.** The instruction book written by the people who make Python. It is for looking things up when the friendly book did not say.
 
@@ -719,7 +751,7 @@ _docs · free · free; the reference once Sweigart runs out_
 
 #### [Kaggle Learn: Python](https://www.kaggle.com/learn/python)
 
-_course · free · free, short, with exercises in the browser_
+_course · free · a weekend · free, short, with exercises in the browser_
 
 **Age 5.** A website where you learn Python in small steps and it checks your answers right away, like a game with levels.
 
@@ -735,7 +767,7 @@ _course · free · free, short, with exercises in the browser_
 
 #### [Exercism, Python track](https://exercism.org/tracks/python)
 
-_interactive · free · free practice with tests and human mentors_
+_interactive · free · ongoing, a few a week · free practice with tests and human mentors_
 
 **Age 5.** A website with little puzzles to solve in Python. Each one is a small job, like counting words, and when you finish, a real person can look at your answer and give you tips.
 
@@ -749,9 +781,25 @@ _interactive · free · free practice with tests and human mentors_
 
 **PhD at Apple.** For a team, a shared practice track is a low-cost way to align coding style among people from different backgrounds; the exercises are also a fair, low-stakes pair-programming warm-up for onboarding an intern.
 
+#### [CS50's Introduction to Programming with Python (Harvard)](https://cs50.harvard.edu/python/)
+
+_course · free · ten weeks part-time · free; structured lectures with checked problem sets_
+
+**Age 5.** A famous free class where a teacher explains Python from the very beginning, with problems to solve after every lecture.
+
+**Middle school.** Harvard's Python course, free online: functions, conditionals, loops, exceptions, libraries, unit tests, file input and output, regular expressions, and classes. Ten lectures with problem sets that are checked automatically. It is more structured than Sweigart and pairs well with it.
+
+**High school.** Its problem sets are the best part: each is a small program with tests. The weeks on exceptions, on libraries, on unit tests and on file I/O map onto the collector script's needs. Do the problem sets in order; the automatic checker is strict in a useful way.
+
+**Stanford undergrad.** The course teaches testing early (its unit-testing week is unusual for an intro course) and its problems are designed to be misread, which trains careful reading of requirements. Its final project is a chance to build something around the traffic data.
+
+**Stanford grad.** A well-engineered course: autograders, consistent difficulty, and problems that scale. Its design is worth studying if you ever teach.
+
+**PhD at Apple.** For a team, CS50P is a fair baseline for what 'can program in Python' should mean before someone touches pipeline code.
+
 #### [The `zoneinfo` and `datetime` documentation](https://docs.python.org/3/library/zoneinfo.html)
 
-_docs · free · free; read the section on aware versus naive datetimes twice_
+_docs · free · an hour · free; read the section on aware versus naive datetimes twice_
 
 **Age 5.** The instructions for the part of Python that knows about clocks, dates and the different times in different places.
 
@@ -1151,7 +1199,7 @@ A sign error or a missing division by n produces a loop that still decreases the
 
 #### [Khan Academy: Linear algebra, Differential calculus, Statistics and probability](https://www.khanacademy.org/math)
 
-_course · free · free; do the exercises, skip nothing marked 'gradient'_
+_course · free · weeks · free; do the exercises, skip nothing marked 'gradient'_
 
 **Age 5.** Video lessons and practice questions that teach math one small step at a time, with a friendly voice, and you earn points for practicing.
 
@@ -1167,7 +1215,7 @@ _course · free · free; do the exercises, skip nothing marked 'gradient'_
 
 #### [3Blue1Brown: Essence of linear algebra, Essence of calculus](https://www.3blue1brown.com/topics/linear-algebra)
 
-_video · free · free; the intuition the exercises lack_
+_video · free · an afternoon each · free; the intuition the exercises lack_
 
 **Age 5.** Videos with beautiful moving pictures that show what math looks like, so arrows and slopes become things you can see instead of just numbers.
 
@@ -1183,7 +1231,7 @@ _video · free · free; the intuition the exercises lack_
 
 #### [Immersive Linear Algebra (Ström, Åström, Akenine-Möller)](https://immersivemath.com/ila/)
 
-_interactive · free · free, interactive; touch what the videos show_
+_interactive · free · a few evenings · free, interactive; touch what the videos show_
 
 **Age 5.** An online book where the pictures move. You drag arrows around and the math updates, so you can feel what adding arrows and stretching space means.
 
@@ -1199,7 +1247,7 @@ _interactive · free · free, interactive; touch what the videos show_
 
 #### [Seeing Theory (Brown University)](https://seeing-theory.brown.edu/)
 
-_interactive · free · free, interactive; probability you can see_
+_interactive · free · an evening · free, interactive; probability you can see_
 
 **Age 5.** A website that shows chance with little animations: you flip coins, roll dice and watch the results pile up into shapes.
 
@@ -1215,7 +1263,7 @@ _interactive · free · free, interactive; probability you can see_
 
 #### [Introduction to Probability (Blitzstein, Hwang) and Stat 110](https://probabilitybook.net/)
 
-_book · free · free book and lectures; the rigorous first course_
+_book · free · a semester · free book and lectures; the rigorous first course_
 
 **Age 5.** A book and a set of video classes about chance, taught by a professor who explains coin flips and dice with stories and jokes.
 
@@ -1231,7 +1279,7 @@ _book · free · free book and lectures; the rigorous first course_
 
 #### [Mathematics for Machine Learning (Deisenroth, Faisal, Ong), chapters 2–7](https://mml-book.github.io/)
 
-_book · free · free PDF; reference, not a read-through_
+_book · free · reference · free PDF; reference, not a read-through_
 
 **Age 5.** A big free book about the math inside learning machines. It is for looking things up, not for reading from the first page to the last.
 
@@ -1247,7 +1295,7 @@ _book · free · free PDF; reference, not a read-through_
 
 #### [Think Stats (Downey)](https://allendowney.github.io/ThinkStats/)
 
-_book · free · free; statistics with Python from the first page_
+_book · free · two weeks · free; statistics with Python from the first page_
 
 **Age 5.** A free book that teaches statistics by playing with real numbers in Python, instead of only formulas.
 
@@ -1260,6 +1308,38 @@ _book · free · free; statistics with Python from the first page_
 **Stanford grad.** Compare its resampling viewpoint with classical inference and understand when each is valid: the bootstrap fails for dependent data unless it resamples blocks, which is why lesson 6 bootstraps over days. Downey's Think Bayes is the natural next book for the uncertainty track in phase 8.
 
 **PhD at Apple.** The book is an argument that computation has changed how statistics should be taught, and it is right. For someone designing evaluation methodology, its emphasis on effect sizes and simulation over p-values is the correct instinct, and its examples are a template for the kind of small, honest analysis that should accompany every metric in a report.
+
+#### [MIT 18.06 Linear Algebra (Strang), OpenCourseWare](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/)
+
+_course · free · ten lectures, two weeks · free; the classic lectures, the first ten alongside Khan_
+
+**Age 5.** Video lessons by a beloved professor who explains grids of numbers with a chalkboard and a lot of enthusiasm.
+
+**Middle school.** Gilbert Strang's MIT course, free on OpenCourseWare with videos, notes and problem sets. It covers vectors, matrices, solving equations, the four fundamental subspaces, projections, determinants, eigenvalues and singular values, in a way that makes the ideas feel concrete. Watch the first ten lectures alongside Khan Academy.
+
+**High school.** Lectures 1 to 4 (vectors, elimination, matrix multiplication), 14 to 16 (projections and least squares), and 21 to 22 (eigenvalues) are the ones the course needs. Strang's picture of the four subspaces is the mental model behind least squares, which is the ancestor of every loss function you will minimize.
+
+**Stanford undergrad.** Strang teaches through geometry and examples rather than proofs; his treatment of least squares, of positive definite matrices and of the singular value decomposition is exactly the linear algebra of regression, of the Hessian's convexity argument, and of principal components.
+
+**Stanford grad.** The later lectures on positive definiteness, similar matrices and the SVD connect to optimization and to spectral graph methods; his companion course on matrix methods for data analysis continues into machine learning directly.
+
+**PhD at Apple.** A canonical course; for research communication, Strang's habit of stating the idea in one sentence before any symbol is the standard to aim for.
+
+#### [OpenIntro Statistics](https://www.openintro.org/book/os/)
+
+_book · free · weeks · free textbook; inference done carefully_
+
+**Age 5.** A free statistics textbook with lots of real examples, written so that anyone can follow it.
+
+**Middle school.** A free, openly licensed introductory statistics book with videos and exercises: data collection, summarizing data, probability, distributions, inference with confidence intervals and hypothesis tests, and regression. Slower and more thorough than Khan Academy on inference.
+
+**High school.** The chapters on probability, on distributions, and on inference (sampling distributions, confidence intervals, hypothesis tests and their misuse) give the statistical grounding that lesson 6 assumes. Its regression chapters preview the regression topic.
+
+**Stanford undergrad.** OpenIntro is careful about experimental design and about what a p-value is, which most machine-learning material glosses. Read it for the inference vocabulary and for its treatment of confounding, then Blitzstein for the probability depth.
+
+**Stanford grad.** It is introductory by design; its value is a correct foundation for the language of uncertainty that the evaluation and causal-inference topics build on.
+
+**PhD at Apple.** An openly licensed textbook maintained by a nonprofit, usable in teaching without restrictions; its treatment of study design is what you will point a product team to when they propose an evaluation.
 
 ### Build
 
@@ -1517,7 +1597,7 @@ A value per row computed over neighboring rows, such as the previous value or a 
 
 #### [Python for Data Analysis, 3rd edition (McKinney), chapters 4–8 and 10–11](https://wesmckinney.com/book/)
 
-_book · free · free online; the pandas book by pandas's author_
+_book · free · weeks · free online; the pandas book by pandas's author_
 
 **Age 5.** A book by the person who invented pandas, the tool that turns big tables of numbers into things you can sort, count and draw.
 
@@ -1533,7 +1613,7 @@ _book · free · free online; the pandas book by pandas's author_
 
 #### [pandas user guide: Time series and date functionality](https://pandas.pydata.org/docs/user_guide/timeseries.html)
 
-_docs · free · free; the `shift` and `rolling` semantics live here_
+_docs · free · an afternoon · free; the `shift` and `rolling` semantics live here_
 
 **Age 5.** The manual page for the part of pandas that understands dates, times and clocks.
 
@@ -1549,7 +1629,7 @@ _docs · free · free; the `shift` and `rolling` semantics live here_
 
 #### [Kaggle Learn: Pandas, Data Cleaning, Data Visualization](https://www.kaggle.com/learn/pandas)
 
-_course · free · free, short_
+_course · free · an afternoon each · free, short_
 
 **Age 5.** Three short online lessons about sorting tables, tidying up messy numbers, and drawing charts from them.
 
@@ -1565,7 +1645,7 @@ _course · free · free, short_
 
 #### [The polars user guide, first three chapters](https://docs.pola.rs/)
 
-_docs · free · free; do stage 5 once in each_
+_docs · free · an afternoon · free; do stage 5 once in each_
 
 **Age 5.** The manual for a newer, faster tool that does the same job as pandas: turning big tables into answers.
 
@@ -1581,7 +1661,7 @@ _docs · free · free; do stage 5 once in each_
 
 #### [SQLBolt, interactive SQL lessons](https://sqlbolt.com/)
 
-_interactive · free · free; SQL fluency in a weekend_
+_interactive · free · a weekend · free; SQL fluency in a weekend_
 
 **Age 5.** A website where you type questions to a pretend filing cabinet and it answers right away, with hints when you get stuck.
 
@@ -1597,7 +1677,7 @@ _interactive · free · free; SQL fluency in a weekend_
 
 #### [DuckDB documentation, the Python API and SQL reference](https://duckdb.org/docs/)
 
-_docs · free · free; SQL over the project's Parquet files_
+_docs · free · an afternoon · free; SQL over the project's Parquet files_
 
 **Age 5.** The manual for a small, fast database that lives inside your program and can read the project's files directly.
 
@@ -1613,7 +1693,7 @@ _docs · free · free; SQL over the project's Parquet files_
 
 #### [PeMS documentation and the Clearinghouse (Caltrans)](https://pems.dot.ca.gov/)
 
-_docs · free, login · the source of the sensor data; read before parsing_
+_docs · free (login) · an afternoon · the source of the sensor data; read before parsing_
 
 **Age 5.** The website where the road sensor numbers come from, with pages that explain what each column of numbers means.
 
@@ -1629,7 +1709,7 @@ _docs · free, login · the source of the sensor data; read before parsing_
 
 #### [Open-Meteo, historical weather API documentation](https://open-meteo.com/en/docs/historical-weather-api)
 
-_docs · free · free, no key; the rain feature_
+_docs · free · an hour · free, no key; the rain feature_
 
 **Age 5.** A free website that tells you what the weather was, hour by hour, for any place, so we can know whether it rained when the road got slow.
 
@@ -1645,7 +1725,7 @@ _docs · free · free, no key; the rain feature_
 
 #### [511 SF Bay Open Data, traffic API documentation](https://511.org/open-data)
 
-_docs · free, token · free with a token; the incident feed's fields and limits_
+_docs · free (token) · an hour · free with a token; the incident feed's fields and limits_
 
 **Age 5.** The rules for asking the 511 helper about crashes and roadwork, so our program can ask politely and understand the answer.
 
@@ -1658,6 +1738,70 @@ _docs · free, token · free with a token; the incident feed's fields and limits
 **Stanford grad.** Event feeds are the interface between human reporting (CHP dispatch) and your model; their delay and severity encoding are measurement properties you should estimate rather than assume. Compare the feed with CHP's own incident page for a day to see what the API drops.
 
 **PhD at Apple.** Public-sector data APIs are governed by terms and by quotas that shape what a product can promise; at scale, direct feeds from agencies or probe-based incident detection replace polling. The Open511 standard is also a small lesson in how interoperability specifications succeed or fail.
+
+#### [Python Data Science Handbook (VanderPlas)](https://jakevdp.github.io/PythonDataScienceHandbook/)
+
+_book · free · weeks · free online; a second explanation of numpy, pandas and matplotlib_
+
+**Age 5.** A free book that shows how to use Python to look at data: sorting it, summarizing it, and drawing pictures of it.
+
+**Middle school.** Jake VanderPlas's book, free online as notebooks: IPython, numpy, pandas, matplotlib and an introduction to scikit-learn. The numpy and pandas chapters are a good second explanation next to McKinney; the matplotlib chapter is the clearest short guide to plotting in Python.
+
+**High school.** Read the numpy chapter for broadcasting and vectorized operations, the pandas chapter for grouping and time series, and the matplotlib chapter before making the station plots. Its scikit-learn chapter is a preview of phase 4 with clear examples of the fit-predict pattern.
+
+**Stanford undergrad.** Its explanations of numpy's memory model and of pandas' index alignment complement McKinney's; the visualization chapter's coverage of matplotlib's object model is what you need to make consistent figures for the evaluation report.
+
+**Stanford grad.** The book predates Arrow-backed pandas and polars; its scikit-learn chapter is introductory. Its lasting value is the clear treatment of the numerical stack's fundamentals.
+
+**PhD at Apple.** A widely used free reference; a good default recommendation for engineers moving from another language to Python's data stack.
+
+#### [Fundamentals of Data Visualization (Wilke)](https://clauswilke.com/dataviz/)
+
+_book · free · weeks · free online; how to design a plot that tells the truth_
+
+**Age 5.** A free book about drawing pictures of numbers so that people understand them, with lots of examples of bad pictures made good.
+
+**Middle school.** Claus Wilke's book, free online, is about the design of plots rather than any one tool: which chart for which question, color, axes, legends, and the mistakes that mislead. Read the chapters on visualizing amounts, distributions and time series, then look at your own plots differently.
+
+**High school.** Its chapters on visualizing uncertainty, on time series, and on the principle of proportional ink apply directly to the evaluation report: reliability diagrams, lead-time histograms and daily speed lines. The chapter on color explains why a sequential scale is right for one thing and wrong for another.
+
+**Stanford undergrad.** Wilke's rules (avoid unnecessary 3-D, order categories meaningfully, show uncertainty honestly) are the review checklist for every figure you publish; its discussion of small multiples is how to show a hundred stations at once.
+
+**Stanford grad.** Pair it with the literature on perception (Cleveland and McGill) that it draws on; its guidance on uncertainty visualization is the practical counterpart of the calibration and interval topics.
+
+**PhD at Apple.** A free, rigorous, tool-agnostic reference for figures in papers and reports; the standard to hold a figure to before a talk.
+
+#### [Kaggle Learn: Intro to SQL, Advanced SQL](https://www.kaggle.com/learn/intro-to-sql)
+
+_course · free · an afternoon each · free; window functions on a real warehouse_
+
+**Age 5.** Two short online lessons about asking questions of a giant table of data, with answers checked as you type.
+
+**Middle school.** Kaggle's SQL courses run against real public datasets in BigQuery from the browser. Intro to SQL covers select, where, group by, order by, and joins; Advanced SQL covers joins in depth, analytic (window) functions and nested data. An afternoon each.
+
+**High school.** Do Intro to SQL after SQLBolt and Advanced SQL's window-functions lesson before rewriting the lag feature in DuckDB. The window-functions lesson is the same idea as `shift` and `rolling` in pandas, expressed in SQL.
+
+**Stanford undergrad.** The courses use a cloud warehouse, which shows what large-scale analytical SQL feels like (partitioning, cost of scans); the ideas transfer to DuckDB unchanged.
+
+**Stanford grad.** Their coverage of nested and repeated fields previews the semi-structured data you meet in event streams such as the 511 feed.
+
+**PhD at Apple.** A free, practical introduction to warehouse SQL for a team that needs analysts and engineers to share feature definitions.
+
+#### [Select Star SQL](https://selectstarsql.com/)
+
+_interactive · free · two hours · free; one dataset, project-shaped practice_
+
+**Age 5.** A free online book that teaches you to ask a database questions by working through one real story from start to finish.
+
+**Middle school.** An interactive SQL book, free and without sign-up, that uses one real dataset throughout and builds up to real questions. Four chapters, about half an hour each. Do it after SQLBolt for a project-shaped practice run.
+
+**High school.** Its single-dataset design mirrors how you will work with the traffic data for months; the chapters on aggregation and on joins are the operations of the profile computation and the incident join. Its final chapter asks questions that need several steps, which is where SQL fluency is tested.
+
+**Stanford undergrad.** The book is short and stops before window functions; pair with DuckDB's documentation for those. Its emphasis on reading the data before querying is the right habit.
+
+**Stanford grad.** Useful mostly as a teaching resource; its narrative approach is a good model for a project-specific SQL primer.
+
+**PhD at Apple.** A small, well-made open resource; the kind of thing to fork and adapt to a team's own dataset for onboarding.
 
 ### Build
 
@@ -2274,7 +2418,7 @@ Training loss keeps falling as trees are added; validation AP peaks and then dec
 
 #### [Machine Learning Specialization (Andrew Ng), courses 1 and 2](https://www.coursera.org/specializations/machine-learning-introduction)
 
-_course · free to audit · the classic; audit for free_
+_course · free (audit) · six weeks · the classic; audit for free_
 
 **Age 5.** Video classes by a famous teacher who explains how computers learn, slowly and kindly, with drawings on a screen.
 
@@ -2290,7 +2434,7 @@ _course · free to audit · the classic; audit for free_
 
 #### [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/)
 
-_book · free · free PDF; the clearest account of trees and boosting_
+_book · free · three weeks · free PDF; the clearest account of trees and boosting_
 
 **Age 5.** A famous textbook, free, that explains learning machines with pictures and real examples, written by teachers who invented some of the methods.
 
@@ -2304,25 +2448,73 @@ _book · free · free PDF; the clearest account of trees and boosting_
 
 **PhD at Apple.** As a citation for standard methods and as a teaching text it is the reference, and its evolution from R to Python editions tracks the field's tooling. For research, its framing of methods as estimators with bias and variance you can reason about is the habit that distinguishes a careful ML engineer from a library user.
 
-#### [Hands-On Machine Learning (Géron), chapters 1–7](https://github.com/ageron/handson-ml3)
+#### [Google's Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course)
 
-_book · paid, code free · paid; the practitioner's companion, worth owning_
+_course · free · about 15 hours · free; the practitioner's course, videos and exercises_
 
-**Age 5.** A book that shows how to build learning machines with real code, step by step, like a workshop manual with all the tools laid out.
+**Age 5.** A free class from Google with short videos and little exercises that teach how computers learn from examples.
 
-**Middle school.** Aurélien Géron's book (paid, worth owning) walks through a whole project in chapter 2: get data, split it, build features, train a model, evaluate it, tune it. Then classification, training models with gradient descent, support vector machines, decision trees, and ensembles. Chapters 1 to 7 line up with phase 4. Run the notebooks as you read.
+**Middle school.** Google's free course covers linear and logistic regression, classification metrics, overfitting and regularization, neural networks, embeddings, and fairness, with short videos, interactive exercises and quizzes. It covers what a practitioner's textbook would, in about fifteen hours.
 
-**High school.** Chapter 2's project is the template for this pipeline in miniature. Chapter 3 covers precision, recall, the precision-recall curve and ROC with code; chapter 4 trains logistic regression by gradient descent, matching lesson 7; chapters 6 and 7 cover trees, random forests and boosting with scikit-learn. The code is idiomatic scikit-learn and worth imitating.
+**High school.** The modules on linear regression, logistic regression, classification (precision, recall, ROC, and thresholds), data, and overfitting map onto phase 4; the fairness module previews phase 10. Its interactive exercises on learning rate and on thresholds are worth doing twice.
 
-**Stanford undergrad.** Géron is strong on practice (pipelines, transformers, cross-validation pitfalls, hyperparameter search) and adequate on theory; read alongside ISLP. Be alert to where its examples shuffle data or use `train_test_split` with a random split; for a time series that is the wrong move, as lesson 6 explains, and the fix is a chronological split with a gap.
+**Stanford undergrad.** The course is practical and current, and its treatment of data quality, of feature crosses and of embeddings connects the classical and neural halves of the course. It is light on theory; ISLP supplies that.
 
-**Stanford grad.** The later chapters on deep learning overlap with phase 6; choose one framework (PyTorch here) and translate rather than switching. His chapter on sequence models is a useful contrast to Dive into Deep Learning's treatment, and his emphasis on end-to-end pipelines with `Pipeline` and `ColumnTransformer` is a design pattern for the feature module.
+**Stanford grad.** Its production-oriented sections (data preparation, fairness, real-world ML) reflect Google's own practice; read them with the Rules of ML.
 
-**PhD at Apple.** The book's endurance shows the demand for practitioner texts that are correct. Its main lesson for a senior engineer is the scikit-learn API design (fit, transform, predict; composable pipelines), which is worth imitating in an internal feature library so that training and serving call the same objects.
+**PhD at Apple.** A free, maintained, vendor-flavored but sound curriculum; useful as a shared baseline for a mixed team.
+
+#### [scikit-learn: Getting Started and the tutorials](https://scikit-learn.org/stable/getting_started.html)
+
+_docs · free · an afternoon · free; the workflow end to end in a few lines_
+
+**Age 5.** The first pages of the manual for the learning toolbox, showing how to teach a model and ask it questions in a few lines.
+
+**Middle school.** scikit-learn's Getting Started page and tutorials show the whole workflow in a few lines: load data, fit a model, predict, evaluate, and build a pipeline that scales and encodes features before the model. Read them the first week of phase 4 and run every snippet.
+
+**High school.** Getting Started covers estimators, transformers, pipelines, model evaluation with cross-validation, and hyperparameter search; the tutorial on statistical learning goes deeper on supervised and unsupervised methods. Together with the user guide they replace the practitioner's book.
+
+**Stanford undergrad.** The API design (fit, transform, predict; pipelines; consistent parameters) is the pattern every internal library ends up copying; the tutorials show it end to end and the examples gallery shows every method on real data.
+
+**Stanford grad.** The examples gallery is an underused resource: each example is a small, correct experiment with a figure, and many are directly reusable for the evaluation report.
+
+**PhD at Apple.** scikit-learn's documentation is a reference for how to document an API; its tutorials are a model of teaching by runnable example.
+
+#### [R2D3: A Visual Introduction to Machine Learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/)
+
+_interactive · free · half an hour · free; trees and overfitting as an animated story_
+
+**Age 5.** A web page that tells a story with moving pictures: a computer learns to tell apart homes in two cities by asking questions about them, one question at a time.
+
+**Middle school.** Two free interactive essays that show, with animated charts, how a decision tree learns to classify by splitting data on features, and then what overfitting is and how bias and variance trade off. Fifteen minutes each; the pictures make the ideas stick.
+
+**High school.** Part one is lesson 8's decision tree, animated: watch splits partition the data and the tree grow. Part two shows a tree that memorizes its training data and fails on new data, which is the overfitting of lesson 6, with the bias-variance trade-off made visible.
+
+**Stanford undergrad.** Use it as the picture behind the formal bias-variance decomposition; its scrolling design is also a model for explaining a method to a non-technical audience.
+
+**Stanford grad.** A teaching resource; when you have to explain overfitting to a stakeholder in five minutes, this is the page to open.
+
+**PhD at Apple.** An example of explanation as design, useful as a reference for how far interactive storytelling can carry a technical concept.
+
+#### [MLU-Explain (Amazon)](https://mlu-explain.github.io/)
+
+_interactive · free · an hour per essay · free; visual essays on precision, ROC, cross-validation and more_
+
+**Age 5.** A website with pictures that move to explain ideas in learning: how a machine measures its mistakes, how trees vote, and how to tell if it is right.
+
+**Middle school.** Amazon's Machine Learning University publishes free visual explanations: linear and logistic regression, decision trees and random forests, precision and recall, ROC and AUC, cross-validation, bias and variance, the neural network's basics, and more. Each is a short interactive page. Read the one on precision and recall before lesson 6.
+
+**High school.** The pages on ROC and AUC, on precision and recall, on cross-validation, on random forests, and on double descent give the pictures behind phases 4 and 5; the one on train, test and validation sets explains the split with animation.
+
+**Stanford undergrad.** Their visual treatment of double descent and of the bias-variance trade-off is a useful complement to the theory topic; each page links the papers it summarizes.
+
+**Stanford grad.** Good for teaching and for checking your own intuition; the pages are correct and current, and their sources are cited.
+
+**PhD at Apple.** A curated set of explanations from an industry group; their choice of topics is a fair map of what practitioners most often misunderstand.
 
 #### [StatQuest with Josh Starmer (YouTube)](https://statquest.org/)
 
-_video · free · free; one idea per video, worked with numbers_
+_video · free · hours, as needed · free; one idea per video, worked with numbers_
 
 **Age 5.** Videos with silly songs and simple drawings that explain how learning machines work, one small idea at a time.
 
@@ -2338,7 +2530,7 @@ _video · free · free; one idea per video, worked with numbers_
 
 #### [Kaggle Learn: Intro to ML, Intermediate ML, Feature Engineering](https://www.kaggle.com/learn/intro-to-machine-learning)
 
-_course · free · free_
+_course · free · weeks · free_
 
 **Age 5.** Three short online lessons: build your first learning machine, make it better, and invent better clues for it.
 
@@ -2354,7 +2546,7 @@ _course · free · free_
 
 #### [LightGBM documentation: Parameters, Parameters Tuning](https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html)
 
-_docs · free · free; read before touching a parameter_
+_docs · free · an hour · free; read before touching a parameter_
 
 **Age 5.** The instruction sheet for the tree-building program, with all of its knobs and what each one does.
 
@@ -2370,7 +2562,7 @@ _docs · free · free; read before touching a parameter_
 
 #### [The boosting papers: Friedman (2001), XGBoost (2016), LightGBM (2017)](https://arxiv.org/abs/1603.02754)
 
-_paper · free · free; the algorithm behind every parameter_
+_paper · free · an evening or two · free; the algorithm behind every parameter_
 
 **Age 5.** Three papers, written years apart, about a way of learning that builds many small decision trees, each fixing the mistakes of the ones before. The later papers made it much faster.
 
@@ -2386,7 +2578,7 @@ _paper · free · free; the algorithm behind every parameter_
 
 #### [Why do tree-based models still outperform deep learning on tabular data? (Grinsztajn, Oyallon, Varoquaux, 2022)](https://arxiv.org/abs/2207.08815)
 
-_paper · free · free; the evidence for the production choice_
+_paper · free · an evening or two · free; the evidence for the production choice_
 
 **Age 5.** A paper where scientists tested many learning machines on lots of tables of numbers and found that the tree-based ones usually won.
 
@@ -2402,7 +2594,7 @@ _paper · free · free; the evidence for the production choice_
 
 #### [Interpretable Machine Learning (Molnar), the SHAP chapter](https://christophm.github.io/interpretable-ml-book/shap.html)
 
-_book · free · free online_
+_book · free · an evening · free online_
 
 **Age 5.** A free book about asking a learning machine why it said what it said, and getting an answer you can understand.
 
@@ -2418,7 +2610,7 @@ _book · free · free online_
 
 #### [scikit-learn user guide: Model evaluation, Probability calibration](https://scikit-learn.org/stable/modules/model_evaluation.html)
 
-_docs · free · free; the metrics you will report_
+_docs · free · an evening · free; the metrics you will report_
 
 **Age 5.** The manual pages that explain how to score a learning machine, and how to make its confidence honest.
 
@@ -2796,7 +2988,7 @@ Any dependence, including nonlinear and non-monotone ones; correlation only meas
 
 #### [scikit-learn user guide: Supervised and unsupervised learning](https://scikit-learn.org/stable/supervised_learning.html)
 
-_docs · free · free; one page per method with its pitfalls_
+_docs · free · an afternoon · free; one page per method with its pitfalls_
 
 **Age 5.** The manual for a big toolbox of learning methods, with a page for each tool that explains what it is for.
 
@@ -2812,7 +3004,7 @@ _docs · free · free; one page per method with its pitfalls_
 
 #### [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/)
 
-_book · free · now chapters 6 (regularization), 9 (SVMs) and 12 (unsupervised)_
+_book · free · three weeks · now chapters 6 (regularization), 9 (SVMs) and 12 (unsupervised)_
 
 **Age 5.** A famous textbook, free, that explains learning machines with pictures and real examples, written by teachers who invented some of the methods.
 
@@ -2826,25 +3018,41 @@ _book · free · now chapters 6 (regularization), 9 (SVMs) and 12 (unsupervised)
 
 **PhD at Apple.** As a citation for standard methods and as a teaching text it is the reference, and its evolution from R to Python editions tracks the field's tooling. For research, its framing of methods as estimators with bias and variance you can reason about is the habit that distinguishes a careful ML engineer from a library user.
 
-#### [Hands-On Machine Learning (Géron), chapters 1–7](https://github.com/ageron/handson-ml3)
+#### [Google's Clustering course](https://developers.google.com/machine-learning/clustering)
 
-_book · paid, code free · now chapters 8 and 9 (dimensionality reduction, clustering)_
+_course · free · a few hours · free; similarity, k-means and how to judge clusters_
 
-**Age 5.** A book that shows how to build learning machines with real code, step by step, like a workshop manual with all the tools laid out.
+**Age 5.** A free short class about sorting things into groups without being told the groups, like putting similar songs together.
 
-**Middle school.** Aurélien Géron's book (paid, worth owning) walks through a whole project in chapter 2: get data, split it, build features, train a model, evaluate it, tune it. Then classification, training models with gradient descent, support vector machines, decision trees, and ensembles. Chapters 1 to 7 line up with phase 4. Run the notebooks as you read.
+**Middle school.** A short free course from Google about clustering: how to measure similarity, the k-means algorithm step by step, how to check whether clusters are any good, and where clustering is used. A few hours. Do it before clustering the stations.
 
-**High school.** Chapter 2's project is the template for this pipeline in miniature. Chapter 3 covers precision, recall, the precision-recall curve and ROC with code; chapter 4 trains logistic regression by gradient descent, matching lesson 7; chapters 6 and 7 cover trees, random forests and boosting with scikit-learn. The code is idiomatic scikit-learn and worth imitating.
+**High school.** Its sections on similarity measures (why scaling matters), on k-means and its failure modes, and on interpreting and evaluating clusters are exactly the unsupervised topic's needs. The section on choosing k with the elbow and silhouette methods is practical.
 
-**Stanford undergrad.** Géron is strong on practice (pipelines, transformers, cross-validation pitfalls, hyperparameter search) and adequate on theory; read alongside ISLP. Be alert to where its examples shuffle data or use `train_test_split` with a random split; for a time series that is the wrong move, as lesson 6 explains, and the fix is a chronological split with a gap.
+**Stanford undergrad.** The course is introductory and k-means-centric; pair it with scikit-learn's clustering guide for density-based and hierarchical methods, and with the Gaussian-mixture view for the probabilistic version.
 
-**Stanford grad.** The later chapters on deep learning overlap with phase 6; choose one framework (PyTorch here) and translate rather than switching. His chapter on sequence models is a useful contrast to Dive into Deep Learning's treatment, and his emphasis on end-to-end pipelines with `Pipeline` and `ColumnTransformer` is a design pattern for the feature module.
+**Stanford grad.** Its emphasis on the similarity measure as the real modelling decision is correct and often skipped; for stations, the choice of profile distance decides the clusters more than the algorithm does.
 
-**PhD at Apple.** The book's endurance shows the demand for practitioner texts that are correct. Its main lesson for a senior engineer is the scikit-learn API design (fit, transform, predict; composable pipelines), which is worth imitating in an internal feature library so that training and serving call the same objects.
+**PhD at Apple.** A free, focused mini-course; useful as the standard reference when a team disagrees about what a clustering result means.
+
+#### [Information Theory, Inference, and Learning Algorithms (MacKay)](https://www.inference.org.uk/mackay/itila/)
+
+_book · free · a semester, selectively · free; entropy, coding and learning as one subject_
+
+**Age 5.** A famous free book by a scientist who explained information, coding and learning as one big idea, with puzzles on every page.
+
+**Middle school.** David MacKay's textbook, free online, covers information theory (entropy, coding, compression), probabilistic inference, and machine learning (clustering, neural networks, Gaussian processes) as one subject. It is long; read chapters 1, 2 and 4 for entropy and coding, and the exercises are famously good.
+
+**High school.** Chapters 2 and 4 make entropy and the source-coding theorem concrete; chapter 22 on maximum likelihood and clustering connects to the unsupervised topic; chapter 36 previews decision theory. His writing style, with worked puzzles, rewards patience.
+
+**Stanford undergrad.** The book unifies coding, inference and learning through probability; its chapters on Bayesian inference, on model comparison (Occam's razor as a consequence of marginal likelihood) and on Gaussian processes are a second, deeper take on the Bayesian topic.
+
+**Stanford grad.** MacKay's treatment of the information-theoretic view of learning (chapters on inference and on neural networks as inference) is the intellectual background for variational methods and for the information bottleneck.
+
+**PhD at Apple.** A classic, free, and still one of the best-written technical books in the field; its lectures (also free) are a model of teaching.
 
 #### [StatQuest with Josh Starmer (YouTube)](https://statquest.org/)
 
-_video · free · the videos on k-means, PCA, SVMs and regularization_
+_video · free · hours, as needed · the videos on k-means, PCA, SVMs and regularization_
 
 **Age 5.** Videos with silly songs and simple drawings that explain how learning machines work, one small idea at a time.
 
@@ -2860,7 +3068,7 @@ _video · free · the videos on k-means, PCA, SVMs and regularization_
 
 #### [Random Search for Hyper-Parameter Optimization (Bergstra, Bengio, 2012)](https://jmlr.org/papers/v13/bergstra12a.html)
 
-_paper · free · free; why random beats grid_
+_paper · free · an evening or two · free; why random beats grid_
 
 **Age 5.** A paper that found that trying dial settings at random beats trying them in a neat grid, because only a few dials really matter.
 
@@ -2876,7 +3084,7 @@ _paper · free · free; why random beats grid_
 
 #### [Optuna documentation](https://optuna.readthedocs.io/)
 
-_docs · free · free; tuning with pruning in an hour_
+_docs · free · an afternoon · free; tuning with pruning in an hour_
 
 **Age 5.** The manual for a helper that tries dial settings for you, learns which ones look promising, and stops the bad tries early.
 
@@ -2892,7 +3100,7 @@ _docs · free · free; tuning with pruning in an hour_
 
 #### [Visual Information Theory (Olah)](https://colah.github.io/posts/2015-09-Visual-Information/)
 
-_essay · free · free; entropy and KL with pictures_
+_essay · free · an hour · free; entropy and KL with pictures_
 
 **Age 5.** A web page with pictures that explains what information is, using rectangles whose size shows how surprising something is.
 
@@ -3214,7 +3422,7 @@ A driver experiences alerts per trip, not per 5-minute row; a station firing twe
 
 #### [Forecasting: Principles and Practice, the Python edition (Hyndman, Athanasopoulos), chapters 1–5, 7, 9](https://otexts.com/fpppy/)
 
-_book · free · free online; the forecasting book_
+_book · free · three weeks · free online; the forecasting book_
 
 **Age 5.** A free book about predicting the future from the past, by people who do it for a living, with lots of pictures of wiggly lines.
 
@@ -3230,7 +3438,7 @@ _book · free · free online; the forecasting book_
 
 #### [Kaggle Learn: Time Series](https://www.kaggle.com/learn/time-series)
 
-_course · free · free; lag features and hybrids in an afternoon_
+_course · free · half a day · free; lag features and hybrids in an afternoon_
 
 **Age 5.** A short online lesson about guessing what comes next in a line of numbers.
 
@@ -3246,7 +3454,7 @@ _course · free · free; lag features and hybrids in an afternoon_
 
 #### [statsmodels documentation: one ARIMA fit on one station](https://www.statsmodels.org/stable/tsa.html)
 
-_docs · free · free; do it once to know what it is_
+_docs · free · an afternoon · free; do it once to know what it is_
 
 **Age 5.** A tool that fits an old but famous kind of forecast to a line of numbers. You try it once to see what it does.
 
@@ -3260,25 +3468,41 @@ _docs · free · free; do it once to know what it is_
 
 **PhD at Apple.** Classical models remain the interpretable baseline and a source of principled uncertainty that deep models lack. A production system often keeps a simple statistical model as the fallback when the learned model is stale or its inputs are missing, and statsmodels is where that fallback would be built.
 
-#### [Traffic Flow Dynamics (Treiber, Kesting) and the traffic-simulation.de simulator](https://traffic-simulation.de/)
+#### [traffic-simulation.de and its model documentation (Treiber, Kesting)](https://traffic-simulation.de/)
 
-_interactive · free simulator, paid book · free simulator, paid book; the physics of jams_
+_interactive · free · an evening · free simulator and model docs; the physics of jams_
 
-**Age 5.** A website where you can watch cartoon cars drive on a ring road, add a slow truck, and see a traffic jam appear from nowhere and move backwards. And a book that explains why.
+**Age 5.** A website where you can watch cartoon cars drive on a ring road, add a slow truck, and see a traffic jam appear from nowhere and travel backwards. The pages next to it explain why.
 
-**Middle school.** traffic-simulation.de is a free browser simulation by the authors of the book Traffic Flow Dynamics. You change the number of cars, the road shape and driver behavior, and watch jams form and travel upstream. The book (paid) explains the physics: how cars follow each other, why jams move backwards, and how a bottleneck works. Play with the simulator during phase 5.
+**Middle school.** A free browser simulation by the authors of a well-known traffic textbook. You change the number of cars, the road shape and driver behavior, and watch jams form and move upstream. The site's documentation pages explain the models it runs (car-following and lane-changing) without needing the book.
 
-**High school.** Use the simulator to see the ideas of lesson 10: the fundamental diagram, capacity, the backward-moving jam wave and its speed, and how an on-ramp creates a bottleneck. The book's chapters on the Lighthill-Whitham-Richards model and on car-following models are the theory; chapter 8 (kinematic waves) is the one to read.
+**High school.** Use the simulator to see lesson 10's ideas: the fundamental diagram, capacity, the backward-moving jam wave and its speed, and how an on-ramp creates a bottleneck. The documentation pages describe the Intelligent Driver Model and the kinematic-wave picture in enough detail to follow the equations.
 
-**Stanford undergrad.** The book is the standard modern text on traffic flow theory: macroscopic models (LWR, second-order models), microscopic car-following (the Intelligent Driver Model, which the simulator runs), and the empirical facts (capacity drop, stop-and-go waves). It gives you the physical priors that justify monotone constraints and the direction of neighbor features.
+**Stanford undergrad.** The model documentation covers the Intelligent Driver Model and lane-changing rules with parameters and references to the open literature; the authors' papers (free preprints) supply the theory of the textbook. Together they give you the physical priors that justify monotone constraints and neighbor direction.
 
-**Stanford grad.** Read it to design physics-informed components: a kinematic-wave forecast as a baseline or as a residual target for the learned model, and simulator-generated data for stress-testing the model on regimes rare in the archive. Its treatment of calibration of car-following models is a useful contrast with ML calibration.
+**Stanford grad.** Use simulator-generated data for stress tests on regimes rare in the archive and as a baseline for physics-informed components; the source code of the simulation is open and readable.
 
-**PhD at Apple.** Coupling learned forecasters with traffic simulators is where counterfactual questions (what if 5 % of drivers reroute?) become answerable. The book and the open simulator are the practical entry to that line of work, and the Intelligent Driver Model is simple enough to make differentiable.
+**PhD at Apple.** Coupling learned forecasters with open simulators is where counterfactual evaluation starts; the site and its code are the practical entry, and the Intelligent Driver Model is simple enough to make differentiable.
+
+#### [Kaggle: Store Sales, Time Series Forecasting competition](https://www.kaggle.com/competitions/store-sales-time-series-forecasting)
+
+_dataset · free · a week · free; forecasting practice off the traffic data_
+
+**Age 5.** A practice contest with real store sales numbers where you guess future sales and get a score, for free.
+
+**Middle school.** A permanent beginner competition on Kaggle: predict daily sales for many products and stores from history, holidays and oil prices. You submit a file and get a score. It is the exercise for the time-series topic on data that is not traffic, and the public notebooks show many approaches.
+
+**High school.** Build lag and calendar features, a global gradient-boosted model, and a rolling-origin validation, then submit; read three public notebooks and note where they leak (features that use the future). The evaluation metric and the multi-series structure mirror the M5 findings.
+
+**Stanford undergrad.** Use it to practice global models across series, hierarchical structure (store, family), exogenous regressors and honest validation on a leaderboard; then compare your validation score with your leaderboard score to see selection bias in action.
+
+**Stanford grad.** Competitions are natural experiments about what works under a protocol; this one is small enough to iterate quickly and is a fair place to test a new idea before applying it to the traffic data.
+
+**PhD at Apple.** A free, standing benchmark for time-series practice and for calibrating a newcomer's forecasting skill.
 
 #### [The M5 forecasting competition and its findings (Makridakis, Spiliotis, Assimakopoulos)](https://www.kaggle.com/competitions/m5-forecasting-accuracy)
 
-_dataset · free · free; the largest evidence for global boosted models_
+_dataset · free · days · free; the largest evidence for global boosted models_
 
 **Age 5.** A big contest where thousands of people tried to predict how many of each thing a store would sell. The winners used the same kind of tree model we use for traffic.
 
@@ -3484,7 +3708,7 @@ Each batch launches a handful of tiny kernels; the launch overhead is comparable
 
 #### [3Blue1Brown: Neural networks](https://www.3blue1brown.com/topics/neural-networks)
 
-_video · free · free; four videos, watch before Karpathy_
+_video · free · two hours · free; four videos, watch before Karpathy_
 
 **Age 5.** Four videos with moving pictures that show what a neural network is and how it learns, using handwritten numbers as the example.
 
@@ -3500,7 +3724,7 @@ _video · free · free; four videos, watch before Karpathy_
 
 #### [TensorFlow Playground](https://playground.tensorflow.org/)
 
-_interactive · free · free; poke a network in the browser_
+_interactive · free · fifteen minutes · free; poke a network in the browser_
 
 **Age 5.** A web page where you build a tiny brain by clicking, then press play and watch it learn to separate blue dots from orange dots.
 
@@ -3516,7 +3740,7 @@ _interactive · free · free; poke a network in the browser_
 
 #### [Neural Networks: Zero to Hero (Karpathy), micrograd and makemore](https://karpathy.ai/zero-to-hero.html)
 
-_video · free · free; backprop from scratch, the best there is_
+_video · free · three weeks · free; backprop from scratch, the best there is_
 
 **Age 5.** A programmer builds a tiny brain from scratch on video, typing every line, and explains each one as he goes.
 
@@ -3532,7 +3756,7 @@ _video · free · free; backprop from scratch, the best there is_
 
 #### [PyTorch tutorials: Learn the Basics; the MPS backend notes](https://pytorch.org/tutorials/beginner/basics/intro.html)
 
-_docs · free · free_
+_docs · free · an afternoon · free_
 
 **Age 5.** The official lessons for the tool that runs neural networks, plus a note about making it use the Mac's graphics chip so it goes faster.
 
@@ -3548,7 +3772,7 @@ _docs · free · free_
 
 #### [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/)
 
-_book · free · free, PyTorch throughout_
+_book · free · reference, chapters as needed · free, PyTorch throughout_
 
 **Age 5.** A free online textbook where every idea comes with code you can run, about teaching computers using layers of simple math.
 
@@ -3564,7 +3788,7 @@ _book · free · free, PyTorch throughout_
 
 #### [Understanding Deep Learning (Prince)](https://udlbook.github.io/udlbook/)
 
-_book · free · free PDF; chapters 1 to 9 now, the rest in phase 8_
+_book · free · reference, chapters as needed · free PDF; chapters 1 to 9 now, the rest in phase 8_
 
 **Age 5.** A newer big book about deep learning, free to read, with lots of clear pictures that show what each part of a network does.
 
@@ -3580,7 +3804,7 @@ _book · free · free PDF; chapters 1 to 9 now, the rest in phase 8_
 
 #### [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/)
 
-_course · free · free; the practitioner's counterweight to the theory_
+_course · free · eight weeks · free; the practitioner's counterweight to the theory_
 
 **Age 5.** A free class where you train a real neural network on the very first day and only later learn all the details, like learning to ride a bike before studying how it works.
 
@@ -3596,7 +3820,7 @@ _course · free · free; the practitioner's counterweight to the theory_
 
 #### [A Gentle Introduction to Graph Neural Networks (Distill, 2021)](https://distill.pub/2021/gnn-intro/)
 
-_interactive · free · free, interactive; message passing before CS224W_
+_interactive · free · an evening · free, interactive; message passing before CS224W_
 
 **Age 5.** An article with pictures you can play with about learning from things that are connected, like friends in a group or roads in a city.
 
@@ -3612,7 +3836,7 @@ _interactive · free · free, interactive; message passing before CS224W_
 
 #### [DCRNN (Li et al., ICLR 2018) and STGCN (Yu et al., IJCAI 2018)](https://arxiv.org/abs/1707.01926)
 
-_paper · free · the two traffic papers; first pass now, second in phase 11_
+_paper · free · an evening or two · the two traffic papers; first pass now, second in phase 11_
 
 **Age 5.** Two papers where scientists taught computers to predict traffic on real Californian roads, using the same kind of sensors we use.
 
@@ -3625,6 +3849,86 @@ _paper · free · the two traffic papers; first pass now, second in phase 11_
 **Stanford grad.** Read critically: sensitivity to how the graph is built (a Gaussian kernel on road distance with a threshold), the evaluation protocol (12-step windows, masking missing values), and later critiques showing that simple baselines are competitive at short horizons. Graph WaveNet's adaptive adjacency is the natural next read.
 
 **PhD at Apple.** These papers set the benchmark protocol the field still uses, and their limitations (fixed sensor sets, no incidents or weather, no transfer across networks) are the open problems. Reproducing them on the M1 with a reduced configuration and then adding incident and weather features to the same protocol is a publishable direction.
+
+#### [Neural Networks and Deep Learning (Nielsen)](http://neuralnetworksanddeeplearning.com/)
+
+_book · free · a week · free; the best written backpropagation chapter_
+
+**Age 5.** A free online book that builds a tiny brain that reads handwritten numbers, and explains every piece as it goes.
+
+**Middle school.** Michael Nielsen's classic free book teaches neural networks through one running example, recognizing handwritten digits, with code you can run. It explains neurons, gradient descent, backpropagation, and why deep networks are hard to train, with clear pictures. Read chapters 1 to 3 before lesson 9.
+
+**High school.** Chapter 2 is the best written derivation of backpropagation; chapter 3 covers cross-entropy, regularization and initialization with experiments you can rerun; chapter 4 gives a visual proof that networks can approximate any function. The code is plain numpy, like lesson 9's.
+
+**Stanford undergrad.** Nielsen's four backpropagation equations and his discussion of the vanishing-gradient problem are the background for the initialization and normalization material; his universality chapter is the intuition behind the approximation theorems.
+
+**Stanford grad.** It predates modern architectures and optimizers, which is fine for its purpose: the foundations, explained better than most textbooks.
+
+**PhD at Apple.** A free classic; still the recommendation for anyone who wants to understand backpropagation rather than call it.
+
+#### [The Little Book of Deep Learning (Fleuret)](https://fleuret.org/francois/lbdl.html)
+
+_book · free · a weekend · free; the whole field in 150 small pages_
+
+**Age 5.** A short free book, made to fit on a phone screen, that explains deep learning from start to finish in plain language.
+
+**Middle school.** François Fleuret's book is about 150 small pages, free, covering machine learning basics, efficient computation, training, the main model components, architectures, and applications. It is dense but readable; use it as a summary after the longer courses.
+
+**High school.** Read the chapters on training (losses, autoregressive models, optimization), on model components (layers, attention, normalization) and on architectures after lesson 9 to consolidate; its figures are precise and its notation consistent.
+
+**Stanford undergrad.** The book is a compact, rigorous map of the field; its chapter on efficient computation (GPUs, memory, batching) is the shortest correct account of why hardware shapes models.
+
+**Stanford grad.** Useful as a reference for definitions and as a checklist of what a current practitioner should know; its brevity makes gaps in your own understanding visible.
+
+**PhD at Apple.** A free, expert summary; the kind of document to hand a strong engineer who needs the whole picture in a weekend.
+
+#### [A Recipe for Training Neural Networks (Karpathy)](https://karpathy.github.io/2019/04/25/recipe/)
+
+_essay · free · an hour · free; the checklist that prevents silent failures_
+
+**Age 5.** A checklist from an expert about how to train a learning machine without fooling yourself: start simple, look at the data, change one thing at a time.
+
+**Middle school.** A blog post with a step-by-step recipe: inspect the data first, build a tiny end-to-end pipeline, get baselines right, overfit a small batch on purpose, then regularize and tune. It is short, free and practical, and it prevents most beginner mistakes.
+
+**High school.** Apply it to the spatio-temporal net: verify the loss at initialization, overfit two batches, add complexity one piece at a time, and plot everything. Its list of things that silently go wrong (mismatched shapes, wrong learning rates, data leaks) is a debugging checklist.
+
+**Stanford undergrad.** The post's principle, that neural network training fails silently and so must be built incrementally with verification at each step, is the engineering discipline behind every successful training run; its specific checks are cheap and catch real bugs.
+
+**Stanford grad.** Read it with Karpathy's course on activations and gradients statistics; together they are the practical theory of training diagnostics.
+
+**PhD at Apple.** A widely used piece of practitioner wisdom; for a lead, it is the shared protocol to require before anyone reports a result.
+
+#### [UvA Deep Learning Tutorials](https://uvadlc-notebooks.readthedocs.io/)
+
+_docs · free · an afternoon · free notebooks; initialization, optimization, transformers, graphs_
+
+**Age 5.** A set of free lessons with code you can run that teach how to build learning machines with a popular tool called PyTorch.
+
+**Middle school.** The University of Amsterdam's deep learning course notebooks, free online: PyTorch basics, activation functions, initialization, optimization, transformers, graph neural networks, autoencoders, and more. Each notebook runs and explains as it goes. They fill gaps between the theory and the code.
+
+**High school.** The notebooks on initialization and optimization, on transformers and multi-head attention, and on graph neural networks are directly useful for lesson 9 and lesson 10's advanced levels; run them on the Mac (they are written for GPUs but work on CPU and MPS with smaller settings).
+
+**Stanford undergrad.** Their careful experiments (comparing initializations, optimizers, normalization) are the empirical version of the training material, and their graph neural network notebook implements message passing from scratch.
+
+**Stanford grad.** The tutorials on energy-based models, normalizing flows and autoregressive models are a bridge to the generative-model topic with working code.
+
+**PhD at Apple.** A free, maintained set of reference implementations; useful when reproducing a paper and needing a correct baseline component.
+
+#### [The training-recipe papers: Adam (Kingma, Ba, 2014), Batch Normalization (Ioffe, Szegedy, 2015), Dropout (Srivastava et al., 2014)](https://arxiv.org/abs/1412.6980)
+
+_paper · free · an evening or two · free; the three tricks behind the standard recipe_
+
+**Age 5.** Three papers that gave learning machines three tricks: a smarter way to take steps, a way to keep numbers in a comfortable range, and a way to make the machine not rely on any one part too much.
+
+**Middle school.** Three research papers behind the standard training recipe. Adam adapts the step size for each weight; batch normalization keeps activations in a stable range so training is faster and more forgiving; dropout randomly switches off neurons during training so the network cannot depend on any one. All free; read the abstracts and the main figures.
+
+**High school.** Read each after using the method: Adam's update rule and its bias correction, batch norm's normalization and its learned scale and shift, dropout's training and test-time behavior. The experiments show the effect sizes; note what each claims and what later work revised.
+
+**Stanford undergrad.** Understand Adam as a combination of momentum and per-parameter scaling; batch norm's effect on optimization (smoothing the loss landscape, later analyses argue) rather than the internal-covariate-shift story; dropout as approximate model averaging. Each has known failure modes worth knowing.
+
+**Stanford grad.** Together with later corrections (AdamW's decoupled weight decay, layer normalization for transformers, batch norm's issues at small batch size) they are the history of the training recipe; reading them teaches how empirical claims in ML get revised.
+
+**PhD at Apple.** Canonical citations; for research, the interesting part is the gap between their stated explanations and the later understanding, which is a lesson in how the field learns.
 
 ### Build
 
@@ -3978,7 +4282,7 @@ The data contain their own supervision: hide part of an input and predict it fro
 
 #### [Understanding Deep Learning (Prince)](https://udlbook.github.io/udlbook/)
 
-_book · free · now chapters 10 to 18: convolutions, transformers, graphs, generative models_
+_book · free · reference, chapters as needed · now chapters 10 to 18: convolutions, transformers, graphs, generative models_
 
 **Age 5.** A newer big book about deep learning, free to read, with lots of clear pictures that show what each part of a network does.
 
@@ -3994,7 +4298,7 @@ _book · free · now chapters 10 to 18: convolutions, transformers, graphs, gene
 
 #### [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/)
 
-_book · free · now chapters 7, 8 and 11: convolutions and attention_
+_book · free · reference, chapters as needed · now chapters 7, 8 and 11: convolutions and attention_
 
 **Age 5.** A free online textbook where every idea comes with code you can run, about teaching computers using layers of simple math.
 
@@ -4010,7 +4314,7 @@ _book · free · now chapters 7, 8 and 11: convolutions and attention_
 
 #### [CS231n: Convolutional Neural Networks for Visual Recognition, course notes](https://cs231n.github.io/)
 
-_course · free · free; the convolutional foundations with worked counts_
+_course · free · weeks · free; the convolutional foundations with worked counts_
 
 **Age 5.** The notes from a famous class that taught computers to see, with drawings of how a picture becomes numbers and then a label.
 
@@ -4026,7 +4330,7 @@ _course · free · free; the convolutional foundations with worked counts_
 
 #### [The Illustrated Transformer (Alammar)](https://jalammar.github.io/illustrated-transformer/)
 
-_essay · free · free; read before the paper_
+_essay · free · an hour · free; read before the paper_
 
 **Age 5.** A web page with drawings that shows how a computer reads a sentence by paying attention to the words that matter, a bit like how you look at the important parts of a picture.
 
@@ -4042,7 +4346,7 @@ _essay · free · free; read before the paper_
 
 #### [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762)
 
-_paper · free · free; the paper, with the post open beside it_
+_paper · free · an evening or two · free; the paper, with the post open beside it_
 
 **Age 5.** The paper that introduced the transformer, the design inside today's language models, by showing that paying attention to all words at once works better than reading them one by one.
 
@@ -4058,7 +4362,7 @@ _paper · free · free; the paper, with the post open beside it_
 
 #### [Hugging Face LLM course](https://huggingface.co/learn/llm-course/chapter1/1)
 
-_course · free · free; the practical stack for language models_
+_course · free · two weeks · free; the practical stack for language models_
 
 **Age 5.** A free online class that shows how to use ready-made language models, like borrowing a very well-read robot and teaching it your job.
 
@@ -4074,7 +4378,7 @@ _course · free · free; the practical stack for language models_
 
 #### [Speech and Language Processing, 3rd edition draft (Jurafsky, Martin)](https://web.stanford.edu/~jurafsky/slp3/)
 
-_book · free · free; the textbook for the language chapters_
+_book · free · reference · free; the textbook for the language chapters_
 
 **Age 5.** A big free book about how computers handle language, from letters and words to whole conversations.
 
@@ -4088,25 +4392,105 @@ _book · free · free; the textbook for the language chapters_
 
 **PhD at Apple.** A free, continuously revised textbook by leading researchers is the field's reference; its revision history is itself a record of how fast the field moved.
 
-#### [Build a Large Language Model (From Scratch) (Raschka)](https://github.com/rasbt/LLMs-from-scratch)
+#### [LLMs-from-scratch repository (Raschka)](https://github.com/rasbt/LLMs-from-scratch)
 
-_book · paid, code free · paid book, free code; a GPT you built yourself_
+_code · free · two weeks · free notebooks; a GPT you built yourself_
 
-**Age 5.** A book that builds a small language model step by step in code, so you can see every part instead of trusting a magic box.
+**Age 5.** A free set of notebooks that build a small language model step by step in code, so you can see every part instead of trusting a magic box.
 
-**Middle school.** Sebastian Raschka's book (paid) walks through implementing a GPT-style model in PyTorch: the tokenizer, the attention mechanism, the transformer blocks, pretraining on text, and fine-tuning for classification and for following instructions. The code is free on GitHub. It is the from-scratch rule applied to language models.
+**Middle school.** Sebastian Raschka's public repository walks through implementing a GPT-style model in PyTorch: the tokenizer, attention, transformer blocks, pretraining on text, and fine-tuning for classification and instruction following. The notebooks are free and complete; the companion book adds prose but is not required.
 
-**High school.** Chapters 2 to 5 build and pretrain a small model you can run on the Mac mini; chapters 6 and 7 fine-tune it. Type the code rather than copying it, and keep the model tiny so training takes minutes. When you finish, the Hugging Face abstractions will be transparent.
+**High school.** Work through the notebooks in order and keep the model tiny so training takes minutes on the Mac mini. Type the code rather than copying it. When you finish, the Hugging Face abstractions will be transparent.
 
-**Stanford undergrad.** The value is completeness: every tensor shape is shown, the attention implementation is stepwise, and the training loop is explicit. Pair it with the original papers and with Karpathy's GPT lesson for a second perspective on the same architecture.
+**Stanford undergrad.** The value is completeness: every tensor shape is shown, attention is built stepwise, and the training loop is explicit. Pair with the original papers and with Karpathy's GPT lesson for a second perspective on the same architecture.
 
-**Stanford grad.** It stops at small scale; the scaling questions (data curation, distributed training, evaluation) are in the ultra-scale playbook and in CS336. Its instruction-tuning chapter is a compact account of supervised fine-tuning.
+**Stanford grad.** It stops at small scale; the scaling questions (data curation, distributed training, evaluation) are in the ultra-scale playbook and CS336. The instruction-tuning notebook is a compact account of supervised fine-tuning.
 
-**PhD at Apple.** A from-scratch implementation is the fastest route to reading LLM papers critically; for a lead, assigning it to an engineer is a reliable way to build a real mental model before they touch a production model.
+**PhD at Apple.** A from-scratch implementation is the fastest route to reading language-model papers critically; for a lead, assigning the repository to an engineer is a reliable way to build a real mental model before they touch a production model.
+
+#### [Intro to Large Language Models (Karpathy, video)](https://www.youtube.com/watch?v=zjkBMFhNj_g)
+
+_video · free · one hour · free; one hour, the whole picture_
+
+**Age 5.** A one-hour talk that explains, with simple drawings, what a large language model is, how it is trained, and what it can and cannot do.
+
+**Middle school.** Andrej Karpathy's free talk for a general audience: a model is two files (weights and code), pretraining compresses the internet into weights, fine-tuning teaches an assistant style, and scaling makes it better in predictable ways. It ends with what is coming and with security concerns. Watch it before the language-model topic.
+
+**High school.** The talk's framing (base model, assistant model, the training stages, scaling laws, tool use, and the jailbreak and injection risks) is the outline of the language-model topic; watch it, then read the topic's high-school level and notice what the talk simplified.
+
+**Stanford undergrad.** It is a survey, not a course; its value is the clear separation of pretraining, fine-tuning and preference tuning, and the honest treatment of security. Follow with the from-scratch repository for the mechanics.
+
+**Stanford grad.** Karpathy's later talks and his from-scratch series are the technical continuation; this one is the shared vocabulary for a mixed audience.
+
+**PhD at Apple.** The talk to send to a stakeholder before a discussion about using a language model in a product; its security section is the part most people skip and should not.
+
+#### [Stanford CS224N: Natural Language Processing with Deep Learning](https://web.stanford.edu/class/cs224n/)
+
+_course · free · a quarter · free lectures; embeddings to transformers, rigorously_
+
+**Age 5.** A university class, free to watch, about teaching computers to read and write, from single words to whole documents.
+
+**Middle school.** Stanford's course, with free lecture videos and notes: word vectors, neural networks for text, recurrent models, attention and transformers, pretraining, and the current state of language models. Watch the lectures on word vectors and on transformers during the language topic.
+
+**High school.** Lectures 1 and 2 (word vectors) explain embeddings from first principles; the lectures on transformers and on pretraining are the theory behind the Hugging Face course's practice. The assignments (word2vec from scratch, a dependency parser, a translation model) are demanding and worth one.
+
+**Stanford undergrad.** The course's treatment of word2vec's objective, of attention's derivation, and of pretraining objectives is rigorous; its later lectures on evaluation, on multilingual models and on ethics broaden the language topic.
+
+**Stanford grad.** CS224N's evolution across years is a record of the field; its final lectures on current research are a fair map of open problems.
+
+**PhD at Apple.** The standard graduate NLP course; knowing it lets you calibrate what a new hire in language modelling can be assumed to know.
+
+#### [Hugging Face Computer Vision course](https://huggingface.co/learn/computer-vision-course/unit0/welcome/welcome)
+
+_course · free · weeks · free; current vision practice with notebooks_
+
+**Age 5.** A free online class about teaching computers to see, with code you can run and pictures to try it on.
+
+**Middle school.** A community-written free course from Hugging Face covering image basics, convolutional networks, vision transformers, object detection, segmentation, video, and multimodal models, with notebooks. Do the units on convolutional networks and on transfer learning during the vision topic.
+
+**High school.** Units on the fundamentals of computer vision, on convolutional networks, on vision transformers and on transfer learning give working code for the vision exercises; the unit on model optimization for deployment previews on-device constraints.
+
+**Stanford undergrad.** It complements CS231n (foundations) with current practice (pretrained backbones, the transformers library for vision, evaluation on standard benchmarks); its multimodal units are a bridge to vision-language models.
+
+**Stanford grad.** Community courses vary in depth; this one is strongest on practice and on the current model zoo, weakest on theory. Use it accordingly.
+
+**PhD at Apple.** A free, maintained map of practical vision tooling; useful for calibrating what a modern vision baseline is before proposing anything custom.
+
+#### [The generative-model papers: VAE (Kingma, Welling, 2013), GAN (Goodfellow et al., 2014), DDPM (Ho, Jain, Abbeel, 2020)](https://arxiv.org/abs/1312.6114)
+
+_paper · free · an evening or two · free; the three originals_
+
+**Age 5.** Three papers, years apart, each a new way for a computer to make new pictures: one squeezes and rebuilds, one plays forger against detective, one cleans up noise step by step.
+
+**Middle school.** The three papers that defined generative modelling: the variational autoencoder, the generative adversarial network, and denoising diffusion. All free. Read the introductions and look at the sample figures; then read Lilian Weng's diffusion post for the connections.
+
+**High school.** For each: the model, the training objective, and the samples. The VAE's loss has two parts (reconstruction and a KL term); the GAN is a two-player game; the diffusion model learns to predict noise. Compare their samples and note the years.
+
+**Stanford undergrad.** Work through the derivations: the evidence lower bound and the reparameterization trick; the minimax objective and its optimum; the diffusion forward process and the simplified noise-prediction loss. Each paper's experiments show the evaluation problem of generative models.
+
+**Stanford grad.** The later literature (Wasserstein GANs, hierarchical VAEs, score-based models, latent diffusion) builds directly on these; reading the originals shows what each solved and what it left.
+
+**PhD at Apple.** Canonical citations; the interesting research questions are those they opened: evaluation, controllability, and the unification of the three families through score matching.
+
+#### [Self-Supervised Representation Learning (Weng, Lil'Log)](https://lilianweng.github.io/posts/2019-11-10-self-supervised/)
+
+_essay · free · an hour · free; the pretraining objectives, surveyed_
+
+**Age 5.** A long web post about how a computer can learn from pictures and text without anyone labelling them, by hiding parts and guessing them.
+
+**Middle school.** Lilian Weng's survey of self-supervised learning: pretext tasks in vision, contrastive learning, and language modelling as self-supervision. Free, long, with figures for each method. Read the introduction and the contrastive section before the transfer-learning topic.
+
+**High school.** Its sections on contrastive learning (pull together two views of the same image, push apart others) and on masked prediction explain the objectives behind modern pretraining; apply the idea to station-day windows as the topic's exercise suggests.
+
+**Stanford undergrad.** The post is a curated map of the literature with the objectives written out; use it to choose a pretext task for the traffic data and to understand the InfoNCE objective's connection to mutual information.
+
+**Stanford grad.** Weng's companion posts on contrastive learning and on diffusion models complete the picture; her surveys are reliable starting bibliographies.
+
+**PhD at Apple.** A well-maintained survey; the practical entry to the pretraining literature before the papers.
 
 #### [Stanford CS336: Language Modeling from Scratch](https://cs336.stanford.edu/)
 
-_course · free · free lectures and assignments; how models are really built_
+_course · free · a quarter · free lectures and assignments; how models are really built_
 
 **Age 5.** A university class where students build a language model from the very bottom, including collecting and cleaning the text it learns from.
 
@@ -4122,7 +4506,7 @@ _course · free · free lectures and assignments; how models are really built_
 
 #### [What are Diffusion Models? (Weng, Lil'Log)](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/)
 
-_essay · free · free; the generative-model survey to read first_
+_essay · free · an hour · free; the generative-model survey to read first_
 
 **Age 5.** A long web post that explains how a computer can draw a picture by starting from noise and cleaning it up bit by bit.
 
@@ -4138,7 +4522,7 @@ _essay · free · free; the generative-model survey to read first_
 
 #### [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/)
 
-_course · free · the vision and text lessons, with transfer learning throughout_
+_course · free · eight weeks · the vision and text lessons, with transfer learning throughout_
 
 **Age 5.** A free class where you train a real neural network on the very first day and only later learn all the details, like learning to ride a bike before studying how it works.
 
@@ -4462,25 +4846,105 @@ Underflow and overflow in 16-bit numbers; loss scaling and keeping master weight
 
 ### Read and watch, explained at every level
 
-#### [Designing Machine Learning Systems (Huyen), chapters 1–3 and 7–9](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/)
+#### [CS 329S: Machine Learning Systems Design, lecture notes (Huyen, Stanford)](https://stanford-cs329s.github.io/)
 
-_book · paid · paid; the systems view in one book_
+_course · free · weeks · free; the systems view, as lecture notes_
 
-**Age 5.** A book about how to make a learning machine work in the real world, day after day, not just once on a laptop.
+**Age 5.** Free class notes about making a learning machine work in the real world day after day, written by someone who has done it.
 
-**Middle school.** Chip Huyen's book (paid). Chapters 1 to 3 cover what an ML system is, how to set up a project, and how data flows through it. Chapters 7 to 9 cover putting a model into service, watching it for problems, and updating it as the world changes. It is the textbook for phase 7.
+**Middle school.** Chip Huyen's Stanford course, with free lecture notes and slides: what an ML system is, data engineering, training data, feature engineering, model development, deployment, monitoring, continual learning, and the human side. It is the free version of her book and covers phase 9's ideas.
 
-**High school.** Chapter 8's data distribution shifts and monitoring, and chapter 9's continual learning and testing in production, map directly onto `20_monitor.py`. Chapter 7's deployment patterns (batch versus online prediction, model compression) frame the decision to run in replay mode until a real-time feed exists.
+**High school.** The notes on deployment (batch versus online), on monitoring and drift, and on continual learning map onto stages 12 and 13; the notes on data engineering and on training-serving skew explain the one-feature-module rule.
 
-**Stanford undergrad.** The book gives vocabulary and checklists (feature stores, model registries, data validation, drift detection) and case studies; it is light on math and code, so pair it with Made With ML for implementations. Its discussion of training-serving skew is the reason this pipeline has one feature module and a golden-file test.
+**Stanford undergrad.** The course notes give vocabulary and checklists (feature stores, model registries, data validation) with case studies; pair with Made With ML for implementations and with the technical-debt paper for the why.
 
-**Stanford grad.** Its treatment of feedback loops and degenerate feedback (recommendation systems that train on their own outputs) applies to alerts that change traffic. Its chapter on the human side, stakeholders and responsible AI, is practical rather than preachy, and its framing of monitoring as a product requirement rather than an afterthought is the right one.
+**Stanford grad.** Its treatment of feedback loops and of testing in production is directly relevant to alerts that change traffic; the guest lectures (linked) cover industrial practice.
 
-**PhD at Apple.** The systems view it presents is the current industry consensus, and the research questions it leaves open (monitoring without labels, continual learning with guarantees, evaluation under feedback) are exactly the ones in lesson 12's highest level. For a lead it is also the book to align a team's vocabulary before an architecture discussion.
+**PhD at Apple.** A free snapshot of the systems consensus; for a lead, the notes align a team's vocabulary before architecture discussions.
+
+#### [MLflow documentation](https://mlflow.org/docs/latest/)
+
+_docs · free · an afternoon · free; experiment tracking and a model registry_
+
+**Age 5.** The manual for a tool that writes down every experiment you run: the settings, the score, and the model, so you can find them later.
+
+**Middle school.** MLflow is a free, open-source tool for tracking experiments (parameters, metrics, artifacts), packaging models and keeping a registry of versions. Its quickstart runs locally in minutes. Use it to log every training run in phase 9 instead of a JSON file, once the JSON file gets unwieldy.
+
+**High school.** Read the tracking quickstart and the model registry pages: log parameters and metrics from the LightGBM runs, store the model files as artifacts, and mark a version as production. Its local server shows runs in a browser.
+
+**Stanford undergrad.** Understand what a tracking server and an artifact store are, how runs and experiments are organized, and how the registry supports staging and rollback; then decide whether the project needs it or whether a manifest and a folder suffice.
+
+**Stanford grad.** MLflow is one of several tools for the same job; the concepts (runs, artifacts, registry, lineage) are what matter and transfer to any platform.
+
+**PhD at Apple.** Experiment tracking is infrastructure for reproducibility; the research-relevant question is whether a result can be traced to code, data and parameters a year later, which the tool makes routine.
+
+#### [Evidently, open-source ML monitoring documentation](https://docs.evidentlyai.com/)
+
+_docs · free · an afternoon · free; drift and performance reports_
+
+**Age 5.** The manual for a free tool that checks whether the data a learning machine sees today still looks like the data it learned from.
+
+**Middle school.** Evidently is an open-source Python library for monitoring: it compares current data with reference data and reports drift per feature, data quality issues, and model performance over time, as reports or dashboards. Its tutorials run locally. Use it in stage 13 to check drift weekly.
+
+**High school.** Read the tutorial on data drift and the one on classification performance: compute drift on the feature table against the training reference, and performance metrics on the scored predictions once labels arrive. Compare its drift tests with the PSI you implemented.
+
+**Stanford undergrad.** The library implements several statistical tests for drift; understand what each assumes and why a single number per feature is a screen, not a verdict. Its report format is a reasonable template for the weekly monitoring output.
+
+**Stanford grad.** Monitoring tools encode choices about what drift means; read the documentation's methodology pages critically and keep your own definition versioned.
+
+**PhD at Apple.** Open-source monitoring made a piece of production practice inspectable; useful as a reference implementation when designing a team's own.
+
+#### [The Turing Way](https://book.the-turing-way.org/)
+
+_book · free · weeks · free; reproducible research as a handbook_
+
+**Age 5.** A free handbook about doing science with computers in a way that others can check and repeat.
+
+**Middle school.** A community-written handbook on reproducible, ethical and collaborative research with data: version control, environments, testing, documentation, data management, and project design. Free online. Read the reproducibility guide during phase 9.
+
+**High school.** The chapters on reproducible environments, on version control, on testing and on research data management are the scientific version of the engineering rules; its templates (README, project structure) are worth adopting.
+
+**Stanford undergrad.** Its treatment of the reproducibility spectrum (rerunnable, repeatable, reproducible, replicable) clarifies what the manifest and the golden test achieve, and its ethics chapters connect to phase 10.
+
+**Stanford grad.** A useful reference for the norms of open research and for collaboration practices; its community process is itself a model.
+
+**PhD at Apple.** For a lab or team, the handbook is a ready-made standard for research practice and a source of onboarding material.
+
+#### [Site Reliability Engineering (Google), the free book](https://sre.google/sre-book/table-of-contents/)
+
+_book · free · selected chapters, a week · free; SLOs, on-call and postmortems_
+
+**Age 5.** A free book about keeping big computer services running all the time, and what to do when they break.
+
+**Middle school.** Google's book on how they run services, free online: service level objectives, monitoring, being on call, handling incidents, postmortems, and avoiding overload. Read the chapters on monitoring, on service level objectives and on postmortems for the serving stage.
+
+**High school.** The chapters on monitoring distributed systems (the four golden signals), on service level objectives, on being on call and on blameless postmortems give the operating discipline for the alert service; write the runbook and the postmortem template from them.
+
+**Stanford undergrad.** Its treatment of error budgets, of toil, and of release engineering frames the retraining and rollback policies; the chapter on managing incidents is the procedure for a bad model in production.
+
+**Stanford grad.** Written for large services, the principles scale down; the exercise is deciding which practices a one-machine system needs and which are ceremony.
+
+**PhD at Apple.** A foundational operations text; ML systems inherit all of its concerns plus data and model drift.
+
+#### [Hypothesis documentation (property-based testing)](https://hypothesis.readthedocs.io/)
+
+_docs · free · an afternoon · free; tests that invent their own edge cases_
+
+**Age 5.** The manual for a testing tool that makes up thousands of tricky examples for you and finds the one that breaks your code.
+
+**Middle school.** Hypothesis is a free Python library: instead of writing one test input, you describe what inputs look like (a list of speeds between 0 and 100) and it generates many, including nasty edge cases, and shrinks any failure to the smallest example. Its quickstart is short.
+
+**High school.** Use it on the parsers and feature code: properties such as 'cleaning never produces speeds outside 0 to 100', 'lag features of a shifted series equal shifted lag features', 'the profile of a constant series is that constant'. Read the pages on strategies and on shrinking.
+
+**Stanford undergrad.** Property-based testing finds bugs example-based tests miss (empty inputs, boundaries, unusual timestamps); its stateful testing extends to pipelines. Understand how to write good properties: invariants, round trips, comparisons with a reference implementation.
+
+**Stanford grad.** For data code, properties are often the only tractable specification; the technique is also a way to document assumptions executably, which the data-contract exercise needs.
+
+**PhD at Apple.** Property-based testing is underused in ML engineering; adopting it for feature libraries is a cheap, high-yield practice.
 
 #### [Made With ML (Mohandas)](https://madewithml.com/)
 
-_course · free · free; testing, monitoring and pipelines with code_
+_course · free · weeks · free; testing, monitoring and pipelines with code_
 
 **Age 5.** A free website that shows, with real code, how to build a learning machine the careful way, with tests and checks so it keeps working.
 
@@ -4496,7 +4960,7 @@ _course · free · free; testing, monitoring and pipelines with code_
 
 #### [Machine Learning Engineering (Burkov)](https://www.mlebook.com/)
 
-_book · free · free to read online_
+_book · free · weeks · free to read online_
 
 **Age 5.** A short, plain book about the whole job of building learning machines, from getting the data to keeping them running.
 
@@ -4512,7 +4976,7 @@ _book · free · free to read online_
 
 #### [Full Stack Deep Learning](https://fullstackdeeplearning.com/)
 
-_course · free · free; the production lifecycle with labs_
+_course · free · weeks · free; the production lifecycle with labs_
 
 **Age 5.** A free class about everything around a learning machine: getting data, keeping it working, and putting it inside a real app.
 
@@ -4528,7 +4992,7 @@ _course · free · free; the production lifecycle with labs_
 
 #### [Rules of Machine Learning (Zinkevich, Google)](https://developers.google.com/machine-learning/guides/rules-of-ml)
 
-_docs · free · free; 43 rules from hard experience_
+_docs · free · an hour · free; 43 rules from hard experience_
 
 **Age 5.** A list of rules from an engineer who has built many learning machines, about what to do first and what mistakes to avoid.
 
@@ -4544,7 +5008,7 @@ _docs · free · free; 43 rules from hard experience_
 
 #### [The ML Test Score (Breck, Cai, Nielsen, Salib, Sculley, 2017)](https://research.google/pubs/the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction/)
 
-_paper · free · free; the production-readiness rubric_
+_paper · free · an hour · free; the production-readiness rubric_
 
 **Age 5.** A checklist from engineers who ask: did you test your data, did you test your model, did you test the machine that runs it? You get points for each thing you checked.
 
@@ -4560,7 +5024,7 @@ _paper · free · free; the production-readiness rubric_
 
 #### [Hidden Technical Debt in Machine Learning Systems (Sculley et al., 2015)](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html)
 
-_paper · free · free; ten pages, read twice_
+_paper · free · an hour, twice · free; ten pages, read twice_
 
 **Age 5.** A short paper by people who build big systems, saying: the learning part is small, and the messy parts around it are big and bite you later if you are not careful.
 
@@ -4576,7 +5040,7 @@ _paper · free · free; ten pages, read twice_
 
 #### [launchd.info and the pytest documentation](https://www.launchd.info/)
 
-_docs · free · free_
+_docs · free · an afternoon · free_
 
 **Age 5.** Instructions for two tools: one that makes the Mac run a program on a schedule by itself, and one that runs all your checks with a single command.
 
@@ -4592,7 +5056,7 @@ _docs · free · free_
 
 #### [FastAPI documentation](https://fastapi.tiangolo.com/)
 
-_docs · free · free; a door on the predictor in an afternoon_
+_docs · free · an afternoon · free; a door on the predictor in an afternoon_
 
 **Age 5.** The manual for a tool that gives your program a door on the internet, so other programs can knock and ask questions.
 
@@ -4608,7 +5072,7 @@ _docs · free · free; a door on the predictor in an afternoon_
 
 #### [Docker, Get started guide](https://docs.docker.com/get-started/)
 
-_docs · free · free; the service in a box_
+_docs · free · an afternoon · free; the service in a box_
 
 **Age 5.** Instructions for packing your program and everything it needs into one box that runs the same on any computer.
 
@@ -4624,7 +5088,7 @@ _docs · free · free; the service in a box_
 
 #### [PyTorch distributed overview](https://pytorch.org/tutorials/beginner/dist_overview.html)
 
-_docs · free · free; what you would need past one machine_
+_docs · free · an afternoon · free; what you would need past one machine_
 
 **Age 5.** The manual page about using many computers or chips at once to train one learning machine faster.
 
@@ -4640,7 +5104,7 @@ _docs · free · free; what you would need past one machine_
 
 #### [The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)](https://huggingface.co/spaces/nanotron/ultrascale-playbook)
 
-_book · free · free; how the largest models are actually trained_
+_book · free · weeks · free; how the largest models are actually trained_
 
 **Age 5.** A free online book about training gigantic language models on hundreds of chips at once, with pictures of how the work is split up.
 
@@ -4656,7 +5120,7 @@ _book · free · free; how the largest models are actually trained_
 
 #### [Scaling Laws for Neural Language Models (Kaplan et al., 2020)](https://arxiv.org/abs/2001.08361)
 
-_paper · free · free; measure before assuming bigger helps_
+_paper · free · an evening or two · free; measure before assuming bigger helps_
 
 **Age 5.** A paper that found that bigger models trained on more text get better in a very predictable way, like a line on a graph.
 
@@ -4669,6 +5133,22 @@ _paper · free · free; measure before assuming bigger helps_
 **Stanford grad.** Scaling laws organize much of current research on large models; their limits (task-specific behavior, data quality, emergence claims) are active debates. For forecasting, the analogous question is whether more stations and years keep improving skill.
 
 **PhD at Apple.** Understanding scaling is now part of research strategy; the open questions include what scales with what, and where data quality dominates quantity.
+
+#### [Training Compute-Optimal Large Language Models (Hoffmann et al., 2022)](https://arxiv.org/abs/2203.15556)
+
+_paper · free · an evening or two · free; the correction to the scaling laws_
+
+**Age 5.** A paper that found that many big models had been trained on too little text, and that a smaller model trained on more text can be better.
+
+**Middle school.** Researchers trained many models with different sizes and amounts of data and found the best balance for a fixed compute budget: model size and data should grow together. Their model, Chinchilla, beat bigger models trained on less data. Free; read it after the scaling-laws paper.
+
+**High school.** Read the method (three approaches to fitting the trade-off) and the main result (tokens should scale roughly with parameters); compare with Kaplan's earlier conclusions and note how a methodological change (tuning learning-rate schedules per run) changed the answer.
+
+**Stanford undergrad.** The paper is a lesson in experimental methodology: the earlier scaling result depended on a confound, and fixing it moved the optimum substantially. Apply the same skepticism to any scaling claim, including your own data-size curves.
+
+**Stanford grad.** Later work refines the trade-off for inference cost and data quality; the paper's fitted laws remain the reference point for planning training runs.
+
+**PhD at Apple.** Together with its predecessor it defines how the field reasons about compute allocation; for research strategy, it is the argument for data over parameters.
 
 ### Build
 
@@ -4955,7 +5435,7 @@ Putting relevant items near the top, with a discount that makes the first positi
 
 #### [Reinforcement Learning: An Introduction (Sutton, Barto)](http://incompleteideas.net/book/the-book-2nd.html)
 
-_book · free · free; the standard first book_
+_book · free · a semester · free; the standard first book_
 
 **Age 5.** The classic free book about learning by trial and reward, by two of the people who invented the field.
 
@@ -4971,7 +5451,7 @@ _book · free · free; the standard first book_
 
 #### [David Silver's Reinforcement Learning course (UCL, DeepMind)](https://www.davidsilver.uk/teaching/)
 
-_video · free · free lectures alongside the book_
+_video · free · ten lectures, two weeks · free lectures alongside the book_
 
 **Age 5.** Video lectures by a scientist who helped build a computer that beat the best human at the board game Go, explaining how machines learn from rewards.
 
@@ -4987,7 +5467,7 @@ _video · free · free lectures alongside the book_
 
 #### [Spinning Up in Deep RL (OpenAI)](https://spinningup.openai.com/)
 
-_docs · free · free; clean algorithms and a reading list_
+_docs · free · a week · free; clean algorithms and a reading list_
 
 **Age 5.** A free website that teaches modern trial-and-reward learning with clear notes and code you can run.
 
@@ -5003,7 +5483,7 @@ _docs · free · free; clean algorithms and a reading list_
 
 #### [Causal Inference: The Mixtape (Cunningham)](https://mixtape.scunning.com/)
 
-_book · free · free; applied causal methods with code_
+_book · free · selected chapters, two weeks · free; applied causal methods with code_
 
 **Age 5.** A free book about telling causes from coincidences, written in a friendly voice with lots of examples from real life.
 
@@ -5019,7 +5499,7 @@ _book · free · free; applied causal methods with code_
 
 #### [Causal Inference: What If (Hernán, Robins)](https://miguelhernan.org/whatifbook)
 
-_book · free · free; the rigorous base, part 1 now_
+_book · free · part 1, three weeks · free; the rigorous base, part 1 now_
 
 **Age 5.** A free book about telling the difference between 'these two things happen together' and 'this one causes that one', which is harder than it sounds.
 
@@ -5033,25 +5513,25 @@ _book · free · free; the rigorous base, part 1 now_
 
 **PhD at Apple.** The epidemiological tradition of causal inference is the most careful one about assumptions; for a product that intervenes (alerts that change traffic), it is the framework for saying what you can and cannot learn from logged data.
 
-#### The Book of Why (Pearl, Mackenzie)
+#### [Introduction to Causal Inference (Brady Neal), course and book draft](https://www.bradyneal.com/causal-inference-course)
 
-_book · paid · paid; the ideas in prose_
+_course · free · weeks · free; causal inference for ML people, from zero_
 
-**Age 5.** A book that tells the story of how scientists learned to ask 'why', with pictures of arrows showing what causes what.
+**Age 5.** A free online class and book about telling causes from coincidences, taught from the very beginning with pictures of arrows.
 
-**Middle school.** Judea Pearl's popular book (paid) explains causal thinking through history and examples: why statistics avoided causation for a century, how causal diagrams changed that, and the 'ladder of causation' from seeing to doing to imagining. No equations; read it for the ideas before the technical books.
+**Middle school.** Brady Neal's free course (video lectures) and book draft introduce causal inference from a machine-learning perspective: potential outcomes, causal graphs, confounding, adjustment, and the main methods. It assumes only basic probability. It is the free entry point for the causal topic.
 
-**High school.** Its account of confounding, of the smoking debates, and of the difference between observing and intervening prepares you for the causal-inference topic; its ladder of causation is the frame for what a prediction model can and cannot answer.
+**High school.** Chapters 1 to 4 (motivation, potential outcomes, the flow of association and causation in graphs, causal models) give the vocabulary and the diagrams; chapters on identification and on instruments give the methods. Draw the traffic DAG after chapter 3.
 
-**Stanford undergrad.** The book presents Pearl's structural framework in prose; the technical version is in his textbook Causality. Compare with the potential-outcomes framework of Hernán and Robins; they are largely equivalent but stress different things.
+**Stanford undergrad.** Neal presents Pearl's graphical approach and the potential-outcomes framework together and shows their correspondence, which the specialized books do less well; its later chapters connect to machine learning (causal discovery, counterfactuals).
 
-**Stanford grad.** Read critically: the book advocates for one school; the disagreements with the potential-outcomes tradition are instructive about what each framework makes easy.
+**Stanford grad.** Read it as the bridge between the Mixtape's applied methods and Hernán and Robins's rigor; its treatment of the estimand and of identification is a clean template for writing your own causal question.
 
-**PhD at Apple.** A widely read book that shaped how the public and many engineers think about causality; useful as a shared reference when explaining why a model's feature importance is not a causal claim.
+**PhD at Apple.** A free, ML-oriented causal course is the right shared reference for an engineering team beginning to ask what a system's outputs cause.
 
 #### [Fairness and Machine Learning (Barocas, Hardt, Narayanan)](https://fairmlbook.org/)
 
-_book · free · free; the graduate text_
+_book · free · three weeks · free; the graduate text_
 
 **Age 5.** A free book about making sure learning machines treat different groups of people fairly, and about how hard it is to even agree on what fair means.
 
@@ -5067,7 +5547,7 @@ _book · free · free; the graduate text_
 
 #### [The Algorithmic Foundations of Differential Privacy (Dwork, Roth)](https://www.cis.upenn.edu/~aaroth/privacybook.html)
 
-_book · free · free from the authors; chapters 1 to 3_
+_book · free · weeks · free from the authors; chapters 1 to 3_
 
 **Age 5.** A book about adding a little randomness to shared numbers so that nobody can tell whether any one person's information was used.
 
@@ -5083,7 +5563,7 @@ _book · free · free from the authors; chapters 1 to 3_
 
 #### [Model Cards for Model Reporting (Mitchell et al., 2019) and Datasheets for Datasets (Gebru et al., 2018)](https://arxiv.org/abs/1810.03993)
 
-_paper · free · free; documentation you will actually fill in_
+_paper · free · an evening or two · free; documentation you will actually fill in_
 
 **Age 5.** Two papers that say every learning machine and every pile of data should come with a label, like food has ingredients and warnings.
 
@@ -5099,7 +5579,7 @@ _paper · free · free; documentation you will actually fill in_
 
 #### [Google's Recommendation Systems course](https://developers.google.com/machine-learning/recommendation)
 
-_course · free · free; the architecture of ranking systems_
+_course · free · weeks · free; the architecture of ranking systems_
 
 **Age 5.** A free class from Google about how apps guess what you might like next.
 
@@ -5113,25 +5593,105 @@ _course · free · free; the architecture of ranking systems_
 
 **PhD at Apple.** A useful shared reference for the structure of ranking systems; for a lead, its staged architecture is the design pattern for any system that shows people an ordered list.
 
-#### [Matrix Factorization Techniques for Recommender Systems (Koren, Bell, Volinsky, 2009)](https://doi.org/10.1109/MC.2009.263)
+#### [Recommender Systems chapter, Dive into Deep Learning](https://d2l.ai/chapter_recommender-systems/index.html)
 
-_paper · paywalled · short; the Netflix Prize method by its winners_
+_book · free · weeks · free; matrix factorization to ranking, with code_
 
-**Age 5.** A short article by the people who won a famous movie-rating contest, explaining how they guessed what movies people would like using hidden traits.
+**Age 5.** A free chapter, with code, about how apps guess what you might like next.
 
-**Middle school.** Written by the Netflix Prize winners, this article explains matrix factorization: represent each user and each movie by a few numbers (hidden traits), and predict a rating by combining them. It also covers biases, implicit feedback and time effects. Free to read and short.
+**Middle school.** The recommender-systems chapter of Dive into Deep Learning covers matrix factorization, autoencoders for ratings, implicit feedback, sequence-aware recommendation, feature-rich models and click-through prediction, each with runnable code. It replaces the paywalled matrix-factorization article with a free, complete treatment.
 
-**High school.** Read it fully; it is one of the clearest short explanations of a learning method. Then implement the basic model with alternating least squares on a small public dataset and reproduce the improvement from adding bias terms.
+**High school.** Read the sections on matrix factorization and on implicit feedback (personalized ranking), and run their code on a small public ratings dataset; then compute precision at k and NDCG as the ranking topic asks.
 
-**Stanford undergrad.** The article's extensions (implicit feedback, temporal dynamics, confidence weighting) are the seeds of much later work; its discussion of the Netflix Prize is a lesson in the value of ensembles and in the gap between a contest metric and a product.
+**Stanford undergrad.** The chapter's coverage of Bayesian personalized ranking and of click-through models is the practical core of ranking with implicit feedback; its factorization machines section connects to the tabular models of phase 4.
 
-**Stanford grad.** Compare with modern two-tower and sequential models; matrix factorization remains a strong baseline and an interpretable one.
+**Stanford grad.** Its treatment is method-centric; pair with the exposure-bias and off-policy-evaluation literature for the evaluation problems, which the chapter does not solve.
 
-**PhD at Apple.** A historically important applied paper; its authors' account of the prize is also a case study in evaluation design and data privacy (the prize's data release led to a de-anonymization result).
+**PhD at Apple.** A free, runnable reference for the classical recommender methods; useful as the baseline set when a team proposes something new.
+
+#### [Hugging Face Deep RL course](https://huggingface.co/learn/deep-rl-course/unit0/introduction)
+
+_course · free · four weeks · free; train agents hands-on_
+
+**Age 5.** A free online class where you train little agents to play games and land a rocket, and see them get better.
+
+**Middle school.** Hugging Face's free reinforcement-learning course: the foundations, Q-learning, deep Q-networks, policy gradients, actor-critic methods, and multi-agent settings, with hands-on units where you train agents in simulators and share them. It pairs practice with Sutton and Barto's theory.
+
+**High school.** Do units 1 to 4 (introduction, Q-learning, deep Q-learning, policy gradient) alongside the RL topic; the hands-on notebooks run on a free cloud GPU or, with small settings, on the Mac. The unit on evaluation and on the reproducibility of RL results is short and important.
+
+**Stanford undergrad.** The course uses standard libraries (Stable-Baselines3, Gymnasium) so you learn the practical stack; understand what the libraries hide (replay buffers, target networks, advantage estimation) by reading Spinning Up's implementations alongside.
+
+**Stanford grad.** It is practice-first; its coverage of offline RL and of off-policy evaluation, which the alerting problem needs, is thin, so read those from the literature.
+
+**PhD at Apple.** A free, maintained practical course; a good calibration of what a working RL baseline looks like before proposing a control experiment.
+
+#### [Gymnasium documentation](https://gymnasium.farama.org/)
+
+_docs · free · an afternoon · free; the environment interface, and how to build one_
+
+**Age 5.** The manual for a set of practice worlds where a learning agent can try things safely, like a cart balancing a pole.
+
+**Middle school.** Gymnasium is the maintained version of OpenAI Gym: a standard interface for reinforcement-learning environments (observe, act, reward, done) and a set of classic tasks. Its documentation explains the interface and how to build your own environment, which is what a traffic-control simulator would need.
+
+**High school.** Read the basic usage page and the guide to making a custom environment; implement a tiny ramp-metering environment (state: queue and mainline occupancy; action: meter rate; reward: negative delay) and train a bandit or Q-learning agent on it.
+
+**Stanford undergrad.** The environment API is the contract between algorithms and simulators; understand observation and action spaces, episode termination versus truncation, and vectorized environments for throughput.
+
+**Stanford grad.** Wrapping a traffic simulator (SUMO) as a Gymnasium environment is the standard path to RL experiments in transport; the documentation's custom-environment guide is the template.
+
+**PhD at Apple.** A shared interface made RL research comparable; the same lesson applies to any experimental platform you build.
+
+#### [SUMO, Simulation of Urban MObility, documentation](https://sumo.dlr.de/docs/)
+
+_docs · free · an afternoon · free; a city's traffic, car by car_
+
+**Age 5.** The manual for a free program that simulates a whole city's traffic, car by car, so you can test ideas without touching real roads.
+
+**Middle school.** SUMO is an open-source traffic simulator from the German Aerospace Center: road networks, vehicles with realistic car-following, traffic lights, ramp meters, and a Python interface to control and observe the simulation. Its tutorials build a small network and run it.
+
+**High school.** Do the beginner tutorials (a simple network, adding vehicles, viewing the simulation), then import a piece of Fremont's road network from OpenStreetMap and simulate a rush hour with an incident. The Python interface (TraCI) lets you read speeds like PeMS would and change signals.
+
+**Stanford undergrad.** SUMO is the environment for the traffic-control RL exercise and a source of synthetic data for stress-testing the forecaster; understand its car-following models (Krauss, IDM) and its calibration limits before trusting its numbers.
+
+**Stanford grad.** Simulator-to-reality gaps are the central issue: calibrate demand and driver parameters against PeMS counts, and evaluate any learned controller under demand shifts. The documentation on calibration and on the TraCI interface is the practical reference.
+
+**PhD at Apple.** Open simulators are where counterfactual questions about alerts and routing become answerable; SUMO with a learned forecaster and a control policy is a complete research platform on one machine.
+
+#### [Fairlearn user guide](https://fairlearn.org/)
+
+_docs · free · an afternoon · free; fairness assessment and mitigation in code_
+
+**Age 5.** The manual for a free tool that checks whether a learning machine treats different groups of people fairly, and helps fix it.
+
+**Middle school.** Fairlearn is an open-source Python library from Microsoft for assessing and improving fairness: metrics computed per group, dashboards, and algorithms that reduce disparities under constraints. Its user guide explains the fairness definitions it implements and their trade-offs.
+
+**High school.** Read the user guide's sections on assessment (metric frames by group) and on mitigation, then compute recall and false-alarm rate per neighborhood for the alert policy and try one mitigation; see what it costs in overall precision.
+
+**Stanford undergrad.** The guide's careful discussion of which fairness metric fits which harm, and of the limits of technical mitigation, is a practical companion to the fairness book; its implementations are correct references for the definitions.
+
+**Stanford grad.** Fairness tooling encodes choices; use the library for measurement and treat its mitigations as experiments to be evaluated, not fixes to be applied.
+
+**PhD at Apple.** A maintained open-source reference for fairness assessment; useful for standardizing audits across a team's models.
+
+#### [Programming Differential Privacy (Near, Abuah)](https://programming-dp.com/)
+
+_book · free · weeks · free; privacy mechanisms as runnable notebooks_
+
+**Age 5.** A free online book that teaches how to add just enough randomness to shared numbers, with code you can run, so nobody can be picked out.
+
+**Middle school.** A free book, written as runnable notebooks, that teaches differential privacy by doing: the Laplace mechanism, sensitivity, composition, private counts and averages, and private machine learning, all in Python on a real dataset. It is the practical companion to Dwork and Roth.
+
+**High school.** Work through the chapters on the Laplace mechanism, on sensitivity and on composition, then release the hourly speed averages privately and plot accuracy against the privacy parameter as the topic asks. The chapter on differentially private gradient descent shows private model training.
+
+**Stanford undergrad.** The book's worked examples make the definitions concrete and its exercises are checkable; its treatment of local differential privacy and of synthetic data connects to on-device settings and to the generative-model topic.
+
+**Stanford grad.** Read it alongside the theory monograph: the book shows what the mechanisms do to real data, which is where the practical privacy-utility trade-off lives.
+
+**PhD at Apple.** A free, executable textbook is the right onboarding for engineers who will implement private releases; its examples are a starting point for a team's own privacy library.
 
 #### [Performative Prediction (Perdomo, Zrnic, Mendler-Dünner, Hardt, 2020)](https://arxiv.org/abs/2002.06673)
 
-_paper · free · free; the theory of alerts that change traffic_
+_paper · free · an evening or two · free; the theory of alerts that change traffic_
 
 **Age 5.** A paper about what happens when a prediction changes the thing it predicted, like telling everyone a road will be slow so everyone avoids it and it is not slow after all.
 
@@ -5410,7 +5970,7 @@ They model a smooth unknown function with uncertainty from few evaluations, whic
 
 #### [Probabilistic Machine Learning: An Introduction (Murphy)](https://probml.github.io/pml-book/book1.html)
 
-_book · free · free PDF; the modern reference_
+_book · free · reference · free PDF; the modern reference_
 
 **Age 5.** A very big free book that explains almost all of machine learning using the language of chance.
 
@@ -5426,7 +5986,7 @@ _book · free · free PDF; the modern reference_
 
 #### [The Elements of Statistical Learning (Hastie, Tibshirani, Friedman)](https://hastie.su.domains/ElemStatLearn/)
 
-_book · free · free PDF_
+_book · free · reference · free PDF_
 
 **Age 5.** A famous, hard, free book by three statisticians who invented many of the methods it describes.
 
@@ -5442,7 +6002,7 @@ _book · free · free PDF_
 
 #### [Understanding Machine Learning: From Theory to Algorithms (Shalev-Shwartz, Ben-David)](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)
 
-_book · free · free PDF; learning theory with proofs_
+_book · free · a semester, selectively · free PDF; learning theory with proofs_
 
 **Age 5.** A free math book that asks: why can a machine that learned from old examples be right about new ones? And it proves the answers.
 
@@ -5458,7 +6018,7 @@ _book · free · free PDF; learning theory with proofs_
 
 #### [Convex Optimization (Boyd, Vandenberghe)](https://web.stanford.edu/~boyd/cvxbook/)
 
-_book · free · free PDF and lectures_
+_book · free · a semester, selectively · free PDF and lectures_
 
 **Age 5.** A free math book about finding the lowest point of a bowl-shaped hill, which is what a learning machine does when it learns.
 
@@ -5474,7 +6034,7 @@ _book · free · free PDF and lectures_
 
 #### [CS229 lecture notes (Stanford)](https://cs229.stanford.edu/main_notes.pdf)
 
-_course · free · free_
+_course · free · reference · free_
 
 **Age 5.** The notes from a famous university class about learning machines, free for anyone to read.
 
@@ -5490,7 +6050,7 @@ _course · free · free_
 
 #### [CS224W: Machine Learning with Graphs (Stanford)](https://web.stanford.edu/class/cs224w/)
 
-_course · free · free lectures_
+_course · free · a quarter · free lectures_
 
 **Age 5.** A university class, free to watch, about learning from things that are connected to each other, like roads that join.
 
@@ -5506,7 +6066,7 @@ _course · free · free lectures_
 
 #### [A Gentle Introduction to Conformal Prediction (Angelopoulos, Bates)](https://arxiv.org/abs/2107.07511)
 
-_paper · free · free; intervals you can defend_
+_paper · free · an evening or two · free; intervals you can defend_
 
 **Age 5.** A short guide about how to make a learning machine say 'I am 90 % sure the answer is in this range' and actually be right 90 % of the time.
 
@@ -5522,7 +6082,7 @@ _paper · free · free; intervals you can defend_
 
 #### [Adaptive Conformal Inference Under Distribution Shift (Gibbs, Candès, 2021)](https://arxiv.org/abs/2106.00170)
 
-_paper · free · free; coverage that survives seasons_
+_paper · free · an evening or two · free; coverage that survives seasons_
 
 **Age 5.** A paper about keeping the 'I am 90 % sure' promise even when the world keeps changing, by adjusting how wide the range is as you go.
 
@@ -5536,25 +6096,89 @@ _paper · free · free; coverage that survives seasons_
 
 **PhD at Apple.** The practical entry point to valid uncertainty in non-stationary deployed systems; for an alerting product, this line of work is how you keep a false-alarm promise honest over months.
 
-#### [Statistical Rethinking (McElreath)](https://xcelab.net/rm/)
+#### [Statistical Rethinking lectures and course materials (McElreath)](https://github.com/rmcelreath/stat_rethinking_2026)
 
-_book · paid, lectures free · paid, lectures free; the Bayesian track_
+_course · free · ten weeks · free lectures, slides and homework; the Bayesian track_
 
-**Age 5.** A book, with free video lectures, that teaches how to think carefully about chance and evidence, using stories and small models.
+**Age 5.** Free video lessons that teach how to think carefully about chance and evidence, using stories, drawings and small models.
 
-**Middle school.** Richard McElreath's Bayesian statistics course: you build a model by writing down what you believe, then update it with data, with lots of simulation and pictures. The book is paid; the lectures are free online. It belongs to the uncertainty track of phase 8.
+**Middle school.** Richard McElreath's Bayesian statistics course: the full lecture series is free on YouTube, and the course repository on GitHub has slides, homework and solutions, with code in several languages including Python ports. You build models by writing down what you believe, then update them with data.
 
-**High school.** It teaches Bayesian thinking (priors, posteriors, why they help when data are scarce) and causal thinking (diagrams of cause and effect, confounding) in plain language. Both apply here: per-station effects with little data, and rain and incidents as common causes of slowness that confound a naive reading of the incident feature.
+**High school.** Watch the lectures on Bayesian inference, on causal diagrams and on multilevel models, and do the homework with the Python code. Then apply partial pooling to per-station slow rates, which is the topic's exercise.
 
-**Stanford undergrad.** Hierarchical models with partial pooling are the answer to 'per-station calibration is noisy': share strength across stations while letting each differ. Work through the chapters on multilevel models and on causal inference with the Python ports of the code, and apply partial pooling to the per-station thresholds of lesson 11.
+**Stanford undergrad.** The lectures present hierarchical models with partial pooling (the answer to noisy per-station estimates) and causal thinking with DAGs in plain language; the homework, with solutions, is enough to learn the material without the book.
 
-**Stanford grad.** It contrasts with the frequentist habit of point estimates; its emphasis on generative models and posterior predictive checks is a different evaluation culture that is worth learning. Pair with Gelman and colleagues' Bayesian Data Analysis for depth and with the causal-inference literature for the diagrams.
+**Stanford grad.** The course's emphasis on generative models and posterior predictive checks is a different evaluation culture worth adopting; pair with Bayesian Data Analysis for depth.
 
-**PhD at Apple.** McElreath's causal-first framing is influential in applied statistics. For traffic it is the right lens for questions prediction alone cannot answer, such as the effect of an alert or of an incident on downstream speeds, and its emphasis on stating assumptions explicitly is the discipline an alerting product needs.
+**PhD at Apple.** McElreath's causal-first framing is influential in applied statistics; the free lectures make it accessible to a whole team.
+
+#### [Probabilistic Programming and Bayesian Methods for Hackers (Davidson-Pilon)](https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers)
+
+_book · free · weeks · free; Bayesian models in code first_
+
+**Age 5.** A free online book that teaches Bayesian thinking with code first and math second, so you can see beliefs update on a screen.
+
+**Middle school.** Cameron Davidson-Pilon's book, free as notebooks, introduces Bayesian methods through probabilistic programming (PyMC): you describe a model in code, the library samples from the posterior, and you plot what you learned. Chapters cover Bayesian inference, sampling, priors, and practical examples.
+
+**High school.** Chapters 1 to 3 (introduction, a little more on PyMC, opening the black box of MCMC) are enough to build the Beta-Binomial model of station slow rates and to see the posterior update as data arrive. The examples are small and fast.
+
+**Stanford undergrad.** The book is intuition-first and light on theory; use it to become fluent with a probabilistic programming library before Bayesian Data Analysis makes the theory rigorous. Its chapter on priors and on loss functions connects to decision theory.
+
+**Stanford grad.** Probabilistic programming is how applied Bayesian work is done now; the book is the fastest way to a working model, and its limits (no hierarchical depth, dated library versions in places) are easy to work around with the library's current docs.
+
+**PhD at Apple.** A free, code-first introduction; useful for getting a team from Bayesian ideas to running models in a week.
+
+#### [A Visual Exploration of Gaussian Processes (Distill, 2019)](https://distill.pub/2019/visual-exploration-gaussian-processes/)
+
+_interactive · free · an hour · free, interactive; the kernel's effect, seen_
+
+**Age 5.** A web page with pictures that move, showing a kind of model that draws a smooth curve through points and a band showing how unsure it is.
+
+**Middle school.** A free interactive article on Distill: what a Gaussian process is, how the kernel controls the shape of the curves, how observing data narrows the band, and what the hyperparameters do. Play with the figures before reading the Gaussian-process textbook.
+
+**High school.** Use the interactive figures to see how the kernel's length scale and the noise level change the fit, then reproduce the picture on one station's daily profile with a periodic kernel. The article's explanation of the prior over functions is the idea to keep.
+
+**Stanford undergrad.** The article's treatment of conditioning a multivariate Gaussian is the whole computation behind a Gaussian process; with it, the textbook's chapter 2 reads as a formalization of what you saw.
+
+**Stanford grad.** Distill's interactive format is the reference for explaining Bayesian nonparametrics; the article stops before sparse approximations and classification.
+
+**PhD at Apple.** An exemplary explanation; the model for how to present a Bayesian method to an engineering audience.
+
+#### [Foundations of Machine Learning (Mohri, Rostamizadeh, Talwalkar), 2nd edition](https://cs.nyu.edu/~mohri/mlbook/)
+
+_book · free · reference · free PDF; learning theory with proofs, a second view_
+
+**Age 5.** A free math book that proves why learning from examples works and how many examples you need.
+
+**Middle school.** A graduate textbook on learning theory, free as a PDF from the authors: PAC learning, Rademacher complexity, support vector machines, kernels, boosting, online learning, and more, with proofs. Read it in the final phase alongside Shalev-Shwartz and Ben-David.
+
+**High school.** Chapters 2 and 3 (the PAC framework, Rademacher complexity and VC dimension) are the theory topic's formal version; chapter 7 on boosting gives the margin theory behind lesson 8. Expect slow reading and do the exercises.
+
+**Stanford undergrad.** Its treatment of online learning and of ranking (chapters 8 and 10) connects to the bandit and recommender topics; its proofs are complete and its notation consistent, which makes it a good reference for reading theory papers.
+
+**Stanford grad.** Compare with Shalev-Shwartz and Ben-David: Mohri is stronger on kernels, boosting and online learning; the other on stability and convex learning. Together they cover classical learning theory.
+
+**PhD at Apple.** A standard reference; its exercises are qualifying-exam material and its later chapters are entry points to research areas.
+
+#### [PyTorch Geometric documentation](https://pytorch-geometric.readthedocs.io/)
+
+_docs · free · an afternoon · free; graph networks without hand-written operators_
+
+**Age 5.** The manual for a tool that lets a learning machine work on networks of connected things, like roads that join.
+
+**Middle school.** PyTorch Geometric is a free library for graph neural networks: graph data structures, message-passing layers, standard datasets and models. Its introduction and tutorials show how to build a graph model in a few lines. Use it to implement the road-graph models after CS224W.
+
+**High school.** Read the introduction by example and the tutorial on creating message-passing networks; then rebuild the two-hop neighbor mixing from lesson 10 as a PyG layer and compare with the hand-written version.
+
+**Stanford undergrad.** Understand the library's data model (edge index, batching of graphs), its implementations of the standard layers, and its handling of directed graphs, which the road network needs; the temporal extension covers spatio-temporal models.
+
+**Stanford grad.** PyG's model zoo includes the graph models from the traffic papers or their components, which makes reproduction faster and fairer; read the implementations to check them against the papers.
+
+**PhD at Apple.** The standard toolkit for graph learning research; for a lead, it is the argument for not writing graph operators by hand past the learning stage.
 
 #### [Bayesian Data Analysis, 3rd edition (Gelman, Carlin, Stern, Dunson, Vehtari, Rubin)](https://sites.stat.columbia.edu/gelman/book/)
 
-_book · free · free PDF; the applied Bayesian reference_
+_book · free · reference · free PDF; the applied Bayesian reference_
 
 **Age 5.** A big free book about learning from data by keeping track of what you believed before and how the data changed it.
 
@@ -5570,7 +6194,7 @@ _book · free · free PDF; the applied Bayesian reference_
 
 #### [Gaussian Processes for Machine Learning (Rasmussen, Williams)](https://gaussianprocess.org/gpml/)
 
-_book · free · free; models with their own error bars_
+_book · free · two chapters, a week · free; models with their own error bars_
 
 **Age 5.** A free book about a kind of model that draws a smooth curve through data and also draws a band that shows how unsure it is.
 
@@ -5586,7 +6210,7 @@ _book · free · free; models with their own error bars_
 
 #### [Deep Learning (Goodfellow, Bengio, Courville)](https://www.deeplearningbook.org/)
 
-_book · free · free online_
+_book · free · reference · free online_
 
 **Age 5.** The big classic book about deep neural networks, free online, by three of the people who built the field.
 
@@ -5602,7 +6226,7 @@ _book · free · free online_
 
 #### [Graph WaveNet (Wu et al., IJCAI 2019)](https://arxiv.org/abs/1906.00121)
 
-_paper · free · free; the third traffic paper_
+_paper · free · an evening or two · free; the third traffic paper_
 
 **Age 5.** A paper where scientists let the computer figure out for itself which roads affect which, instead of telling it.
 
@@ -5618,7 +6242,7 @@ _paper · free · free; the third traffic paper_
 
 #### [METR-LA and PEMS-BAY datasets (DCRNN repository)](https://github.com/liyaguang/DCRNN)
 
-_dataset · free · free; the benchmark to reproduce on_
+_dataset · free · days · free; the benchmark to reproduce on_
 
 **Age 5.** Two ready-made piles of road sensor data that scientists all use to test their traffic guessers, so everyone can compare fairly.
 
@@ -5634,7 +6258,7 @@ _dataset · free · free; the benchmark to reproduce on_
 
 #### [ETA Prediction with Graph Neural Networks in Google Maps (Derrow-Pinion et al., 2021)](https://arxiv.org/abs/2108.11482)
 
-_paper · free · free; the industrial version_
+_paper · free · an evening or two · free; the industrial version_
 
 **Age 5.** A paper about how a maps app guesses how long a drive will take, by looking at the roads as a connected network and learning from millions of trips.
 
@@ -5688,105 +6312,147 @@ _paper · free · free; the industrial version_
 
 ## The library
 
-| Title | Kind | Cost | Phase |
-|---|---|---|---|
-| [Software Carpentry: The Unix Shell, Version Control with Git](https://swcarpentry.github.io/shell-novice/) | course | free | 0 |
-| [Pro Git, chapters 1–3](https://git-scm.com/book/en/v2) | book | free | 0 |
-| The repo's own `00_CONCEPTS.md` and `05_PLAN_COMBINED_DATASETS.md` | docs | free | 0 |
-| [Automate the Boring Stuff with Python, chapters 1–13 and 16–18](https://automatetheboringstuff.com/) | book | free | 1 |
-| [The official Python tutorial, sections 3–9](https://docs.python.org/3/tutorial/) | docs | free | 1 |
-| [Kaggle Learn: Python](https://www.kaggle.com/learn/python) | course | free | 1 |
-| [Exercism, Python track](https://exercism.org/tracks/python) | interactive | free | 1 |
-| [The `zoneinfo` and `datetime` documentation](https://docs.python.org/3/library/zoneinfo.html) | docs | free | 1 |
-| [Khan Academy: Linear algebra, Differential calculus, Statistics and probability](https://www.khanacademy.org/math) | course | free | 2 |
-| [3Blue1Brown: Essence of linear algebra, Essence of calculus](https://www.3blue1brown.com/topics/linear-algebra) | video | free | 2 |
-| [Immersive Linear Algebra (Ström, Åström, Akenine-Möller)](https://immersivemath.com/ila/) | interactive | free | 2 |
-| [Seeing Theory (Brown University)](https://seeing-theory.brown.edu/) | interactive | free | 2 |
-| [Introduction to Probability (Blitzstein, Hwang) and Stat 110](https://probabilitybook.net/) | book | free | 2 |
-| [Mathematics for Machine Learning (Deisenroth, Faisal, Ong), chapters 2–7](https://mml-book.github.io/) | book | free | 2 |
-| [Think Stats (Downey)](https://allendowney.github.io/ThinkStats/) | book | free | 2 |
-| [Python for Data Analysis, 3rd edition (McKinney), chapters 4–8 and 10–11](https://wesmckinney.com/book/) | book | free | 3 |
-| [pandas user guide: Time series and date functionality](https://pandas.pydata.org/docs/user_guide/timeseries.html) | docs | free | 3 |
-| [Kaggle Learn: Pandas, Data Cleaning, Data Visualization](https://www.kaggle.com/learn/pandas) | course | free | 3 |
-| [The polars user guide, first three chapters](https://docs.pola.rs/) | docs | free | 3 |
-| [SQLBolt, interactive SQL lessons](https://sqlbolt.com/) | interactive | free | 3 |
-| [DuckDB documentation, the Python API and SQL reference](https://duckdb.org/docs/) | docs | free | 3 |
-| [PeMS documentation and the Clearinghouse (Caltrans)](https://pems.dot.ca.gov/) | docs | free, login | 3 |
-| [Open-Meteo, historical weather API documentation](https://open-meteo.com/en/docs/historical-weather-api) | docs | free | 3 |
-| [511 SF Bay Open Data, traffic API documentation](https://511.org/open-data) | docs | free, token | 3 |
-| [Machine Learning Specialization (Andrew Ng), courses 1 and 2](https://www.coursera.org/specializations/machine-learning-introduction) | course | free to audit | 4 |
-| [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/) | book | free | 4, 5 |
-| [Hands-On Machine Learning (Géron), chapters 1–7](https://github.com/ageron/handson-ml3) | book | paid, code free | 4, 5 |
-| [StatQuest with Josh Starmer (YouTube)](https://statquest.org/) | video | free | 4, 5 |
-| [Kaggle Learn: Intro to ML, Intermediate ML, Feature Engineering](https://www.kaggle.com/learn/intro-to-machine-learning) | course | free | 4 |
-| [LightGBM documentation: Parameters, Parameters Tuning](https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html) | docs | free | 4 |
-| [The boosting papers: Friedman (2001), XGBoost (2016), LightGBM (2017)](https://arxiv.org/abs/1603.02754) | paper | free | 4 |
-| [Why do tree-based models still outperform deep learning on tabular data? (Grinsztajn, Oyallon, Varoquaux, 2022)](https://arxiv.org/abs/2207.08815) | paper | free | 4 |
-| [Interpretable Machine Learning (Molnar), the SHAP chapter](https://christophm.github.io/interpretable-ml-book/shap.html) | book | free | 4 |
-| [scikit-learn user guide: Model evaluation, Probability calibration](https://scikit-learn.org/stable/modules/model_evaluation.html) | docs | free | 4 |
-| [scikit-learn user guide: Supervised and unsupervised learning](https://scikit-learn.org/stable/supervised_learning.html) | docs | free | 5 |
-| [Random Search for Hyper-Parameter Optimization (Bergstra, Bengio, 2012)](https://jmlr.org/papers/v13/bergstra12a.html) | paper | free | 5 |
-| [Optuna documentation](https://optuna.readthedocs.io/) | docs | free | 5 |
-| [Visual Information Theory (Olah)](https://colah.github.io/posts/2015-09-Visual-Information/) | essay | free | 5 |
-| [Forecasting: Principles and Practice, the Python edition (Hyndman, Athanasopoulos), chapters 1–5, 7, 9](https://otexts.com/fpppy/) | book | free | 6 |
-| [Kaggle Learn: Time Series](https://www.kaggle.com/learn/time-series) | course | free | 6 |
-| [statsmodels documentation: one ARIMA fit on one station](https://www.statsmodels.org/stable/tsa.html) | docs | free | 6 |
-| [Traffic Flow Dynamics (Treiber, Kesting) and the traffic-simulation.de simulator](https://traffic-simulation.de/) | interactive | free simulator, paid book | 6 |
-| [The M5 forecasting competition and its findings (Makridakis, Spiliotis, Assimakopoulos)](https://www.kaggle.com/competitions/m5-forecasting-accuracy) | dataset | free | 6 |
-| [3Blue1Brown: Neural networks](https://www.3blue1brown.com/topics/neural-networks) | video | free | 7 |
-| [TensorFlow Playground](https://playground.tensorflow.org/) | interactive | free | 7 |
-| [Neural Networks: Zero to Hero (Karpathy), micrograd and makemore](https://karpathy.ai/zero-to-hero.html) | video | free | 7 |
-| [PyTorch tutorials: Learn the Basics; the MPS backend notes](https://pytorch.org/tutorials/beginner/basics/intro.html) | docs | free | 7 |
-| [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/) | book | free | 7, 8 |
-| [Understanding Deep Learning (Prince)](https://udlbook.github.io/udlbook/) | book | free | 7, 8 |
-| [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/) | course | free | 7, 8 |
-| [A Gentle Introduction to Graph Neural Networks (Distill, 2021)](https://distill.pub/2021/gnn-intro/) | interactive | free | 7 |
-| [DCRNN (Li et al., ICLR 2018) and STGCN (Yu et al., IJCAI 2018)](https://arxiv.org/abs/1707.01926) | paper | free | 7 |
-| [CS231n: Convolutional Neural Networks for Visual Recognition, course notes](https://cs231n.github.io/) | course | free | 8 |
-| [The Illustrated Transformer (Alammar)](https://jalammar.github.io/illustrated-transformer/) | essay | free | 8 |
-| [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) | paper | free | 8 |
-| [Hugging Face LLM course](https://huggingface.co/learn/llm-course/chapter1/1) | course | free | 8 |
-| [Speech and Language Processing, 3rd edition draft (Jurafsky, Martin)](https://web.stanford.edu/~jurafsky/slp3/) | book | free | 8 |
-| [Build a Large Language Model (From Scratch) (Raschka)](https://github.com/rasbt/LLMs-from-scratch) | book | paid, code free | 8 |
-| [Stanford CS336: Language Modeling from Scratch](https://cs336.stanford.edu/) | course | free | 8 |
-| [What are Diffusion Models? (Weng, Lil'Log)](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/) | essay | free | 8 |
-| [Designing Machine Learning Systems (Huyen), chapters 1–3 and 7–9](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/) | book | paid | 9 |
-| [Made With ML (Mohandas)](https://madewithml.com/) | course | free | 9 |
-| [Machine Learning Engineering (Burkov)](https://www.mlebook.com/) | book | free | 9 |
-| [Full Stack Deep Learning](https://fullstackdeeplearning.com/) | course | free | 9 |
-| [Rules of Machine Learning (Zinkevich, Google)](https://developers.google.com/machine-learning/guides/rules-of-ml) | docs | free | 9 |
-| [The ML Test Score (Breck, Cai, Nielsen, Salib, Sculley, 2017)](https://research.google/pubs/the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction/) | paper | free | 9 |
-| [Hidden Technical Debt in Machine Learning Systems (Sculley et al., 2015)](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html) | paper | free | 9 |
-| [launchd.info and the pytest documentation](https://www.launchd.info/) | docs | free | 9 |
-| [FastAPI documentation](https://fastapi.tiangolo.com/) | docs | free | 9 |
-| [Docker, Get started guide](https://docs.docker.com/get-started/) | docs | free | 9 |
-| [PyTorch distributed overview](https://pytorch.org/tutorials/beginner/dist_overview.html) | docs | free | 9 |
-| [The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)](https://huggingface.co/spaces/nanotron/ultrascale-playbook) | book | free | 9 |
-| [Scaling Laws for Neural Language Models (Kaplan et al., 2020)](https://arxiv.org/abs/2001.08361) | paper | free | 9 |
-| [Reinforcement Learning: An Introduction (Sutton, Barto)](http://incompleteideas.net/book/the-book-2nd.html) | book | free | 10 |
-| [David Silver's Reinforcement Learning course (UCL, DeepMind)](https://www.davidsilver.uk/teaching/) | video | free | 10 |
-| [Spinning Up in Deep RL (OpenAI)](https://spinningup.openai.com/) | docs | free | 10 |
-| [Causal Inference: The Mixtape (Cunningham)](https://mixtape.scunning.com/) | book | free | 10 |
-| [Causal Inference: What If (Hernán, Robins)](https://miguelhernan.org/whatifbook) | book | free | 10 |
-| The Book of Why (Pearl, Mackenzie) | book | paid | 10 |
-| [Fairness and Machine Learning (Barocas, Hardt, Narayanan)](https://fairmlbook.org/) | book | free | 10 |
-| [The Algorithmic Foundations of Differential Privacy (Dwork, Roth)](https://www.cis.upenn.edu/~aaroth/privacybook.html) | book | free | 10 |
-| [Model Cards for Model Reporting (Mitchell et al., 2019) and Datasheets for Datasets (Gebru et al., 2018)](https://arxiv.org/abs/1810.03993) | paper | free | 10 |
-| [Google's Recommendation Systems course](https://developers.google.com/machine-learning/recommendation) | course | free | 10 |
-| [Matrix Factorization Techniques for Recommender Systems (Koren, Bell, Volinsky, 2009)](https://doi.org/10.1109/MC.2009.263) | paper | paywalled | 10 |
-| [Performative Prediction (Perdomo, Zrnic, Mendler-Dünner, Hardt, 2020)](https://arxiv.org/abs/2002.06673) | paper | free | 10 |
-| [Probabilistic Machine Learning: An Introduction (Murphy)](https://probml.github.io/pml-book/book1.html) | book | free | 11 |
-| [The Elements of Statistical Learning (Hastie, Tibshirani, Friedman)](https://hastie.su.domains/ElemStatLearn/) | book | free | 11 |
-| [Understanding Machine Learning: From Theory to Algorithms (Shalev-Shwartz, Ben-David)](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/) | book | free | 11 |
-| [Convex Optimization (Boyd, Vandenberghe)](https://web.stanford.edu/~boyd/cvxbook/) | book | free | 11 |
-| [CS229 lecture notes (Stanford)](https://cs229.stanford.edu/main_notes.pdf) | course | free | 11 |
-| [CS224W: Machine Learning with Graphs (Stanford)](https://web.stanford.edu/class/cs224w/) | course | free | 11 |
-| [A Gentle Introduction to Conformal Prediction (Angelopoulos, Bates)](https://arxiv.org/abs/2107.07511) | paper | free | 11 |
-| [Adaptive Conformal Inference Under Distribution Shift (Gibbs, Candès, 2021)](https://arxiv.org/abs/2106.00170) | paper | free | 11 |
-| [Statistical Rethinking (McElreath)](https://xcelab.net/rm/) | book | paid, lectures free | 11 |
-| [Bayesian Data Analysis, 3rd edition (Gelman, Carlin, Stern, Dunson, Vehtari, Rubin)](https://sites.stat.columbia.edu/gelman/book/) | book | free | 11 |
-| [Gaussian Processes for Machine Learning (Rasmussen, Williams)](https://gaussianprocess.org/gpml/) | book | free | 11 |
-| [Deep Learning (Goodfellow, Bengio, Courville)](https://www.deeplearningbook.org/) | book | free | 11 |
-| [Graph WaveNet (Wu et al., IJCAI 2019)](https://arxiv.org/abs/1906.00121) | paper | free | 11 |
-| [METR-LA and PEMS-BAY datasets (DCRNN repository)](https://github.com/liyaguang/DCRNN) | dataset | free | 11 |
-| [ETA Prediction with Graph Neural Networks in Google Maps (Derrow-Pinion et al., 2021)](https://arxiv.org/abs/2108.11482) | paper | free | 11 |
+All free; a few need a free login or token.
+
+| Title | Kind | Access | Time | Phase |
+|---|---|---|---|---|
+| [Software Carpentry: The Unix Shell, Version Control with Git](https://swcarpentry.github.io/shell-novice/) | course | free | a day | 0 |
+| [Pro Git, chapters 1–3](https://git-scm.com/book/en/v2) | book | free | a weekend | 0 |
+| The repo's own `00_CONCEPTS.md` and `05_PLAN_COMBINED_DATASETS.md` | docs | free | an hour, twice | 0 |
+| [The Missing Semester of Your CS Education (MIT)](https://missing.csail.mit.edu/) | course | free | a week | 0 |
+| [Elements of AI (University of Helsinki)](https://www.elementsofai.com/) | course | free | about 30 hours | 0 |
+| [Automate the Boring Stuff with Python, chapters 1–13 and 16–18](https://automatetheboringstuff.com/) | book | free | weeks | 1 |
+| [The official Python tutorial, sections 3–9](https://docs.python.org/3/tutorial/) | docs | free | an afternoon | 1 |
+| [Kaggle Learn: Python](https://www.kaggle.com/learn/python) | course | free | a weekend | 1 |
+| [Exercism, Python track](https://exercism.org/tracks/python) | interactive | free | ongoing, a few a week | 1 |
+| [CS50's Introduction to Programming with Python (Harvard)](https://cs50.harvard.edu/python/) | course | free | ten weeks part-time | 1 |
+| [The `zoneinfo` and `datetime` documentation](https://docs.python.org/3/library/zoneinfo.html) | docs | free | an hour | 1 |
+| [Khan Academy: Linear algebra, Differential calculus, Statistics and probability](https://www.khanacademy.org/math) | course | free | weeks | 2 |
+| [3Blue1Brown: Essence of linear algebra, Essence of calculus](https://www.3blue1brown.com/topics/linear-algebra) | video | free | an afternoon each | 2 |
+| [Immersive Linear Algebra (Ström, Åström, Akenine-Möller)](https://immersivemath.com/ila/) | interactive | free | a few evenings | 2 |
+| [Seeing Theory (Brown University)](https://seeing-theory.brown.edu/) | interactive | free | an evening | 2 |
+| [Introduction to Probability (Blitzstein, Hwang) and Stat 110](https://probabilitybook.net/) | book | free | a semester | 2 |
+| [Mathematics for Machine Learning (Deisenroth, Faisal, Ong), chapters 2–7](https://mml-book.github.io/) | book | free | reference | 2 |
+| [Think Stats (Downey)](https://allendowney.github.io/ThinkStats/) | book | free | two weeks | 2 |
+| [MIT 18.06 Linear Algebra (Strang), OpenCourseWare](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/) | course | free | ten lectures, two weeks | 2 |
+| [OpenIntro Statistics](https://www.openintro.org/book/os/) | book | free | weeks | 2 |
+| [Python for Data Analysis, 3rd edition (McKinney), chapters 4–8 and 10–11](https://wesmckinney.com/book/) | book | free | weeks | 3 |
+| [pandas user guide: Time series and date functionality](https://pandas.pydata.org/docs/user_guide/timeseries.html) | docs | free | an afternoon | 3 |
+| [Kaggle Learn: Pandas, Data Cleaning, Data Visualization](https://www.kaggle.com/learn/pandas) | course | free | an afternoon each | 3 |
+| [The polars user guide, first three chapters](https://docs.pola.rs/) | docs | free | an afternoon | 3 |
+| [SQLBolt, interactive SQL lessons](https://sqlbolt.com/) | interactive | free | a weekend | 3 |
+| [DuckDB documentation, the Python API and SQL reference](https://duckdb.org/docs/) | docs | free | an afternoon | 3 |
+| [PeMS documentation and the Clearinghouse (Caltrans)](https://pems.dot.ca.gov/) | docs | free (login) | an afternoon | 3 |
+| [Open-Meteo, historical weather API documentation](https://open-meteo.com/en/docs/historical-weather-api) | docs | free | an hour | 3 |
+| [511 SF Bay Open Data, traffic API documentation](https://511.org/open-data) | docs | free (token) | an hour | 3 |
+| [Python Data Science Handbook (VanderPlas)](https://jakevdp.github.io/PythonDataScienceHandbook/) | book | free | weeks | 3 |
+| [Fundamentals of Data Visualization (Wilke)](https://clauswilke.com/dataviz/) | book | free | weeks | 3 |
+| [Kaggle Learn: Intro to SQL, Advanced SQL](https://www.kaggle.com/learn/intro-to-sql) | course | free | an afternoon each | 3 |
+| [Select Star SQL](https://selectstarsql.com/) | interactive | free | two hours | 3 |
+| [Machine Learning Specialization (Andrew Ng), courses 1 and 2](https://www.coursera.org/specializations/machine-learning-introduction) | course | free (audit) | six weeks | 4 |
+| [An Introduction to Statistical Learning with Python (ISLP), chapters 2–4 and 8](https://www.statlearning.com/) | book | free | three weeks | 4, 5 |
+| [Google's Machine Learning Crash Course](https://developers.google.com/machine-learning/crash-course) | course | free | about 15 hours | 4 |
+| [scikit-learn: Getting Started and the tutorials](https://scikit-learn.org/stable/getting_started.html) | docs | free | an afternoon | 4 |
+| [R2D3: A Visual Introduction to Machine Learning](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/) | interactive | free | half an hour | 4 |
+| [MLU-Explain (Amazon)](https://mlu-explain.github.io/) | interactive | free | an hour per essay | 4 |
+| [StatQuest with Josh Starmer (YouTube)](https://statquest.org/) | video | free | hours, as needed | 4, 5 |
+| [Kaggle Learn: Intro to ML, Intermediate ML, Feature Engineering](https://www.kaggle.com/learn/intro-to-machine-learning) | course | free | weeks | 4 |
+| [LightGBM documentation: Parameters, Parameters Tuning](https://lightgbm.readthedocs.io/en/latest/Parameters-Tuning.html) | docs | free | an hour | 4 |
+| [The boosting papers: Friedman (2001), XGBoost (2016), LightGBM (2017)](https://arxiv.org/abs/1603.02754) | paper | free | an evening or two | 4 |
+| [Why do tree-based models still outperform deep learning on tabular data? (Grinsztajn, Oyallon, Varoquaux, 2022)](https://arxiv.org/abs/2207.08815) | paper | free | an evening or two | 4 |
+| [Interpretable Machine Learning (Molnar), the SHAP chapter](https://christophm.github.io/interpretable-ml-book/shap.html) | book | free | an evening | 4 |
+| [scikit-learn user guide: Model evaluation, Probability calibration](https://scikit-learn.org/stable/modules/model_evaluation.html) | docs | free | an evening | 4 |
+| [scikit-learn user guide: Supervised and unsupervised learning](https://scikit-learn.org/stable/supervised_learning.html) | docs | free | an afternoon | 5 |
+| [Google's Clustering course](https://developers.google.com/machine-learning/clustering) | course | free | a few hours | 5 |
+| [Information Theory, Inference, and Learning Algorithms (MacKay)](https://www.inference.org.uk/mackay/itila/) | book | free | a semester, selectively | 5 |
+| [Random Search for Hyper-Parameter Optimization (Bergstra, Bengio, 2012)](https://jmlr.org/papers/v13/bergstra12a.html) | paper | free | an evening or two | 5 |
+| [Optuna documentation](https://optuna.readthedocs.io/) | docs | free | an afternoon | 5 |
+| [Visual Information Theory (Olah)](https://colah.github.io/posts/2015-09-Visual-Information/) | essay | free | an hour | 5 |
+| [Forecasting: Principles and Practice, the Python edition (Hyndman, Athanasopoulos), chapters 1–5, 7, 9](https://otexts.com/fpppy/) | book | free | three weeks | 6 |
+| [Kaggle Learn: Time Series](https://www.kaggle.com/learn/time-series) | course | free | half a day | 6 |
+| [statsmodels documentation: one ARIMA fit on one station](https://www.statsmodels.org/stable/tsa.html) | docs | free | an afternoon | 6 |
+| [traffic-simulation.de and its model documentation (Treiber, Kesting)](https://traffic-simulation.de/) | interactive | free | an evening | 6 |
+| [Kaggle: Store Sales, Time Series Forecasting competition](https://www.kaggle.com/competitions/store-sales-time-series-forecasting) | dataset | free | a week | 6 |
+| [The M5 forecasting competition and its findings (Makridakis, Spiliotis, Assimakopoulos)](https://www.kaggle.com/competitions/m5-forecasting-accuracy) | dataset | free | days | 6 |
+| [3Blue1Brown: Neural networks](https://www.3blue1brown.com/topics/neural-networks) | video | free | two hours | 7 |
+| [TensorFlow Playground](https://playground.tensorflow.org/) | interactive | free | fifteen minutes | 7 |
+| [Neural Networks: Zero to Hero (Karpathy), micrograd and makemore](https://karpathy.ai/zero-to-hero.html) | video | free | three weeks | 7 |
+| [PyTorch tutorials: Learn the Basics; the MPS backend notes](https://pytorch.org/tutorials/beginner/basics/intro.html) | docs | free | an afternoon | 7 |
+| [Dive into Deep Learning (d2l.ai), chapters 3–5 and 9–10](https://d2l.ai/) | book | free | reference, chapters as needed | 7, 8 |
+| [Understanding Deep Learning (Prince)](https://udlbook.github.io/udlbook/) | book | free | reference, chapters as needed | 7, 8 |
+| [Practical Deep Learning for Coders (fast.ai)](https://course.fast.ai/) | course | free | eight weeks | 7, 8 |
+| [A Gentle Introduction to Graph Neural Networks (Distill, 2021)](https://distill.pub/2021/gnn-intro/) | interactive | free | an evening | 7 |
+| [DCRNN (Li et al., ICLR 2018) and STGCN (Yu et al., IJCAI 2018)](https://arxiv.org/abs/1707.01926) | paper | free | an evening or two | 7 |
+| [Neural Networks and Deep Learning (Nielsen)](http://neuralnetworksanddeeplearning.com/) | book | free | a week | 7 |
+| [The Little Book of Deep Learning (Fleuret)](https://fleuret.org/francois/lbdl.html) | book | free | a weekend | 7 |
+| [A Recipe for Training Neural Networks (Karpathy)](https://karpathy.github.io/2019/04/25/recipe/) | essay | free | an hour | 7 |
+| [UvA Deep Learning Tutorials](https://uvadlc-notebooks.readthedocs.io/) | docs | free | an afternoon | 7 |
+| [The training-recipe papers: Adam (Kingma, Ba, 2014), Batch Normalization (Ioffe, Szegedy, 2015), Dropout (Srivastava et al., 2014)](https://arxiv.org/abs/1412.6980) | paper | free | an evening or two | 7 |
+| [CS231n: Convolutional Neural Networks for Visual Recognition, course notes](https://cs231n.github.io/) | course | free | weeks | 8 |
+| [The Illustrated Transformer (Alammar)](https://jalammar.github.io/illustrated-transformer/) | essay | free | an hour | 8 |
+| [Attention Is All You Need (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) | paper | free | an evening or two | 8 |
+| [Hugging Face LLM course](https://huggingface.co/learn/llm-course/chapter1/1) | course | free | two weeks | 8 |
+| [Speech and Language Processing, 3rd edition draft (Jurafsky, Martin)](https://web.stanford.edu/~jurafsky/slp3/) | book | free | reference | 8 |
+| [LLMs-from-scratch repository (Raschka)](https://github.com/rasbt/LLMs-from-scratch) | code | free | two weeks | 8 |
+| [Intro to Large Language Models (Karpathy, video)](https://www.youtube.com/watch?v=zjkBMFhNj_g) | video | free | one hour | 8 |
+| [Stanford CS224N: Natural Language Processing with Deep Learning](https://web.stanford.edu/class/cs224n/) | course | free | a quarter | 8 |
+| [Hugging Face Computer Vision course](https://huggingface.co/learn/computer-vision-course/unit0/welcome/welcome) | course | free | weeks | 8 |
+| [The generative-model papers: VAE (Kingma, Welling, 2013), GAN (Goodfellow et al., 2014), DDPM (Ho, Jain, Abbeel, 2020)](https://arxiv.org/abs/1312.6114) | paper | free | an evening or two | 8 |
+| [Self-Supervised Representation Learning (Weng, Lil'Log)](https://lilianweng.github.io/posts/2019-11-10-self-supervised/) | essay | free | an hour | 8 |
+| [Stanford CS336: Language Modeling from Scratch](https://cs336.stanford.edu/) | course | free | a quarter | 8 |
+| [What are Diffusion Models? (Weng, Lil'Log)](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/) | essay | free | an hour | 8 |
+| [CS 329S: Machine Learning Systems Design, lecture notes (Huyen, Stanford)](https://stanford-cs329s.github.io/) | course | free | weeks | 9 |
+| [MLflow documentation](https://mlflow.org/docs/latest/) | docs | free | an afternoon | 9 |
+| [Evidently, open-source ML monitoring documentation](https://docs.evidentlyai.com/) | docs | free | an afternoon | 9 |
+| [The Turing Way](https://book.the-turing-way.org/) | book | free | weeks | 9 |
+| [Site Reliability Engineering (Google), the free book](https://sre.google/sre-book/table-of-contents/) | book | free | selected chapters, a week | 9 |
+| [Hypothesis documentation (property-based testing)](https://hypothesis.readthedocs.io/) | docs | free | an afternoon | 9 |
+| [Made With ML (Mohandas)](https://madewithml.com/) | course | free | weeks | 9 |
+| [Machine Learning Engineering (Burkov)](https://www.mlebook.com/) | book | free | weeks | 9 |
+| [Full Stack Deep Learning](https://fullstackdeeplearning.com/) | course | free | weeks | 9 |
+| [Rules of Machine Learning (Zinkevich, Google)](https://developers.google.com/machine-learning/guides/rules-of-ml) | docs | free | an hour | 9 |
+| [The ML Test Score (Breck, Cai, Nielsen, Salib, Sculley, 2017)](https://research.google/pubs/the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction/) | paper | free | an hour | 9 |
+| [Hidden Technical Debt in Machine Learning Systems (Sculley et al., 2015)](https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html) | paper | free | an hour, twice | 9 |
+| [launchd.info and the pytest documentation](https://www.launchd.info/) | docs | free | an afternoon | 9 |
+| [FastAPI documentation](https://fastapi.tiangolo.com/) | docs | free | an afternoon | 9 |
+| [Docker, Get started guide](https://docs.docker.com/get-started/) | docs | free | an afternoon | 9 |
+| [PyTorch distributed overview](https://pytorch.org/tutorials/beginner/dist_overview.html) | docs | free | an afternoon | 9 |
+| [The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)](https://huggingface.co/spaces/nanotron/ultrascale-playbook) | book | free | weeks | 9 |
+| [Scaling Laws for Neural Language Models (Kaplan et al., 2020)](https://arxiv.org/abs/2001.08361) | paper | free | an evening or two | 9 |
+| [Training Compute-Optimal Large Language Models (Hoffmann et al., 2022)](https://arxiv.org/abs/2203.15556) | paper | free | an evening or two | 9 |
+| [Reinforcement Learning: An Introduction (Sutton, Barto)](http://incompleteideas.net/book/the-book-2nd.html) | book | free | a semester | 10 |
+| [David Silver's Reinforcement Learning course (UCL, DeepMind)](https://www.davidsilver.uk/teaching/) | video | free | ten lectures, two weeks | 10 |
+| [Spinning Up in Deep RL (OpenAI)](https://spinningup.openai.com/) | docs | free | a week | 10 |
+| [Causal Inference: The Mixtape (Cunningham)](https://mixtape.scunning.com/) | book | free | selected chapters, two weeks | 10 |
+| [Causal Inference: What If (Hernán, Robins)](https://miguelhernan.org/whatifbook) | book | free | part 1, three weeks | 10 |
+| [Introduction to Causal Inference (Brady Neal), course and book draft](https://www.bradyneal.com/causal-inference-course) | course | free | weeks | 10 |
+| [Fairness and Machine Learning (Barocas, Hardt, Narayanan)](https://fairmlbook.org/) | book | free | three weeks | 10 |
+| [The Algorithmic Foundations of Differential Privacy (Dwork, Roth)](https://www.cis.upenn.edu/~aaroth/privacybook.html) | book | free | weeks | 10 |
+| [Model Cards for Model Reporting (Mitchell et al., 2019) and Datasheets for Datasets (Gebru et al., 2018)](https://arxiv.org/abs/1810.03993) | paper | free | an evening or two | 10 |
+| [Google's Recommendation Systems course](https://developers.google.com/machine-learning/recommendation) | course | free | weeks | 10 |
+| [Recommender Systems chapter, Dive into Deep Learning](https://d2l.ai/chapter_recommender-systems/index.html) | book | free | weeks | 10 |
+| [Hugging Face Deep RL course](https://huggingface.co/learn/deep-rl-course/unit0/introduction) | course | free | four weeks | 10 |
+| [Gymnasium documentation](https://gymnasium.farama.org/) | docs | free | an afternoon | 10 |
+| [SUMO, Simulation of Urban MObility, documentation](https://sumo.dlr.de/docs/) | docs | free | an afternoon | 10 |
+| [Fairlearn user guide](https://fairlearn.org/) | docs | free | an afternoon | 10 |
+| [Programming Differential Privacy (Near, Abuah)](https://programming-dp.com/) | book | free | weeks | 10 |
+| [Performative Prediction (Perdomo, Zrnic, Mendler-Dünner, Hardt, 2020)](https://arxiv.org/abs/2002.06673) | paper | free | an evening or two | 10 |
+| [Probabilistic Machine Learning: An Introduction (Murphy)](https://probml.github.io/pml-book/book1.html) | book | free | reference | 11 |
+| [The Elements of Statistical Learning (Hastie, Tibshirani, Friedman)](https://hastie.su.domains/ElemStatLearn/) | book | free | reference | 11 |
+| [Understanding Machine Learning: From Theory to Algorithms (Shalev-Shwartz, Ben-David)](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/) | book | free | a semester, selectively | 11 |
+| [Convex Optimization (Boyd, Vandenberghe)](https://web.stanford.edu/~boyd/cvxbook/) | book | free | a semester, selectively | 11 |
+| [CS229 lecture notes (Stanford)](https://cs229.stanford.edu/main_notes.pdf) | course | free | reference | 11 |
+| [CS224W: Machine Learning with Graphs (Stanford)](https://web.stanford.edu/class/cs224w/) | course | free | a quarter | 11 |
+| [A Gentle Introduction to Conformal Prediction (Angelopoulos, Bates)](https://arxiv.org/abs/2107.07511) | paper | free | an evening or two | 11 |
+| [Adaptive Conformal Inference Under Distribution Shift (Gibbs, Candès, 2021)](https://arxiv.org/abs/2106.00170) | paper | free | an evening or two | 11 |
+| [Statistical Rethinking lectures and course materials (McElreath)](https://github.com/rmcelreath/stat_rethinking_2026) | course | free | ten weeks | 11 |
+| [Probabilistic Programming and Bayesian Methods for Hackers (Davidson-Pilon)](https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers) | book | free | weeks | 11 |
+| [A Visual Exploration of Gaussian Processes (Distill, 2019)](https://distill.pub/2019/visual-exploration-gaussian-processes/) | interactive | free | an hour | 11 |
+| [Foundations of Machine Learning (Mohri, Rostamizadeh, Talwalkar), 2nd edition](https://cs.nyu.edu/~mohri/mlbook/) | book | free | reference | 11 |
+| [PyTorch Geometric documentation](https://pytorch-geometric.readthedocs.io/) | docs | free | an afternoon | 11 |
+| [Bayesian Data Analysis, 3rd edition (Gelman, Carlin, Stern, Dunson, Vehtari, Rubin)](https://sites.stat.columbia.edu/gelman/book/) | book | free | reference | 11 |
+| [Gaussian Processes for Machine Learning (Rasmussen, Williams)](https://gaussianprocess.org/gpml/) | book | free | two chapters, a week | 11 |
+| [Deep Learning (Goodfellow, Bengio, Courville)](https://www.deeplearningbook.org/) | book | free | reference | 11 |
+| [Graph WaveNet (Wu et al., IJCAI 2019)](https://arxiv.org/abs/1906.00121) | paper | free | an evening or two | 11 |
+| [METR-LA and PEMS-BAY datasets (DCRNN repository)](https://github.com/liyaguang/DCRNN) | dataset | free | days | 11 |
+| [ETA Prediction with Graph Neural Networks in Google Maps (Derrow-Pinion et al., 2021)](https://arxiv.org/abs/2108.11482) | paper | free | an evening or two | 11 |
