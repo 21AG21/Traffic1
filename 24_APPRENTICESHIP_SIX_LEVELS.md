@@ -6,7 +6,7 @@ _September 2026. Supersedes `22_LEARNING_PATH_ML.md` and `23_LESSONS_SIX_LEVELS.
 
 The Fremont traffic model is the spine: you build it stage by stage and learn each idea the week it is needed. Around that spine the course covers the rest of the field, from SQL and regression to transformers, reinforcement learning, causal inference and fairness, so nothing needed for real machine-learning work is left out. Every lesson, topic and resource is explained at six levels, every resource is free, and every resource carries a study guide that teaches its content here, so the course can be learned from this page alone. Pick a level with the switcher and read the whole course at that height, or turn on every level and watch one idea gain precision rung by rung. Tick things off as you go; progress is saved in this browser.
 
-The six levels, in order: Age 5, Middle school, High school, Stanford undergrad, Stanford grad, PhD at Apple. Every lesson, topic and resource below carries all six, and every resource has a study guide (what it covers, key ideas, formulas, takeaways, practice) so the content can be learned from this document before opening the link. Links were checked in September 2026.
+The six levels, in order: Age 5, Middle school, High school, Stanford undergrad, Stanford grad, PhD at Apple. Every lesson, topic and resource below carries all six, and every resource has a study guide (what it covers, key ideas, formulas, takeaways, practice) so the content can be learned from this document before opening the link. Every walkthrough step explains its tools, terms and commands before it asks anything, and reads its code line by line; the glossary at the end defines every word the course uses. Links were checked in September 2026.
 
 ## Contents
 
@@ -61,6 +61,7 @@ The six levels, in order: Age 5, Middle school, High school, Stanford undergrad,
   - Topic: Theory: why learning works at all
   - Topic: Reading papers and reproducing benchmarks
   - Topic: Bayesian machine learning and Gaussian processes
+- Glossary: every word, defined
 
 ## Six rules
 
@@ -250,37 +251,98 @@ The 16 GB Mac mini is a useful proxy for on-device budgets: model size, latency 
 
 _Try this._ Define the label on probe data with heterogeneous sampling rates. State the estimator bias it introduces for low-coverage segments and propose a correction.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Load one month of cleaned rows (or fake them) and pick a station.
+**Step 1.**
 
-   ```python
-   import pandas as pd, numpy as np
-   df = pd.read_parquet("data/pems_processed/2026-03.parquet")
-   s = df[df.station_id == df.station_id.iloc[0]].sort_values("timestamp").reset_index(drop=True)
-   ```
+_Before you do this._ You will run this code in Python, the programming language the whole course uses. Python is a program that reads a text file of instructions and carries them out one line at a time. You type the lines into a file such as `scratch.py` and run it from the terminal with `python scratch.py`, or you paste them into a Jupyter notebook cell and press shift-enter. The terminal is the text window (the Terminal app on a Mac) where you type commands instead of clicking; Jupyter is a notebook app that runs Python one cell at a time and shows the result under each cell. Either is fine; the notebook is friendlier for looking at data.
 
-2. Build the input side of one row: speed now and 5, 10, 15 minutes ago.
+`pandas` is the library, meaning a bundle of ready-made code, that Python uses for tables. Its table type is called a DataFrame: rows and named columns, like a spreadsheet you drive with code. `numpy` is the library underneath it for fast arithmetic on arrays of numbers. `import pandas as pd` loads the library and gives it the short name `pd`, so later lines can say `pd.something`.
 
-   ```python
-   for k in (0, 1, 2, 3):
-       s[f"speed_lag_{k}"] = s["speed"].shift(k)
-   ```
+Parquet is a file format for tables. Unlike a CSV text file it stores each column separately and compressed, so a month of detector rows is small on disk and fast to load. `data/pems_processed/2026-03.parquet` is the cleaned table that lesson 3 produces; the path is relative to the Traffic1 folder, so run the code from there. If you have not built that file yet, make a fake one: a DataFrame with the columns `station_id`, `timestamp`, `speed` and `label`, 288 rows per day (one every five minutes), any plausible numbers.
 
-3. Build the target side: the label 30 minutes later is the label six rows down.
+A station is one detector site on the freeway, identified by a number in the `station_id` column. The line that picks a station reads in three parts: `df.station_id.iloc[0]` takes the first station number in the table; `df[df.station_id == that]` keeps only the rows for that station (a boolean mask: a true-or-false test per row, used to filter); `sort_values("timestamp")` puts those rows in time order; `reset_index(drop=True)` renumbers them 0, 1, 2, … so that row 100 really is the 101st reading. The result, `s`, is one station's month as a single time series: one row per five minutes.
 
-   ```python
-   s["y_30"] = s["label"].shift(-6)      # negative shift looks forward
-   print(s.loc[100, ["timestamp", "speed_lag_0", "y_30"]])
-   print(s.loc[106, ["timestamp", "label"]])   # same value as y_30 at row 100
-   ```
+_Do this._ Load one month of cleaned rows (or fake them) and pick a station.
 
-4. Confirm there is nothing in the inputs from after the row's timestamp. Every lag has k ≥ 0 and the only forward shift is on the target.
-5. Count the positives. That number is the prevalence and the baseline average precision.
+```python
+import pandas as pd, numpy as np
+df = pd.read_parquet("data/pems_processed/2026-03.parquet")
+s = df[df.station_id == df.station_id.iloc[0]].sort_values("timestamp").reset_index(drop=True)
+```
 
-   ```python
-   print(s["y_30"].mean())
-   ```
+_What each line does._
+
+- `import pandas as pd, numpy as np` — loads the table library and the numeric library under the short names used everywhere in the course
+- `pd.read_parquet(...)` — reads the Parquet file into a DataFrame called df, every station, every five-minute row of the month
+- `df[df.station_id == df.station_id.iloc[0]]` — keeps only rows belonging to the first station in the file
+- `.sort_values("timestamp").reset_index(drop=True)` — orders them by time and numbers them from zero, so row positions mean time positions
+
+**Step 2.**
+
+_Before you do this._ A row's inputs are what was known at that row's moment. The simplest inputs are the station's own recent speeds. A lag is a value from some steps earlier: lag 1 is the previous row (five minutes ago), lag 3 is three rows back (fifteen minutes ago), lag 0 is the row itself.
+
+`s["speed"]` is one column of the table, a Series in pandas language. `.shift(k)` returns the same column moved down by k rows, so the value that was at row 99 now sits at row 100 when k is 1. The first k rows have nothing above them and become NaN, which is pandas' marker for a missing number (short for not a number). Assigning `s["speed_lag_1"] = ...` creates a new column with that name.
+
+The `for k in (0, 1, 2, 3):` line is a loop: Python runs the indented line once with k set to 0, then 1, then 2, then 3. The `f"speed_lag_{k}"` is an f-string, a way of building text where whatever is inside the curly braces is filled in, so the four columns are named `speed_lag_0` to `speed_lag_3`.
+
+_Do this._ Build the input side of one row: speed now and 5, 10, 15 minutes ago.
+
+```python
+for k in (0, 1, 2, 3):
+    s[f"speed_lag_{k}"] = s["speed"].shift(k)
+```
+
+_What each line does._
+
+- `for k in (0, 1, 2, 3):` — repeat the next line for each of the four lag distances
+- `s[f"speed_lag_{k}"] = s["speed"].shift(k)` — make a column holding the speed from k rows earlier; the first k rows are NaN because there is no earlier reading
+
+**Step 3.**
+
+_Before you do this._ The target is the thing to predict: whether the station is inside a slow episode thirty minutes after the row's moment. The cleaned table already has a `label` column (lesson 4 shows how it is made) that says, for each row, whether that row is slow now. To know what happens thirty minutes later, look six rows further down, because each row is five minutes and 6 × 5 = 30.
+
+`shift(-6)` is the same shift as before with a negative number, which moves the column up by six rows: the value that was at row 106 now sits at row 100. That is exactly the future label lined up next to the present inputs. The last six rows of the month have no future inside the file and become NaN.
+
+`s.loc[100, [...]]` picks row 100 and a list of columns; `print` shows them. Printing rows 100 and 106 side by side is the check: the `y_30` at row 100 must equal the `label` at row 106, and the timestamps must be thirty minutes apart. The text after `#` on a line is a comment: Python ignores it; it is a note for the reader.
+
+_Do this._ Build the target side: the label 30 minutes later is the label six rows down.
+
+```python
+s["y_30"] = s["label"].shift(-6)      # negative shift looks forward
+print(s.loc[100, ["timestamp", "speed_lag_0", "y_30"]])
+print(s.loc[106, ["timestamp", "label"]])   # same value as y_30 at row 100
+```
+
+_What each line does._
+
+- `s["y_30"] = s["label"].shift(-6)` — new column: the slow-or-not label from six rows (thirty minutes) later, the target
+- `print(s.loc[100, ["timestamp", "speed_lag_0", "y_30"]])` — show one row's time, its present speed and its future label
+- `print(s.loc[106, ["timestamp", "label"]])` — show the row thirty minutes later; its label must match y_30 above
+
+**Step 4.**
+
+_Before you do this._ Leakage is the mistake that makes traffic models look brilliant and then fail: letting information from after a row's moment into that row's inputs. A model trained with leaked columns learns to read the answer instead of predicting it. This step is a habit rather than code: every time you make an input column, ask where each value came from in time.
+
+The rule you check here has two parts. Every lag column was made with `shift(k)` and k at least zero, so each input value is from the same moment or earlier. The only column made with a negative shift is the target. If you ever find yourself writing `shift(-something)` for an input, stop: that column is looking into the future.
+
+_Do this._ Confirm there is nothing in the inputs from after the row's timestamp. Every lag has k ≥ 0 and the only forward shift is on the target.
+
+**Step 5.**
+
+_Before you do this._ A positive is a row whose target is 1 (slow in thirty minutes); a negative has target 0. The share of positives is called the prevalence. `.mean()` of a column of zeros and ones is exactly that share, because the sum of the ones divided by the count of rows is the fraction that are ones. NaN rows are skipped automatically.
+
+The prevalence matters twice. It tells you how rare the event is, usually a few percent, which is why accuracy is a useless score: a model that always says no is right most of the time. And it is the score of a model that guesses at random under average precision, the metric lesson 6 introduces. Any real model must beat this number, so write it down.
+
+_Do this._ Count the positives. That number is the prevalence and the baseline average precision.
+
+```python
+print(s["y_30"].mean())
+```
+
+_What each line does._
+
+- `print(s["y_30"].mean())` — the fraction of rows that are positive: the prevalence, and the average precision of random guessing
 
 **Check yourself.**
 
@@ -565,6 +627,8 @@ P(disease | positive) = P(positive | disease) P(disease) / P(positive)
 
 ### Build
 
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
+
 - Clone Traffic1, create the venv, install the requirements, get a 511 key, run `02_collect_events.py` and open the CSV.
 - Add `data/` and `.env` to `.gitignore`, commit, push. Start `notebook/2026-W37.md` with what you did and what confused you.
 
@@ -816,45 +880,111 @@ Research threads: learned spatio-temporal imputation (graph recurrent imputation
 
 _Try this._ Design a detector-health score from `% Observed`, flow-occupancy consistency against the station's own fundamental diagram, and agreement with neighbors. Say how you would validate it without ground truth.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Look at a raw file before you trust any description of it.
+**Step 1.**
 
-   ```bash
-   zcat data/pems_raw/d04_text_station_5min_2026_03_02.txt.gz | head -3
-   zcat data/pems_raw/d04_text_station_5min_2026_03_02.txt.gz | head -1 | tr ',' '\n' | wc -l
-   ```
+_Before you do this._ These are terminal commands, not Python. Open the Terminal app, change into the Traffic1 folder with `cd`, and type each line followed by return. The PeMS files arrive gzipped, a compression format whose files end in `.gz`; `zcat` prints a gzipped file's contents decompressed, without writing an uncompressed copy to disk.
 
-2. Read the first twelve columns for a hundred thousand rows and describe them.
+The vertical bar `|` is a pipe: it sends the output of the command on its left into the command on its right. `head -3` keeps only the first three lines, so the first command shows three raw rows and nothing more. Never open a 200 MB file in a text editor; peek at it like this.
 
-   ```python
-   import pandas as pd
-   cols = ["ts","station","district","fwy","dir","lane_type","length","samples","pct_obs","flow","occ","speed"]
-   df = pd.read_csv("data/pems_raw/d04_text_station_5min_2026_03_02.txt.gz", header=None,
-                    usecols=range(12), names=cols, nrows=100_000)
-   print(df.describe().T)
-   print(df.station.nunique(), "stations in the first 100k rows")
-   ```
+The second command counts columns. `head -1` keeps one line; `tr ',' '\n'` translates every comma into a line break, so each field lands on its own line; `wc -l` counts lines. The answer is the number of columns in a row, which is far more than the twelve documented ones because PeMS repeats a block of columns for every lane.
 
-3. Count rows per station. A healthy station has 288 per day.
+_Do this._ Look at a raw file before you trust any description of it.
 
-   ```python
-   print(df.groupby("station").size().describe())
-   ```
+```bash
+zcat data/pems_raw/d04_text_station_5min_2026_03_02.txt.gz | head -3
+zcat data/pems_raw/d04_text_station_5min_2026_03_02.txt.gz | head -1 | tr ',' '\n' | wc -l
+```
 
-4. Parse the local timestamp and convert to UTC with explicit DST handling.
+_What each line does._
 
-   ```python
-   ts = pd.to_datetime(df.ts, format="%m/%d/%Y %H:%M:%S")
-   df["timestamp"] = ts.dt.tz_localize("America/Los_Angeles", ambiguous="NaT", nonexistent="shift_forward").dt.tz_convert("UTC")
-   ```
+- `zcat file.txt.gz | head -3` — decompress and show the first three raw rows
+- `zcat file.txt.gz | head -1 | tr ',' '\n' | wc -l` — take one row, put each comma-separated field on its own line, count the lines: the column count
 
-5. Open the incident log and look at the gap between `created` and `pulled_at` for a few rows. That gap is the reporting and polling delay you will live with.
+**Step 2.**
 
-   ```python
-   ev = pd.read_csv("data/fremont_events_log.csv", parse_dates=["created","updated","pulled_at"])
-   print((ev.pulled_at - ev.created).describe())
-   ```
+_Before you do this._ Now the same file in Python. A CSV is a text table with one row per line and commas between fields; the PeMS file is a CSV with no header line, so pandas has to be told the column names. `pd.read_csv` reads it, and it can read a gzipped file directly.
+
+The arguments: `header=None` says the first line is data, not names; `usecols=range(12)` keeps the first twelve columns and ignores the per-lane repeats; `names=cols` gives those twelve columns the names in the list `cols`; `nrows=100_000` stops after a hundred thousand rows, which is enough to look at and keeps memory small. Python allows the underscore inside a number for readability.
+
+The names follow the PeMS documentation: `ts` the timestamp text, `station` the detector id, `district` the Caltrans district (4 is the Bay Area), `fwy` the freeway number, `dir` the direction, `lane_type` mainline or ramp, `length` the stretch of road the station represents, `samples` how many raw sensor samples went into the five-minute row, `pct_obs` the percentage of the row that was actually observed rather than filled in, and `flow`, `occ`, `speed` the three measurements: vehicles counted, fraction of time the sensor was covered, and average speed in miles per hour.
+
+`describe()` computes count, mean, standard deviation, minimum, quartiles and maximum for every numeric column; `.T` transposes the table so columns become rows, easier to read. `nunique()` counts distinct values, here how many stations appear.
+
+_Do this._ Read the first twelve columns for a hundred thousand rows and describe them.
+
+```python
+import pandas as pd
+cols = ["ts","station","district","fwy","dir","lane_type","length","samples","pct_obs","flow","occ","speed"]
+df = pd.read_csv("data/pems_raw/d04_text_station_5min_2026_03_02.txt.gz", header=None,
+                 usecols=range(12), names=cols, nrows=100_000)
+print(df.describe().T)
+print(df.station.nunique(), "stations in the first 100k rows")
+```
+
+_What each line does._
+
+- `cols = [...]` — the twelve documented column names, in file order
+- `pd.read_csv(path, header=None, usecols=range(12), names=cols, nrows=100_000)` — read a hundred thousand rows of the first twelve columns, naming them
+- `print(df.describe().T)` — a summary of every numeric column: is speed between 0 and 100, is pct_obs often below 50
+- `print(df.station.nunique(), ...)` — how many distinct stations appear in this slice
+
+**Step 3.**
+
+_Before you do this._ A day has 24 × 12 = 288 five-minute slots, so a station that reported every slot has 288 rows. `groupby("station")` splits the table into one group per station; `.size()` counts rows in each group; `.describe()` summarizes those counts. If the minimum is far below 288, some stations are missing rows, and lesson 3 will have to put the gaps back on the grid.
+
+This is the general pattern for questions of the form 'how many per something': group, then count.
+
+_Do this._ Count rows per station. A healthy station has 288 per day.
+
+```python
+print(df.groupby("station").size().describe())
+```
+
+_What each line does._
+
+- `df.groupby("station").size()` — rows per station
+- `.describe()` — min, median, max of those counts; a healthy file shows 288 everywhere
+
+**Step 4.**
+
+_Before you do this._ The `ts` column is text such as `03/02/2026 00:05:00`, in California local time. Text cannot be compared or subtracted, so it must be parsed into a real datetime. `pd.to_datetime` does that; `format="%m/%d/%Y %H:%M:%S"` tells it the layout (month, day, four-digit year, hour, minute, second), which is faster and safer than guessing.
+
+A timezone is the rule that maps a local clock reading to a moment in the world. California uses Pacific time, which shifts by an hour twice a year for daylight saving time (DST). On the spring night one hour of clock time does not exist; on the autumn night one hour happens twice. `tz_localize("America/Los_Angeles", ...)` attaches the Pacific rule; `ambiguous="NaT"` says that a repeated autumn hour should become NaT (not a time, the datetime version of NaN) rather than a guess; `nonexistent="shift_forward"` says a spring clock reading that never happened should move forward to the next real moment. `.dt` is the accessor that gives datetime methods on a column.
+
+`tz_convert("UTC")` then turns every moment into Coordinated Universal Time, the single clock that has no DST. All storage in the course is in UTC; local time is recomputed only when a feature needs the hour of day.
+
+_Do this._ Parse the local timestamp and convert to UTC with explicit DST handling.
+
+```python
+ts = pd.to_datetime(df.ts, format="%m/%d/%Y %H:%M:%S")
+df["timestamp"] = ts.dt.tz_localize("America/Los_Angeles", ambiguous="NaT", nonexistent="shift_forward").dt.tz_convert("UTC")
+```
+
+_What each line does._
+
+- `pd.to_datetime(df.ts, format=...)` — text to datetime, with the layout stated
+- `.dt.tz_localize("America/Los_Angeles", ambiguous="NaT", nonexistent="shift_forward")` — declare the readings to be Pacific local time and decide what to do with the two DST edge cases
+- `.dt.tz_convert("UTC")` — express every moment on the one clock the course stores
+
+**Step 5.**
+
+_Before you do this._ The incident log is the CSV that `02_collect_events.py` appends to every time it polls the 511 service, the Bay Area traffic information feed. Polling means asking a server for its current list on a schedule. Each row of the log is one incident as seen at one poll, with `created` (when the incident was first reported), `updated` (when its details last changed) and `pulled_at` (when this program fetched it).
+
+`parse_dates=[...]` tells `read_csv` to turn those three columns into datetimes as it reads. Subtracting two datetime columns gives a column of durations; `describe()` then shows how long, typically, an incident had already existed before this collector saw it. That delay is a fact of life for the live model: an incident cannot help a prediction until it has been reported and pulled.
+
+_Do this._ Open the incident log and look at the gap between `created` and `pulled_at` for a few rows. That gap is the reporting and polling delay you will live with.
+
+```python
+ev = pd.read_csv("data/fremont_events_log.csv", parse_dates=["created","updated","pulled_at"])
+print((ev.pulled_at - ev.created).describe())
+```
+
+_What each line does._
+
+- `pd.read_csv("data/fremont_events_log.csv", parse_dates=[...])` — load the incident log with real datetimes
+- `(ev.pulled_at - ev.created).describe()` — how long between an incident's creation and our seeing it: the reporting plus polling delay
 
 **Check yourself.**
 
@@ -1203,6 +1333,8 @@ second = local.replace(fold=1).astimezone(timezone.utc)   # one hour later
 
 ### Build
 
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
+
 - Read `02_collect_events.py` top to bottom and write one comment above each function saying what it does and why.
 - Rewrite `event_touches_fremont()` from its description without looking, then test it with pytest on five hand-made events.
 - Write a script that prints events per road per day from the CSV, using only the standard library.
@@ -1500,59 +1632,127 @@ Open questions of practical weight: the interaction between class reweighting, c
 
 _Try this._ State and sketch the proof that gradient descent on logistic loss over linearly separable data converges in direction to the max-margin solution, and explain what it implies for the choice of stopping time.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Standardize with training statistics only.
+**Step 1.**
 
-   ```python
-   feats = ["speed_lag_0", "speed_lag_3", "speed_roll_mean_30", "down1_speed", "incident_active", "min_sin", "min_cos"]
-   mu, sd = tr[feats].mean(), tr[feats].std() + 1e-6
-   Xtr = ((tr[feats] - mu) / sd).fillna(0).to_numpy(np.float32); ytr = tr.y_30.to_numpy(np.float32)
-   Xva = ((va[feats] - mu) / sd).fillna(0).to_numpy(np.float32); yva = va.y_30.to_numpy(np.float32)
-   ```
+_Before you do this._ Logistic regression is the simplest model that outputs a probability: multiply each feature by a weight, add them up, add a bias, and squash the sum into 0 to 1. Before any such model, features are standardized: each column has its mean subtracted and is divided by its standard deviation, so every column is centred on zero with a spread of about one. Without this a column measured in vehicles per five minutes (hundreds) would swamp a column measured as a fraction (0 to 1), and gradient descent would crawl.
 
-2. The model, the loss and the gradient in eight lines.
+The trap is the same as in lesson 4: the mean `mu` and standard deviation `sd` are computed from the training rows only and then applied to validation and test. `+ 1e-6` keeps a constant column from dividing by zero. `fillna(0)` puts missing values at the mean, a neutral choice. `to_numpy(np.float32)` converts the DataFrame into a plain numpy matrix `X` (rows × features) of 32-bit floats, and the target into a vector `y`, because the hand-written math below works on arrays, not tables. `feats` is a short list of features chosen to keep this lesson readable; `incident_active` is the 511 flag from stage 7.
 
-   ```python
-   def sigmoid(z): return 1 / (1 + np.exp(-z))
-   def loss(w, b, X, y):
-       p = np.clip(sigmoid(X @ w + b), 1e-7, 1 - 1e-7)
-       return -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
-   def grad(w, b, X, y):
-       p = sigmoid(X @ w + b); e = p - y
-       return X.T @ e / len(y), e.mean()
-   ```
+_Do this._ Standardize with training statistics only.
 
-3. Check the gradient numerically before trusting it.
+```python
+feats = ["speed_lag_0", "speed_lag_3", "speed_roll_mean_30", "down1_speed", "incident_active", "min_sin", "min_cos"]
+mu, sd = tr[feats].mean(), tr[feats].std() + 1e-6
+Xtr = ((tr[feats] - mu) / sd).fillna(0).to_numpy(np.float32); ytr = tr.y_30.to_numpy(np.float32)
+Xva = ((va[feats] - mu) / sd).fillna(0).to_numpy(np.float32); yva = va.y_30.to_numpy(np.float32)
+```
 
-   ```python
-   w = np.zeros(Xtr.shape[1], np.float32); b = 0.0
-   gw, gb = grad(w, b, Xtr[:5000], ytr[:5000])
-   eps = 1e-4; num = []
-   for j in range(len(w)):
-       wp = w.copy(); wp[j] += eps; wm = w.copy(); wm[j] -= eps
-       num.append((loss(wp, b, Xtr[:5000], ytr[:5000]) - loss(wm, b, Xtr[:5000], ytr[:5000])) / (2 * eps))
-   print(np.max(np.abs(np.array(num) - gw)))     # should be ~1e-5 or smaller
-   ```
+_What each line does._
 
-4. Mini-batch gradient descent with a validation check every epoch.
+- `feats = [...]` — seven features for a readable first model
+- `mu, sd = tr[feats].mean(), tr[feats].std() + 1e-6` — training mean and spread per column
+- `Xtr = ((tr[feats] - mu) / sd).fillna(0).to_numpy(np.float32); ytr = ...` — standardized training matrix and its targets
+- `Xva = ((va[feats] - mu) / sd)...` — validation standardized with the training statistics, never its own
 
-   ```python
-   rng = np.random.default_rng(0); eta = 0.1
-   for epoch in range(20):
-       idx = rng.permutation(len(ytr))
-       for i in range(0, len(idx), 4096):
-           j = idx[i:i + 4096]; gw, gb = grad(w, b, Xtr[j], ytr[j]); w -= eta * gw; b -= eta * gb
-       print(epoch, loss(w, b, Xva, yva), ap(yva, sigmoid(Xva @ w + b)))
-   ```
+**Step 2.**
 
-5. Compare with scikit-learn on the same matrix; the two should agree closely.
+_Before you do this._ Three functions, each a few lines. `sigmoid(z) = 1 / (1 + e^(-z))` turns any number into a probability: large positive z gives nearly 1, large negative nearly 0, zero gives 0.5. `np.exp` is e raised to a power, applied to a whole array at once. `X @ w` is matrix multiplication: for each row of X, the sum of feature times weight, giving one number per row; `+ b` adds the bias.
 
-   ```python
-   from sklearn.linear_model import LogisticRegression
-   sk = LogisticRegression(C=1e6, max_iter=1000).fit(Xtr, ytr)
-   print(np.round(sk.coef_[0], 3)); print(np.round(w, 3))
-   ```
+The loss is a single number that says how wrong the model is on a batch: cross-entropy, also called log loss. For a row with true label 1 it is −log p, which is near zero when p is near 1 and huge when p is near 0; for label 0 it is −log(1 − p). `np.mean` averages over rows. `np.clip(p, 1e-7, 1 - 1e-7)` keeps p away from exactly 0 or 1 so that the logarithm never becomes infinite.
+
+The gradient is the direction in which the loss rises fastest, one number per weight. For this loss and this model it has a famously simple form: the prediction error `e = p - y`, multiplied by the features and averaged. `X.T @ e / len(y)` computes that for every weight at once (`X.T` is the transposed matrix); `e.mean()` is the gradient for the bias. Training will step the weights against this direction.
+
+_Do this._ The model, the loss and the gradient in eight lines.
+
+```python
+def sigmoid(z): return 1 / (1 + np.exp(-z))
+def loss(w, b, X, y):
+    p = np.clip(sigmoid(X @ w + b), 1e-7, 1 - 1e-7)
+    return -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
+def grad(w, b, X, y):
+    p = sigmoid(X @ w + b); e = p - y
+    return X.T @ e / len(y), e.mean()
+```
+
+_What each line does._
+
+- `def sigmoid(z): return 1 / (1 + np.exp(-z))` — any number to a probability
+- `p = np.clip(sigmoid(X @ w + b), 1e-7, 1 - 1e-7)` — the model's probability per row, kept away from 0 and 1
+- `return -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))` — cross-entropy: average penalty for confident wrong answers
+- `e = p - y` — the error per row
+- `return X.T @ e / len(y), e.mean()` — gradient for the weights and for the bias
+
+**Step 3.**
+
+_Before you do this._ A gradient formula derived on paper can be wrong by a sign or a factor, and training will still run, only badly. The numerical gradient check compares the formula with a brute-force estimate: nudge one weight up by a tiny amount `eps`, measure the loss, nudge it down, measure again, and divide the difference by 2·eps. That is the slope of the loss along that weight, computed with no calculus at all.
+
+`np.zeros(n, np.float32)` makes a weight vector of zeros; `w.copy()` makes an independent copy so nudging `wp` does not change `w`. Only the first five thousand rows are used because the check is slow (one loss evaluation per weight per side). `np.max(np.abs(num - gw))` is the largest disagreement across all weights; with float32 arithmetic it should be around 1e-5 or below. If it is 0.1, the gradient is wrong; go back to step 2.
+
+_Do this._ Check the gradient numerically before trusting it.
+
+```python
+w = np.zeros(Xtr.shape[1], np.float32); b = 0.0
+gw, gb = grad(w, b, Xtr[:5000], ytr[:5000])
+eps = 1e-4; num = []
+for j in range(len(w)):
+    wp = w.copy(); wp[j] += eps; wm = w.copy(); wm[j] -= eps
+    num.append((loss(wp, b, Xtr[:5000], ytr[:5000]) - loss(wm, b, Xtr[:5000], ytr[:5000])) / (2 * eps))
+print(np.max(np.abs(np.array(num) - gw)))     # should be ~1e-5 or smaller
+```
+
+_What each line does._
+
+- `w = np.zeros(...); b = 0.0` — start with all weights zero
+- `gw, gb = grad(w, b, Xtr[:5000], ytr[:5000])` — the formula's gradient on a small batch
+- `wp[j] += eps; wm[j] -= eps` — the same weights with one entry nudged up and down
+- `num.append((loss(wp, ...) - loss(wm, ...)) / (2 * eps))` — the brute-force slope for weight j
+- `print(np.max(np.abs(np.array(num) - gw)))` — the worst disagreement; should be tiny
+
+**Step 4.**
+
+_Before you do this._ Gradient descent is the training loop: compute the gradient, step the weights a little in the opposite direction, repeat. The step size is the learning rate `eta` (η); 0.1 is reasonable for standardized features. Mini-batch means each step uses a random slice of rows (4096 here) rather than all of them: cheaper per step and, in practice, better.
+
+An epoch is one pass through the training rows. `rng.permutation(n)` shuffles the row numbers so each epoch sees the rows in a new order; `range(0, len(idx), 4096)` walks through them in slices; `j = idx[i:i + 4096]` is one batch's row numbers, and `Xtr[j]` selects those rows. `w -= eta * gw` is the update. After each epoch the validation loss and average precision are printed: the loss should fall and then flatten, and the average precision should rise above the baselines from lesson 6. If validation gets worse while training keeps improving, the model is overfitting and you should stop earlier.
+
+_Do this._ Mini-batch gradient descent with a validation check every epoch.
+
+```python
+rng = np.random.default_rng(0); eta = 0.1
+for epoch in range(20):
+    idx = rng.permutation(len(ytr))
+    for i in range(0, len(idx), 4096):
+        j = idx[i:i + 4096]; gw, gb = grad(w, b, Xtr[j], ytr[j]); w -= eta * gw; b -= eta * gb
+    print(epoch, loss(w, b, Xva, yva), ap(yva, sigmoid(Xva @ w + b)))
+```
+
+_What each line does._
+
+- `rng = np.random.default_rng(0); eta = 0.1` — repeatable shuffling; the learning rate
+- `idx = rng.permutation(len(ytr))` — a new random order every epoch
+- `j = idx[i:i + 4096]; gw, gb = grad(w, b, Xtr[j], ytr[j])` — one mini-batch and its gradient
+- `w -= eta * gw; b -= eta * gb` — step against the gradient
+- `print(epoch, loss(w, b, Xva, yva), ap(yva, sigmoid(Xva @ w + b)))` — validation loss and average precision after each pass
+
+**Step 5.**
+
+_Before you do this._ scikit-learn's `LogisticRegression` is the same model with a tested implementation. It always adds regularization, a penalty on large weights controlled by `C`; setting `C=1e6` makes the penalty negligible so the two fits are comparable. `max_iter=1000` gives its solver enough iterations to converge. `.fit(X, y)` trains; `sk.coef_[0]` are the learned weights.
+
+`np.round(x, 3)` rounds to three decimals for printing. The two weight vectors should agree to a couple of decimals. If they do not, the usual causes are too few epochs, a learning rate that is too large, or a bug the gradient check would have caught. Once they agree you have earned the right to use the library and know what it is doing.
+
+_Do this._ Compare with scikit-learn on the same matrix; the two should agree closely.
+
+```python
+from sklearn.linear_model import LogisticRegression
+sk = LogisticRegression(C=1e6, max_iter=1000).fit(Xtr, ytr)
+print(np.round(sk.coef_[0], 3)); print(np.round(w, 3))
+```
+
+_What each line does._
+
+- `sk = LogisticRegression(C=1e6, max_iter=1000).fit(Xtr, ytr)` — the library's fit with regularization effectively off
+- `print(np.round(sk.coef_[0], 3)); print(np.round(w, 3))` — its weights beside yours
 
 **Check yourself.**
 
@@ -2041,6 +2241,8 @@ logit(p) = β₀ + β₁x₁ + … ;  odds ratio = e^{β}
 
 ### Build
 
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
+
 - Derive the logistic regression gradient on paper, then check it numerically with finite differences against the repo's update.
 - Write the training loop from a blank file and match the repo's weights to four decimals.
 - Compute the median and the 85th percentile of a real speed column with numpy, by hand and with the library, and write a notebook page titled 'why the median' for stage 6.
@@ -2140,55 +2342,123 @@ Research threads: learned spatio-temporal imputation versus the downstream model
 
 _Try this._ Design the backfill procedure for a corrected PeMS day: what is recomputed, what is invalidated (features, models, logged metrics), and how the manifest records it.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Build the registry once from the meta file and derive neighbors from postmile order.
+**Step 1.**
 
-   ```python
-   meta = pd.read_csv("data/pems_meta/d04_text_meta_2026_03_01.txt", sep="\t")
-   fre = meta[(meta.Fwy.isin([880, 680, 84])) & meta.Latitude.between(37.447, 37.612)
-              & meta.Longitude.between(-122.075, -121.888) & (meta.Type == "ML")].copy()
-   fre = fre.sort_values(["Fwy", "Dir", "Abs_PM"])
-   fre["upstream_id"]   = fre.groupby(["Fwy", "Dir"]).ID.shift(1)
-   fre["downstream_id"] = fre.groupby(["Fwy", "Dir"]).ID.shift(-1)
-   fre.to_parquet("data/pems_meta/fremont_stations.parquet")
-   ```
+_Before you do this._ The meta file is PeMS's list of every station in district 4 with its location and role; it is tab-separated, so `sep="\t"` tells `read_csv` that the delimiter is a tab, not a comma. A registry is the course's word for the small, curated table of the stations the model uses, built once and saved.
 
-2. Stream one day, keeping only registry stations in each chunk.
+Filtering to Fremont is a chain of boolean tests joined with `&` (and), each wrapped in parentheses because pandas needs that. `Fwy.isin([880, 680, 84])` keeps the three freeways through Fremont. `Latitude.between(...)` and `Longitude.between(...)` keep the box around the city. `Type == "ML"` keeps mainline detectors and drops ramps and HOV lanes. `.copy()` makes an independent table so later edits do not warn about modifying a slice.
 
-   ```python
-   keep = set(fre.ID)
-   parts = []
-   for chunk in pd.read_csv(path, header=None, usecols=range(12), names=cols, chunksize=200_000):
-       parts.append(chunk[chunk.station.isin(keep)])
-   day = pd.concat(parts, ignore_index=True)
-   ```
+Neighbors: PeMS gives every station a postmile, `Abs_PM`, its distance along the freeway. Sort by freeway, direction and postmile and the stations line up in driving order. `groupby(["Fwy", "Dir"]).ID.shift(1)` then gives, within each freeway-direction, the station one position earlier in the list: the upstream neighbor, the one traffic comes from. `shift(-1)` gives the downstream neighbor, the one traffic goes to. `to_parquet` saves the registry.
 
-3. Convert time, apply bounds, blank imputed rows.
+_Do this._ Build the registry once from the meta file and derive neighbors from postmile order.
 
-   ```python
-   day["timestamp"] = (pd.to_datetime(day.ts, format="%m/%d/%Y %H:%M:%S")
-       .dt.tz_localize("America/Los_Angeles", ambiguous="NaT", nonexistent="shift_forward").dt.tz_convert("UTC"))
-   day.loc[~day.speed.between(0, 100), "speed"] = np.nan
-   day.loc[day.pct_obs < 50, ["speed", "occ", "flow"]] = np.nan
-   ```
+```python
+meta = pd.read_csv("data/pems_meta/d04_text_meta_2026_03_01.txt", sep="\t")
+fre = meta[(meta.Fwy.isin([880, 680, 84])) & meta.Latitude.between(37.447, 37.612)
+           & meta.Longitude.between(-122.075, -121.888) & (meta.Type == "ML")].copy()
+fre = fre.sort_values(["Fwy", "Dir", "Abs_PM"])
+fre["upstream_id"]   = fre.groupby(["Fwy", "Dir"]).ID.shift(1)
+fre["downstream_id"] = fre.groupby(["Fwy", "Dir"]).ID.shift(-1)
+fre.to_parquet("data/pems_meta/fremont_stations.parquet")
+```
 
-4. Reindex onto the full grid per station, then forward-fill within station.
+_What each line does._
 
-   ```python
-   grid = pd.MultiIndex.from_product([sorted(keep), pd.date_range(day.timestamp.min().floor("D"), periods=288, freq="5min", tz="UTC")],
-                                     names=["station_id", "timestamp"])
-   tidy = day.set_index(["station", "timestamp"]).rename_axis(["station_id", "timestamp"]).reindex(grid)
-   tidy[["speed", "occ", "flow"]] = tidy.groupby(level="station_id")[["speed", "occ", "flow"]].ffill(limit=3)
-   tidy = tidy.astype({"speed": "float32", "occ": "float32", "flow": "float32"})
-   ```
+- `meta = pd.read_csv(..., sep="\t")` — load the station list, tab-separated
+- `fre = meta[(...isin...) & (...between...) & (...between...) & (...== "ML")].copy()` — keep mainline stations on 880, 680 and 84 inside the Fremont bounding box
+- `fre.sort_values(["Fwy", "Dir", "Abs_PM"])` — order stations along each freeway in each direction
+- `fre.groupby(["Fwy", "Dir"]).ID.shift(1)` — the previous station along the road: upstream
+- `...shift(-1)` — the next station along the road: downstream
+- `fre.to_parquet("data/pems_meta/fremont_stations.parquet")` — save the registry for every later stage
 
-5. Validate before writing: 288 rows per station, values in range, and log memory and seconds.
+**Step 2.**
 
-   ```python
-   assert (tidy.groupby(level="station_id").size() == 288).all()
-   tidy.reset_index().to_parquet("data/pems_processed/2026-03.parquet")
-   ```
+_Before you do this._ A day's PeMS file is about 200 MB compressed and several gigabytes as a DataFrame, more than a 16 GB Mac can spare while other things run. Streaming means reading a file in pieces and keeping only what you need from each piece. `chunksize=200_000` makes `read_csv` return an iterator: instead of one table, a sequence of tables of two hundred thousand rows each, one at a time.
+
+`keep = set(fre.ID)` turns the registry's station ids into a set, a collection built for fast 'is this in there' tests. Inside the loop, `chunk[chunk.station.isin(keep)]` keeps the rows whose station is a Fremont station, a few percent of each chunk, and `parts.append` stores that small piece in a list. `pd.concat(parts, ignore_index=True)` glues the pieces into one table and renumbers the rows. Peak memory is one chunk plus the kept rows, never the whole file. `path` is the day's filename from step 2.1; `cols` is the column list from lesson 2.
+
+_Do this._ Stream one day, keeping only registry stations in each chunk.
+
+```python
+keep = set(fre.ID)
+parts = []
+for chunk in pd.read_csv(path, header=None, usecols=range(12), names=cols, chunksize=200_000):
+    parts.append(chunk[chunk.station.isin(keep)])
+day = pd.concat(parts, ignore_index=True)
+```
+
+_What each line does._
+
+- `keep = set(fre.ID)` — the registry ids as a set for fast membership tests
+- `for chunk in pd.read_csv(path, ..., chunksize=200_000):` — read the file two hundred thousand rows at a time
+- `parts.append(chunk[chunk.station.isin(keep)])` — keep only Fremont rows from this chunk
+- `day = pd.concat(parts, ignore_index=True)` — one table of the day's Fremont rows
+
+**Step 3.**
+
+_Before you do this._ Three cleaning rules, all applied with `.loc`, pandas' way of selecting rows and columns by label and assigning to them. `day.loc[mask, "speed"] = np.nan` sets the speed to missing for every row where the mask is true.
+
+The timestamp conversion is the same three-part chain as lesson 2.4, wrapped in parentheses so it can be split across lines. Bounds: a speed below 0 or above 100 miles per hour is a sensor fault, not a fact, so `~day.speed.between(0, 100)` (the tilde means not) picks the impossible rows and blanks them. Imputed rows: `pct_obs` is the share of a five-minute row that came from real observations; PeMS fills the rest in with estimates. Below 50 percent the row is more guess than measurement, so speed, occupancy and flow are all blanked. Blanking with NaN rather than deleting keeps the row on the time grid.
+
+_Do this._ Convert time, apply bounds, blank imputed rows.
+
+```python
+day["timestamp"] = (pd.to_datetime(day.ts, format="%m/%d/%Y %H:%M:%S")
+    .dt.tz_localize("America/Los_Angeles", ambiguous="NaT", nonexistent="shift_forward").dt.tz_convert("UTC"))
+day.loc[~day.speed.between(0, 100), "speed"] = np.nan
+day.loc[day.pct_obs < 50, ["speed", "occ", "flow"]] = np.nan
+```
+
+_What each line does._
+
+- `day["timestamp"] = (pd.to_datetime(...).dt.tz_localize(...).dt.tz_convert("UTC"))` — text to Pacific to UTC, as in lesson 2
+- `day.loc[~day.speed.between(0, 100), "speed"] = np.nan` — impossible speeds become missing
+- `day.loc[day.pct_obs < 50, ["speed", "occ", "flow"]] = np.nan` — mostly-imputed rows lose all three measurements
+
+**Step 4.**
+
+_Before you do this._ Every later stage assumes that each station has exactly one row per five-minute slot, in order, with no gaps: the full grid. Missing rows must be added as NaN, not skipped. An index in pandas is the row labels; a MultiIndex is a two-level index, here (station, timestamp). `pd.MultiIndex.from_product` builds every combination of the station list and the timestamp list: N stations × 288 slots.
+
+`pd.date_range(start, periods=288, freq="5min", tz="UTC")` makes the 288 slot timestamps; `day.timestamp.min().floor("D")` is midnight UTC of the day in the file. `set_index([...])` makes station and timestamp the row labels; `rename_axis` gives the levels the names the rest of the course uses; `reindex(grid)` reorders onto the full grid, inserting NaN rows for any missing slot.
+
+Forward fill (`ffill`) copies the last known value into the following NaN slots, and `limit=3` stops after three slots (fifteen minutes) so a dead detector does not keep reporting a stale speed for hours. `groupby(level="station_id")` makes the fill stay inside one station, so a value never leaks from the end of one station into the start of the next. Finally `astype(float32)` stores the three measurements as 32-bit floats, half the memory of the default 64-bit, which is plenty of precision for a speed.
+
+_Do this._ Reindex onto the full grid per station, then forward-fill within station.
+
+```python
+grid = pd.MultiIndex.from_product([sorted(keep), pd.date_range(day.timestamp.min().floor("D"), periods=288, freq="5min", tz="UTC")],
+                                  names=["station_id", "timestamp"])
+tidy = day.set_index(["station", "timestamp"]).rename_axis(["station_id", "timestamp"]).reindex(grid)
+tidy[["speed", "occ", "flow"]] = tidy.groupby(level="station_id")[["speed", "occ", "flow"]].ffill(limit=3)
+tidy = tidy.astype({"speed": "float32", "occ": "float32", "flow": "float32"})
+```
+
+_What each line does._
+
+- `grid = pd.MultiIndex.from_product([stations, slots], names=["station_id", "timestamp"])` — every station × every five-minute slot of the day
+- `tidy = day.set_index(["station", "timestamp"]).rename_axis([...]).reindex(grid)` — put the rows on that grid, with NaN where a slot is missing
+- `tidy[...] = tidy.groupby(level="station_id")[...].ffill(limit=3)` — carry each station's last reading forward for up to three slots
+- `tidy = tidy.astype({... "float32"})` — halve the memory of the measurement columns
+
+**Step 5.**
+
+_Before you do this._ `assert` is Python's way of saying 'this must be true, stop with an error if not'. It is the cheapest safety net there is: an assertion that fails at the end of a stage is far better than a silent wrong file used by every later stage. Here it checks that every station really has 288 rows after reindexing; the `.all()` says the test must hold for every station.
+
+`reset_index()` turns the two index levels back into ordinary columns, because Parquet stores columns, and `to_parquet` writes the day's tidy table into the month file (in the real script the days are concatenated first). Also log how long the stage took and how much memory it used; lesson 12.5 gives the line that does it. Checks like range and row counts belong before every write, never after.
+
+_Do this._ Validate before writing: 288 rows per station, values in range, and log memory and seconds.
+
+```python
+assert (tidy.groupby(level="station_id").size() == 288).all()
+tidy.reset_index().to_parquet("data/pems_processed/2026-03.parquet")
+```
+
+_What each line does._
+
+- `assert (tidy.groupby(level="station_id").size() == 288).all()` — stop if any station is not on the full daily grid
+- `tidy.reset_index().to_parquet("data/pems_processed/2026-03.parquet")` — write the tidy table with station and timestamp as columns
 
 **Check yourself.**
 
@@ -2934,6 +3204,8 @@ SELECT road, SUM(CASE WHEN severity = 'MAJOR' THEN 1 ELSE 0 END) AS major, COUNT
 
 ### Build
 
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
+
 - Run stage 4 for a few days of files. Open one, confirm the column layout, and write it into the stage 5 README.
 - Write `10_clean_pems.py`: chunked reading, the Fremont filter, DST-safe UTC conversion, bounds, `% Observed`, forward fill, the full grid, float32, monthly Parquet.
 - Build the station registry with upstream and downstream neighbors from postmiles.
@@ -3032,51 +3304,114 @@ Operationally, version the label definition as you would a schema. A label chang
 
 _Try this._ Propose an A/B design that compares two label definitions on a downstream user metric such as reroute acceptance, and state what confounds the comparison.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Choose the split dates first; the profile uses training rows only.
+**Step 1.**
 
-   ```python
-   train_end = pd.Timestamp("2026-08-31", tz="UTC")
-   tr = df[df.timestamp <= train_end].copy()
-   ```
+_Before you do this._ The label for this course is relative: slow compared with what is typical for that station at that time of day. 'Typical' is a profile computed from data, and here is the leakage trap: if the profile is computed from every row, including the months used later to test the model, then the test rows helped define their own labels. So the very first act is to fix the split dates, and to compute the profile from training rows only.
 
-2. Compute the profile per station, 5-minute slot and day type.
+A split divides the data by time into training (the model learns from it), validation (used to make choices such as when to stop) and test (touched once, at the end, to report a number). `pd.Timestamp("2026-08-31", tz="UTC")` builds one moment in UTC; `df[df.timestamp <= train_end]` keeps rows up to and including it; `.copy()` makes an independent table called `tr` for training.
 
-   ```python
-   def daytype(ts):
-       d = ts.dt.dayofweek
-       return np.where(d < 5, "wd", np.where(d == 5, "sat", "sun"))
-   for x in (df, tr):
-       x["slot"] = (x.timestamp.dt.tz_convert("America/Los_Angeles").dt.hour * 12 + x.timestamp.dt.tz_convert("America/Los_Angeles").dt.minute // 5)
-       x["daytype"] = daytype(x.timestamp.dt.tz_convert("America/Los_Angeles"))
-   prof = tr.groupby(["station_id", "daytype", "slot"]).speed.median().rename("profile_speed").reset_index()
-   prof.to_parquet("models/profile_train2026.parquet")
-   ```
+_Do this._ Choose the split dates first; the profile uses training rows only.
 
-3. Join the profile back and compute the ratio and the run-based label.
+```python
+train_end = pd.Timestamp("2026-08-31", tz="UTC")
+tr = df[df.timestamp <= train_end].copy()
+```
 
-   ```python
-   df = df.merge(prof, on=["station_id", "daytype", "slot"], how="left")
-   df["speed_ratio"] = df.speed / df.profile_speed
-   df["is_slow"] = (df.speed_ratio < 0.6).astype("float32")
-   df = df.sort_values(["station_id", "timestamp"])
-   df["label"] = (df.groupby("station_id").is_slow.rolling(3).sum().reset_index(level=0, drop=True) == 3).astype("int8")
-   ```
+_What each line does._
 
-4. Compute the absolute label and the free-flow ratio alongside.
+- `train_end = pd.Timestamp("2026-08-31", tz="UTC")` — the last moment of the training period
+- `tr = df[df.timestamp <= train_end].copy()` — the training rows only, which is all the profile may see
 
-   ```python
-   df["label_abs"] = (df.groupby("station_id").speed.transform(lambda s: (s < 35).rolling(3).sum()) == 3).astype("int8")
-   ff = tr.groupby("station_id").speed.quantile(0.85).rename("free_flow_85")
-   df = df.merge(ff, on="station_id", how="left"); df["ratio_ff"] = df.speed / df.free_flow_85
-   ```
+**Step 2.**
 
-5. Look at prevalence by hour for both labels. The relative label should be flat across the day; the absolute label should peak at rush hour. If not, something is wrong.
+_Before you do this._ The profile is the typical speed for each station, in each five-minute slot of the day, for each type of day. A slot is the position within the day, 0 to 287: hour × 12 plus minute ÷ 5. The day type separates weekdays (`wd`), Saturdays (`sat`) and Sundays (`sun`), because traffic on a Sunday morning has nothing to do with a Monday morning.
 
-   ```python
-   print(df.groupby(df.timestamp.dt.tz_convert("America/Los_Angeles").dt.hour)[["label", "label_abs"]].mean())
-   ```
+`def daytype(ts):` defines a function, a named block of code you can call with an argument. Inside it `ts.dt.dayofweek` gives 0 for Monday to 6 for Sunday; `np.where(condition, a, b)` chooses a where the condition holds and b elsewhere, nested twice to get three categories. The `for x in (df, tr):` loop adds the slot and day-type columns to both the full table and the training table, with the hour taken in Pacific time (`tz_convert("America/Los_Angeles")`) because rush hour is a local-time idea.
+
+`groupby(["station_id", "daytype", "slot"]).speed.median()` computes the median speed inside every (station, day type, slot) group. The median, the middle value, is used rather than the mean because a few crawling readings would drag a mean down; the median ignores them. `rename` names the result column and `reset_index` turns the group keys back into columns; `to_parquet` saves the profile with the training period in its name, so a profile is never silently reused with the wrong split.
+
+_Do this._ Compute the profile per station, 5-minute slot and day type.
+
+```python
+def daytype(ts):
+    d = ts.dt.dayofweek
+    return np.where(d < 5, "wd", np.where(d == 5, "sat", "sun"))
+for x in (df, tr):
+    x["slot"] = (x.timestamp.dt.tz_convert("America/Los_Angeles").dt.hour * 12 + x.timestamp.dt.tz_convert("America/Los_Angeles").dt.minute // 5)
+    x["daytype"] = daytype(x.timestamp.dt.tz_convert("America/Los_Angeles"))
+prof = tr.groupby(["station_id", "daytype", "slot"]).speed.median().rename("profile_speed").reset_index()
+prof.to_parquet("models/profile_train2026.parquet")
+```
+
+_What each line does._
+
+- `def daytype(ts): ...` — weekday, Saturday or Sunday from a datetime column
+- `x["slot"] = hour * 12 + minute // 5` — the five-minute position within the local day, 0 to 287
+- `x["daytype"] = daytype(...)` — the day-type column, from local time
+- `prof = tr.groupby([...]).speed.median()...` — typical speed per station, day type and slot, from training rows only
+- `prof.to_parquet("models/profile_train2026.parquet")` — save it under a name that says which split made it
+
+**Step 3.**
+
+_Before you do this._ A merge is a join: it lines up two tables on shared key columns and combines their other columns. `df.merge(prof, on=[...], how="left")` attaches each row's profile speed by matching station, day type and slot; `how="left"` keeps every row of `df` even if no profile exists for it (then the profile is NaN).
+
+The ratio `speed / profile_speed` says how the current speed compares with typical: 1.0 is normal, 0.5 is half speed. `is_slow` is 1 where the ratio is below 0.6, stored as `float32` so that NaN can survive in it. Then the run rule: a slow episode needs three consecutive slow rows, so that one noisy reading does not count. `rolling(3).sum()` adds each row's value to the two before it within each station (`groupby("station_id")` keeps the window from crossing stations); a sum of 3 means three slow rows in a row. `reset_index(level=0, drop=True)` strips the extra group level that rolling adds so the result lines up with `df` again; `== 3` makes the boolean; `astype("int8")` stores it as a one-byte integer. The sort before rolling matters: rolling reads rows in table order, so the table must be in time order within each station.
+
+_Do this._ Join the profile back and compute the ratio and the run-based label.
+
+```python
+df = df.merge(prof, on=["station_id", "daytype", "slot"], how="left")
+df["speed_ratio"] = df.speed / df.profile_speed
+df["is_slow"] = (df.speed_ratio < 0.6).astype("float32")
+df = df.sort_values(["station_id", "timestamp"])
+df["label"] = (df.groupby("station_id").is_slow.rolling(3).sum().reset_index(level=0, drop=True) == 3).astype("int8")
+```
+
+_What each line does._
+
+- `df = df.merge(prof, on=["station_id", "daytype", "slot"], how="left")` — attach the typical speed to every row
+- `df["speed_ratio"] = df.speed / df.profile_speed` — current speed relative to typical
+- `df["is_slow"] = (df.speed_ratio < 0.6).astype("float32")` — 1 where the row is below sixty percent of typical
+- `df = df.sort_values(["station_id", "timestamp"])` — time order within each station, required before rolling
+- `df["label"] = (df.groupby("station_id").is_slow.rolling(3).sum()... == 3).astype("int8")` — 1 where this row and the two before it are all slow: the episode label
+
+**Step 4.**
+
+_Before you do this._ One label definition is a choice, and a good analyst keeps a second definition beside it to see what the choice did. The absolute label says slow means below 35 miles per hour, three rows running, with no profile at all. `transform(lambda s: ...)` applies a small unnamed function (a lambda) to each station's speed column and returns a result the same length as the input, so it can be compared and stored directly; inside, `(s < 35).rolling(3).sum()` is the same run rule as before.
+
+The free-flow ratio is a third view: `quantile(0.85)` of a station's training speeds is a speed that is exceeded only 15 percent of the time, a fair estimate of the station's uncongested speed. Merging it on `station_id` and dividing gives `ratio_ff`, the speed relative to free flow rather than relative to the time-of-day profile.
+
+_Do this._ Compute the absolute label and the free-flow ratio alongside.
+
+```python
+df["label_abs"] = (df.groupby("station_id").speed.transform(lambda s: (s < 35).rolling(3).sum()) == 3).astype("int8")
+ff = tr.groupby("station_id").speed.quantile(0.85).rename("free_flow_85")
+df = df.merge(ff, on="station_id", how="left"); df["ratio_ff"] = df.speed / df.free_flow_85
+```
+
+_What each line does._
+
+- `df["label_abs"] = (df.groupby("station_id").speed.transform(lambda s: (s < 35).rolling(3).sum()) == 3).astype("int8")` — three consecutive rows under 35 mph: the absolute label
+- `ff = tr.groupby("station_id").speed.quantile(0.85)` — each station's free-flow speed, from training rows
+- `df = df.merge(ff, ...); df["ratio_ff"] = df.speed / df.free_flow_85` — speed relative to free flow
+
+**Step 5.**
+
+_Before you do this._ Prevalence by hour is the sanity check that catches a wrong label definition. Group the rows by the local hour (`dt.tz_convert(...).dt.hour`), and take the mean of each label column, which is the share of rows that are positive in that hour. Because the relative label compares each slot with its own typical speed, it should be roughly equally common at 3 a.m. and 5 p.m.; the absolute label should pile up at rush hour, when speeds really are low.
+
+If the relative label also peaks at rush hour, the profile is not doing its job: a wrong day type, a slot computed in UTC instead of local time, or a profile built from too little data. Fix that before training anything.
+
+_Do this._ Look at prevalence by hour for both labels. The relative label should be flat across the day; the absolute label should peak at rush hour. If not, something is wrong.
+
+```python
+print(df.groupby(df.timestamp.dt.tz_convert("America/Los_Angeles").dt.hour)[["label", "label_abs"]].mean())
+```
+
+_What each line does._
+
+- `df.groupby(local_hour)[["label", "label_abs"]].mean()` — share of positive rows in each hour of the day, for both labels
 
 **Check yourself.**
 
@@ -3177,58 +3512,123 @@ Research threads: causal feature selection under shift (incident features and co
 
 _Try this._ Specify the point-in-time join for the weather forecast: the feature at t is the forecast for hour t + 1 issued at or before t, not the realized weather. Say how you would store forecast vintages to make training match serving.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Lags and rolling statistics, grouped by station, on the full grid.
+**Step 1.**
 
-   ```python
-   g = df.groupby("station_id")
-   for k in (0, 1, 2, 3, 6, 12):
-       for c in ("speed", "occ", "flow"):
-           df[f"{c}_lag_{k}"] = g[c].shift(k).astype("float32")
-   df["speed_roll_mean_30"] = g.speed.transform(lambda s: s.rolling(6, min_periods=3).mean()).astype("float32")
-   df["speed_roll_std_30"]  = g.speed.transform(lambda s: s.rolling(6, min_periods=3).std()).astype("float32")
-   df["speed_slope_15"] = df.speed_lag_0 - df.speed_lag_3
-   ```
+_Before you do this._ A feature is one input column, and feature engineering is deciding which columns to compute from the raw data. The rule from lesson 1 applies to every one of them: computed only from rows at or before the current timestamp. `g = df.groupby("station_id")` is saved once, because every feature here must stay inside a station; a grouped object can be reused for many computations.
 
-2. Cyclic time and calendar flags.
+The double loop makes lags at 0, 1, 2, 3, 6 and 12 steps (now, 5, 10, 15, 30 and 60 minutes ago) for each of speed, occupancy and flow: eighteen columns. Rolling statistics summarize a recent window: `rolling(6, min_periods=3).mean()` is the mean of the last six rows (thirty minutes), computed as long as at least three of them are present, and `.std()` is the standard deviation, how much the speed has been jumping around. `transform` applies the rolling calculation per station and returns a column that lines up with `df`. The slope is the simplest trend feature: speed now minus speed fifteen minutes ago; negative means slowing.
 
-   ```python
-   import holidays
-   loc = df.timestamp.dt.tz_convert("America/Los_Angeles")
-   m = loc.dt.hour * 60 + loc.dt.minute
-   df["min_sin"] = np.sin(2 * np.pi * m / 1440).astype("float32"); df["min_cos"] = np.cos(2 * np.pi * m / 1440).astype("float32")
-   df["dow_sin"] = np.sin(2 * np.pi * loc.dt.dayofweek / 7).astype("float32"); df["dow_cos"] = np.cos(2 * np.pi * loc.dt.dayofweek / 7).astype("float32")
-   us_ca = holidays.US(state="CA", years=[2026])
-   df["is_holiday"] = loc.dt.date.isin(us_ca).astype("int8")
-   ```
+_Do this._ Lags and rolling statistics, grouped by station, on the full grid.
 
-3. Neighbor features from the registry.
+```python
+g = df.groupby("station_id")
+for k in (0, 1, 2, 3, 6, 12):
+    for c in ("speed", "occ", "flow"):
+        df[f"{c}_lag_{k}"] = g[c].shift(k).astype("float32")
+df["speed_roll_mean_30"] = g.speed.transform(lambda s: s.rolling(6, min_periods=3).mean()).astype("float32")
+df["speed_roll_std_30"]  = g.speed.transform(lambda s: s.rolling(6, min_periods=3).std()).astype("float32")
+df["speed_slope_15"] = df.speed_lag_0 - df.speed_lag_3
+```
 
-   ```python
-   reg = pd.read_parquet("data/pems_meta/fremont_stations.parquet")[["ID", "upstream_id", "downstream_id"]]
-   cur = df[["station_id", "timestamp", "speed", "occ"]]
-   for side in ("upstream", "downstream"):
-       nb = cur.rename(columns={"station_id": f"{side}_id", "speed": f"{side[:2 if side=='upstream' else 4]}1_speed", "occ": f"{side[:2 if side=='upstream' else 4]}1_occ"})
-       df = df.merge(reg[["ID", f"{side}_id"]].rename(columns={"ID": "station_id"}), on="station_id", how="left")
-       df = df.merge(nb, on=[f"{side}_id", "timestamp"], how="left")
-   ```
+_What each line does._
 
-4. Targets shifted forward, then drop rows whose target is unknown.
+- `g = df.groupby("station_id")` — a grouped view, reused so nothing crosses stations
+- `df[f"{c}_lag_{k}"] = g[c].shift(k).astype("float32")` — the value of speed, occ or flow k rows earlier
+- `df["speed_roll_mean_30"] = g.speed.transform(lambda s: s.rolling(6, min_periods=3).mean())` — average speed over the last thirty minutes
+- `df["speed_roll_std_30"] = ...std()` — how variable speed has been over the last thirty minutes
+- `df["speed_slope_15"] = df.speed_lag_0 - df.speed_lag_3` — change over the last fifteen minutes
 
-   ```python
-   for h, steps in ((15, 3), (30, 6), (60, 12)):
-       df[f"y_{h}"] = g.label.shift(-steps)
-   train_table = df.dropna(subset=["y_15", "y_30", "y_60"])
-   ```
+**Step 2.**
 
-5. The leakage assert: recompute one feature by hand for a random row and compare.
+_Before you do this._ Time of day matters, but the number of minutes since midnight has a flaw: 23:55 and 00:05 are ten minutes apart yet 1430 minutes apart as numbers. The fix is to place the time on a circle. Any point on a circle is described by its sine and cosine, so `sin(2π m / 1440)` and `cos(2π m / 1440)` (1440 minutes in a day) are two columns that are close for times that are close, including across midnight. The same trick with 7 handles the day of the week.
 
-   ```python
-   r = train_table.sample(1, random_state=0).iloc[0]
-   past = df[(df.station_id == r.station_id) & (df.timestamp < r.timestamp)].tail(3)
-   assert np.isclose(r.speed_lag_3, past.speed.iloc[0])   # three rows back
-   ```
+`loc` is the timestamp column converted to Pacific time, because rush hour is local. `np.sin` and `np.cos` work on whole columns at once; `np.pi` is π. `holidays` is a small library listing public holidays; `holidays.US(state="CA", years=[2026])` gives the California set, and `loc.dt.date.isin(us_ca)` marks rows that fall on one, stored as `int8`. Install it once with `pip install holidays` in the course's virtual environment (venv), the private copy of Python and its libraries that the project uses.
+
+_Do this._ Cyclic time and calendar flags.
+
+```python
+import holidays
+loc = df.timestamp.dt.tz_convert("America/Los_Angeles")
+m = loc.dt.hour * 60 + loc.dt.minute
+df["min_sin"] = np.sin(2 * np.pi * m / 1440).astype("float32"); df["min_cos"] = np.cos(2 * np.pi * m / 1440).astype("float32")
+df["dow_sin"] = np.sin(2 * np.pi * loc.dt.dayofweek / 7).astype("float32"); df["dow_cos"] = np.cos(2 * np.pi * loc.dt.dayofweek / 7).astype("float32")
+us_ca = holidays.US(state="CA", years=[2026])
+df["is_holiday"] = loc.dt.date.isin(us_ca).astype("int8")
+```
+
+_What each line does._
+
+- `loc = df.timestamp.dt.tz_convert("America/Los_Angeles")` — local time for calendar features
+- `m = loc.dt.hour * 60 + loc.dt.minute` — minutes since local midnight
+- `df["min_sin"], df["min_cos"] = sin, cos of 2π m / 1440` — time of day as a point on a circle
+- `df["dow_sin"], df["dow_cos"] = sin, cos of 2π dayofweek / 7` — day of week on a circle
+- `df["is_holiday"] = loc.dt.date.isin(us_ca).astype("int8")` — 1 on a California public holiday
+
+**Step 3.**
+
+_Before you do this._ Jams travel backward along the road: a slowdown at the next station downstream reaches you a few minutes later. So the downstream station's current speed is one of the strongest features, and the upstream one helps too. The registry from lesson 3 knows each station's `upstream_id` and `downstream_id`.
+
+The trick is a self-join: the same table of (station, timestamp, speed, occ) is merged back onto `df` under a different name. First `df` is merged with the registry to gain the neighbor id column; then `nb`, a renamed copy of the current readings, is merged on (neighbor id, timestamp), so each row picks up its neighbor's reading at the same moment. The `rename(columns=...)` calls give the new columns names such as `down1_speed` (first downstream neighbor's speed) and `up1_occ`; the odd slicing expression inside just shortens 'upstream' to 'up' and 'downstream' to 'down'. Same timestamp, so nothing from the future is used.
+
+_Do this._ Neighbor features from the registry.
+
+```python
+reg = pd.read_parquet("data/pems_meta/fremont_stations.parquet")[["ID", "upstream_id", "downstream_id"]]
+cur = df[["station_id", "timestamp", "speed", "occ"]]
+for side in ("upstream", "downstream"):
+    nb = cur.rename(columns={"station_id": f"{side}_id", "speed": f"{side[:2 if side=='upstream' else 4]}1_speed", "occ": f"{side[:2 if side=='upstream' else 4]}1_occ"})
+    df = df.merge(reg[["ID", f"{side}_id"]].rename(columns={"ID": "station_id"}), on="station_id", how="left")
+    df = df.merge(nb, on=[f"{side}_id", "timestamp"], how="left")
+```
+
+_What each line does._
+
+- `reg = pd.read_parquet("data/pems_meta/fremont_stations.parquet")[["ID", "upstream_id", "downstream_id"]]` — the registry's neighbor columns
+- `cur = df[["station_id", "timestamp", "speed", "occ"]]` — the readings to be looked up as a neighbor
+- `nb = cur.rename(columns={...})` — the same readings, named as the neighbor's
+- `df = df.merge(reg[...].rename(...), on="station_id", how="left")` — add each row's neighbor id
+- `df = df.merge(nb, on=[f"{side}_id", "timestamp"], how="left")` — attach the neighbor's reading at the same timestamp
+
+**Step 4.**
+
+_Before you do this._ Three horizons, three targets: `y_15`, `y_30` and `y_60` are the label 3, 6 and 12 rows later, made with a negative shift inside each station, exactly as in lesson 1.3. These are the only columns that may look forward.
+
+Near the end of the data the future is unknown, and those rows have NaN targets. `dropna(subset=[...])` removes rows where any of the three targets is missing, giving `train_table`, the table every model in the course trains on. The `for h, steps in ((15, 3), ...)` loop unpacks two values per iteration, the horizon in minutes and the number of rows it corresponds to.
+
+_Do this._ Targets shifted forward, then drop rows whose target is unknown.
+
+```python
+for h, steps in ((15, 3), (30, 6), (60, 12)):
+    df[f"y_{h}"] = g.label.shift(-steps)
+train_table = df.dropna(subset=["y_15", "y_30", "y_60"])
+```
+
+_What each line does._
+
+- `df[f"y_{h}"] = g.label.shift(-steps)` — the label 3, 6 or 12 rows ahead, within each station
+- `train_table = df.dropna(subset=["y_15", "y_30", "y_60"])` — keep rows whose future is known
+
+**Step 5.**
+
+_Before you do this._ Trust nothing you have not checked by hand once. This assertion picks one random row, rebuilds one of its features from the raw table the slow way, and demands that the two agree. `sample(1, random_state=0)` draws one row, with a fixed random seed so the check is repeatable; `.iloc[0]` turns the one-row table into a row object `r`.
+
+`past` selects that station's rows strictly before the row's timestamp and takes the last three with `tail(3)`; the first of those three, `past.speed.iloc[0]`, is the reading three rows back, which is what `speed_lag_3` claims to be. `np.isclose` compares two floating-point numbers allowing tiny rounding differences. If the assertion fails, the feature is wrong or the grid has a gap; either way, stop. Repeat this for a neighbor feature and a rolling feature.
+
+_Do this._ The leakage assert: recompute one feature by hand for a random row and compare.
+
+```python
+r = train_table.sample(1, random_state=0).iloc[0]
+past = df[(df.station_id == r.station_id) & (df.timestamp < r.timestamp)].tail(3)
+assert np.isclose(r.speed_lag_3, past.speed.iloc[0])   # three rows back
+```
+
+_What each line does._
+
+- `r = train_table.sample(1, random_state=0).iloc[0]` — one random row
+- `past = df[(same station) & (df.timestamp < r.timestamp)].tail(3)` — its station's three rows before it
+- `assert np.isclose(r.speed_lag_3, past.speed.iloc[0])` — the lag-3 feature equals the speed three rows back
 
 **Check yourself.**
 
@@ -3325,55 +3725,119 @@ Research threads: evaluating forecasts under intervention, distribution-free con
 
 _Try this._ Design an interleaving or switchback experiment that measures the usefulness of alerts without exposing every driver to a possibly bad model, and state the interference assumptions it needs.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Chronological split with a one-day gap.
+**Step 1.**
 
-   ```python
-   t = train_table.timestamp
-   tr = train_table[t <= "2026-08-30"]; va = train_table[(t >= "2026-09-01") & (t <= "2026-10-30")]; te = train_table[t >= "2026-11-01"]
-   ```
+_Before you do this._ Never split time-series data at random. Rows five minutes apart are nearly identical, so a random split would put near-copies of test rows into training and the score would be a fantasy. Split by date instead: train on the earliest months, validate on the next, test on the last, and leave a gap of a day between them so that a lag or rolling feature cannot straddle the boundary.
 
-2. Baselines: persistence and profile rate.
+`t = train_table.timestamp` saves the column; comparing it with a date string such as `"2026-08-30"` works because pandas parses the string. `tr`, `va` and `te` are the three tables. The validation set is for decisions (which model, how many trees, what threshold); the test set is opened once, at the very end, to report the number you will believe.
 
-   ```python
-   from sklearn.metrics import average_precision_score as ap
-   rate = tr.groupby(["station_id", "daytype", "slot"]).y_30.mean().rename("profile_rate").reset_index()
-   va = va.merge(rate, on=["station_id", "daytype", "slot"], how="left")
-   print("prevalence", va.y_30.mean())
-   print("persistence AP", ap(va.y_30, va.label))          # label now as the forecast
-   print("profile-rate AP", ap(va.y_30, va.profile_rate.fillna(0)))
-   ```
+_Do this._ Chronological split with a one-day gap.
 
-3. Precision-recall curve and a threshold at 0.5 precision.
+```python
+t = train_table.timestamp
+tr = train_table[t <= "2026-08-30"]; va = train_table[(t >= "2026-09-01") & (t <= "2026-10-30")]; te = train_table[t >= "2026-11-01"]
+```
 
-   ```python
-   from sklearn.metrics import precision_recall_curve
-   p, r, thr = precision_recall_curve(va.y_30, va.p_30)          # p_30 from any model
-   ok = np.where(p[:-1] >= 0.5)[0]
-   tau = thr[ok[0]] if len(ok) else 1.0
-   print("tau", tau, "recall at tau", r[ok[0]] if len(ok) else 0)
-   ```
+_What each line does._
 
-4. Reliability diagram numbers.
+- `tr = train_table[t <= "2026-08-30"]` — training: everything up to the end of August
+- `va = train_table[(t >= "2026-09-01") & (t <= "2026-10-30")]` — validation: September and October, after a one-day gap
+- `te = train_table[t >= "2026-11-01"]` — test: November onward, touched once
 
-   ```python
-   from sklearn.calibration import calibration_curve
-   frac_pos, mean_pred = calibration_curve(va.y_30, va.p_30, n_bins=10, strategy="quantile")
-   for a, b in zip(mean_pred, frac_pos): print(f"predicted {a:.2f}  observed {b:.2f}")
-   ```
+**Step 2.**
 
-5. Block bootstrap over days for an interval on AP.
+_Before you do this._ A baseline is the simplest forecast you can make without a model, and every model is judged against it. Two baselines here. Persistence says the future equals the present: the label now (`va.label`) is the forecast for thirty minutes from now. The profile rate says the future equals the historical average: how often, in training, this station in this slot on this day type was slow thirty minutes later.
 
-   ```python
-   days = va.timestamp.dt.floor("D").unique()
-   rng = np.random.default_rng(0); scores = []
-   for _ in range(200):
-       pick = rng.choice(days, size=len(days), replace=True)
-       sub = pd.concat([va[va.timestamp.dt.floor("D") == d] for d in pick])
-       scores.append(ap(sub.y_30, sub.p_30))
-   print(np.percentile(scores, [2.5, 97.5]))
-   ```
+The metric is average precision, `ap`, imported from scikit-learn (`sklearn`), the standard Python machine-learning library. It takes the true labels and the scores and summarizes the precision-recall curve: precision is the share of alarms that were right, recall is the share of real jams that were alarmed, and the curve traces both as the alarm threshold moves. Average precision equals the prevalence for random scores and 1.0 for perfect ones, and it is not fooled by rare positives the way accuracy is. `groupby(...).y_30.mean()` computes the profile rate per (station, day type, slot); the merge attaches it to validation rows; `fillna(0)` gives zero where a group never appeared in training.
+
+_Do this._ Baselines: persistence and profile rate.
+
+```python
+from sklearn.metrics import average_precision_score as ap
+rate = tr.groupby(["station_id", "daytype", "slot"]).y_30.mean().rename("profile_rate").reset_index()
+va = va.merge(rate, on=["station_id", "daytype", "slot"], how="left")
+print("prevalence", va.y_30.mean())
+print("persistence AP", ap(va.y_30, va.label))          # label now as the forecast
+print("profile-rate AP", ap(va.y_30, va.profile_rate.fillna(0)))
+```
+
+_What each line does._
+
+- `from sklearn.metrics import average_precision_score as ap` — the metric, under a short name
+- `rate = tr.groupby([...]).y_30.mean()...` — historical share of slow-in-30-minutes per station, day type and slot
+- `va = va.merge(rate, on=[...], how="left")` — attach that rate to every validation row
+- `ap(va.y_30, va.label)` — score of the persistence baseline
+- `ap(va.y_30, va.profile_rate.fillna(0))` — score of the profile-rate baseline
+
+**Step 3.**
+
+_Before you do this._ A model gives each row a score, `p_30`, between 0 and 1. An alert fires when the score is above a threshold, written τ (tau). Choosing τ is a business decision expressed in precision: here, at least half of all alarms must be right. `precision_recall_curve` returns three arrays: precision and recall at every possible threshold, and the thresholds themselves, which has one fewer element (the last precision-recall point has no threshold, hence `p[:-1]`).
+
+`np.where(p[:-1] >= 0.5)[0]` gives the positions where precision reaches 0.5; scikit-learn orders thresholds increasing, so the first such position is the lowest threshold that meets the requirement, which is also the one with the most recall. `thr[ok[0]] if len(ok) else 1.0` is a conditional expression: use that threshold, or 1.0 (never alert) if no threshold reaches the precision. Print the recall at τ too: that is the share of real jams you will catch at this alarm quality.
+
+_Do this._ Precision-recall curve and a threshold at 0.5 precision.
+
+```python
+from sklearn.metrics import precision_recall_curve
+p, r, thr = precision_recall_curve(va.y_30, va.p_30)          # p_30 from any model
+ok = np.where(p[:-1] >= 0.5)[0]
+tau = thr[ok[0]] if len(ok) else 1.0
+print("tau", tau, "recall at tau", r[ok[0]] if len(ok) else 0)
+```
+
+_What each line does._
+
+- `p, r, thr = precision_recall_curve(va.y_30, va.p_30)` — precision and recall at every threshold
+- `ok = np.where(p[:-1] >= 0.5)[0]` — thresholds at which at least half of alarms are correct
+- `tau = thr[ok[0]] if len(ok) else 1.0` — the lowest such threshold, or never alert
+- `print("tau", tau, "recall at tau", ...)` — the chosen threshold and how many jams it catches
+
+**Step 4.**
+
+_Before you do this._ Calibration asks whether a score of 0.3 means a 30 percent chance. A reliability diagram checks it: sort rows into bins by predicted score, and compare each bin's average prediction with the share of positives actually observed in it. `calibration_curve` from scikit-learn does the binning; `n_bins=10` makes ten bins and `strategy="quantile"` gives each bin the same number of rows rather than the same width, which matters when most scores are small.
+
+It returns two arrays, the observed fraction of positives and the mean predicted score per bin; `zip` walks the two together and the f-string prints them with two decimals. A well calibrated model prints pairs that nearly match; a model that prints predicted 0.60, observed 0.30 is overconfident and needs the calibration step in lesson 11.
+
+_Do this._ Reliability diagram numbers.
+
+```python
+from sklearn.calibration import calibration_curve
+frac_pos, mean_pred = calibration_curve(va.y_30, va.p_30, n_bins=10, strategy="quantile")
+for a, b in zip(mean_pred, frac_pos): print(f"predicted {a:.2f}  observed {b:.2f}")
+```
+
+_What each line does._
+
+- `frac_pos, mean_pred = calibration_curve(va.y_30, va.p_30, n_bins=10, strategy="quantile")` — ten equal-count bins: observed rate and mean prediction in each
+- `for a, b in zip(mean_pred, frac_pos): print(...)` — predicted versus observed, one line per bin
+
+**Step 5.**
+
+_Before you do this._ A single average precision number hides how much it would move with a different two months of data. The bootstrap estimates that by resampling: draw days at random with replacement (a day can be picked twice, another not at all), recompute the score, and repeat two hundred times; the spread of those scores is the uncertainty. Resampling whole days rather than rows is the block bootstrap, needed because rows within a day are not independent.
+
+`va.timestamp.dt.floor("D").unique()` lists the validation days. `np.random.default_rng(0)` is a random number generator with a fixed seed so the run is repeatable; `rng.choice(days, size=len(days), replace=True)` draws the resample. The list comprehension inside `pd.concat` gathers each picked day's rows, and `ap` scores the resampled set. `np.percentile(scores, [2.5, 97.5])` gives the range that holds the middle 95 percent of the scores: report it beside the point estimate.
+
+_Do this._ Block bootstrap over days for an interval on AP.
+
+```python
+days = va.timestamp.dt.floor("D").unique()
+rng = np.random.default_rng(0); scores = []
+for _ in range(200):
+    pick = rng.choice(days, size=len(days), replace=True)
+    sub = pd.concat([va[va.timestamp.dt.floor("D") == d] for d in pick])
+    scores.append(ap(sub.y_30, sub.p_30))
+print(np.percentile(scores, [2.5, 97.5]))
+```
+
+_What each line does._
+
+- `days = va.timestamp.dt.floor("D").unique()` — the validation days
+- `pick = rng.choice(days, size=len(days), replace=True)` — one resample of days, some repeated
+- `sub = pd.concat([va[va.timestamp.dt.floor("D") == d] for d in pick])` — the rows of those days
+- `scores.append(ap(sub.y_30, sub.p_30))` — the score on this resample
+- `np.percentile(scores, [2.5, 97.5])` — a 95 percent interval for average precision
 
 **Check yourself.**
 
@@ -3468,51 +3932,106 @@ The senior judgment is choosing when not to replace it: a model that is 0.01 AP 
 
 _Try this._ Propose a set of monotone constraints for this problem, argue which are physically justified from kinematic wave theory and which are merely plausible, and describe how you would test that a constraint does not cost skill.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Prepare LightGBM datasets with categoricals declared.
+**Step 1.**
 
-   ```python
-   import lightgbm as lgb
-   feats = [c for c in train_table.columns if c not in ("timestamp", "label", "label_abs", "y_15", "y_30", "y_60", "speed_t30")]
-   cats = ["station_id", "fwy", "dir"]
-   dtr = lgb.Dataset(tr[feats], tr.y_30, categorical_feature=cats, free_raw_data=False)
-   dva = lgb.Dataset(va[feats], va.y_30, categorical_feature=cats, reference=dtr)
-   ```
+_Before you do this._ A decision tree splits data with questions like 'is downstream speed below 40?' and gives a constant answer in each leaf. Gradient boosting builds hundreds of small trees in sequence, each one trained to correct the errors of the ones before it; the sum of their outputs is the score. LightGBM is a fast, memory-frugal library for this from Microsoft, installed with `pip install lightgbm` in the venv, imported as `lgb`.
 
-2. Train with early stopping on average precision.
+The feature list is everything in the table except the columns that are not inputs: the timestamp, the two present-time labels, the three targets and any helper column. The list comprehension `[c for c in ... if c not in (...)]` builds that list. A categorical feature is one whose values are names rather than quantities (station id, freeway, direction); declaring them lets LightGBM split on 'is the station one of these' instead of treating the id as a number. `lgb.Dataset` wraps a table and its targets in LightGBM's own binned format; `reference=dtr` makes the validation set use the same bins as training; `free_raw_data=False` keeps the original table available for later predictions.
 
-   ```python
-   params = dict(objective="binary", is_unbalance=True, num_leaves=63, min_data_in_leaf=200, learning_rate=0.05,
-                 feature_fraction=0.8, bagging_fraction=0.8, bagging_freq=1, lambda_l2=1.0, max_bin=255,
-                 num_threads=8, metric="average_precision", verbose=-1)
-   m = lgb.train(params, dtr, num_boost_round=3000, valid_sets=[dva], callbacks=[lgb.early_stopping(100), lgb.log_evaluation(100)])
-   print("best iteration", m.best_iteration)
-   ```
+_Do this._ Prepare LightGBM datasets with categoricals declared.
 
-3. Score validation and compare with the baselines from lesson 6.
+```python
+import lightgbm as lgb
+feats = [c for c in train_table.columns if c not in ("timestamp", "label", "label_abs", "y_15", "y_30", "y_60", "speed_t30")]
+cats = ["station_id", "fwy", "dir"]
+dtr = lgb.Dataset(tr[feats], tr.y_30, categorical_feature=cats, free_raw_data=False)
+dva = lgb.Dataset(va[feats], va.y_30, categorical_feature=cats, reference=dtr)
+```
 
-   ```python
-   va["p_30"] = m.predict(va[feats], num_iteration=m.best_iteration)
-   print("LightGBM AP", ap(va.y_30, va.p_30), "persistence AP", ap(va.y_30, va.label))
-   ```
+_What each line does._
 
-4. Importance by gain and a SHAP summary for one horizon.
+- `feats = [c for c in train_table.columns if c not in (...)]` — every column that is a legitimate input
+- `cats = ["station_id", "fwy", "dir"]` — the columns that are names, not amounts
+- `dtr = lgb.Dataset(tr[feats], tr.y_30, categorical_feature=cats, free_raw_data=False)` — training data in LightGBM's format
+- `dva = lgb.Dataset(va[feats], va.y_30, categorical_feature=cats, reference=dtr)` — validation data, binned the same way
 
-   ```python
-   imp = pd.Series(m.feature_importance("gain"), index=feats).sort_values(ascending=False)
-   print(imp.head(15))
-   import shap
-   ex = shap.TreeExplainer(m); sv = ex.shap_values(va[feats].sample(20_000, random_state=0))
-   shap.summary_plot(sv, va[feats].sample(20_000, random_state=0), max_display=15)
-   ```
+**Step 2.**
 
-5. Save with the label definition in the name, plus the feature list.
+_Before you do this._ Hyperparameters are the settings chosen before training. `objective="binary"` means a yes-or-no target with log loss; `is_unbalance=True` up-weights the rare positives; `num_leaves=63` limits each tree's size; `min_data_in_leaf=200` forbids leaves that fit a handful of rows; `learning_rate=0.05` scales each tree's contribution so that many trees are needed and each is a small correction; `feature_fraction` and `bagging_fraction` at 0.8 train each tree on a random 80 percent of features and rows, which reduces overfitting; `bagging_freq=1` re-draws that sample every tree; `lambda_l2` is a penalty on leaf values; `max_bin=255` is how finely each feature is bucketed; `num_threads=8` uses the M1's eight cores; `metric="average_precision"` is what the validation set is scored with; `verbose=-1` silences chatter.
 
-   ```python
-   m.save_model("models/gbt_h30_thresh0.6_win3.txt", num_iteration=m.best_iteration)
-   import json; json.dump(feats, open("models/gbt_h30_features.json", "w"))
-   ```
+`lgb.train` fits up to 3000 trees. Early stopping watches the validation metric and stops when it has not improved for 100 rounds, then remembers the best round as `m.best_iteration`; that is the number of trees to use at prediction time. `log_evaluation(100)` prints the metric every hundred rounds so you can watch it climb and flatten.
+
+_Do this._ Train with early stopping on average precision.
+
+```python
+params = dict(objective="binary", is_unbalance=True, num_leaves=63, min_data_in_leaf=200, learning_rate=0.05,
+              feature_fraction=0.8, bagging_fraction=0.8, bagging_freq=1, lambda_l2=1.0, max_bin=255,
+              num_threads=8, metric="average_precision", verbose=-1)
+m = lgb.train(params, dtr, num_boost_round=3000, valid_sets=[dva], callbacks=[lgb.early_stopping(100), lgb.log_evaluation(100)])
+print("best iteration", m.best_iteration)
+```
+
+_What each line does._
+
+- `params = dict(...)` — the settings, each explained above
+- `m = lgb.train(params, dtr, num_boost_round=3000, valid_sets=[dva], callbacks=[early_stopping(100), log_evaluation(100)])` — train until validation average precision stops improving
+- `print("best iteration", m.best_iteration)` — how many trees the final model uses
+
+**Step 3.**
+
+_Before you do this._ `m.predict(table, num_iteration=m.best_iteration)` scores rows with the best number of trees, returning a probability per row; store it in the validation table as `p_30`. The comparison against persistence, the baseline from lesson 6, is the whole point: the boosted model should beat it clearly, typically by a wide margin at 30 minutes and by less at 60. If it does not, look for a feature bug before touching hyperparameters.
+
+_Do this._ Score validation and compare with the baselines from lesson 6.
+
+```python
+va["p_30"] = m.predict(va[feats], num_iteration=m.best_iteration)
+print("LightGBM AP", ap(va.y_30, va.p_30), "persistence AP", ap(va.y_30, va.label))
+```
+
+_What each line does._
+
+- `va["p_30"] = m.predict(va[feats], num_iteration=m.best_iteration)` — model scores on validation
+- `print("LightGBM AP", ap(va.y_30, va.p_30), "persistence AP", ap(va.y_30, va.label))` — the model against the baseline it must beat
+
+**Step 4.**
+
+_Before you do this._ Importance by gain totals, for each feature, how much the loss dropped at splits that used it; `feature_importance("gain")` returns those totals in feature order, and wrapping them in `pd.Series(..., index=feats)` names them so `sort_values` and `head(15)` show the top fifteen. Expect downstream speed, speed lags and the profile ratio near the top; a calendar flag at the very top would be suspicious.
+
+SHAP (SHapley Additive exPlanations) goes further: for one row it splits the prediction into a contribution from each feature, positive or negative. `shap.TreeExplainer(m)` builds an explainer for a tree model, `shap_values` computes the contributions for a sample of twenty thousand rows (`sample(20_000, random_state=0)` draws the same rows both times), and `summary_plot` draws the distribution of contributions per feature. Install with `pip install shap`; it can take a few minutes on the M1, which is why a sample is used.
+
+_Do this._ Importance by gain and a SHAP summary for one horizon.
+
+```python
+imp = pd.Series(m.feature_importance("gain"), index=feats).sort_values(ascending=False)
+print(imp.head(15))
+import shap
+ex = shap.TreeExplainer(m); sv = ex.shap_values(va[feats].sample(20_000, random_state=0))
+shap.summary_plot(sv, va[feats].sample(20_000, random_state=0), max_display=15)
+```
+
+_What each line does._
+
+- `imp = pd.Series(m.feature_importance("gain"), index=feats).sort_values(ascending=False)` — features ranked by how much they reduced the loss
+- `ex = shap.TreeExplainer(m); sv = ex.shap_values(sample)` — per-row, per-feature contributions on a sample
+- `shap.summary_plot(sv, sample, max_display=15)` — the picture: which features push predictions up or down, and how much
+
+**Step 5.**
+
+_Before you do this._ A saved model is only useful if you can tell, months later, exactly what it predicts. Put the label definition in the filename: horizon 30, threshold 0.6, window 3. `save_model` writes the trees as text; `num_iteration=m.best_iteration` saves only the useful trees. The feature list is saved beside it as JSON, a text format for lists and dictionaries that any language can read, because the live predictor must build its input columns in exactly this order. `json.dump(obj, open(path, "w"))` writes it.
+
+_Do this._ Save with the label definition in the name, plus the feature list.
+
+```python
+m.save_model("models/gbt_h30_thresh0.6_win3.txt", num_iteration=m.best_iteration)
+import json; json.dump(feats, open("models/gbt_h30_features.json", "w"))
+```
+
+_What each line does._
+
+- `m.save_model("models/gbt_h30_thresh0.6_win3.txt", num_iteration=m.best_iteration)` — the model, named by what it predicts
+- `json.dump(feats, open("models/gbt_h30_features.json", "w"))` — the exact feature order the model expects
 
 **Check yourself.**
 
@@ -4188,6 +4707,8 @@ IsotonicRegression(out_of_bounds='clip').fit(p_val, y_val)
 </details>
 
 ### Build
+
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
 
 - `11_build_labels.py` with the train-only profile and both labels; `12_join_incidents.py` with distance and upstream flags.
 - `14_train_baselines.py`: persistence, profile rate, ratio rule.
@@ -4943,6 +5464,8 @@ I(X; Y) = H(Y) − H(Y|X) = Σ p(x, y) log [p(x, y)/(p(x)p(y))]
 
 ### Build
 
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
+
 - Train LightGBM regression and quantile models for `speed_t30`; report MAE against persistence and the profile, per hour.
 - Turn the speed ratio into three classes and train softmax regression, k-NN and a linear SVM; compare macro F1 and calibration.
 - Cluster stations by weekly profile; run PCA on daily profiles; build an anomaly score for detector faults and inspect the top twenty days.
@@ -5033,54 +5556,117 @@ Research threads: coupling learned models with simulators (cell transmission, mi
 
 _Try this._ Sketch a hybrid where the GRU predicts a residual over a kinematic-wave forecast, and argue where along the road and at which horizons the residual should carry the most signal.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Autocorrelation of one station's speed.
+**Step 1.**
 
-   ```python
-   s = df[df.station_id == sid].set_index("timestamp").speed.interpolate(limit=3)
-   acf = [s.autocorr(lag) for lag in range(1, 49)]
-   import matplotlib.pyplot as plt; plt.plot(range(1, 49), acf); plt.xlabel("lag (5-min steps)"); plt.ylabel("autocorrelation"); plt.show()
-   ```
+_Before you do this._ Autocorrelation is the correlation of a series with itself shifted by some lag: how much does speed now resemble speed k steps ago. `sid` is a station id you choose; `set_index("timestamp").speed` gives the speed series in time order; `interpolate(limit=3)` fills short gaps by drawing a straight line between neighbors, up to three steps, so the correlation is not broken by NaN. `s.autocorr(lag)` computes the correlation at one lag; the list comprehension collects lags 1 to 48 (four hours).
 
-2. The fundamental diagram from one month of one station.
+matplotlib is Python's plotting library; `plt.plot(x, y)` draws a line, `xlabel` and `ylabel` label the axes, `show()` displays it (in Jupyter the figure appears under the cell). The curve should start near 1 and decay: high for a few steps, still clearly positive at an hour. That decay is why lags are good features and why a 60-minute forecast is harder than a 15-minute one.
 
-   ```python
-   x = df[df.station_id == sid]
-   plt.scatter(x.occ, x.flow, s=2, alpha=.3); plt.xlabel("occupancy"); plt.ylabel("flow per 5 min"); plt.show()
-   ```
+_Do this._ Autocorrelation of one station's speed.
 
-3. Directed adjacency matrices from the registry.
+```python
+s = df[df.station_id == sid].set_index("timestamp").speed.interpolate(limit=3)
+acf = [s.autocorr(lag) for lag in range(1, 49)]
+import matplotlib.pyplot as plt; plt.plot(range(1, 49), acf); plt.xlabel("lag (5-min steps)"); plt.ylabel("autocorrelation"); plt.show()
+```
 
-   ```python
-   ids = list(reg.ID); pos = {i: k for k, i in enumerate(ids)}; N = len(ids)
-   A_up = np.zeros((N, N), np.float32); A_down = np.zeros((N, N), np.float32)
-   for _, r in reg.iterrows():
-       if pd.notna(r.upstream_id):   A_up[pos[r.ID], pos[r.upstream_id]] = 1
-       if pd.notna(r.downstream_id): A_down[pos[r.ID], pos[r.downstream_id]] = 1
-   ```
+_What each line does._
 
-4. Windows of 12 steps × N stations × 6 channels, one per timestamp.
+- `s = df[df.station_id == sid].set_index("timestamp").speed.interpolate(limit=3)` — one station's speed series, short gaps bridged
+- `acf = [s.autocorr(lag) for lag in range(1, 49)]` — correlation with itself at lags 1 to 48
+- `plt.plot(range(1, 49), acf); ...; plt.show()` — draw how memory fades with lag
 
-   ```python
-   chan = ["speed_ratio", "occ", "flow_scaled", "incident_active", "min_sin", "min_cos"]
-   wide = df.pivot(index="timestamp", columns="station_id", values=chan)        # (T, 6*N)
-   X = np.stack([wide.to_numpy(np.float32).reshape(len(wide), len(chan), N)[t - 12:t] for t in range(12, len(wide))])  # (T-12, 12, 6, N)
-   ```
+**Step 2.**
 
-5. A minimal spatio-temporal model.
+_Before you do this._ The fundamental diagram is the one picture from traffic engineering everyone should know: flow (vehicles passing per interval) against occupancy (fraction of time the sensor is covered, a stand-in for density). At low occupancy flow rises with occupancy, since more cars pass; past a critical point the road is saturated, cars slow, and flow falls as occupancy climbs. Congestion is the falling branch.
 
-   ```python
-   class STNet(nn.Module):
-       def __init__(self, C=6, H=64):
-           super().__init__(); self.gru = nn.GRU(C, H, batch_first=True); self.mix1 = Mix(H); self.mix2 = Mix(H); self.head = nn.Linear(H, 3)
-       def forward(self, x, A_up, A_down):                     # x: (B, 12, C, N)
-           B, T, C, N = x.shape
-           seq = x.permute(0, 3, 1, 2).reshape(B * N, T, C)     # every station is its own sequence
-           h = self.gru(seq)[1][0].reshape(B, N, -1)
-           h = self.mix2(self.mix1(h, A_up, A_down), A_up, A_down)
-           return self.head(h)                                  # (B, N, 3) logits for 15/30/60
-   ```
+`plt.scatter(x, y, s=2, alpha=.3)` draws one small, translucent dot per five-minute row, so dense regions look darker. A month of one station shows the triangle shape clearly, and the point where it turns over is that station's capacity. The model's `speed_ratio` and `occ` features are reading positions on this diagram.
+
+_Do this._ The fundamental diagram from one month of one station.
+
+```python
+x = df[df.station_id == sid]
+plt.scatter(x.occ, x.flow, s=2, alpha=.3); plt.xlabel("occupancy"); plt.ylabel("flow per 5 min"); plt.show()
+```
+
+_What each line does._
+
+- `x = df[df.station_id == sid]` — one station's month
+- `plt.scatter(x.occ, x.flow, s=2, alpha=.3)` — flow against occupancy, one dot per row
+
+**Step 3.**
+
+_Before you do this._ The graph needs to be numbers. `ids = list(reg.ID)` fixes an order for the N stations, and `pos` is a dictionary (a lookup table from key to value) from station id to its position 0 to N−1. `np.zeros((N, N), np.float32)` makes an empty N × N matrix. `reg.iterrows()` walks the registry one row at a time as `(index, row)` pairs; for each station with an upstream neighbor, the entry (station's position, neighbor's position) is set to 1, and likewise downstream. `pd.notna` guards the ends of each freeway, where a station has no neighbor on one side. The result is two directed adjacency matrices, the `A_up` and `A_down` that the `Mix` module of lesson 9.5 expects. With N around a hundred these matrices are tiny.
+
+_Do this._ Directed adjacency matrices from the registry.
+
+```python
+ids = list(reg.ID); pos = {i: k for k, i in enumerate(ids)}; N = len(ids)
+A_up = np.zeros((N, N), np.float32); A_down = np.zeros((N, N), np.float32)
+for _, r in reg.iterrows():
+    if pd.notna(r.upstream_id):   A_up[pos[r.ID], pos[r.upstream_id]] = 1
+    if pd.notna(r.downstream_id): A_down[pos[r.ID], pos[r.downstream_id]] = 1
+```
+
+_What each line does._
+
+- `ids = list(reg.ID); pos = {i: k for k, i in enumerate(ids)}; N = len(ids)` — station order and id-to-position lookup
+- `A_up = np.zeros((N, N), np.float32); A_down = ...` — empty adjacency matrices
+- `for _, r in reg.iterrows(): ...` — for each station in the registry
+- `A_up[pos[r.ID], pos[r.upstream_id]] = 1` — mark its upstream neighbor, if it has one
+- `A_down[pos[r.ID], pos[r.downstream_id]] = 1` — and its downstream neighbor
+
+**Step 4.**
+
+_Before you do this._ A sequence model needs its input as a window: for each timestamp, the last twelve steps (one hour) for every station and every channel, where a channel is one measured or derived quantity. The six channels here are the speed ratio, occupancy, scaled flow, the incident flag and the two time-of-day circle coordinates. `pivot(index="timestamp", columns="station_id", values=chan)` turns the long table (one row per station per time) into a wide one (one row per time, one column per station per channel).
+
+`to_numpy(np.float32).reshape(T, 6, N)` gives a three-dimensional array: time × channel × station. The list comprehension slices, for every t from 12 onward, the twelve rows before t; `np.stack` piles those slices into a four-dimensional array of shape (windows, 12, 6, N). Shapes are the whole difficulty of deep learning code; print `X.shape` and say each number's meaning out loud. Memory: a month is about 8,600 windows × 12 × 6 × N floats, a few hundred megabytes for N near a hundred, fine on 16 GB.
+
+_Do this._ Windows of 12 steps × N stations × 6 channels, one per timestamp.
+
+```python
+chan = ["speed_ratio", "occ", "flow_scaled", "incident_active", "min_sin", "min_cos"]
+wide = df.pivot(index="timestamp", columns="station_id", values=chan)        # (T, 6*N)
+X = np.stack([wide.to_numpy(np.float32).reshape(len(wide), len(chan), N)[t - 12:t] for t in range(12, len(wide))])  # (T-12, 12, 6, N)
+```
+
+_What each line does._
+
+- `chan = [...]` — the six channels per station
+- `wide = df.pivot(index="timestamp", columns="station_id", values=chan)` — one row per timestamp, one column per station and channel
+- `wide.to_numpy(np.float32).reshape(len(wide), len(chan), N)` — time × channel × station
+- `X = np.stack([... [t - 12:t] for t in range(12, len(wide))])` — for each time, the hour before it: windows × 12 × 6 × N
+
+**Step 5.**
+
+_Before you do this._ A GRU (gated recurrent unit) is a recurrent network: it reads a sequence one step at a time, keeping a hidden vector that it updates at each step with learned gates deciding what to remember and what to forget. `nn.GRU(C, H, batch_first=True)` takes sequences of C-channel steps and produces H-dimensional hidden states; `batch_first` means the input shape is (batch, time, channel). `self.head = nn.Linear(H, 3)` turns a station's final hidden vector into three logits, one per horizon, so one network predicts 15, 30 and 60 minutes at once (multi-task).
+
+In `forward`, `x` arrives as (batch, 12, 6, N). `permute(0, 3, 1, 2)` reorders the axes to (batch, N, 12, 6) and `reshape(B * N, T, C)` treats every station in every batch item as its own sequence, which is what a GRU wants. `self.gru(seq)[1][0]` is the final hidden state of each sequence; `reshape(B, N, -1)` puts the stations back together (−1 means 'work this dimension out'). Then two rounds of neighbor mixing with the adjacency matrices from step 3, and the head. The output, (batch, N, 3), is logits: apply a sigmoid and the calibration of lesson 11 before treating them as probabilities. Train it with the same loop as lesson 9.4.
+
+_Do this._ A minimal spatio-temporal model.
+
+```python
+class STNet(nn.Module):
+    def __init__(self, C=6, H=64):
+        super().__init__(); self.gru = nn.GRU(C, H, batch_first=True); self.mix1 = Mix(H); self.mix2 = Mix(H); self.head = nn.Linear(H, 3)
+    def forward(self, x, A_up, A_down):                     # x: (B, 12, C, N)
+        B, T, C, N = x.shape
+        seq = x.permute(0, 3, 1, 2).reshape(B * N, T, C)     # every station is its own sequence
+        h = self.gru(seq)[1][0].reshape(B, N, -1)
+        h = self.mix2(self.mix1(h, A_up, A_down), A_up, A_down)
+        return self.head(h)                                  # (B, N, 3) logits for 15/30/60
+```
+
+_What each line does._
+
+- `self.gru = nn.GRU(C, H, batch_first=True)` — reads each station's hour, step by step
+- `self.mix1 = Mix(H); self.mix2 = Mix(H); self.head = nn.Linear(H, 3)` — two rounds of neighbor mixing, then three horizon logits
+- `seq = x.permute(0, 3, 1, 2).reshape(B * N, T, C)` — every station becomes its own sequence
+- `h = self.gru(seq)[1][0].reshape(B, N, -1)` — final hidden state per station, regrouped by batch
+- `h = self.mix2(self.mix1(h, A_up, A_down), A_up, A_down)` — each station reads its neighbors, twice
+- `return self.head(h)` — logits for 15, 30 and 60 minutes, per station
 
 **Check yourself.**
 
@@ -5169,52 +5755,109 @@ Research threads: risk-controlling prediction sets (Angelopoulos, Bates and coll
 
 _Try this._ Design an experiment that estimates the causal effect of an alert on a driver's reroute decision and travel time, given that alerts change the traffic other drivers experience.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. Isotonic calibration on validation, per horizon.
+**Step 1.**
 
-   ```python
-   from sklearn.isotonic import IsotonicRegression
-   iso = IsotonicRegression(out_of_bounds="clip").fit(va.p_30, va.y_30)
-   va["q_30"] = iso.predict(va.p_30)
-   print("Brier raw", np.mean((va.p_30 - va.y_30) ** 2), "Brier calibrated", np.mean((va.q_30 - va.y_30) ** 2))
-   ```
+_Before you do this._ A boosted model's scores rank rows well but are not honest probabilities, especially with `is_unbalance` on. Calibration fixes that with a second, tiny model fitted on validation: it maps raw score to observed frequency. Isotonic regression is the standard choice: a step function that is only allowed to go up, fitted so that rows with higher raw scores get higher calibrated probabilities that match the positive rate actually seen. `IsotonicRegression(out_of_bounds="clip")` handles scores outside the fitted range by clamping; `.fit(raw, truth)` fits, `.predict(raw)` maps.
 
-2. Threshold at the required precision.
+The Brier score is the mean squared difference between the probability and the outcome, one number that rewards both good ranking and honest probabilities; lower is better. Print it before and after calibration; it should fall. Calibration is per horizon, so repeat for 15 and 60, and it uses validation rows, not training rows (which the model has already fitted) and not test rows (which must stay untouched).
 
-   ```python
-   p, r, thr = precision_recall_curve(va.y_30, va.q_30)
-   ok = np.where(p[:-1] >= 0.5)[0]; tau = float(thr[ok[0]]); print("tau_30", tau, "recall", float(r[ok[0]]))
-   ```
+_Do this._ Isotonic calibration on validation, per horizon.
 
-3. Episode onsets on the test split.
+```python
+from sklearn.isotonic import IsotonicRegression
+iso = IsotonicRegression(out_of_bounds="clip").fit(va.p_30, va.y_30)
+va["q_30"] = iso.predict(va.p_30)
+print("Brier raw", np.mean((va.p_30 - va.y_30) ** 2), "Brier calibrated", np.mean((va.q_30 - va.y_30) ** 2))
+```
 
-   ```python
-   te = te.sort_values(["station_id", "timestamp"])
-   te["onset"] = ((te.label == 1) & (te.groupby("station_id").label.shift(1).fillna(0) == 0)).astype(int)
-   ```
+_What each line does._
 
-4. Lead time: first alert in the two hours before each onset.
+- `iso = IsotonicRegression(out_of_bounds="clip").fit(va.p_30, va.y_30)` — the monotone map from raw score to honest probability
+- `va["q_30"] = iso.predict(va.p_30)` — calibrated probabilities
+- `print("Brier raw", np.mean((va.p_30 - va.y_30) ** 2), "Brier calibrated", ...)` — should fall after calibration
 
-   ```python
-   te["alert"] = (iso.predict(te.p_30) >= tau).astype(int)
-   leads = []
-   for sid, g in te.groupby("station_id"):
-       g = g.reset_index(drop=True); on = g.index[g.onset == 1]
-       for i in on:
-           w = g.loc[max(0, i - 24):i - 1]
-           hit = w.index[w.alert == 1]
-           leads.append((i - hit[0]) * 5 if len(hit) else np.nan)
-   leads = pd.Series(leads); print("episodes", len(leads), "caught", leads.notna().mean(), "median lead min", leads.median())
-   ```
+**Step 2.**
 
-5. False alarms per station-day.
+_Before you do this._ The same threshold search as lesson 6.3, now on the calibrated scores `q_30`, and now written to be saved: `float(...)` turns numpy numbers into plain Python floats so they can go into a JSON file. The requirement is unchanged: at least half of alarms must be correct. Save `tau` per horizon into `models/calibration.json`; the live predictor in lesson 12 reads it. Changing the required precision later means rerunning only this step, not retraining.
 
-   ```python
-   te["fut"] = te.groupby("station_id").label.transform(lambda s: s[::-1].rolling(12, min_periods=1).max()[::-1])
-   fa = te[(te.alert == 1) & (te.fut == 0)].groupby([te.station_id, te.timestamp.dt.floor("D")]).size()
-   print("false alarms per station-day", fa.sum() / (te.station_id.nunique() * te.timestamp.dt.floor("D").nunique()))
-   ```
+_Do this._ Threshold at the required precision.
+
+```python
+p, r, thr = precision_recall_curve(va.y_30, va.q_30)
+ok = np.where(p[:-1] >= 0.5)[0]; tau = float(thr[ok[0]]); print("tau_30", tau, "recall", float(r[ok[0]]))
+```
+
+_What each line does._
+
+- `p, r, thr = precision_recall_curve(va.y_30, va.q_30)` — the curve on calibrated scores
+- `ok = np.where(p[:-1] >= 0.5)[0]; tau = float(thr[ok[0]])` — the lowest threshold meeting the precision requirement
+- `print("tau_30", tau, "recall", float(r[ok[0]]))` — the threshold and the share of jams it catches
+
+**Step 3.**
+
+_Before you do this._ Drivers do not care about row-level scores; they care about whether they were warned before a jam started. An episode onset is the first row of a slow episode: the label is 1 now and was 0 in the previous row. `groupby("station_id").label.shift(1)` is the previous row's label within each station; `fillna(0)` treats the first row of each station as not slow; the `&` combines the two conditions. Sorting first is required, as always before shift. This is done on the test split, `te`, because this is the final, reported evaluation.
+
+_Do this._ Episode onsets on the test split.
+
+```python
+te = te.sort_values(["station_id", "timestamp"])
+te["onset"] = ((te.label == 1) & (te.groupby("station_id").label.shift(1).fillna(0) == 0)).astype(int)
+```
+
+_What each line does._
+
+- `te = te.sort_values(["station_id", "timestamp"])` — time order within each station
+- `te["onset"] = ((te.label == 1) & (prev label == 0)).astype(int)` — 1 at the first row of each slow episode
+
+**Step 4.**
+
+_Before you do this._ Lead time is how many minutes before an onset the first alert fired. First make the alert column: calibrated test scores at or above `tau`. Then, for each station (`groupby` again, `g` being one station's rows, `reset_index` renumbering them), find the rows where an episode starts (`on`), and for each such row `i` look at the window of the 24 rows before it (two hours; `g.loc[max(0, i - 24):i - 1]`). `hit` are the window rows that alerted; the lead is the distance from the first of them to the onset, times five minutes. If nothing alerted, the lead is NaN: a missed episode.
+
+`pd.Series(leads)` makes the list a Series so that `notna().mean()` gives the share of episodes caught and `median()` the typical lead time in minutes. Report those two numbers together with the false-alarm rate from the next step; they are the model's real scorecard.
+
+_Do this._ Lead time: first alert in the two hours before each onset.
+
+```python
+te["alert"] = (iso.predict(te.p_30) >= tau).astype(int)
+leads = []
+for sid, g in te.groupby("station_id"):
+    g = g.reset_index(drop=True); on = g.index[g.onset == 1]
+    for i in on:
+        w = g.loc[max(0, i - 24):i - 1]
+        hit = w.index[w.alert == 1]
+        leads.append((i - hit[0]) * 5 if len(hit) else np.nan)
+leads = pd.Series(leads); print("episodes", len(leads), "caught", leads.notna().mean(), "median lead min", leads.median())
+```
+
+_What each line does._
+
+- `te["alert"] = (iso.predict(te.p_30) >= tau).astype(int)` — 1 where the calibrated score crosses the threshold
+- `for sid, g in te.groupby("station_id"): ... on = g.index[g.onset == 1]` — each station's episode starts
+- `w = g.loc[max(0, i - 24):i - 1]; hit = w.index[w.alert == 1]` — the two hours before an onset, and the alerts in it
+- `leads.append((i - hit[0]) * 5 if len(hit) else np.nan)` — minutes from the first alert to the onset, or missed
+- `print("episodes", len(leads), "caught", leads.notna().mean(), "median lead min", leads.median())` — how many jams, how many warned, how early
+
+**Step 5.**
+
+_Before you do this._ A false alarm is an alert with no slow episode in the next hour. `fut` marks whether any of the next twelve rows (an hour) is slow: reversing the label series with `s[::-1]`, taking a rolling maximum over twelve rows, and reversing back turns a backward-looking window into a forward-looking one; `min_periods=1` lets it work near the end. This is one of the rare legitimate uses of future information, because it is evaluation, not a model input.
+
+The false alarms are rows with `alert == 1` and `fut == 0`. Grouping them by station and by day (`timestamp.dt.floor("D")` drops the time of day) and taking `size()` counts them per station-day; dividing the total by the number of station-days gives the rate a driver would feel: how many wrong warnings per station per day. Below one is livable; several is not, whatever the average precision says.
+
+_Do this._ False alarms per station-day.
+
+```python
+te["fut"] = te.groupby("station_id").label.transform(lambda s: s[::-1].rolling(12, min_periods=1).max()[::-1])
+fa = te[(te.alert == 1) & (te.fut == 0)].groupby([te.station_id, te.timestamp.dt.floor("D")]).size()
+print("false alarms per station-day", fa.sum() / (te.station_id.nunique() * te.timestamp.dt.floor("D").nunique()))
+```
+
+_What each line does._
+
+- `te["fut"] = te.groupby("station_id").label.transform(lambda s: s[::-1].rolling(12, min_periods=1).max()[::-1])` — 1 if any of the next hour's rows is slow
+- `fa = te[(te.alert == 1) & (te.fut == 0)].groupby([station, day]).size()` — false alarms per station per day
+- `print(fa.sum() / (stations × days))` — the average false-alarm rate per station-day
 
 **Check yourself.**
 
@@ -5533,6 +6176,8 @@ pinball(q) = mean( max(q(y − ŷ), (q − 1)(y − ŷ)) )
 
 ### Build
 
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
+
 - `13_feature_engineering.py` with forward-shifted targets and the rolling-origin split with a one-day gap.
 - The episode-level half of `18_evaluate_lead_time.py`: onset, lead-time histogram, share caught, false alarms.
 - Plot the ACF of speed for one station; estimate the shockwave speed from the fundamental diagram; compute skill over persistence per horizon.
@@ -5626,69 +6271,135 @@ Research threads: spatio-temporal transformers and adaptive graphs at city scale
 
 _Try this._ Outline the Core ML export path for the spatio-temporal net: which layers convert cleanly, how to handle a variable number of stations, and what you would measure on device before shipping.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. The numpy MLP with a hand-written backward pass.
+**Step 1.**
 
-   ```python
-   rng = np.random.default_rng(0); d, H = Xtr.shape[1], 64
-   W1 = rng.normal(0, np.sqrt(2 / d), (H, d)).astype(np.float32); b1 = np.zeros(H, np.float32)
-   w2 = rng.normal(0, np.sqrt(1 / H), H).astype(np.float32); b2 = 0.0
-   def forward(X):
-       z1 = X @ W1.T + b1; h = np.maximum(z1, 0); z2 = h @ w2 + b2; p = 1 / (1 + np.exp(-z2)); return z1, h, p
-   def backward(X, y):
-       z1, h, p = forward(X); e = (p - y) / len(y)
-       gw2 = h.T @ e; gb2 = e.sum()
-       dh = np.outer(e, w2) * (z1 > 0)
-       gW1 = dh.T @ X; gb1 = dh.sum(0)
-       return gW1, gb1, gw2, gb2
-   ```
+_Before you do this._ A multilayer perceptron (MLP) is logistic regression with a hidden layer in between: the inputs are multiplied by a weight matrix `W1` and shifted by `b1`, passed through ReLU (`max(z, 0)`, which zeroes negatives and is what lets the network bend), then multiplied by a second weight vector `w2` and squashed by the sigmoid. `H = 64` is the hidden width. Weights start small and random; the `sqrt(2 / d)` and `sqrt(1 / H)` scales (He and LeCun initialization) keep the signal from blowing up or vanishing.
 
-2. Gradient check on a few rows.
+`forward` computes the prediction and keeps the intermediate values needed for the backward pass. `backward` is backpropagation by hand: start with the output error `e = (p − y) / n`, get the gradient of the last layer (`h.T @ e`), push the error back through `w2` (`np.outer(e, w2)`), zero it where ReLU was off (`* (z1 > 0)`), and get the first layer's gradient (`dh.T @ X`). Each step is the chain rule from calculus applied to one layer. `X @ W1.T` uses the transpose so the shapes line up: rows × features times features × hidden.
 
-   ```python
-   def L(X, y): p = np.clip(forward(X)[2], 1e-7, 1 - 1e-7); return -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
-   X0, y0 = Xtr[:64], ytr[:64]; gW1, gb1, gw2, gb2 = backward(X0, y0)
-   eps = 1e-4; i, j = 3, 5
-   W1[i, j] += eps; lp = L(X0, y0); W1[i, j] -= 2 * eps; lm = L(X0, y0); W1[i, j] += eps
-   print(abs((lp - lm) / (2 * eps) - gW1[i, j]))     # ~1e-6
-   ```
+_Do this._ The numpy MLP with a hand-written backward pass.
 
-3. The same network in PyTorch on MPS.
+```python
+rng = np.random.default_rng(0); d, H = Xtr.shape[1], 64
+W1 = rng.normal(0, np.sqrt(2 / d), (H, d)).astype(np.float32); b1 = np.zeros(H, np.float32)
+w2 = rng.normal(0, np.sqrt(1 / H), H).astype(np.float32); b2 = 0.0
+def forward(X):
+    z1 = X @ W1.T + b1; h = np.maximum(z1, 0); z2 = h @ w2 + b2; p = 1 / (1 + np.exp(-z2)); return z1, h, p
+def backward(X, y):
+    z1, h, p = forward(X); e = (p - y) / len(y)
+    gw2 = h.T @ e; gb2 = e.sum()
+    dh = np.outer(e, w2) * (z1 > 0)
+    gW1 = dh.T @ X; gb1 = dh.sum(0)
+    return gW1, gb1, gw2, gb2
+```
 
-   ```python
-   import torch, torch.nn as nn
-   dev = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-   net = nn.Sequential(nn.Linear(d, 64), nn.ReLU(), nn.Linear(64, 1)).to(dev)
-   opt = torch.optim.AdamW(net.parameters(), lr=1e-3, weight_decay=1e-4)
-   pos_w = torch.tensor([(1 - ytr.mean()) / ytr.mean()], device=dev)
-   lossf = nn.BCEWithLogitsLoss(pos_weight=pos_w)
-   Xt, yt = torch.tensor(Xtr, device=dev), torch.tensor(ytr, device=dev)
-   ```
+_What each line does._
 
-4. Train with early stopping on validation AP.
+- `W1, b1, w2, b2 = small random matrices and zero biases` — the network's parameters, sensibly scaled
+- `z1 = X @ W1.T + b1; h = np.maximum(z1, 0)` — first layer, then ReLU
+- `z2 = h @ w2 + b2; p = sigmoid(z2)` — second layer, then a probability
+- `e = (p - y) / len(y); gw2 = h.T @ e; gb2 = e.sum()` — output error and the last layer's gradients
+- `dh = np.outer(e, w2) * (z1 > 0)` — error pushed back through w2 and the ReLU gate
+- `gW1 = dh.T @ X; gb1 = dh.sum(0)` — first layer's gradients
 
-   ```python
-   best, patience = 0, 0
-   for epoch in range(30):
-       net.train(); perm = torch.randperm(len(yt), device=dev)
-       for i in range(0, len(perm), 2048):
-           j = perm[i:i + 2048]; opt.zero_grad(); lossf(net(Xt[j]).squeeze(1), yt[j]).backward(); opt.step()
-       net.eval()
-       with torch.no_grad(): pv = torch.sigmoid(net(torch.tensor(Xva, device=dev)).squeeze(1)).cpu().numpy()
-       score = ap(yva, pv); print(epoch, score)
-       if score > best: best, patience = score, 0; torch.save(net.state_dict(), "models/mlp_h30.pt")
-       elif (patience := patience + 1) >= 5: break
-   ```
+**Step 2.**
 
-5. The spatio-temporal step: one round of neighbor mixing as matrix products.
+_Before you do this._ The same numerical check as lesson 7.3, on one weight of the first layer. `L` is the cross-entropy loss written as a one-line function. The entry `W1[3, 5]` is nudged up, the loss measured, nudged down by twice the amount, measured, and restored; the slope is compared with the backward pass's `gW1[3, 5]`. Sixty-four rows are enough. A disagreement near 1e-6 means the backward pass is right; try a second entry and one of `w2` before moving on. Every network you ever train relies on this check having been done by someone.
 
-   ```python
-   # hidden: (N, H) after a GRU over 12 steps per station; A_up, A_down: (N, N) 0/1 directed adjacency from the registry
-   class Mix(nn.Module):
-       def __init__(self, H): super().__init__(); self.Wu = nn.Linear(H, H, bias=False); self.Wd = nn.Linear(H, H, bias=False)
-       def forward(self, h, A_up, A_down): return h + self.Wu(A_up @ h) + self.Wd(A_down @ h)
-   ```
+_Do this._ Gradient check on a few rows.
+
+```python
+def L(X, y): p = np.clip(forward(X)[2], 1e-7, 1 - 1e-7); return -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
+X0, y0 = Xtr[:64], ytr[:64]; gW1, gb1, gw2, gb2 = backward(X0, y0)
+eps = 1e-4; i, j = 3, 5
+W1[i, j] += eps; lp = L(X0, y0); W1[i, j] -= 2 * eps; lm = L(X0, y0); W1[i, j] += eps
+print(abs((lp - lm) / (2 * eps) - gW1[i, j]))     # ~1e-6
+```
+
+_What each line does._
+
+- `def L(X, y): ...` — the loss as a function of the current weights
+- `gW1, gb1, gw2, gb2 = backward(X0, y0)` — the analytic gradients
+- `W1[i, j] += eps; lp = L(...); W1[i, j] -= 2 * eps; lm = L(...); W1[i, j] += eps` — loss with one weight nudged up, then down, then restored
+- `print(abs((lp - lm) / (2 * eps) - gW1[i, j]))` — brute-force slope minus analytic gradient
+
+**Step 3.**
+
+_Before you do this._ PyTorch is the library that does the backward pass for you and runs on the GPU; install it with `pip install torch`. A tensor is PyTorch's array, like a numpy array but able to live on the GPU and to remember how it was computed so gradients can be derived automatically (autograd). On Apple silicon the GPU is reached through MPS (Metal Performance Shaders); `torch.device("mps" if torch.backends.mps.is_available() else "cpu")` picks it when present. `.to(dev)` moves a model or tensor there.
+
+`nn.Sequential(nn.Linear(d, 64), nn.ReLU(), nn.Linear(64, 1))` is the same network as step 1: a linear layer, ReLU, a linear layer with one output, the logit (the number before the sigmoid). AdamW is the optimizer, an improvement on plain gradient descent that adapts the step size per weight; `lr=1e-3` is its learning rate and `weight_decay=1e-4` a mild penalty on large weights. `BCEWithLogitsLoss` is cross-entropy that takes the logit directly, numerically safer than sigmoid then log; `pos_weight` up-weights the rare positives by the ratio of negatives to positives. `torch.tensor(Xtr, device=dev)` copies the training arrays to the GPU once.
+
+_Do this._ The same network in PyTorch on MPS.
+
+```python
+import torch, torch.nn as nn
+dev = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+net = nn.Sequential(nn.Linear(d, 64), nn.ReLU(), nn.Linear(64, 1)).to(dev)
+opt = torch.optim.AdamW(net.parameters(), lr=1e-3, weight_decay=1e-4)
+pos_w = torch.tensor([(1 - ytr.mean()) / ytr.mean()], device=dev)
+lossf = nn.BCEWithLogitsLoss(pos_weight=pos_w)
+Xt, yt = torch.tensor(Xtr, device=dev), torch.tensor(ytr, device=dev)
+```
+
+_What each line does._
+
+- `dev = torch.device("mps" if ... else "cpu")` — the Mac's GPU if PyTorch can see it
+- `net = nn.Sequential(nn.Linear(d, 64), nn.ReLU(), nn.Linear(64, 1)).to(dev)` — the same two-layer network, on the GPU
+- `opt = torch.optim.AdamW(net.parameters(), lr=1e-3, weight_decay=1e-4)` — the optimizer that will update the weights
+- `lossf = nn.BCEWithLogitsLoss(pos_weight=pos_w)` — cross-entropy on logits, positives up-weighted
+- `Xt, yt = torch.tensor(Xtr, device=dev), torch.tensor(ytr, device=dev)` — training data as GPU tensors
+
+**Step 4.**
+
+_Before you do this._ The training loop in PyTorch has a fixed rhythm per batch: `opt.zero_grad()` clears the previous gradients, the forward pass computes the loss, `.backward()` computes every gradient by autograd, `opt.step()` updates the weights. `net.train()` and `net.eval()` switch modes (they matter for layers such as dropout; harmless here). `torch.randperm` shuffles, as `permutation` did in numpy; `.squeeze(1)` drops the trailing dimension so the output shape matches the targets.
+
+Evaluation is wrapped in `torch.no_grad()` so PyTorch does not build the gradient bookkeeping for it; `torch.sigmoid` turns logits into probabilities; `.cpu().numpy()` brings the result back to numpy for scikit-learn's `ap`. Early stopping by hand: when validation average precision improves, save the weights with `torch.save(net.state_dict(), path)` and reset patience; when it has not improved for five epochs, stop. The `:=` operator assigns and tests in one expression. The saved file is the model you keep.
+
+_Do this._ Train with early stopping on validation AP.
+
+```python
+best, patience = 0, 0
+for epoch in range(30):
+    net.train(); perm = torch.randperm(len(yt), device=dev)
+    for i in range(0, len(perm), 2048):
+        j = perm[i:i + 2048]; opt.zero_grad(); lossf(net(Xt[j]).squeeze(1), yt[j]).backward(); opt.step()
+    net.eval()
+    with torch.no_grad(): pv = torch.sigmoid(net(torch.tensor(Xva, device=dev)).squeeze(1)).cpu().numpy()
+    score = ap(yva, pv); print(epoch, score)
+    if score > best: best, patience = score, 0; torch.save(net.state_dict(), "models/mlp_h30.pt")
+    elif (patience := patience + 1) >= 5: break
+```
+
+_What each line does._
+
+- `perm = torch.randperm(len(yt), device=dev)` — a new order each epoch
+- `opt.zero_grad(); lossf(net(Xt[j]).squeeze(1), yt[j]).backward(); opt.step()` — clear, forward, backward, update: one batch
+- `with torch.no_grad(): pv = torch.sigmoid(net(...)).squeeze(1).cpu().numpy()` — validation probabilities without gradient bookkeeping
+- `if score > best: best, patience = score, 0; torch.save(net.state_dict(), "models/mlp_h30.pt")` — keep the best weights seen so far
+- `elif (patience := patience + 1) >= 5: break` — stop after five epochs without improvement
+
+**Step 5.**
+
+_Before you do this._ This step previews lesson 10. Suppose each station already has a hidden vector `h` of size H summarizing its last hour (a GRU, a recurrent network, produces that in lesson 10). Neighbor mixing lets each station read its neighbors' summaries. An adjacency matrix `A` is an N × N table of zeros and ones where entry (i, j) is 1 if station j is station i's neighbor; then `A @ h` gives, for each station, the sum of its neighbors' vectors, and in a directed road there are two: `A_up` for the upstream neighbor and `A_down` for the downstream one.
+
+`nn.Module` is PyTorch's base class for a model piece; `__init__` creates the learnable parts, here two linear layers without bias that transform the upstream and downstream messages, and `forward` says how to compute the output. The `h +` is a residual connection: the station keeps its own summary and adds what it learned from its neighbors. This single module, applied twice, is a small graph neural network.
+
+_Do this._ The spatio-temporal step: one round of neighbor mixing as matrix products.
+
+```python
+# hidden: (N, H) after a GRU over 12 steps per station; A_up, A_down: (N, N) 0/1 directed adjacency from the registry
+class Mix(nn.Module):
+    def __init__(self, H): super().__init__(); self.Wu = nn.Linear(H, H, bias=False); self.Wd = nn.Linear(H, H, bias=False)
+    def forward(self, h, A_up, A_down): return h + self.Wu(A_up @ h) + self.Wd(A_down @ h)
+```
+
+_What each line does._
+
+- `class Mix(nn.Module):` — a reusable model piece
+- `self.Wu = nn.Linear(H, H, bias=False); self.Wd = nn.Linear(H, H, bias=False)` — learnable transforms for upstream and downstream messages
+- `return h + self.Wu(A_up @ h) + self.Wd(A_down @ h)` — own summary plus transformed neighbor summaries
 
 **Check yourself.**
 
@@ -6400,6 +7111,8 @@ Dropout (inverted): h ← h ⊙ mask / p, mask ~ Bernoulli(p)
 </details>
 
 ### Build
+
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
 
 - `17a`: a numpy MLP with a hand-written backward pass checked against finite differences.
 - The same MLP in PyTorch with matching loss curves.
@@ -7537,6 +8250,8 @@ rating ≈ u_user · v_item + b_user + b_item
 
 ### Build
 
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
+
 - Train a small convolutional network on a public digits dataset on MPS, then fine-tune a pretrained ResNet on a tiny set of your own photos.
 - Fine-tune a small pretrained encoder to predict 511 incident severity from headlines; compare with a bag-of-words logistic regression.
 - Run a quantized open language model locally, extract route, direction and severity from 50 headlines, and score exact match against hand labels; build a small retrieval-augmented question answerer over the repository's docs with a 30-question eval set.
@@ -7631,66 +8346,135 @@ Research threads: performative prediction and feedback loops (next month's train
 
 _Try this._ Propose how you would detect that the model's own alerts are changing the label distribution, and how you would correct the training data or the objective for it.
 
-**Guided walkthrough.**
+**Guided walkthrough.** Every step first explains the tools, terms and commands it uses, then says what to do, then reads the code line by line.
 
-1. The serving loop's core, using the training feature module.
+**Step 1.**
 
-   ```python
-   from features import build_features           # the same module 13_feature_engineering.py uses
-   import json, lightgbm as lgb, joblib
-   models = {h: lgb.Booster(model_file=f"models/gbt_h{h}_thresh0.6_win3.txt") for h in (15, 30, 60)}
-   cal = json.load(open("models/calibration.json")); isos = {h: joblib.load(f"models/iso_h{h}.joblib") for h in (15, 30, 60)}
-   buf = load_last_13_steps()                       # replay mode: slice yesterday's Parquet at the wall-clock slot
-   X = build_features(buf).iloc[-1 * N:]            # the newest row per station
-   out = {"generated_at": pd.Timestamp.utcnow().isoformat(), "input_ts": str(buf.timestamp.max()), "rows": []}
-   for h, m in models.items():
-       q = isos[h].predict(m.predict(X[feats]))
-       for sid, p in zip(X.station_id, q):
-           out["rows"].append({"station_id": int(sid), "h": h, "p": float(p), "alert": bool(p >= cal[str(h)]["tau"])})
-   json.dump(out, open("output/predictions_latest.json.tmp", "w")); os.replace("output/predictions_latest.json.tmp", "output/predictions_latest.json")
-   ```
+_Before you do this._ The serving loop runs every five minutes and must compute features exactly as training did, so the feature code lives in one module, `features.py`, imported by both the training script and the predictor; `from features import build_features` loads that function. Loading the models: `lgb.Booster(model_file=...)` reads a saved LightGBM model; `joblib` is a library for saving and loading Python objects such as the isotonic calibrators; `json.load` reads the thresholds. The dictionary comprehension `{h: ... for h in (15, 30, 60)}` builds one entry per horizon.
 
-2. Population stability index against the training distribution.
+`load_last_13_steps()` is your function that returns the most recent 13 five-minute rows per station (the 12 lags plus the current row); in replay mode it slices yesterday's Parquet at the current wall-clock slot, so the whole pipeline can be exercised without live PeMS. `build_features(buf).iloc[-N:]` computes the feature table and keeps the newest row per station. For each horizon the raw score is calibrated and compared with its threshold; `zip` pairs station ids with probabilities. `pd.Timestamp.utcnow().isoformat()` stamps the output with when it was made, and `input_ts` says how fresh the data was.
 
-   ```python
-   def psi(train_col, live_col, bins=10):
-       edges = np.quantile(train_col.dropna(), np.linspace(0, 1, bins + 1)); edges[0], edges[-1] = -np.inf, np.inf
-       p = np.histogram(train_col.dropna(), edges)[0] / train_col.notna().sum() + 1e-6
-       q = np.histogram(live_col.dropna(), edges)[0] / live_col.notna().sum() + 1e-6
-       return float(np.sum((p - q) * np.log(p / q)))
-   ```
+The last line is the atomic write: write to a `.tmp` file, then `os.replace` renames it over the real file in one step, so a reader never sees a half-written JSON. Any dashboard reads `output/predictions_latest.json`. (`import os` is needed; add it at the top.)
 
-3. Delayed scoring once PeMS posts the day.
+_Do this._ The serving loop's core, using the training feature module.
 
-   ```python
-   log = pd.read_parquet("output/predictions_log.parquet"); truth = pd.read_parquet("data/pems_processed/2026-11.parquet")[["station_id", "timestamp", "label"]]
-   log["target_ts"] = log.input_ts + pd.to_timedelta(log.h, "min")
-   scored = log.merge(truth, left_on=["station_id", "target_ts"], right_on=["station_id", "timestamp"])
-   print(scored.groupby("h").apply(lambda g: ap(g.label, g.p)))
-   ```
+```python
+from features import build_features           # the same module 13_feature_engineering.py uses
+import json, lightgbm as lgb, joblib
+models = {h: lgb.Booster(model_file=f"models/gbt_h{h}_thresh0.6_win3.txt") for h in (15, 30, 60)}
+cal = json.load(open("models/calibration.json")); isos = {h: joblib.load(f"models/iso_h{h}.joblib") for h in (15, 30, 60)}
+buf = load_last_13_steps()                       # replay mode: slice yesterday's Parquet at the wall-clock slot
+X = build_features(buf).iloc[-1 * N:]            # the newest row per station
+out = {"generated_at": pd.Timestamp.utcnow().isoformat(), "input_ts": str(buf.timestamp.max()), "rows": []}
+for h, m in models.items():
+    q = isos[h].predict(m.predict(X[feats]))
+    for sid, p in zip(X.station_id, q):
+        out["rows"].append({"station_id": int(sid), "h": h, "p": float(p), "alert": bool(p >= cal[str(h)]["tau"])})
+json.dump(out, open("output/predictions_latest.json.tmp", "w")); os.replace("output/predictions_latest.json.tmp", "output/predictions_latest.json")
+```
 
-4. A launchd plist for the predictor.
+_What each line does._
 
-   ```xml
-   <?xml version="1.0" encoding="UTF-8"?>
-   <plist version="1.0"><dict>
-     <key>Label</key><string>com.traffic1.predict</string>
-     <key>ProgramArguments</key><array><string>/Users/you/Traffic1/.venv/bin/python</string><string>/Users/you/Traffic1/19_predict_live.py</string></array>
-     <key>StartInterval</key><integer>300</integer>
-     <key>WorkingDirectory</key><string>/Users/you/Traffic1</string>
-     <key>StandardOutPath</key><string>/Users/you/Traffic1/logs/predict.log</string>
-     <key>StandardErrorPath</key><string>/Users/you/Traffic1/logs/predict.err</string>
-   </dict></plist>
-   ```
+- `from features import build_features` — the one feature implementation, shared with training
+- `models = {h: lgb.Booster(model_file=...) for h in (15, 30, 60)}` — the three saved models
+- `cal = json.load(...); isos = {h: joblib.load(...) ...}` — thresholds and calibrators
+- `buf = load_last_13_steps()` — the recent rows needed to compute every lag
+- `X = build_features(buf).iloc[-1 * N:]` — features for the newest row of each station
+- `q = isos[h].predict(m.predict(X[feats]))` — raw score, then calibrated probability
+- `out["rows"].append({..."alert": bool(p >= cal[str(h)]["tau"])})` — one record per station and horizon
+- `json.dump(out, open("...tmp", "w")); os.replace(tmp, real)` — write, then rename atomically
 
-5. A memory line in every stage's log.
+**Step 2.**
 
-   ```python
-   import psutil, time, os
-   t0 = time.time(); proc = psutil.Process(os.getpid())
-   # ... stage work ...
-   print(f"stage=clean file={path} seconds={time.time()-t0:.1f} rss_gb={proc.memory_info().rss/1e9:.2f}")
-   ```
+_Before you do this._ Drift is the slow change in the data after training: a new lane, a sensor replaced, a changed commute pattern. The Population Stability Index (PSI) is a single number comparing a feature's distribution now with its distribution in training. Cut the training values into ten equal-count bins (`np.quantile` at 0, 0.1, …, 1 gives the edges; setting the outer edges to −∞ and +∞ catches everything), count what share of training rows and of live rows fall in each bin (`np.histogram` counts, dividing by the count gives shares, `+ 1e-6` avoids dividing by or logging zero), and sum (p − q)·log(p / q) over bins.
+
+The usual reading: below 0.1 stable, 0.1 to 0.25 watch, above 0.25 the feature has moved and the model may be stale. Compute it weekly for the top ten features and log it; a rise in PSI is the earliest sign that retraining is due, long before the delayed scores of the next step confirm it.
+
+_Do this._ Population stability index against the training distribution.
+
+```python
+def psi(train_col, live_col, bins=10):
+    edges = np.quantile(train_col.dropna(), np.linspace(0, 1, bins + 1)); edges[0], edges[-1] = -np.inf, np.inf
+    p = np.histogram(train_col.dropna(), edges)[0] / train_col.notna().sum() + 1e-6
+    q = np.histogram(live_col.dropna(), edges)[0] / live_col.notna().sum() + 1e-6
+    return float(np.sum((p - q) * np.log(p / q)))
+```
+
+_What each line does._
+
+- `edges = np.quantile(train_col.dropna(), np.linspace(0, 1, bins + 1)); edges[0], edges[-1] = -np.inf, np.inf` — ten equal-count bins from training, open at both ends
+- `p = histogram(train) / n + 1e-6; q = histogram(live) / n + 1e-6` — share of rows per bin, then and now
+- `return float(np.sum((p - q) * np.log(p / q)))` — the index: zero if nothing moved
+
+**Step 3.**
+
+_Before you do this._ Truth arrives late: PeMS posts a day's data the next day, so a prediction can be scored only after that. The predictor should append every prediction it makes to `output/predictions_log.parquet` with the station, the input timestamp, the horizon and the probability. Delayed scoring joins that log to the truth once it exists. `target_ts` is the moment the prediction was about: input time plus horizon minutes, built with `pd.to_timedelta(log.h, "min")`.
+
+The merge matches station and target moment against the cleaned table's `label` at that moment. `groupby("h").apply(lambda g: ap(g.label, g.p))` computes average precision per horizon on real live predictions, the number that finally answers 'is the model still good'. Compare it with the validation and test numbers from training; a steady fall means retrain.
+
+_Do this._ Delayed scoring once PeMS posts the day.
+
+```python
+log = pd.read_parquet("output/predictions_log.parquet"); truth = pd.read_parquet("data/pems_processed/2026-11.parquet")[["station_id", "timestamp", "label"]]
+log["target_ts"] = log.input_ts + pd.to_timedelta(log.h, "min")
+scored = log.merge(truth, left_on=["station_id", "target_ts"], right_on=["station_id", "timestamp"])
+print(scored.groupby("h").apply(lambda g: ap(g.label, g.p)))
+```
+
+_What each line does._
+
+- `log = pd.read_parquet("output/predictions_log.parquet"); truth = ...[["station_id", "timestamp", "label"]]` — what we said, and what happened
+- `log["target_ts"] = log.input_ts + pd.to_timedelta(log.h, "min")` — the moment each prediction was about
+- `scored = log.merge(truth, left_on=["station_id", "target_ts"], right_on=["station_id", "timestamp"])` — prediction beside outcome
+- `scored.groupby("h").apply(lambda g: ap(g.label, g.p))` — live average precision per horizon
+
+**Step 4.**
+
+_Before you do this._ launchd is macOS's built-in scheduler, the thing that runs programs at boot and on timers; it is the right way to run the predictor every five minutes on a Mac mini with no one logged in at the keyboard. A job is described by a plist, an XML file of keys and values, saved as `~/Library/LaunchAgents/com.traffic1.predict.plist` and loaded once with `launchctl load` on that path.
+
+The keys: `Label` names the job; `ProgramArguments` is the command as a list, and it must use the venv's own Python by full path (`/Users/you/Traffic1/.venv/bin/python`) so the right libraries are found, with the script's full path after it; `StartInterval` 300 runs it every 300 seconds; `WorkingDirectory` makes the relative `data/` and `models/` paths resolve; `StandardOutPath` and `StandardErrorPath` capture what the script prints and any error, which is where you look when it stops working. Replace `you` with your username. Make the `logs/` folder first. Check that it runs with `launchctl list | grep traffic1` and by watching the log file.
+
+_Do this._ A launchd plist for the predictor.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.traffic1.predict</string>
+  <key>ProgramArguments</key><array><string>/Users/you/Traffic1/.venv/bin/python</string><string>/Users/you/Traffic1/19_predict_live.py</string></array>
+  <key>StartInterval</key><integer>300</integer>
+  <key>WorkingDirectory</key><string>/Users/you/Traffic1</string>
+  <key>StandardOutPath</key><string>/Users/you/Traffic1/logs/predict.log</string>
+  <key>StandardErrorPath</key><string>/Users/you/Traffic1/logs/predict.err</string>
+</dict></plist>
+```
+
+_What each line does._
+
+- `<key>Label</key><string>com.traffic1.predict</string>` — the job's name
+- `<key>ProgramArguments</key><array>...venv python... ...19_predict_live.py...</array>` — run the predictor with the venv's Python
+- `<key>StartInterval</key><integer>300</integer>` — every five minutes
+- `<key>WorkingDirectory</key>...` — so relative paths inside the script work
+- `<key>StandardOutPath</key> / <key>StandardErrorPath</key>` — where output and errors go
+
+**Step 5.**
+
+_Before you do this._ Memory is the resource that kills a 16 GB machine silently: a stage that grows to 12 GB makes everything else swap. So every stage prints one structured line at the end with its name, its input, how long it took and its peak resident memory. `psutil` is a library for asking the operating system about processes (`pip install psutil`); `psutil.Process(os.getpid())` is the current process, and `.memory_info().rss` is its resident set size in bytes, the memory actually in RAM; dividing by 1e9 gives gigabytes.
+
+`time.time()` is the current time in seconds; subtracting the start time gives the duration. The f-string formats with `:.1f` (one decimal) and `:.2f`. Writing `key=value` pairs makes the line easy to search with `grep` and to load into a table later. Keep these lines; a stage whose memory line creeps up week by week is a stage with a growing leak or a growing file.
+
+_Do this._ A memory line in every stage's log.
+
+```python
+import psutil, time, os
+t0 = time.time(); proc = psutil.Process(os.getpid())
+# ... stage work ...
+print(f"stage=clean file={path} seconds={time.time()-t0:.1f} rss_gb={proc.memory_info().rss/1e9:.2f}")
+```
+
+_What each line does._
+
+- `t0 = time.time(); proc = psutil.Process(os.getpid())` — start the clock and get a handle on this process
+- `print(f"stage=clean file={path} seconds={time.time()-t0:.1f} rss_gb={proc.memory_info().rss/1e9:.2f}")` — one searchable line: what ran, on what, how long, how much memory
 
 **Check yourself.**
 
@@ -8771,6 +9555,8 @@ compute-optimal: N_opt ∝ C^{0.5}, D_opt ∝ C^{0.5};  roughly 20 tokens per pa
 </details>
 
 ### Build
+
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
 
 - `19_predict_live.py` in replay mode; `20_monitor.py`; four launchd plists; `make setup` and `make all`.
 - A golden-file test that serving features equal training features for one stored day; a memory and time line in every stage's log.
@@ -9892,6 +10678,8 @@ convergence condition for repeated risk minimisation: eps < gamma / beta (sensit
 </details>
 
 ### Build
+
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
 
 - Q-learning on a grid world and Thompson sampling on a three-arm bandit; formulate alerting as a contextual bandit and write the off-policy estimator.
 - Draw the DAG for incidents, congestion, reporting, rain and alerts; estimate the effect of rain on slow episodes with inverse probability weighting; design a switchback experiment for alerts.
@@ -11103,6 +11891,8 @@ EMA of parameters: theta_ema <- beta theta_ema + (1 - beta) theta
 
 ### Build
 
+_Everything this asks for has been explained above: the lessons and topics for the ideas, the walkthroughs for the code, the books and courses for depth. The glossary at the end defines any word that is still new._
+
 - A PEMS-BAY reproduction that runs on the mini, with one ablation.
 - A conformal interval on the 30-minute prediction with realized coverage tracked weekly.
 - A hierarchical Bayesian model of per-station slow rates compared with isotonic calibration.
@@ -11285,3 +12075,148 @@ All free; a few need a free login or token.
 | [Graph WaveNet (Wu et al., IJCAI 2019)](https://arxiv.org/abs/1906.00121) | paper | free | an evening or two | 11 |
 | [METR-LA and PEMS-BAY datasets (DCRNN repository)](https://github.com/liyaguang/DCRNN) | dataset | free | days | 11 |
 | [ETA Prediction with Graph Neural Networks in Google Maps (Derrow-Pinion et al., 2021)](https://arxiv.org/abs/2108.11482) | paper | free | an evening or two | 11 |
+
+## Glossary: every word, defined
+
+125 terms the course uses, in plain words, grouped by kind.
+
+### Tools and files
+
+- **Terminal.** The text window (the Terminal app on a Mac) where you type commands and press return instead of clicking. Every script in the course is started from it.
+- **Shell.** The program inside the terminal that reads your commands; on a modern Mac it is zsh. Paths, pipes and environment variables are shell ideas.
+- **Command.** One line typed into the shell: a program name followed by its arguments, such as `python 02_collect_events.py`.
+- **Path.** The address of a file or folder. Absolute paths start at the root (`/Users/you/Traffic1/data`); relative paths start from the folder you are in (`data/pems_raw`). `cd` changes the current folder; `ls` lists it.
+- **Pipe `|`.** Sends the output of one command into the next, so `zcat file.gz | head -3` shows three lines of a compressed file without unpacking it.
+- **Environment variable.** A named value the shell keeps and passes to programs, such as a password or an API key set with `export PEMS_USERNAME=...`. A `.env` file lists them so scripts can load them.
+- **Python.** The programming language the course uses. It reads a text file of instructions and runs them one line at a time.
+- **Script.** A file of Python code ending in `.py`, run with `python name.py`. The numbered files in Traffic1 (`10_clean_pems.py` and so on) are the pipeline's scripts.
+- **Library (package).** A bundle of ready-made code you load with `import`. pandas, numpy, scikit-learn, LightGBM and PyTorch are libraries.
+- **pip.** The tool that installs Python libraries: `pip install pandas`. `requirements.txt` lists everything the project needs so `pip install -r requirements.txt` installs it all.
+- **Virtual environment (venv).** A private copy of Python and its libraries for one project, so projects do not fight over versions. Create it once, activate it, install into it, and point VS Code and launchd at its Python.
+- **arm64 / Apple silicon.** The M-series chips in modern Macs. Python and its libraries must be the arm64 builds to use the chip well; `platform.machine()` must print `arm64`.
+- **Jupyter notebook.** An app that runs Python one cell at a time and shows results, tables and plots under each cell. Good for looking at data; scripts are better for the pipeline.
+- **VS Code.** A free code editor. Point it at the venv's Python so it runs and checks code with the right libraries.
+- **Git.** The version-control tool. It records snapshots (commits) of your files so you can see history, undo, and branch. GitHub hosts repositories online.
+- **Repository (repo).** A folder whose history git tracks. Traffic1 is one. `.gitignore` lists what git must never record, such as `data/` and `.env`.
+- **Commit, branch, push.** A commit is one saved snapshot with a message; a branch is a named line of commits; push copies your commits to GitHub.
+- **CSV.** Comma-separated values: a text table, one row per line, commas between fields. Easy to read, slow and large.
+- **Parquet.** A compressed, column-by-column file format for tables. Small on disk, fast to load, keeps data types. The course stores every cleaned table this way.
+- **gzip (.gz).** A compression format. PeMS files arrive gzipped; `zcat` prints them decompressed and pandas can read them directly.
+- **JSON.** A text format for lists and dictionaries (`{"h": 30, "p": 0.42}`) that every language can read. Used for thresholds, feature lists and the live predictions file.
+- **YAML / plist / XML.** Other text formats for settings. A launchd plist is XML: keys and values inside angle-bracket tags.
+- **launchd.** macOS's built-in scheduler. A plist in `~/Library/LaunchAgents` tells it to run a program every N seconds or at boot, with logs to named files.
+- **Log.** A text file a program appends lines to as it runs, so you can see what happened after the fact. Every stage in the course writes one line with its name, time and memory.
+- **API key / token.** A secret string that identifies you to a web service such as 511. Kept in `.env`, never in code or git.
+- **Polling.** Asking a server for its current data on a schedule, as the 511 collector does every few minutes.
+
+### Data words
+
+- **PeMS.** Caltrans' Performance Measurement System: the archive of freeway detector readings for California, published as daily text files per district.
+- **511.** The Bay Area traveller-information service; its API lists current incidents (crashes, stalls, closures) with times and locations.
+- **Station (detector).** One sensor site on the freeway, identified by a number. It reports flow, occupancy and speed every five minutes.
+- **Mainline (ML).** A detector on the through lanes, as opposed to an on-ramp, off-ramp or HOV lane. The course uses mainline stations only.
+- **Postmile.** A station's distance along its freeway, used to put stations in driving order and find neighbors.
+- **Upstream / downstream.** Upstream is where traffic comes from; downstream is where it is going. A jam downstream reaches you soon.
+- **Registry.** The course's small curated table of the Fremont stations with their neighbors, built once from the PeMS meta file.
+- **Flow.** Vehicles counted passing the detector in the interval.
+- **Occupancy.** The fraction of the interval the sensor was covered by a vehicle; a stand-in for how densely packed the road is.
+- **Speed.** Average speed in miles per hour over the interval.
+- **pct_obs.** The percentage of a five-minute row that came from real observations rather than PeMS's fill-in estimates. Below 50 the row is mostly guesswork.
+- **Five-minute row / slot.** One reading per station per five minutes: 288 per day. The slot is the position in the day, 0 to 287.
+- **Grid.** Every station × every slot, with no gaps. Missing readings are kept as NaN rows, never skipped, so shifts and windows stay aligned.
+- **Timestamp.** A moment in time as a datetime value. Stored in UTC in the course; converted to Pacific time only to compute the hour of day.
+- **Timezone, UTC, DST.** A timezone maps clock readings to moments. UTC is the single world clock. Daylight saving time makes one local hour vanish in spring and repeat in autumn, which the parsing code must handle.
+- **NaN / NaT.** Not a number / not a time: the markers for a missing value. Most pandas functions skip them; `fillna` replaces them.
+- **Imputation.** Filling a missing value with an estimate. PeMS imputes; the course blanks heavily imputed rows and forward-fills short gaps.
+- **Forward fill.** Copying the last known value into the following empty slots, up to a limit.
+- **Incident.** A 511 event: crash, stall, closure, with created, updated and pulled-at times. Its reporting delay limits how much it can help.
+- **Schema.** The list of a table's columns and their types. Checked before every write.
+
+### Tables and code words
+
+- **pandas.** The Python library for tables. `pd.read_csv`, `read_parquet`, `groupby`, `merge`, `shift`, `rolling` are its verbs.
+- **DataFrame / Series.** A DataFrame is a table with named columns; a Series is one column. Selecting a column gives a Series.
+- **numpy.** The library for fast arithmetic on arrays. `np.sin`, `np.mean`, `X @ w` work on whole arrays at once.
+- **Array / matrix / tensor.** A grid of numbers: one-dimensional (vector), two-dimensional (matrix), or more. PyTorch calls its arrays tensors.
+- **Shape.** The size of each dimension of an array, such as (rows, columns) or (batch, time, channel, station). Most deep-learning bugs are shape bugs.
+- **Index.** The row labels of a DataFrame. A MultiIndex has more than one level, such as (station, timestamp). `reset_index` turns levels back into columns.
+- **Boolean mask.** A column of true/false, one per row, used to select rows: `df[df.speed < 35]`.
+- **`.loc` / `.iloc`.** Select by label (`.loc[row, column]`) or by position (`.iloc[0]`). Assigning to `.loc[mask, col]` changes only the masked rows.
+- **groupby.** Split a table into groups by a key, compute something per group, and combine. `groupby("station_id").size()` counts rows per station.
+- **transform.** A groupby method that returns a result the same length as the input, so it can be stored as a new column.
+- **merge (join).** Line two tables up on shared key columns and combine their other columns. `how="left"` keeps every row of the left table.
+- **shift(k).** Move a column down by k rows (a lag). A negative k moves it up, which looks into the future: allowed only for targets.
+- **rolling(n).** A window of the last n rows; `.mean()`, `.std()`, `.sum()`, `.max()` summarize it. Rows must be in time order first.
+- **pivot.** Turn a long table (one row per station and time) into a wide one (one row per time, one column per station).
+- **Chunking / streaming.** Reading a file in pieces (`chunksize`) and keeping only what is needed from each, so memory stays small.
+- **float32 / int8.** Number types that use 4 bytes and 1 byte instead of 8. Halving or quartering memory with no real loss for speeds and flags.
+- **f-string.** Text with values filled in: `f"speed_lag_{k}"`.
+- **List comprehension.** A one-line loop that builds a list: `[c for c in cols if c != "y"]`.
+- **Lambda.** A small unnamed function written inline: `lambda s: s.rolling(3).sum()`.
+- **assert.** A check that must be true or the program stops with an error. The cheapest safety net; put one before every write.
+- **Seed (`random_state`, `default_rng(0)`).** A fixed starting point for random numbers, so a run can be repeated exactly.
+- **matplotlib.** Python's plotting library. `plt.plot`, `plt.scatter`, `plt.show`.
+
+### Prediction words
+
+- **Unit.** The thing a row describes: one station at one timestamp.
+- **Inputs (features).** The columns a model reads. Every one must be known at the row's moment.
+- **Target (label).** The column the model tries to predict. Here 1 if the station is inside a slow episode h minutes later, else 0.
+- **Horizon.** How far ahead the prediction looks: 15, 30 or 60 minutes, one model each.
+- **Slow episode.** Three consecutive five-minute rows with speed below 60 percent of the station's typical speed for that slot and day type.
+- **Profile.** The typical speed per station, day type and slot, computed as the median over training rows only.
+- **Prevalence.** The share of rows that are positive. Small here, which is why accuracy is useless and average precision is used.
+- **Leakage.** Any information from after a row's moment getting into its inputs, or test data influencing training choices. The mistake that makes models look great and then fail.
+- **Feature engineering.** Deciding and computing the input columns: lags, rolling statistics, time-of-day circle, holidays, neighbor readings.
+- **Lag.** A value from k steps earlier in the same station's series.
+- **Cyclic encoding.** Placing a time on a circle with sine and cosine so 23:55 and 00:05 are close.
+- **Split (train / validation / test).** Dividing the data by date. The model learns from training, choices are made on validation, and test is scored once at the end.
+- **Baseline.** The simplest forecast without a model: persistence (the future equals now) and the profile rate (the historical average). Every model must beat them.
+- **Metric.** How guesses are scored. Average precision, precision, recall, Brier score, lead time and false-alarm rate are the course's metrics.
+- **Precision / recall.** Precision is the share of alarms that were right; recall is the share of real jams that were alarmed. Raising one usually lowers the other.
+- **Average precision (AP).** The area under the precision-recall curve: the prevalence for random guessing, 1.0 for perfect. Not fooled by rare positives.
+- **Threshold (τ).** The score above which an alert fires. Chosen on validation to meet a required precision.
+- **Calibration.** Whether a score of 0.3 really means a 30 percent chance. Checked with a reliability diagram; fixed with isotonic regression.
+- **Brier score.** Mean squared difference between predicted probability and outcome; lower is better.
+- **Bootstrap.** Estimating uncertainty by resampling the data many times and recomputing the score. Resample whole days for time series.
+- **Onset, lead time, false alarm.** An onset is the first row of an episode; lead time is minutes from the first alert to the onset; a false alarm is an alert with no episode in the next hour.
+- **Drift.** The data slowly changing after training. Measured with the population stability index; confirmed by delayed scoring.
+- **Population stability index (PSI).** One number comparing a feature's distribution now with training. Below 0.1 stable, above 0.25 moved.
+
+### Model words
+
+- **Model.** A function from inputs to a score, with parameters set by training.
+- **Parameters (weights) / hyperparameters.** Parameters are learned from data; hyperparameters (learning rate, number of leaves) are chosen before training.
+- **Logistic regression.** Weighted sum of features plus bias, squashed by the sigmoid into a probability. The simplest model that outputs a probability.
+- **Sigmoid.** 1 / (1 + e^(−z)): turns any number into a value between 0 and 1.
+- **Logit.** The number before the sigmoid. PyTorch's loss takes logits directly for numerical safety.
+- **Loss.** A number measuring how wrong the model is. Cross-entropy (log loss) for probabilities; training makes it smaller.
+- **Cross-entropy.** −log p for a true positive, −log(1 − p) for a true negative, averaged. Punishes confident wrong answers heavily.
+- **Gradient.** The direction in which the loss rises fastest, one number per parameter. Training steps against it.
+- **Gradient descent / mini-batch / epoch / learning rate.** Repeatedly step the parameters against the gradient. A mini-batch is a random slice of rows per step; an epoch is one pass over all rows; the learning rate is the step size.
+- **Gradient check.** Comparing the formula's gradient with a brute-force slope from nudging one parameter. Done once per new model.
+- **Standardization.** Subtract the training mean and divide by the training standard deviation, per column, so features are on one scale.
+- **Regularization.** Any penalty or constraint that keeps a model from fitting noise: weight decay, leaf limits, feature and row subsampling, early stopping.
+- **Overfitting.** Fitting the training data's noise so that validation gets worse while training gets better.
+- **Early stopping.** Stop training when the validation metric has not improved for a while, and keep the best point.
+- **Decision tree.** A model that asks yes/no questions about features and gives a constant answer in each leaf.
+- **Gradient boosting / LightGBM.** Hundreds of small trees, each fitted to the errors of the ones before; their sum is the score. LightGBM is the fast library used in production here.
+- **Categorical feature.** A column of names rather than amounts (station id, direction). Declared so the trees can split on sets of values.
+- **Feature importance / SHAP.** Importance by gain totals how much each feature reduced the loss; SHAP splits one prediction into per-feature contributions.
+- **Neural network / MLP.** Layers of weighted sums with a nonlinearity (ReLU) between them. A multilayer perceptron is the plain version.
+- **ReLU.** max(z, 0): zeroes negatives. The nonlinearity that lets a network bend.
+- **Backpropagation.** The chain rule applied layer by layer, backward from the loss, to get every gradient.
+- **PyTorch / autograd / MPS.** The deep-learning library; autograd derives gradients automatically; MPS is how it reaches the Mac's GPU.
+- **Optimizer (AdamW).** The rule that turns gradients into parameter updates; AdamW adapts the step per parameter and adds weight decay.
+- **Recurrent network / GRU.** A model that reads a sequence step by step, keeping a hidden state; the GRU uses gates to decide what to remember.
+- **Hidden state.** The vector a recurrent network carries from step to step: its summary of what it has read.
+- **Adjacency matrix.** An N × N table of 0/1 saying which stations are neighbors. `A @ h` sums each station's neighbors' vectors.
+- **Graph neural network / neighbor mixing.** A model that lets each station read transformed summaries of its neighbors, using the adjacency matrices.
+- **Multi-task.** One model with several outputs, here the three horizons.
+- **Residual connection.** Adding a layer's input to its output (`h + f(h)`), so the layer learns a correction.
+- **Autocorrelation.** Correlation of a series with itself at a lag; how long the past stays informative.
+- **Fundamental diagram.** Flow against occupancy: rising while the road is free, falling once it is saturated. Congestion is the falling branch.
+- **Isotonic regression.** A step function that only goes up, fitted to map raw scores to observed frequencies. The calibration method used.
+- **Atomic write.** Write to a temporary file, then rename it over the real one, so a reader never sees a half-written file.
+- **Resident memory (RSS).** The RAM a process is actually using, logged per stage so a 16 GB machine never swaps.
+
