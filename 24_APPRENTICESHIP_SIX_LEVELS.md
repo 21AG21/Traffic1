@@ -161,6 +161,541 @@ The reproducibility problem in research is mostly this stage done badly. A lock 
 
 _Try this._ Write the 'reproduce this result' section of a paper for this repository: exact commands, content hashes for data, versions, hardware, and expected runtime. Then have someone else follow it.
 
+**Guided walkthrough.** This is the one walkthrough where nothing is assumed: no Python, no git, no editor. Every command is typed into the Terminal app, one line at a time, pressing return after each. If a step fails, read the error out loud before doing anything else; the fix is nearly always in the last line of it.
+
+**Step 1.**
+
+_Before you do this._ The Terminal is an app that comes with macOS: press Command and the space bar, type `terminal`, press return. A window opens showing a prompt, a line ending in `%` (or `$`) that means the computer is waiting. You type one command, press return, it runs, and the prompt comes back. That is the entire loop.
+
+Three commands cover ninety percent of moving around. `pwd` means print working directory: it answers 'which folder am I in right now?'. `ls` lists what is in that folder. `cd` means change directory: `cd Documents` goes into a folder named Documents, `cd ..` goes up one level, and `cd ~` goes to your home folder. The `~` character is shorthand for your home folder, `/Users/yourname`.
+
+Two habits that save hours. Press the tab key halfway through a name and the shell completes it for you, which also proves the name exists. And if a command ever hangs or runs away, press Control and C together to stop it.
+
+`mkdir` makes a directory. The `-p` flag means 'make parent folders as needed and do not complain if it already exists', which makes the command safe to run twice.
+
+_Do this._ Open Terminal and make a folder to keep projects in, then go into it.
+
+```bash
+pwd
+ls
+mkdir -p ~/code
+cd ~/code
+pwd
+```
+
+_What each line does._
+
+- `pwd` — prints the folder you are in; it will say /Users/yourname
+- `ls` — lists that folder's contents, so you can see Desktop, Documents and the rest
+- `mkdir -p ~/code` — creates a folder called code in your home folder, quietly succeeding if it is already there
+- `cd ~/code` — moves into it; the prompt now shows code
+- `pwd` — confirms the move: /Users/yourname/code
+
+**Step 2.**
+
+_Before you do this._ Git is the tool that records versions of your work, and on a Mac it arrives inside Apple's Command Line Tools, a free download that also includes the compiler some Python packages need. You do not need the full Xcode app, which is many gigabytes; the command line tools are a few hundred megabytes.
+
+Running the install command opens a small dialog box asking you to agree and install. It takes a few minutes. If the tools are already present, the command says so and does nothing, which is fine.
+
+After it finishes, `git --version` should print something like `git version 2.39.5`. Any version above 2.30 is fine for this course.
+
+_Do this._ Install Apple's command line tools, then check that git is there.
+
+```bash
+xcode-select --install
+git --version
+```
+
+_What each line does._
+
+- `xcode-select --install` — opens the installer dialog; click Install and wait, or read the note that they are already installed
+- `git --version` — proves git now exists and is on your PATH, the list of folders the shell searches for commands
+
+**Step 3.**
+
+_Before you do this._ macOS ships with a Python, and you must not use it. It belongs to the system, it is often an old version, and installing packages into it can break parts of macOS. Every serious project installs its own Python.
+
+There are two good ways to get one on Apple silicon. Miniforge is a small installer from the conda-forge community that gives you a native Python plus the conda tool; it is the smoothest path on an M-series Mac and is what this walkthrough uses. The other is the official installer from python.org, which is equally fine; if you take that route, download the macOS 64-bit universal2 installer, double-click it, and skip to the next step.
+
+Native matters. Apple silicon runs two kinds of program: native arm64 code, and older Intel code translated on the fly by Rosetta, which runs at roughly half speed and cannot use the Mac's GPU from PyTorch. The check at the end of this step must print `arm64`. If it prints `x86_64`, you have an Intel Python and should uninstall it and start this step again.
+
+The commands below download an installer script, run it, and then tell your shell about the new Python. `curl` fetches a file from the internet; `-L` follows redirects; `-O` saves it under its own name. `bash Miniforge3-MacOSX-arm64.sh -b -p ~/miniforge3` runs the installer in batch mode (`-b`, meaning do not ask questions) into the folder `~/miniforge3` (`-p` for prefix). `conda init zsh` edits your shell's startup file, `~/.zshrc`, so that new terminal windows can find this Python. Because that file is only read when a shell starts, you must close the Terminal window and open a new one before the last line will work.
+
+_Do this._ Install a native arm64 Python, then open a new Terminal window and prove it is native.
+
+```bash
+cd ~/Downloads
+curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh
+bash Miniforge3-MacOSX-arm64.sh -b -p ~/miniforge3
+~/miniforge3/bin/conda init zsh
+
+# now quit Terminal (Command-Q), open it again, and run:
+python -c "import platform, sys; print(platform.machine(), sys.version)"
+which python
+```
+
+_What each line does._
+
+- `curl -L -O https://...Miniforge3-MacOSX-arm64.sh` — downloads the installer script for Apple silicon into your Downloads folder
+- `bash Miniforge3-MacOSX-arm64.sh -b -p ~/miniforge3` — runs it without prompts, installing into a folder called miniforge3 in your home folder
+- `~/miniforge3/bin/conda init zsh` — adds a few lines to ~/.zshrc so future terminals find this Python first
+- `python -c "...print(platform.machine(), sys.version)"` — runs one line of Python; it must print arm64 followed by a version of 3.11 or newer
+- `which python` — shows which file the word python actually runs; it should be inside your miniforge3 folder, not /usr/bin
+
+**Step 4.**
+
+_Before you do this._ A repository, or repo, is a folder whose history git tracks. The course's repo is Traffic1 on GitHub. Cloning it copies the whole folder and its history to your machine.
+
+`git clone URL` creates a folder named after the repo and downloads it. If you have your own copy of Traffic1 on GitHub, use its URL instead. If you have no repo at all yet, take the second block: `git init -b main` turns an ordinary folder into a repo with a first branch called main, which is what GitHub expects.
+
+After cloning, `ls` shows the files. Right now the repo holds the planning documents; the numbered scripts are what you will write during the course, starting with the collector in step 11 of this walkthrough.
+
+_Do this._ Get the project folder onto your machine and go into it.
+
+```bash
+cd ~/code
+git clone https://github.com/21AG21/Traffic1.git
+cd Traffic1
+ls
+
+# no repo of your own yet? do this instead:
+# mkdir -p ~/code/Traffic1 && cd ~/code/Traffic1 && git init -b main
+```
+
+_What each line does._
+
+- `git clone https://github.com/21AG21/Traffic1.git` — downloads the repository and its history into a new folder called Traffic1
+- `cd Traffic1` — moves into the project; every command from here on assumes you are in this folder
+- `ls` — lists what came down: the plan and lesson documents
+- `git init -b main` — the alternative: start a fresh repository in the current folder with main as the first branch
+
+**Step 5.**
+
+_Before you do this._ A virtual environment, or venv, is a private copy of Python and its packages that belongs to one project. Without one, every project shares a single set of packages and they eventually conflict: one project needs an old pandas, another needs a new one, and installing for one breaks the other. With one, each project gets its own, and deleting the folder undoes everything cleanly.
+
+`python -m venv .venv` runs Python's built-in venv tool and creates a folder called `.venv` inside your project. The leading dot means the Finder and `ls` hide it by default; `ls -a` shows hidden files. The name `.venv` is a convention that VS Code recognizes automatically.
+
+Creating it is not enough; you must activate it. `source .venv/bin/activate` changes the current terminal so the word `python` means the one inside `.venv`. You will see `(.venv)` appear at the start of your prompt, which is how you know it is on. Activation lasts only for that terminal window: every new window, and every restart, needs the `source` line again. `deactivate` turns it off.
+
+The `.venv` folder is large and is rebuilt from requirements.txt in one command, so it never goes into git. Step 9 adds it to `.gitignore`.
+
+_Do this._ Create the project's virtual environment, turn it on, and confirm which Python is now in charge.
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+which python
+python -V
+```
+
+_What each line does._
+
+- `python -m venv .venv` — creates the private environment in a hidden folder called .venv
+- `source .venv/bin/activate` — switches this terminal into it; your prompt gains a (.venv) prefix
+- `which python` — must now print .../Traffic1/.venv/bin/python — inside the project, not miniforge3
+- `python -V` — prints the version, which should match the Python you installed
+
+**Step 6.**
+
+_Before you do this._ `requirements.txt` is a plain text file listing the packages the project needs, one per line, so anyone (including you on a new machine) can install all of them with one command. This is the file you asked about, and here is exactly what to put in it.
+
+Each line is a package name and a version rule. `pandas>=2.2` means 'at least 2.2, newer is fine'. Loose rules like that are right while you are setting up, because they always resolve. Once everything works, you freeze the exact versions with `pip freeze > requirements.lock.txt`, and that lock file is what makes a run reproducible months later. Text after `#` is a comment that pip ignores.
+
+Why these packages: pandas and numpy are the table and array libraries; pyarrow lets pandas read and write Parquet; requests fetches the 511 feed; python-dotenv reads your `.env` file; scikit-learn provides the baselines, metrics and calibration; lightgbm is the production model; torch is PyTorch for the neural networks and is the only large download; matplotlib draws the plots; jupyterlab runs notebooks; pytest runs the tests; holidays marks public holidays; psutil measures memory; duckdb runs SQL over Parquet; tqdm draws progress bars; shap explains model predictions.
+
+The command below writes the file using a here-document: `cat > requirements.txt << 'EOF'` means 'take everything up to a line containing EOF and write it into requirements.txt'. The quotes around 'EOF' stop the shell from interpreting anything inside. You can equally create the file in VS Code once step 8 is done, or in TextEdit as plain text; the content is what matters.
+
+_Do this._ Create requirements.txt with exactly these lines.
+
+```bash
+cat > requirements.txt << 'EOF'
+# data
+pandas>=2.2            # tables: read, clean, group, join
+numpy>=1.26            # arrays and the maths under pandas
+pyarrow>=15.0          # lets pandas read and write Parquet files
+
+# getting the data
+requests>=2.31         # HTTP calls to the 511 traffic feed
+python-dotenv>=1.0     # loads secrets from the .env file
+
+# models
+scikit-learn>=1.4      # baselines, metrics, calibration, splits
+lightgbm>=4.3          # gradient boosted trees: the production model
+torch>=2.2             # PyTorch, the neural networks (large download)
+shap>=0.45             # explains which features drove a prediction
+
+# looking at things
+matplotlib>=3.8        # plots
+jupyterlab>=4.1        # notebooks for exploring
+
+# the rest
+pytest>=8.0            # tests
+holidays>=0.45         # public holiday calendar for the feature set
+psutil>=5.9            # memory and timing for every pipeline stage
+duckdb>=0.10           # SQL over Parquet without a database server
+tqdm>=4.66             # progress bars for long loops
+EOF
+
+cat requirements.txt
+```
+
+_What each line does._
+
+- `cat > requirements.txt << 'EOF'` — starts writing the file; everything until the EOF line goes into it
+- `pandas>=2.2` — one requirement: the package name, then the lowest version that will do
+- `# tables: read, clean, group, join` — a comment; pip ignores everything after the hash
+- `EOF` — ends the here-document and closes the file
+- `cat requirements.txt` — prints the file back so you can see it saved correctly
+
+**Step 7.**
+
+_Before you do this._ `pip` is Python's package installer. It reads requirements.txt and downloads each package from PyPI, the public package index. Because your venv is active, everything lands inside `.venv` and nothing touches the rest of your machine.
+
+Upgrade pip itself first; old versions sometimes fail to find the right wheel. A wheel is a pre-built package: if one exists for your Mac, installation is a fast download, and if not, pip compiles from source, which is slow and is where the command line tools from step 2 earn their place. Expect the whole install to take a few minutes, most of it PyTorch.
+
+Then verify by importing everything and asking PyTorch whether it can see the Mac's GPU. MPS stands for Metal Performance Shaders, Apple's GPU interface; `torch.backends.mps.is_available()` printing True means later lessons can train on the GPU. False is not fatal, it just means training runs on the processor.
+
+One known failure on macOS: `import lightgbm` raising an error about `libomp` or OpenMP. LightGBM needs Apple's OpenMP runtime, which is not bundled. The fix is Homebrew, the package manager for macOS: install it from brew.sh with the one line on that page, then run `brew install libomp`, then open a new terminal and try again.
+
+_Do this._ Install everything from the file, then prove each import works.
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+
+python - << 'EOF'
+import platform, pandas as pd, numpy as np, sklearn, lightgbm as lgb, torch
+print("machine      ", platform.machine())
+print("pandas       ", pd.__version__)
+print("numpy        ", np.__version__)
+print("scikit-learn ", sklearn.__version__)
+print("lightgbm     ", lgb.__version__)
+print("torch        ", torch.__version__)
+print("GPU (mps)    ", torch.backends.mps.is_available())
+EOF
+```
+
+_What each line does._
+
+- `python -m pip install --upgrade pip` — updates the installer itself before it does any real work
+- `pip install -r requirements.txt` — reads the file and installs every package into the active venv
+- `python - << 'EOF' ... EOF` — runs the block of Python between the markers without saving it to a file
+- `print("machine", platform.machine())` — arm64 again: this time it proves the venv's Python is native too
+- `torch.backends.mps.is_available()` — True means PyTorch can use the Mac's GPU in the neural network lessons
+
+**Step 8.**
+
+_Before you do this._ VS Code is a free editor from Microsoft and the one this course assumes. Download it from code.visualstudio.com, open the downloaded file, and drag the app into your Applications folder. Open it once from Applications so macOS allows it to run.
+
+Connecting it to your project is two connections, not one. First the folder: File, then Open Folder, and choose `~/code/Traffic1`. Everything you do in VS Code from then on is relative to that folder. Second the interpreter: VS Code must be told to use the `.venv` Python rather than some other one, or your imports will be underlined in red and running a file will fail with 'no module named pandas'.
+
+To do that, install the Python extension: click the Extensions icon in the left bar (four squares), search for `Python`, and install the one published by Microsoft. Then press Command, Shift and P together to open the command palette, type `Python: Select Interpreter`, press return, and choose the entry whose path ends in `Traffic1/.venv/bin/python`, usually labelled Recommended. The chosen interpreter then shows in the bottom status bar, and that is your proof it worked.
+
+Two more things worth doing once. The command palette entry `Shell Command: Install 'code' command in PATH` lets you type `code .` in a terminal to open the current folder in VS Code. And a settings file inside the project makes the choice stick for every future window and makes VS Code's own terminal activate the venv automatically, so you do not have to `source` it there.
+
+Running code: open a `.py` file and press the triangular Run button at the top right, or use VS Code's terminal, which is the panel you get with Control and the backtick key. The terminal is the honest way, because it is the same command you would type anywhere.
+
+_Do this._ Open the project in VS Code, install the Python extension, select the .venv interpreter, and save the project settings.
+
+```bash
+mkdir -p .vscode
+cat > .vscode/settings.json << 'EOF'
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.rulers": [100]
+}
+EOF
+
+code .   # opens this folder in VS Code, once the 'code' command is installed
+```
+
+_What each line does._
+
+- `mkdir -p .vscode` — makes the folder VS Code keeps per-project settings in
+- `"python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"` — tells VS Code to use this project's venv without asking again
+- `"python.terminal.activateEnvironment": true` — makes VS Code's built-in terminal activate the venv for you
+- `"editor.rulers": [100]` — draws a faint line at 100 characters so lines stay readable
+- `code .` — opens the current folder in VS Code; the dot means 'here'
+
+**Step 9.**
+
+_Before you do this._ `.gitignore` is a list of things git must never record. It has to exist before your first commit, because git history is permanent: a secret committed once stays in the history even if you delete the file in the next commit, and public repositories are scanned by bots within minutes of a push.
+
+Four kinds of thing belong in it. Secrets, meaning `.env`. Data, because the PeMS files are hundreds of megabytes a day and are re-downloadable. Anything rebuildable: `.venv`, trained models, outputs, logs, Python's `__pycache__` folders. And editor or operating system litter such as `.DS_Store`.
+
+Patterns are simple. A name ending in `/` matches a folder, `*.pyc` matches by extension, and a line starting with `!` is an exception that keeps a file which an earlier pattern excluded. The `!.env.example` line below is exactly that: the real `.env` stays out, but a template with empty values stays in, so the next person knows which variables to set.
+
+_Do this._ Write .gitignore before anything is committed.
+
+```bash
+cat > .gitignore << 'EOF'
+# secrets
+.env
+!.env.example
+
+# data and anything rebuilt from it
+data/
+models/
+output/
+logs/
+
+# the environment
+.venv/
+__pycache__/
+*.pyc
+
+# notebooks and macOS litter
+.ipynb_checkpoints/
+.DS_Store
+EOF
+
+git status --short
+```
+
+_What each line does._
+
+- `.env` — the secrets file: never recorded
+- `!.env.example` — an exception: the template with blank values is recorded, so the file list is documented
+- `data/` — the trailing slash means a folder; everything inside it is ignored
+- `*.pyc` — ignores compiled Python files wherever they appear
+- `git status --short` — lists what git currently sees as new or changed; data and .venv must not appear
+
+**Step 10.**
+
+_Before you do this._ 511.org is the Bay Area's traveller information service, and its traffic events feed is one of the two data sources for the model. The key is free: go to 511.org/open-data/token, fill in your name and email, and the token arrives by email as a long string of letters, digits and dashes.
+
+A token is a secret. It goes in a file called `.env`, one `NAME=value` per line, with no spaces around the equals sign and no quotes. Nothing else reads that file by magic: the `python-dotenv` package's `load_dotenv()` reads it and puts the values into `os.environ`, the dictionary of environment variables that Python programs can see.
+
+Name the variable `TOKEN_511` rather than `511_TOKEN`, because shell variable names cannot start with a digit and you will eventually want to export it by hand.
+
+Write `.env.example` alongside it with the same names and empty values. It is the documented list of what a newcomer must supply, and it is safe to commit because it contains no secret.
+
+_Do this._ Get a free 511 token, put it in .env, and write the example file beside it.
+
+```bash
+cat > .env << 'EOF'
+TOKEN_511=paste-your-token-here
+EOF
+
+cat > .env.example << 'EOF'
+# copy this file to .env and fill in your own values
+TOKEN_511=
+EOF
+
+python -c "from dotenv import load_dotenv; import os; load_dotenv(); print('token loaded:', bool(os.environ.get('TOKEN_511')))"
+```
+
+_What each line does._
+
+- `TOKEN_511=paste-your-token-here` — replace the right-hand side with the token from your email; no quotes, no spaces
+- `.env.example with an empty value` — documents the variable without revealing it, and is safe to commit
+- `load_dotenv()` — reads .env from the current folder and adds its names to os.environ
+- `print('token loaded:', bool(os.environ.get('TOKEN_511')))` — prints True when the token was found; False means the file is misspelt or you are in the wrong folder
+
+**Step 11.**
+
+_Before you do this._ Now the first real script: it asks 511 for the current traffic events near Fremont and appends them to a CSV file, one row per event per poll. Run it every few minutes and you build the incident history the model later joins to the detector data.
+
+What the code uses. `requests.get(url, params={...})` makes the web request and builds the query string for you. The 511 response carries a byte-order mark, an invisible marker at the start of the text that makes a plain `.json()` call fail with a confusing error, so the code decodes the bytes with `utf-8-sig`, which strips it. `.get('key')` on a dictionary returns `None` instead of crashing when a field is missing, which matters because not every event has every field. `csv.DictWriter` writes dictionaries as rows and can write the header line only when the file is new. `datetime.now(timezone.utc)` stamps each row with when we pulled it, in UTC. The `try` and `except` around the request means a network blip prints a message instead of killing the program. And `if __name__ == '__main__':` at the bottom means the file runs when you call it directly but stays importable from other scripts and tests.
+
+Before trusting any of it, the script prints how many events came back and the keys of the first one, so you see the real shape of the data rather than assuming it.
+
+_Do this._ Write 02_collect_events.py, run it once, and look at what it wrote.
+
+```python
+# 02_collect_events.py
+import csv, os, sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+import requests
+from dotenv import load_dotenv
+
+URL = "https://api.511.org/traffic/events"
+OUT = Path("data/fremont_events_log.csv")
+FIELDS = ["pulled_at", "id", "event_type", "severity", "headline", "roads", "created", "updated"]
+
+
+def fetch_events(token):
+    r = requests.get(URL, params={"api_key": token, "format": "json"}, timeout=30)
+    r.raise_for_status()
+    return r.json() if not r.content.startswith(b"\xef\xbb\xbf") else __import__("json").loads(r.content.decode("utf-8-sig"))
+
+
+def flatten(event, pulled_at):
+    roads = event.get("roads") or []
+    return {
+        "pulled_at": pulled_at,
+        "id": event.get("id"),
+        "event_type": event.get("event_type"),
+        "severity": event.get("severity"),
+        "headline": (event.get("headline") or "").replace("\n", " "),
+        "roads": "; ".join(r.get("name", "") for r in roads),
+        "created": event.get("created"),
+        "updated": event.get("updated"),
+    }
+
+
+def main():
+    load_dotenv()
+    token = os.environ.get("TOKEN_511")
+    if not token:
+        sys.exit("No TOKEN_511 in .env — see step 10.")
+
+    try:
+        payload = fetch_events(token)
+    except requests.RequestException as e:
+        sys.exit(f"Could not reach 511: {e}")
+
+    events = payload.get("events", [])
+    print(f"{len(events)} events came back")
+    if events:
+        print("fields on the first one:", sorted(events[0].keys()))
+
+    pulled_at = datetime.now(timezone.utc).isoformat()
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    new_file = not OUT.exists()
+    with OUT.open("a", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=FIELDS)
+        if new_file:
+            w.writeheader()
+        for e in events:
+            w.writerow(flatten(e, pulled_at))
+    print(f"wrote {len(events)} rows to {OUT}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+_What each line does._
+
+- `requests.get(URL, params={...}, timeout=30)` — asks 511 for the events; timeout stops it hanging forever
+- `r.raise_for_status()` — turns an HTTP error such as 401 (bad token) into a Python exception you can see
+- `decode("utf-8-sig")` — strips the invisible byte-order mark that would otherwise break JSON parsing
+- `event.get("severity")` — returns None for a missing field instead of crashing
+- `datetime.now(timezone.utc).isoformat()` — the moment of this poll, in UTC, as text; the delay between created and pulled_at is the model's blind spot
+- `OUT.parent.mkdir(parents=True, exist_ok=True)` — creates the data folder the first time, and does nothing after that
+- `OUT.open("a", ...)` — opens the file in append mode so each run adds to the history
+- `if new_file: w.writeheader()` — writes the column names only when the file was just created
+- `if __name__ == "__main__": main()` — runs main() when you launch the file, but not when a test imports it
+
+**Step 12.**
+
+_Before you do this._ Now run it and read the output. Save the file in VS Code (Command and S), then run it from the terminal with the venv active. Three things should happen: a count of events, the field names of the first one, and a line saying rows were written.
+
+Common failures and what they mean. `No TOKEN_511 in .env` means the file is missing, misspelt, or you are in the wrong folder. A 401 error means the token is wrong; copy it again without spaces. `ModuleNotFoundError: No module named requests` means the venv is not active in this terminal, so run `source .venv/bin/activate` and try again.
+
+`head -2` prints the first two lines of a file: the header and one event. `wc -l` counts lines. Run the script twice, a minute apart, and the line count grows while the header stays single, which is the append working correctly.
+
+_Do this._ Run the collector, then look at the CSV it produced.
+
+```bash
+python 02_collect_events.py
+head -2 data/fremont_events_log.csv
+wc -l data/fremont_events_log.csv
+```
+
+_What each line does._
+
+- `python 02_collect_events.py` — runs the script; the venv must be active in this terminal
+- `head -2 ...csv` — shows the header line and the first event, so you can see the columns are what you declared
+- `wc -l ...csv` — counts the lines; run the script again and this number grows
+
+**Step 13.**
+
+_Before you do this._ Time to record the work. Git has three places: the working tree (your files), the staging area (what the next commit will contain), and the repository (the permanent history). `git add` moves changes into staging, `git commit` writes them into history with a message, `git push` sends them to GitHub.
+
+Check before you commit, every time. `git status --short` lists what will go in: `??` means untracked, `A` means added, `M` means modified. If `data/` or `.env` appear here, stop and fix `.gitignore` first, because after a commit and push it is too late and the honest fix becomes rotating the token.
+
+`git ls-files` lists what git is actually tracking, which is the strongest check available: piping it through `grep` and counting should give zero for both the environment file and the data folder.
+
+If you cloned from GitHub, `git push` already knows where to send things. If you started with `git init`, create an empty repository on GitHub first, then add it as the remote named origin, as the commented lines show. `-u` on the first push links your local main to the remote one so later pushes are just `git push`.
+
+_Do this._ Check what is staged, commit, and push, proving no secret went with it.
+
+```bash
+git status --short
+git ls-files | grep -c -E '^\.env$|^data/' || echo "0 secrets tracked — good"
+
+git add -A
+git status --short
+git commit -m "Set up the environment and the 511 collector"
+
+# only if you started with git init:
+# git remote add origin https://github.com/YOURNAME/Traffic1.git
+
+git push -u origin main
+git log --oneline -3
+```
+
+_What each line does._
+
+- `git status --short` — the pre-commit check: two-letter codes beside every file that changed
+- `git ls-files | grep -c -E '^\.env$|^data/'` — counts tracked secrets and data files; anything but zero means fix .gitignore now
+- `git add -A` — stages every change in the folder, respecting .gitignore
+- `git commit -m "..."` — writes the staged changes into history with a message saying why
+- `git push -u origin main` — sends the commits to GitHub and remembers the destination
+- `git log --oneline -3` — shows the last three commits, newest first, one line each
+
+**Step 14.**
+
+_Before you do this._ The last habit is the notebook, and it is not optional. A weekly plain-text file where you write what you did, what broke, and what confused you turns a scattered course into something you can look back through. Name it by ISO week so the files sort themselves.
+
+Jupyter is the other kind of notebook: an app that runs Python one cell at a time and shows tables and plots underneath. `jupyter lab` starts it and opens a browser tab; press Control and C twice in the terminal to stop it. Inside, when you create a notebook, choose the kernel whose name matches your project's Python; because Jupyter was installed inside `.venv`, that is the default.
+
+Use notebooks to look at data and scripts to build the pipeline. Anything that must run the same way twice belongs in a `.py` file.
+
+_Do this._ Start the lab notebook, and open Jupyter once to see it work.
+
+```bash
+mkdir -p notebook
+cat > notebook/2026-W37.md << 'EOF'
+# Week 37
+
+## Did
+- Installed arm64 Python, made the venv, wrote requirements.txt.
+- Got a 511 token, wrote 02_collect_events.py, first CSV has rows.
+
+## Confused by
+-
+
+## Next
+- Phase 1: read the collector line by line and write tests for it.
+EOF
+
+jupyter lab
+```
+
+_What each line does._
+
+- `mkdir -p notebook` — one folder for the weekly logs
+- `notebook/2026-W37.md` — ISO week numbering, so the files sort in order by name
+- `## Confused by` — the most valuable heading in the file; fill it in honestly and revisit it a week later
+- `jupyter lab` — starts the notebook app in your browser; Control-C twice in the terminal shuts it down
+
+**Step 15.**
+
+_Before you do this._ One last thing to memorise, because it is what you will type at the start of every session from now on. A new terminal window knows nothing about your venv: it must be pointed at the project and switched on again.
+
+If you forget, the symptom is always the same: `ModuleNotFoundError` for a package you know you installed. The cure is the second line below.
+
+_Do this._ Learn the three commands that start every working session.
+
+```bash
+cd ~/code/Traffic1
+source .venv/bin/activate
+code .
+```
+
+_What each line does._
+
+- `cd ~/code/Traffic1` — go to the project
+- `source .venv/bin/activate` — turn the environment on; the prompt gains (.venv)
+- `code .` — open the editor on this folder, if you want it
+
 **Check yourself.**
 
 <details>
@@ -712,6 +1247,160 @@ Python's flexibility is why ML iteration is fast and why production systems need
 
 _Try this._ Find the one function in the pipeline whose cost dominates, implement it twice (pandas and polars), benchmark both on a real file, and write down which you would ship and why.
 
+**Guided walkthrough.** Read the collector you wrote in Phase 0 line by line, then write the pieces yourself. Every command assumes the venv is active: `cd ~/code/Traffic1 && source .venv/bin/activate`.
+
+**Step 1.**
+
+_Before you do this._ Python's four everyday containers are worth having straight before anything else. A list is an ordered, changeable sequence written with square brackets. A dictionary maps keys to values with curly braces, and is what a JSON object becomes when Python reads it. A tuple is a list that cannot be changed, written with parentheses. A set holds unique values with no order and answers 'is this in there?' quickly.
+
+The interactive interpreter is the fastest way to learn them: type `python` with no filename and you get a prompt where each line runs as you type it. `exit()` or Control-D leaves.
+
+Indexing and slicing work on lists and strings alike: `xs[0]` is the first item, `xs[-1]` the last, `xs[:3]` the first three. A list comprehension builds a new list from an old one in one line, and reads as 'this expression, for each item, if this condition'.
+
+_Do this._ Open the interpreter and get the containers under your fingers.
+
+```python
+events = [{"id": 1, "severity": "Minor"}, {"id": 2}, {"id": 3, "severity": "Major"}]
+
+print(len(events), events[0], events[-1]["id"])
+print(events[0]["severity"])          # fine
+print(events[1].get("severity"))      # None, no crash
+print(events[1].get("severity", "unknown"))
+
+majors = [e["id"] for e in events if e.get("severity") == "Major"]
+print(majors)
+
+ids = {e["id"] for e in events}
+print(3 in ids, 99 in ids)
+```
+
+_What each line does._
+
+- `events[0]["severity"]` — square brackets on a dictionary: works, but raises KeyError when the key is missing
+- `events[1].get("severity")` — the safe version: returns None rather than crashing
+- `.get("severity", "unknown")` — with a second argument, returns that instead of None
+- `[e["id"] for e in events if ...]` — a list comprehension: build a list by filtering another
+- `{e["id"] for e in events}` — curly braces with no colon build a set, for fast membership tests
+
+**Step 2.**
+
+_Before you do this._ A function packages work behind a name. `def name(arguments):` opens it, the indented block is its body, and `return` hands a value back. A docstring, the triple-quoted string on the first line, says what it does; `help(name)` prints it.
+
+The habit that matters in a pipeline is one job per function with a name that says what comes out. `flatten_event` takes the nested dictionary 511 sends and returns one flat dictionary whose keys are the CSV columns, and it does nothing else: no printing, no writing, no network. Functions like that are the ones you can test, which is the next topic.
+
+Default arguments make a function easier to call: `def flatten(event, pulled_at=None)` lets the caller leave the timestamp out. Never use a list or dictionary as a default value, because Python creates it once and reuses it between calls; use `None` and build it inside.
+
+_Do this._ Write flatten_event yourself from its description, then check it against three real events.
+
+```python
+from datetime import datetime, timezone
+
+
+def flatten_event(event, pulled_at=None):
+    """Turn one 511 event into a flat dict with the CSV's columns.
+
+    Missing fields become None; the roads list becomes one semicolon-separated string.
+    """
+    if pulled_at is None:
+        pulled_at = datetime.now(timezone.utc).isoformat()
+    roads = event.get("roads") or []
+    return {
+        "pulled_at": pulled_at,
+        "id": event.get("id"),
+        "event_type": event.get("event_type"),
+        "severity": event.get("severity"),
+        "headline": (event.get("headline") or "").replace("\n", " "),
+        "roads": "; ".join(r.get("name", "") for r in roads),
+        "created": event.get("created"),
+        "updated": event.get("updated"),
+    }
+
+
+sample = {"id": "a1", "event_type": "INCIDENT", "roads": [{"name": "I-880 N"}, {"name": "Mowry Ave"}]}
+print(flatten_event(sample, "2026-09-03T18:00:00+00:00"))
+help(flatten_event)
+```
+
+_What each line does._
+
+- `def flatten_event(event, pulled_at=None):` — the definition: one required argument, one optional
+- `"""Turn one 511 event..."""` — the docstring; help() prints it and future you will read it
+- `event.get("roads") or []` — when roads is missing or None, use an empty list, so the join below cannot fail
+- `"; ".join(r.get("name", "") for r in roads)` — turns a list of road dictionaries into one string for the CSV cell
+- `(event.get("headline") or "").replace("\n", " ")` — flattens any line break, which would otherwise split the CSV row in two
+
+**Step 3.**
+
+_Before you do this._ Files are opened with `with open(path) as fh:`. The `with` block closes the file for you even if an error happens inside it, which is why you rarely see a bare `open()` in good code. The mode string is the second argument: `r` reads, `w` overwrites, `a` appends.
+
+JSON and CSV are the two formats the project reads. `json.load(fh)` reads a file into Python objects; `json.loads(text)` does the same from a string; `json.dump(obj, fh)` writes. For CSV, `csv.DictReader` yields each row as a dictionary keyed by the header, and `csv.DictWriter` does the reverse.
+
+`pathlib.Path` is the modern way to handle paths: `Path("data") / "log.csv"` joins parts with the right separator, `.exists()` asks whether it is there, and `.mkdir(parents=True, exist_ok=True)` creates a folder tree without complaining.
+
+_Do this._ Read the CSV you collected back into Python and count events by type.
+
+```python
+import csv, json
+from collections import Counter
+from pathlib import Path
+
+path = Path("data/fremont_events_log.csv")
+with path.open(newline="", encoding="utf-8") as fh:
+    rows = list(csv.DictReader(fh))
+
+print(len(rows), "rows")
+print(rows[0])
+print(Counter(r["event_type"] for r in rows).most_common(5))
+
+Path("data/summary.json").write_text(json.dumps({"rows": len(rows)}, indent=2))
+print(json.loads(Path("data/summary.json").read_text()))
+```
+
+_What each line does._
+
+- `with path.open(newline="", encoding="utf-8") as fh:` — opens the file and guarantees it closes; newline="" is what the csv module wants
+- `list(csv.DictReader(fh))` — reads every row as a dictionary keyed by the header line
+- `Counter(r["event_type"] for r in rows)` — counts how often each value appears
+- `.most_common(5)` — the five most frequent, largest first
+- `json.dumps(obj, indent=2)` — turns Python objects into JSON text, indented so a human can read it
+
+**Step 4.**
+
+_Before you do this._ A script that always does exactly one thing is a script you will outgrow. `argparse` gives it options: you declare them, and it parses the command line, checks types, and writes the help text for you.
+
+`parser.add_argument("--bootstrap", action="store_true")` makes a flag that is False unless present. `type=int` converts and rejects nonsense. Running the file with `--help` prints everything, which is why every option needs the `help=` text.
+
+The `if __name__ == '__main__':` guard is what keeps this from firing when a test imports the file. When Python runs a file directly, it sets that variable to the string `"__main__"`; when it imports it, the variable is the module's name instead. So the guard means 'only when launched directly'.
+
+_Do this._ Give the collector command line options and read its help.
+
+```python
+import argparse
+
+
+def main(argv=None):
+    p = argparse.ArgumentParser(description="Collect 511 traffic events into a CSV.")
+    p.add_argument("--out", default="data/fremont_events_log.csv", help="where to append rows")
+    p.add_argument("--limit", type=int, default=0, help="stop after N events (0 = all)")
+    p.add_argument("--dry-run", action="store_true", help="fetch and print, write nothing")
+    args = p.parse_args(argv)
+    print(args)
+    return args
+
+
+if __name__ == "__main__":
+    main()
+```
+
+_What each line does._
+
+- `argparse.ArgumentParser(description=...)` — creates the parser; the description shows at the top of --help
+- `p.add_argument("--out", default=...)` — an option with a value and a fallback
+- `type=int` — converts the text to an integer and rejects anything else with a clear message
+- `action="store_true"` — a flag: absent means False, present means True
+- `p.parse_args(argv)` — reads sys.argv by default; passing a list instead makes the function testable
+- `if __name__ == "__main__": main()` — runs only when the file is launched directly, never on import
+
 **Check yourself.**
 
 <details>
@@ -789,6 +1478,161 @@ Time in distributed systems: clock skew, event time versus processing time, wate
 Research threads: metamorphic testing for ML, and executable data contracts.
 
 _Try this._ Specify the contract between `10_clean_pems.py` and `13_feature_engineering.py` as executable assertions, and decide which assertions should stop the pipeline and which should only warn.
+
+**Guided walkthrough.** Everything here runs from the project folder with the venv active. pytest was in requirements.txt, so it is already installed.
+
+**Step 1.**
+
+_Before you do this._ A test is a small function that runs your code with known input and asserts what should come out. pytest finds them by convention: files named `test_*.py`, functions named `test_*`, inside a `tests/` folder.
+
+Every test has three parts, worth writing as three visible lines: arrange the input, act by calling the thing, assert the result. `assert` is plain Python; pytest rewrites it so a failure prints both sides of the comparison.
+
+Test against a fake event rather than the live API. A test that calls the network is slow, fails when the internet does, and gives different answers each run. The fake is a dictionary you control, and it can include the awkward cases the real feed only shows you at midnight on a Sunday.
+
+`pytest -q` runs quietly; `-x` stops at the first failure so you fix one thing at a time; `-k name` runs only tests whose name matches.
+
+_Do this._ Write the first test for flatten_event and run it.
+
+```python
+# tests/test_flatten.py
+from collector import flatten_event          # the module you are testing
+
+
+def test_flattens_roads_into_one_string():
+    event = {"id": "a1", "roads": [{"name": "I-880 N"}, {"name": "Mowry Ave"}]}   # arrange
+    row = flatten_event(event, "2026-09-03T18:00:00+00:00")                        # act
+    assert row["roads"] == "I-880 N; Mowry Ave"                                    # assert
+
+
+def test_missing_fields_become_none():
+    row = flatten_event({"id": "a2"}, "2026-09-03T18:00:00+00:00")
+    assert row["severity"] is None
+    assert row["headline"] == ""
+
+
+def test_headline_never_contains_a_newline():
+    row = flatten_event({"id": "a3", "headline": "Crash\non I-880"}, "t")
+    assert "\n" not in row["headline"]
+```
+
+_What each line does._
+
+- `from collector import flatten_event` — imports the function under test; put flatten_event in collector.py so both the script and the tests can use it
+- `event = {...}` — arrange: a fake event, including only the fields this test cares about
+- `row = flatten_event(event, ...)` — act: one call, no network, no files
+- `assert row["roads"] == "I-880 N; Mowry Ave"` — assert: the exact string the CSV should hold
+- `assert row["severity"] is None` — the missing-field case, which is the one that breaks in production
+
+**Step 2.**
+
+_Before you do this._ One test per case gets repetitive when the cases differ only in their values. `@pytest.mark.parametrize` runs the same test body once per row of a table, and reports each as its own result, so you see exactly which case failed.
+
+The decorator takes the argument names as a string and a list of tuples. Add a case whenever you find a new way the data surprises you; the test file becomes the written record of everything the feed has ever done.
+
+`pytest -q` at the end prints a line of dots, one per passing test. Run it now and every time before a commit.
+
+_Do this._ Turn the repetitive cases into one parametrized test, then run the suite.
+
+```python
+import pytest
+from collector import flatten_event
+
+
+@pytest.mark.parametrize("event, expected", [
+    ({"id": "a", "roads": [{"name": "I-880 N"}]}, "I-880 N"),
+    ({"id": "b", "roads": []}, ""),
+    ({"id": "c"}, ""),
+    ({"id": "d", "roads": None}, ""),
+    ({"id": "e", "roads": [{"name": "I-680 S"}, {"name": "CA-84"}]}, "I-680 S; CA-84"),
+])
+def test_roads_column(event, expected):
+    assert flatten_event(event, "t")["roads"] == expected
+```
+
+_What each line does._
+
+- `@pytest.mark.parametrize("event, expected", [...])` — runs the test once per tuple, feeding the two arguments
+- `({"id": "b", "roads": []}, "")` — an empty list of roads should give an empty cell
+- `({"id": "d", "roads": None}, "")` — the case that crashes naive code, and the reason for `or []` in the function
+- `pytest -q` — run it: one dot per passing case, a full report on any failure
+
+**Step 3.**
+
+_Before you do this._ When something is wrong, stop guessing and look. `breakpoint()` is a line you add anywhere; running the script stops there and gives you a prompt inside the running program. Type a variable's name to see it, `n` to run the next line, `c` to continue, `q` to quit.
+
+VS Code gives the same thing with a mouse: click in the gutter to the left of a line number to set a red dot, then press F5 to run with the debugger attached. The panel on the left lists every variable's current value, which beats a dozen print statements.
+
+For scripts that run unattended, `logging` replaces print. It timestamps every line, labels it with a level, and can be turned down without editing code: `logging.info` for normal progress, `logging.warning` for something odd, `logging.error` for a failure. The collector running every five minutes under launchd needs this, because nobody is watching the screen.
+
+_Do this._ Add logging to the collector and stop inside it once with a breakpoint.
+
+```python
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    filename="logs/collect.log",
+)
+
+def main():
+    events = fetch_events(token)
+    logging.info("fetched %d events", len(events))
+    if not events:
+        logging.warning("empty response — is the token still valid?")
+    # breakpoint()        # uncomment to stop here and look around
+    ...
+```
+
+_What each line does._
+
+- `logging.basicConfig(level=logging.INFO, ...)` — sets up logging once, at the top of the program
+- `format="%(asctime)s %(levelname)s %(message)s"` — every line gets a timestamp and a level, so the log can be read months later
+- `filename="logs/collect.log"` — writes to a file rather than the screen, which is what an unattended job needs
+- `logging.info("fetched %d events", len(events))` — note the comma: logging does the formatting only if the line will actually be written
+- `breakpoint()` — stops the program here and gives you a prompt; n steps, c continues, q quits
+
+**Step 4.**
+
+_Before you do this._ Time is where quiet, expensive bugs live. The rule for this project: store UTC, convert to local only when a human or a feature needs the hour of day.
+
+`datetime.now(timezone.utc)` is the correct way to get the current moment; `datetime.now()` without an argument gives a naive datetime with no timezone attached, which cannot be compared safely with anything. `ZoneInfo("America/Los_Angeles")` from the standard library carries the full daylight-saving rules, and `.astimezone(...)` converts between zones.
+
+Twice a year the local clock misbehaves. In March an hour never happens, so 02:30 local is not a real time. In November an hour happens twice, so 01:30 local is ambiguous: it could be either side of the change. pandas makes you say what to do through `ambiguous` and `nonexistent`, which is why the cleaning code in Phase 3 passes `ambiguous="NaT"` and `nonexistent="shift_forward"`.
+
+_Do this._ Write the test that proves the November hour is ambiguous.
+
+```python
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import pytest
+
+LA = ZoneInfo("America/Los_Angeles")
+
+
+def test_utc_round_trip():
+    t = datetime(2026, 9, 3, 18, 0, tzinfo=timezone.utc)
+    assert t.astimezone(LA).hour == 11          # UTC-7 in September
+    assert t.astimezone(LA).astimezone(timezone.utc) == t
+
+
+def test_november_hour_is_ambiguous():
+    s = pd.Series(pd.to_datetime(["2026-11-01 01:30:00"]))
+    with pytest.raises(Exception):
+        s.dt.tz_localize("America/Los_Angeles")            # refuses to guess
+    out = s.dt.tz_localize("America/Los_Angeles", ambiguous="NaT")
+    assert out.isna().all()                                # we chose to drop it
+```
+
+_What each line does._
+
+- `datetime(..., tzinfo=timezone.utc)` — a moment that knows its zone; never build one without tzinfo
+- `.astimezone(LA)` — the same moment expressed on the California clock
+- `pd.Series(...).dt.tz_localize("America/Los_Angeles")` — attaches a zone to naive timestamps; raises here because 01:30 happened twice
+- `pytest.raises(Exception)` — asserts that the call fails, which is the behaviour we want from pandas
+- `ambiguous="NaT"` — our decision: mark the doubtful hour as missing rather than guess it
 
 **Check yourself.**
 
@@ -2544,6 +3388,142 @@ At scale, data platforms are the substrate of ML: streaming ingestion, table for
 Research and engineering overlap in query engines for ML (vectorized execution, GPU databases) and in declarative feature definitions compiled to both batch and streaming.
 
 _Try this._ Specify how the training table for one model version could be reconstructed bit for bit from the warehouse a year later, and what the warehouse must guarantee for that to be possible.
+
+**Guided walkthrough.** DuckDB was in requirements.txt, so there is nothing to install and no server to run: it reads Parquet and CSV files straight from disk and answers SQL over them.
+
+**Step 1.**
+
+_Before you do this._ SQL is the language for asking questions of tables. One statement has a fixed order of clauses: `SELECT` the columns you want, `FROM` the table, `WHERE` the row filter, `GROUP BY` the buckets, `HAVING` the filter on those buckets, `ORDER BY` the sort, `LIMIT` how many rows back.
+
+DuckDB is a database that lives inside your program with no server to start. `duckdb.sql("...")` runs a query and prints the result; `.df()` hands it back as a pandas DataFrame. It can read a Parquet file by name inside the query, so the file is the table.
+
+Start by looking at the shape of the data: `DESCRIBE` lists the columns and their types, and `LIMIT 5` shows a few rows. Never write a long query against a table you have not looked at.
+
+_Do this._ Point DuckDB at the cleaned Parquet and look around.
+
+```python
+import duckdb
+
+duckdb.sql("DESCRIBE SELECT * FROM 'data/pems_processed/2026-03.parquet'").show()
+duckdb.sql("SELECT * FROM 'data/pems_processed/2026-03.parquet' LIMIT 5").show()
+duckdb.sql("SELECT count(*) AS rows, count(DISTINCT station_id) AS stations "
+           "FROM 'data/pems_processed/2026-03.parquet'").show()
+```
+
+_What each line does._
+
+- `duckdb.sql("...")` — runs a query; .show() prints the result as a table
+- `FROM 'data/....parquet'` — the file is the table: no import step, no server
+- `DESCRIBE SELECT *` — lists column names and types
+- `count(DISTINCT station_id)` — how many detectors are in the file
+
+**Step 2.**
+
+_Before you do this._ Grouping answers 'per something' questions. `GROUP BY station_id` makes one bucket per station, and the aggregate functions in the SELECT list summarise each bucket: `count(*)`, `avg(speed)`, `min`, `max`, `median`.
+
+`WHERE` filters rows before grouping; `HAVING` filters the groups afterwards. That distinction is the one people trip over: you cannot use `WHERE avg(speed) < 40`, because the average does not exist yet at that point.
+
+`AS` renames a column in the output, and the name is what you sort by. Rounding with `round(x, 1)` keeps the printout readable.
+
+_Do this._ Ask which stations were slowest in the evening peak.
+
+```python
+import duckdb
+
+duckdb.sql("""
+SELECT station_id,
+       count(*)              AS rows,
+       round(avg(speed), 1)  AS mean_speed,
+       round(min(speed), 1)  AS worst
+FROM 'data/pems_processed/2026-03.parquet'
+WHERE hour(timezone('America/Los_Angeles', timestamp)) BETWEEN 16 AND 19
+GROUP BY station_id
+HAVING count(*) > 500
+ORDER BY mean_speed
+LIMIT 10
+""").show()
+```
+
+_What each line does._
+
+- `WHERE hour(timezone('America/Los_Angeles', timestamp)) BETWEEN 16 AND 19` — keeps the evening peak, converting to local time first because rush hour is a local idea
+- `GROUP BY station_id` — one row of output per station
+- `avg(speed) AS mean_speed` — an aggregate over each bucket, renamed for the output
+- `HAVING count(*) > 500` — drops stations with too little data; a filter on groups, not rows
+- `ORDER BY mean_speed` — slowest first, because the default sort is ascending
+
+**Step 3.**
+
+_Before you do this._ A join combines two tables on a shared key. The station registry holds each detector's freeway, direction and neighbours; the readings hold the measurements. Joining them lets you ask questions the readings alone cannot answer.
+
+`INNER JOIN` keeps only rows that match on both sides. `LEFT JOIN` keeps every row of the left table and fills the right side with nulls where nothing matched, which is what you want when a missing match is information rather than an error.
+
+Give each table a short alias (`r`, `m`) and prefix every column with it. Queries without aliases become unreadable the moment a column name appears in both tables.
+
+_Do this._ Join the readings to the station registry and summarise by freeway.
+
+```python
+import duckdb
+
+duckdb.sql("""
+SELECT m.fwy, m.dir,
+       count(DISTINCT r.station_id) AS stations,
+       round(avg(r.speed), 1)       AS mean_speed
+FROM 'data/pems_processed/2026-03.parquet' AS r
+LEFT JOIN 'data/pems_meta/fremont_stations.parquet' AS m
+       ON r.station_id = m.ID
+GROUP BY m.fwy, m.dir
+ORDER BY m.fwy, m.dir
+""").show()
+```
+
+_What each line does._
+
+- `FROM '...2026-03.parquet' AS r` — the readings, aliased r
+- `LEFT JOIN '...fremont_stations.parquet' AS m` — the registry, aliased m; LEFT keeps readings whose station is missing from the registry
+- `ON r.station_id = m.ID` — the key the two tables share
+- `count(DISTINCT r.station_id)` — how many detectors contributed to each freeway and direction
+
+**Step 4.**
+
+_Before you do this._ A window function computes across rows without collapsing them, which is exactly what a lag or a rolling mean needs. `GROUP BY` gives you one row per bucket; a window gives you every row plus a value calculated over its neighbours.
+
+The `OVER` clause says which neighbours. `PARTITION BY station_id` keeps the calculation inside one station, `ORDER BY timestamp` puts the rows in time order, and a frame such as `ROWS BETWEEN 5 PRECEDING AND CURRENT ROW` sets the window's width.
+
+`LAG(speed, 3)` is the speed three rows earlier: the same `speed_lag_3` feature the pandas code builds in Phase 4, expressed in one line. Computing features this way is how the same pipeline runs inside a database when the data outgrows one machine.
+
+_Do this._ Build the lag and the rolling mean in SQL, then check them against pandas.
+
+```python
+import duckdb, pandas as pd, numpy as np
+
+sql = duckdb.sql("""
+SELECT station_id, timestamp, speed,
+       LAG(speed, 3) OVER w                                        AS speed_lag_3,
+       avg(speed) OVER (PARTITION BY station_id ORDER BY timestamp
+                        ROWS BETWEEN 5 PRECEDING AND CURRENT ROW)  AS roll_30
+FROM 'data/pems_processed/2026-03.parquet'
+WINDOW w AS (PARTITION BY station_id ORDER BY timestamp)
+ORDER BY station_id, timestamp
+""").df()
+
+pdf = pd.read_parquet('data/pems_processed/2026-03.parquet').sort_values(["station_id", "timestamp"])
+pdf["speed_lag_3"] = pdf.groupby("station_id").speed.shift(3)
+
+merged = sql.merge(pdf[["station_id", "timestamp", "speed_lag_3"]],
+                   on=["station_id", "timestamp"], suffixes=("_sql", "_pd"))
+print("rows compared:", len(merged))
+print("mismatches:", (~np.isclose(merged.speed_lag_3_sql, merged.speed_lag_3_pd, equal_nan=True)).sum())
+```
+
+_What each line does._
+
+- `LAG(speed, 3) OVER w` — the value three rows back within the window: the lag feature
+- `WINDOW w AS (PARTITION BY station_id ORDER BY timestamp)` — names the window once so several columns can reuse it
+- `ROWS BETWEEN 5 PRECEDING AND CURRENT ROW` — a six-row window, which at five minutes a row is thirty minutes
+- `.df()` — hands the result back as a pandas DataFrame
+- `np.isclose(..., equal_nan=True)` — compares the two versions allowing for rounding, treating missing as equal to missing
+- `mismatches: 0` — what you must see before trusting either implementation
 
 **Check yourself.**
 
