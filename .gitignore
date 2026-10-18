@@ -1,0 +1,18 @@
+# secrets
+.env
+!.env.example
+
+# data and anything rebuilt from it
+data/
+models/
+output/
+logs/
+
+# the environment
+.venv/
+__pycache__/
+*.pyc
+
+# notebooks and macOS litter
+.ipynb_checkpoints/
+.DS_Store
