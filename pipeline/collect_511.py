@@ -45,7 +45,9 @@ def load_env(path=ENV_FILE):
 def fetch_events(api_key, status="active"):
     """Return the list of events from one API call."""
     query = urllib.parse.urlencode({"api_key": api_key, "format": "json", "status": status})
-    with urllib.request.urlopen(f"{API_URL}?{query}", timeout=30) as response:
+    # urllib sends no Accept header by default, and 511 answers 406 without one.
+    request = urllib.request.Request(f"{API_URL}?{query}", headers={"Accept": "application/json"})
+    with urllib.request.urlopen(request, timeout=30) as response:
         body = json.loads(response.read().decode("utf-8-sig"))
     return body.get("events", [])
 
