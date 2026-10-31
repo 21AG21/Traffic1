@@ -1,12 +1,19 @@
-# Logins and keys. Never commit these.
+# secrets
 .env
+!.env.example
 
-# Downloaded and generated data (large, and rebuilt by the pipeline)
+# data and anything rebuilt from it
 data/
-output/
 models/
+output/
+logs/
 
-# Python
+# the environment
 .venv/
 __pycache__/
+*.pyc
+
+# notebooks and macOS litter
+.ipynb_checkpoints/
+.DS_Store
 .pytest_cache/

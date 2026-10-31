@@ -1,6 +1,25 @@
-pandas>=2.2
-numpy>=1.26
-pyarrow>=16
-scikit-learn>=1.5
-lightgbm>=4.3
-pytest>=8
+# data
+pandas>=2.2            # tables: read, clean, group, join
+numpy>=1.26            # arrays and the maths under pandas
+pyarrow>=15.0          # lets pandas read and write Parquet files
+
+# getting the data
+requests>=2.31         # HTTP calls to the 511 traffic feed
+python-dotenv>=1.0     # loads secrets from the .env file
+
+# models
+scikit-learn>=1.4      # baselines, metrics, calibration, splits
+lightgbm>=4.3          # gradient boosted trees: the production model
+torch>=2.2             # PyTorch, the neural networks (large download)
+shap>=0.45             # explains which features drove a prediction
+
+# looking at things
+matplotlib>=3.8        # plots
+jupyterlab>=4.1        # notebooks for exploring
+
+# the rest
+pytest>=8.0            # tests
+holidays>=0.45         # public holiday calendar for the feature set
+psutil>=5.9            # memory and timing for every pipeline stage
+duckdb>=0.10           # SQL over Parquet without a database server
+tqdm>=4.66             # progress bars for long loops

@@ -20,7 +20,7 @@ One poll:
 python pipeline/collect_511.py
 ```
 
-Schedule it every 15 minutes with launchd, not cron. Output:
+Schedule it every 15 minutes with launchd, not cron. Schedule only one poller: `02_collect_events.py` in the repo root is an older version that only saves raw rows, and running both doubles the API calls. Output:
 - `data/events_raw/YYYY-MM-DD.jsonl`: every raw poll, so filters can change later.
 - `data/fremont_events.csv`: one row per event, deduplicated by `event_id`.
 

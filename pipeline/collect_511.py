@@ -131,9 +131,9 @@ def main():
     parser.add_argument("--status", default="active", choices=["active", "archived"])
     args = parser.parse_args()
 
-    api_key = load_env().get("API_511_KEY")
+    api_key = load_env().get("TOKEN_511")
     if not api_key:
-        raise SystemExit("API_511_KEY is missing from .env")
+        raise SystemExit("TOKEN_511 is missing from .env")
     poll_once(api_key, args.status)
 
 
