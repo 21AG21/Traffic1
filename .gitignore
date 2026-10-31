@@ -1,0 +1,12 @@
+# Logins and keys. Never commit these.
+.env
+
+# Downloaded and generated data (large, and rebuilt by the pipeline)
+data/
+output/
+models/
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
